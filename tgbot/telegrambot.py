@@ -58,9 +58,7 @@ class TelegramBot:
     async def _set_short_description(self):
         try:
             short_description = textwrap.dedent(f"""
-                Playerok Universal — Современный бот-помощник для Playerok 🟦
-                ┕ Канал — @alexeyproduction
-                ┕ Бот — @alexey_production_bot
+                Playerok Universal — it was translated by @pashagta 
             """)
             await self.bot.set_my_short_description(short_description=short_description)
         except:
@@ -69,19 +67,17 @@ class TelegramBot:
     async def _set_description(self):
         try:
             description = textwrap.dedent(f"""
-                Playerok Universal — Бесплатный современный бот-помощник для Playerok 🟦
-                                        
-                🟢 Вечный онлайн
-                ♻️ Авто-восстановление товаров
-                📦 Авто-выдача
-                🕹️ Команды
-                💬 Вызов продавца в чат
-                                        
-                ⬇️ Скачать бота: https://github.com/alleexxeeyy/playerok-universal
-                
-                📣 Канал — @alexeyproduction
-                🤖 Бот — @alexey_production_bot
-                🧑‍💻 Автор — @alleexxeeyy
+                Playerok Universal — Free modern assistant bot for Playerok 🟦
+
+            🟢 Eternal online
+
+            ♻️ Auto-recovery of goods
+
+            📦 Auto-delivery
+
+            🕹️ Teams
+
+            💬 Calling the seller to the chat
             """)
             await self.bot.set_my_description(description=description)
         except:
@@ -144,7 +140,7 @@ class TelegramBot:
         else:
             await self.bot.send_message(
                 chat_id=chat_id, 
-                text=f'{text}\n<span class="tg-spoiler">Переключите чат логов на чат с ботом, чтобы отображалась меню с действиями</span>', 
+                text=f'{text}\n<span class="tg-spoiler">Switch the log chat to the chat with the bot to display the menu with actions</span>', 
                 reply_markup=None, 
                 parse_mode="HTML"
             )
