@@ -88,7 +88,7 @@ async def callback_remember_username(callback: CallbackQuery, callback_data: cal
         await throw_float_message(
             state=state, 
             message=callback.message, 
-            text=templ.do_action_text(f"💬 Введите <b>сообщение</b> для отправки <b>{username}</b> ↓"), 
+            text=templ.do_action_text(f"💬 Enter <b>message</b> to be send to <b>{username}</b> ↓"), 
             reply_markup=templ.destroy_kb(),
             callback=callback,
             send=True
@@ -105,7 +105,7 @@ async def callback_remember_deal_id(callback: CallbackQuery, callback_data: call
         await throw_float_message(
             state=state, 
             message=callback.message, 
-            text=templ.do_action_text(f'📦✔️ Подтвердите <b>возврат</b> <a href="https://playerok.com/deal/{deal_id}">сделки</a> ↓'), 
+            text=templ.do_action_text(f'📦✔️ Confirm <b>refund</b> <a href="https://playerok.com/deal/{deal_id}">of the deal</a> ↓'), 
             reply_markup=templ.confirm_kb(confirm_cb="refund_deal", cancel_cb="destroy"),
             callback=callback,
             send=True
@@ -114,7 +114,7 @@ async def callback_remember_deal_id(callback: CallbackQuery, callback_data: call
         await throw_float_message(
             state=state, 
             message=callback.message, 
-            text=templ.do_action_text(f'☑️✔️ Подтвердите <b>выполнение</b> <a href="https://playerok.com/deal/{deal_id}">сделки</a> ↓'), 
+            text=templ.do_action_text(f'☑️✔️ Confirm <b>accompletition</b> <a href="https://playerok.com/deal/{deal_id}">of the deal</a> ↓'), 
             reply_markup=templ.confirm_kb(confirm_cb="complete_deal", cancel_cb="destroy"),
             callback=callback,
             send=True
@@ -132,7 +132,7 @@ async def callback_refund_deal(callback: CallbackQuery, state: FSMContext):
     await throw_float_message(
         state=state, 
         message=callback.message, 
-        text=templ.do_action_text(f"✅ По сделке <b>https://playerok.com/deal/{deal_id}</b> был оформлен возврат"), 
+        text=templ.do_action_text(f"✅ Deal <b>https://playerok.com/deal/{deal_id}</b> was refunded"), 
         reply_markup=templ.destroy_kb()
     )
         
@@ -148,7 +148,7 @@ async def callback_complete_deal(callback: CallbackQuery, state: FSMContext):
     await throw_float_message(
         state=state, 
         message=callback.message, 
-        text=templ.do_action_text(f"✅ Сделка <b>https://playerok.com/deal/{deal_id}</b> была помечена вами, как выполненная"), 
+        text=templ.do_action_text(f"✅ The deal <b>https://playerok.com/deal/{deal_id}</b> was marked as completed"), 
         reply_markup=templ.destroy_kb()
     )
 
