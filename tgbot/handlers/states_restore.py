@@ -17,7 +17,7 @@ async def handler_waiting_for_new_included_restore_item_keyphrases(message: type
     try: 
         await state.set_state(None)
         if len(message.text.strip()) <= 0:
-            raise Exception("❌ Слишком короткое значение")
+            raise Exception("❌ Too short value")
         
         keyphrases = [phrase.strip() for phrase in message.text.strip().split(",") if len(phrase.strip()) > 0]
         auto_restore_items = sett.get("auto_restore_items")
