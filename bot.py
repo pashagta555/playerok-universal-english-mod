@@ -252,11 +252,11 @@ if __name__ == "__main__":
         patch_requests()
         setup_logger()
         
-        set_title(f"Playerok Universal v{VERSION} by @alleexxeeyy")
+        set_title(f"Playerok Universal v{VERSION} translated by @pashagta555")
         print(
             f"\n\n   {ACCENT_COLOR}Playerok Universal {Fore.WHITE}v{Fore.LIGHTWHITE_EX}{VERSION}"
-            f"\n    · {Fore.LIGHTWHITE_EX}https://t.me/alleexxeeyy"
-            f"\n    · {Fore.LIGHTWHITE_EX}https://t.me/alexeyproduction\n\n"
+            f"\n    · {Fore.LIGHTWHITE_EX}-"
+            f"\n    · {Fore.LIGHTWHITE_EX}-"
         )
         
         check_for_updates()
