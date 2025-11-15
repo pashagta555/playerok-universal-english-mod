@@ -149,85 +149,85 @@ def check_and_configure_config():
     
     while not config["playerok"]["api"]["token"]:
         while not config["playerok"]["api"]["token"]:
-            print(f"\n{Fore.WHITE}Введите {Fore.LIGHTBLUE_EX}токен {Fore.WHITE}вашего Playerok аккаунта. Его можно узнать из Cookie-данных, воспользуйтесь расширением Cookie-Editor."
-                f"\n  {Fore.WHITE}· Пример: eyJhbGciOiJIUzI1NiIsInR5cCI1IkpXVCJ9.eyJzdWIiOiIxZWUxMzg0Ni...")
+            print(f"\n{Fore.WHITE}Enter {Fore.LIGHTBLUE_EX}token{Fore.WHITE}Of your Playerok account. You can find it from Cookie data, use the Cookie-Editor extension."
+                f"\n  {Fore.WHITE}· Example: eyJhbGciOiJIUzI1NiIsInR5cCI1IkpXVCJ9.eyJzdWIiOiIxZWUxMzg0Ni...")
             token = input(f"  {Fore.WHITE}↳ {Fore.LIGHTWHITE_EX}").strip()
             if is_token_valid(token):
                 config["playerok"]["api"]["token"] = token
                 sett.set("config", config)
-                print(f"\n{Fore.GREEN}Токен успешно сохранён в конфиг.")
+                print(f"\n{Fore.GREEN}Token was succesfully saved to the config.")
             else:
-                print(f"\n{Fore.LIGHTRED_EX}Похоже, что вы ввели некорректный токен. Убедитесь, что он соответствует формату и попробуйте ещё раз.")
+                print(f"\n{Fore.LIGHTRED_EX}It seems that you entered an incorrect token. Make sure it matches the format and try again.")
 
         while not config["playerok"]["api"]["user_agent"]:
-            print(f"\n{Fore.WHITE}Введите {Fore.LIGHTMAGENTA_EX}User Agent {Fore.WHITE}вашего браузера. Его можно скопировать на сайте {Fore.LIGHTWHITE_EX}https://whatmyuseragent.com. Или вы можете пропустить этот параметр, нажав Enter."
-                f"\n  {Fore.WHITE}· Пример: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36")
+            print(f"\n{Fore.WHITE}Enter {Fore.LIGHTMAGENTA_EX}User Agent {Fore.WHITE}of your browser. It can be copied on the website {Fore.LIGHTWHITE_EX}https://whatmyuseragent.com. Or you can skip this option by pressing Enter."
+                f"\n  {Fore.WHITE}· Example: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36")
             user_agent = input(f"  {Fore.WHITE}↳ {Fore.LIGHTWHITE_EX}").strip()
             if not user_agent:
-                print(f"\n{Fore.YELLOW}Вы пропустили ввод User Agent. Учтите, что в таком случае бот может работать нестабильно.")
+                print(f"\n{Fore.YELLOW}You missed entering the User Agent. Please note that in this case the bot may work unstable.")
                 break
             if is_user_agent_valid(user_agent):
                 config["playerok"]["api"]["user_agent"] = user_agent
                 sett.set("config", config)
-                print(f"\n{Fore.GREEN}User Agent успешно сохранён в конфиг.")
+                print(f"\n{Fore.GREEN}User Agent has been successfully saved to the config.")
             else:
-                print(f"\n{Fore.LIGHTRED_EX}Похоже, что вы ввели некорректный User Agent. Убедитесь, что в нём нет русских символов и попробуйте ещё раз.")
+                print(f"\n{Fore.LIGHTRED_EX}It seems that you entered an incorrect User Agent. Make sure there are no non-english characters in it and try again.")
         
         while not config["playerok"]["api"]["proxy"]:
-            print(f"\n{Fore.WHITE}Введите {Fore.LIGHTBLUE_EX}IPv4 Прокси {Fore.WHITE}в формате user:password@ip:port или ip:port, если он без авторизации. Если вы не знаете что это, или не хотите устанавливать прокси - пропустите этот параметр, нажав Enter."
-                f"\n  {Fore.WHITE}· Пример: DRjcQTm3Yc:m8GnUN8Q9L@46.161.30.187:8000")
+            print(f"\n{Fore.WHITE}Enter {Fore.LIGHTBLUE_EX}IPv4 proxy {Fore.WHITE}in format user:password@ip:port or ip:port, in case it is without authorization. If you don't know what it is or don't want to install a proxy, skip this option by pressing Enter."
+                f"\n  {Fore.WHITE}· Example: DRjcQTm3Yc:m8GnUN8Q9L@46.161.30.187:8000")
             proxy = input(f"  {Fore.WHITE}↳ {Fore.LIGHTWHITE_EX}").strip()
             if not proxy:
-                print(f"\n{Fore.WHITE}Вы пропустили ввод прокси.")
+                print(f"\n{Fore.WHITE}You missed the proxy input.")
                 break
             if is_proxy_valid(proxy):
                 config["playerok"]["api"]["proxy"] = proxy
                 sett.set("config", config)
-                print(f"\n{Fore.GREEN}Прокси успешно сохранён в конфиг.")
+                print(f"\n{Fore.GREEN}The proxy has been successfully saved in the configuration.")
             else:
-                print(f"\n{Fore.LIGHTRED_EX}Похоже, что вы ввели некорректный Прокси. Убедитесь, что он соответствует формату и попробуйте ещё раз.")
+                print(f"\n{Fore.LIGHTRED_EX}It seems that you entered the wrong Proxy. Make sure it matches the format and try again.")
 
     while not config["telegram"]["api"]["token"]:
-        print(f"\n{Fore.WHITE}Введите {Fore.CYAN}токен вашего Telegram бота{Fore.WHITE}. Бота нужно создать у @BotFather."
-              f"\n  {Fore.WHITE}· Пример: 7257913369:AAG2KjLL3-zvvfSQFSVhaTb4w7tR2iXsJXM")
+        print(f"\n{Fore.WHITE}Enter {Fore.CYAN}token of your Telegram bot{Fore.WHITE}. You need to create a bot from @BotFather."
+              f"\n  {Fore.WHITE}· Example: 7257913369:AAG2KjLL3-zvvfSQFSVhaTb4w7tR2iXsJXM")
         token = input(f"  {Fore.WHITE}↳ {Fore.LIGHTWHITE_EX}").strip()
         if is_tg_token_valid(token):
             config["telegram"]["api"]["token"] = token
             sett.set("config", config)
-            print(f"\n{Fore.GREEN}Токен Telegram бота успешно сохранён в конфиг.")
+            print(f"\n{Fore.GREEN}Telegram bot token successfully saved to the config.")
         else:
-            print(f"\n{Fore.LIGHTRED_EX}Похоже, что вы ввели некорректный токен. Убедитесь, что он соответствует формату и попробуйте ещё раз.")
+            print(f"\n{Fore.LIGHTRED_EX}It seems that you entered an incorrect token. Make sure it matches the format and try again.")
 
     while not config["telegram"]["bot"]["password"]:
-        print(f"\n{Fore.WHITE}Придумайте и введите {Fore.YELLOW}пароль для вашего Telegram бота{Fore.WHITE}. Бот будет запрашивать этот пароль при каждой новой попытке взаимодействия чужого пользователя с вашим Telegram ботом."
-              f"\n  {Fore.WHITE}· Пароль должен быть сложным, длиной не менее 6 и не более 64 символов.")
+        print(f"\n{Fore.WHITE}Come up with and enter {Fore.YELLOW}password for your Telegram bot{Fore.WHITE}. The bot will request this password every time someone else's attempt to interact with your Telegram bot."
+              f"\n  {Fore.WHITE}· The password must be complex, at least 6 and no more than 64 characters long.")
         password = input(f"  {Fore.WHITE}↳ {Fore.LIGHTWHITE_EX}").strip()
         if is_password_valid(password):
             config["telegram"]["bot"]["password"] = password
             sett.set("config", config)
-            print(f"\n{Fore.GREEN}Пароль успешно сохранён в конфиг.")
+            print(f"\n{Fore.GREEN}The password has been successfully saved in the configuration.")
         else:
-            print(f"\n{Fore.LIGHTRED_EX}Ваш пароль не подходит. Убедитесь, что он соответствует формату и не является лёгким и попробуйте ещё раз.")
+            print(f"\n{Fore.LIGHTRED_EX}Your password does not match. Make sure it matches the format and is not easy and try again.")
 
     if config["playerok"]["api"]["proxy"] and not is_proxy_working(config["playerok"]["api"]["proxy"]):
-        print(f"\n{Fore.LIGHTRED_EX}Похоже, что указанный вами прокси не работает. Пожалуйста, проверьте его и введите снова.")
+        print(f"\n{Fore.LIGHTRED_EX}It seems that the proxy you specified does not work. Please check it and enter it again.")
         config["playerok"]["api"]["token"] = ""
         config["playerok"]["api"]["user_agent"] = ""
         config["playerok"]["api"]["proxy"] = ""
         sett.set("config", config)
         return check_and_configure_config()
     elif config["playerok"]["api"]["proxy"]:
-        logger.info(f"{Fore.WHITE}Прокси успешно работает.")
+        logger.info(f"{Fore.WHITE}The proxy works successfully.")
 
     if not is_pl_account_working():
-        print(f"\n{Fore.LIGHTRED_EX}Не удалось подключиться к вашему Playerok аккаунту. Пожалуйста, убедитесь, что у вас указан верный токен и введите его снова.")
+        print(f"\n{Fore.LIGHTRED_EX}Failed to connect to your Playerok account. Please make sure that you have the correct token and enter it again.")
         config["playerok"]["api"]["token"] = ""
         config["playerok"]["api"]["user_agent"] = ""
         config["playerok"]["api"]["proxy"] = ""
         sett.set("config", config)
         return check_and_configure_config()
     else:
-        logger.info(f"{Fore.WHITE}Playerok аккаунт успешно авторизован.")
+        logger.info(f"{Fore.WHITE}Playerok account has been successfully authorized.")
 
     if is_pl_account_banned():
         print(f"{Fore.LIGHTRED_EX}\nВаш Playerok аккаунт забанен! Увы, я не могу запустить бота на заблокированном аккаунте...")
@@ -238,7 +238,7 @@ def check_and_configure_config():
         return check_and_configure_config()
 
     if not is_tg_bot_exists():
-        print(f"\n{Fore.LIGHTRED_EX}Не удалось подключиться к вашему Telegram боту. Пожалуйста, убедитесь, что у вас указан верный токен и введите его снова.")
+        print(f"\n{Fore.LIGHTRED_EX}Failed to connect to your Telegram bot. Please make sure that you have the correct token and enter it again.")
         config["telegram"]["api"]["token"] = ""
         sett.set("config", config)
         return check_and_configure_config()
