@@ -14,7 +14,7 @@ async def handler_waiting_for_password(message: types.Message, state: FSMContext
     try: 
         await state.set_state(None)
         if len(message.text.strip()) <= 0:
-            raise Exception("❌ Слишком короткий текст")
+            raise Exception("❌ Too short text")
 
         from plbot.playerokbot import get_playerok_bot
         
@@ -27,7 +27,7 @@ async def handler_waiting_for_password(message: types.Message, state: FSMContext
         await throw_float_message(
             state=state,
             message=message,
-            text=templ.do_action_text(f"✅ Пользователю <b>{username}</b> было отправлено сообщение: <blockquote>{message.text.strip()}</blockquote>"),
+            text=templ.do_action_text(f"✅ User <b>{username}</b> recevied message from u: <blockquote>{message.text.strip()}</blockquote>"),
             reply_markup=templ.destroy_kb()
         )
     except Exception as e:
