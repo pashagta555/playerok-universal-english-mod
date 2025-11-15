@@ -25,7 +25,7 @@ from core.modules import (
     connect_modules
 )
 from core.handlers import call_bot_event
-from updater import check_for_updates
+
 
 
 logger = getLogger(f"universal")
@@ -259,7 +259,7 @@ if __name__ == "__main__":
             f"\n    · {Fore.LIGHTWHITE_EX}-"
         )
         
-        check_for_updates()
+        
         check_and_configure_config()
 
         modules = load_modules()
