@@ -10,10 +10,10 @@ from .. import callback_datas as calls
 def settings_mess_text():
     messages = sett.get("messages")
     txt = textwrap.dedent(f"""
-        ⚙️ <b>Настройки</b> → ✉️ <b>Сообщения</b>
-        Всего <b>{len(messages.keys())}</b> настраиваемых сообщений в конфиге
+        ⚙️ <b>Settings</b> → ✉️ <b>Messages</b>
+        Summary <b>{len(messages.keys())}</b> setable messages in the config
 
-        Перемещайтесь по разделам ниже. Нажмите на сообщение, чтобы перейти в его редактирование ↓
+        Navigate through the sections below. Click on the message to proceed to its editing ↓
     """)
     return txt
 
@@ -49,8 +49,8 @@ def settings_mess_kb(page: int = 0):
         rows.append(buttons_row)
 
     rows.append([
-        InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.SettingsNavigation(to="default").pack()),
-        InlineKeyboardButton(text="🔄️ Обновить", callback_data=calls.MessagesPagination(page=page).pack())
+        InlineKeyboardButton(text="⬅️ Back", callback_data=calls.SettingsNavigation(to="default").pack()),
+        InlineKeyboardButton(text="🔄️ Update", callback_data=calls.MessagesPagination(page=page).pack())
     ])
 
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
@@ -59,7 +59,7 @@ def settings_mess_kb(page: int = 0):
 
 def settings_mess_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        ⚙️ <b>Настройки</b> → ✉️ <b>Сообщения</b>
+        ⚙️ <b>Settings</b> → ✉️ <b>Messages</b>
         \n{placeholder}
     """)
     return txt
