@@ -80,38 +80,38 @@ MESSAGES = SettingsFile(
         "first_message": {
             "enabled": True,
             "text": [
-                "👋 Привет, {username}, я бот-помощник 𝗣𝗹𝗮𝘆𝗲𝗿𝗼𝗸 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗮𝗹",
+                "👋 Hi, {username}, it's bot-helper 𝗣𝗹𝗮𝘆𝗲𝗿𝗼𝗸 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗮𝗹",
                 "",
-                "💡 Если вы хотите поговорить с продавцом, напишите команду !продавец, чтобы я пригласил его в этот диалог",
+                "💡 If you want to talk to the seller, write !seller, so that I invite him to this dialogue",
                 "",
-                "Чтобы узнать все мои команды, напишите !команды"
+                "To find out all my commands, write !commands"
             ]
         },
         "cmd_error": {
             "enabled": True,
             "text": [
-                "❌ При вводе команды произошла ошибка: {error}"
+                "❌ An error occurred while entering the command: {error}"
             ]
         },
         "cmd_commands": {
             "enabled": True,
             "text": [
-                "🕹️ Основные команды:",
-                "・ !продавец — уведомить и позвать продавца в этот чат"
+                "🕹️ Main commands:",
+                "・ !seller - notify and call the seller to this chat"
             ]
         },
         "cmd_seller": {
             "enabled": True,
             "text": [
-                "💬 Продавец был вызван в этот чат. Ожидайте, пока он подключиться к диалогу..."
+                "💬 The seller was called to this chat. Wait for him to join the dialogue..."
             ]
         },
         "new_deal": {
             "enabled": False,
             "text": [
-                "📋 Спасибо за покупку «{deal_item_name}» в количестве {deal_amount} шт.",
+                "📋 Thanks for the order «{deal_item_name}» amount {deal_amount} шт.",
                 ""
-                "Продавца сейчас может не быть на месте, чтобы позвать его, используйте команду !продавец."
+                "The seller may not be there now, to call him, use the command! Seller."
             ]
         },
         "deal_pending": {
@@ -129,13 +129,13 @@ MESSAGES = SettingsFile(
         "deal_confirmed": {
             "enabled": False,
             "text": [
-                "🌟 Спасибо за успешную сделку. Буду рад, если оставите отзыв. Жду вас в своём магазине в следующий раз, удачи!"
+                "🌟Thank you for a successful deal. I will be glad if you leave a review. I'm waiting for you in my store next time, good luck!"
             ]
         },
         "deal_refunded": {
             "enabled": False,
             "text": [
-                "📦 Заказ был возвращён. Надеюсь эта сделка не принесла вам неудобств. Жду вас в своём магазине в следующий раз, удачи!"
+                "📦 The order has been returned. I hope this deal didn't inconvenience you. I'm waiting for you in my store next time, good luck!"
             ]
         }
     }
