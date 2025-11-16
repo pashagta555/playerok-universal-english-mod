@@ -11,12 +11,12 @@ def settings_auth_text():
     token = config["playerok"]["api"]["token"][:5] + ("*" * 10) or "❌ Не задано"
     user_agent = config["playerok"]["api"]["user_agent"] or "❌ Не задано"
     txt = textwrap.dedent(f"""
-        ⚙️ <b>Настройки → 🔑 Авторизация</b>
+        ⚙️ <b>Settings → 🔑 Autorisation</b>
 
-        🔐 <b>Токен:</b> {token}
+        🔐 <b>Token:</b> {token}
         🎩 <b>User-Agent:</b> {user_agent}
 
-        Выберите параметр для изменения ↓
+        Select an option to change ↓
     """)
     return txt
 
@@ -26,11 +26,11 @@ def settings_auth_kb():
     token = config["playerok"]["api"]["token"][:5] + ("*" * 10) or "❌ Не задано"
     user_agent = config["playerok"]["api"]["user_agent"] or "❌ Не задано"
     rows = [
-        [InlineKeyboardButton(text=f"🔐 Токен: {token}", callback_data="enter_token")],
+        [InlineKeyboardButton(text=f"🔐 Token: {token}", callback_data="enter_token")],
         [InlineKeyboardButton(text=f"🎩 User-Agent: {user_agent}", callback_data="enter_user_agent")],
         [
-        InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.SettingsNavigation(to="default").pack()),
-        InlineKeyboardButton(text="🔄️ Обновить", callback_data=calls.SettingsNavigation(to="authorization").pack())
+        InlineKeyboardButton(text="⬅️ Back", callback_data=calls.SettingsNavigation(to="default").pack()),
+        InlineKeyboardButton(text="🔄️ Update", callback_data=calls.SettingsNavigation(to="authorization").pack())
         ]
     ]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
@@ -39,7 +39,7 @@ def settings_auth_kb():
 
 def settings_auth_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        ⚙️ <b>Настройки → 🔑 Авторизация</b>
+        ⚙️ <b>Settings → 🔑 Autorisation</b>
         \n{placeholder}
     """)
     return txt
