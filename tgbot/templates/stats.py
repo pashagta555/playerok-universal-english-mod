@@ -11,7 +11,7 @@ def stats_text():
     txt = textwrap.dedent(f"""
         📊 <b>Statistics of the  Playerok bot</b>
 
-       Date of the start of the bot: <b>{stats.bot_launch_time.strftime("%d.%m.%Y %H:%M:%S") or 'Не запущен'}</b>
+       Date of the start of the bot: <b>{stats.bot_launch_time.strftime("%d.%m.%Y %H:%M:%S") or 'Not started'}</b>
 
         <b>Statistics from the start:</b>
         ┣ Finished: <b>{stats.deals_completed}</b>
