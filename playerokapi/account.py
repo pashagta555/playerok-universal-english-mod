@@ -5,9 +5,12 @@ from typing import Literal
 import json
 import random
 import time
+import os
+import tempfile
+import shutil
 
-import tls_client
 import tls_requests
+import curl_cffi
 
 from . import types
 from .exceptions import *
@@ -101,6 +104,10 @@ class Account:
         self.profile: AccountProfile | None = None
         """ Профиль аккаунта (не путать с профилем пользователя). \n\n_Заполняется при первом использовании get()_ """
 
+        self.__cert_path = os.path.join(os.path.dirname(__file__), "cacert.pem")
+        self.__tmp_cert_path = os.path.join(tempfile.gettempdir(), "cacert.pem")
+        shutil.copyfile(self.__cert_path, self.__tmp_cert_path)
+
         self._refresh_clients()
         self.__logger = getLogger("playerokapi")
 
@@ -108,9 +115,10 @@ class Account:
         self.__tls_requests = tls_requests.Client(
             proxy=self.__proxy_string
         )
-        self.__tls_client = tls_client.Session(
-            client_identifier="chrome_142",
-            random_tls_extension_order=True
+        self.__curl_session = curl_cffi.Session(
+            impersonate="chrome",
+            timeout=10,
+            verify=self.__tmp_cert_path
         )
 
     def request(self, method: Literal["get", "post"], url: str, headers: dict[str, str], 
@@ -170,20 +178,19 @@ class Account:
             "sec-fetch-dest": "empty",
             "sec-fetch-mode": "cors",
             "sec-fetch-site": "same-origin",
+            "user-agent": self.user_agent if self.user_agent else random.choice(agents),
             "x-gql-op": "viewer",
-            "x-timezone-offset": "-180"
+            "x-timezone-offset": "-240"
         }
         headers = {k: v for k, v in _headers.items() if k not in headers.keys()}
-        headers["cookie"] = f"token={self.token}"
-        headers["user-agent"] = self.user_agent if self.user_agent else random.choice(agents)
                 
         def make_req():
             if method == "get":
-                r = self.__tls_client.get(
+                r = self.__curl_session.get(
                     url=url, 
                     params=payload, 
                     headers=headers, 
-                    timeout_seconds=self.requests_timeout,
+                    timeout=self.requests_timeout,
                     proxy=self.__proxy_string
                 )
             elif method == "post":
@@ -197,11 +204,11 @@ class Account:
                         timeout=self.requests_timeout
                     )
                 else:
-                    r = self.__tls_client.post(
+                    r = self.__curl_session.post(
                         url=url, 
                         json=payload,
                         headers=headers, 
-                        timeout_seconds=self.requests_timeout,
+                        timeout=self.requests_timeout,
                         proxy=self.__proxy_string
                     )
             return r
@@ -214,14 +221,15 @@ class Account:
             "cf-browser-verification",
             "Cloudflare Ray ID"
         ]
-        for attempt in range(self.request_max_retries):
+        for attempt in range(30):
             resp = make_req()
             if not any(sig in resp.text for sig in cloudflare_signatures):
                 break
-            delay = min(120.0, 5.0 * (2 ** attempt))
+            self._refresh_clients()
+            #delay = min(120.0, 5.0 * (2 ** attempt)) 
+            delay = 1
             self.__logger.error(f"Cloudflare Detected, пробую отправить запрос снова через {delay} сек.")
             time.sleep(delay)
-            self._refresh_clients()
         else:
             raise CloudflareDetectedException(resp)
         try:
