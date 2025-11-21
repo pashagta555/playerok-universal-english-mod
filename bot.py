@@ -25,7 +25,7 @@ from core.modules import (
     connect_modules
 )
 from core.handlers import call_bot_event
-
+from updater import check_for_updates
 
 
 logger = getLogger(f"universal")
@@ -149,13 +149,13 @@ def check_and_configure_config():
     
     while not config["playerok"]["api"]["token"]:
         while not config["playerok"]["api"]["token"]:
-            print(f"\n{Fore.WHITE}Enter {Fore.LIGHTBLUE_EX}token{Fore.WHITE}Of your Playerok account. You can find it from Cookie data, use the Cookie-Editor extension."
-                f"\n  {Fore.WHITE}· Example: eyJhbGciOiJIUzI1NiIsInR5cCI1IkpXVCJ9.eyJzdWIiOiIxZWUxMzg0Ni...")
+            print(f"\n{Fore.WHITE}Enter {Fore.LIGHTBLUE_EX}token {Fore.WHITE}of your Playerok account. You can find it from Cookie data, use the Cookie-Editor extension."
+                f"\n  {Fore.WHITE}· Пример: eyJhbGciOiJIUzI1NiIsInR5cCI1IkpXVCJ9.eyJzdWIiOiIxZWUxMzg0Ni...")
             token = input(f"  {Fore.WHITE}↳ {Fore.LIGHTWHITE_EX}").strip()
             if is_token_valid(token):
                 config["playerok"]["api"]["token"] = token
                 sett.set("config", config)
-                print(f"\n{Fore.GREEN}Token was succesfully saved to the config.")
+                print(f"\n{Fore.GREEN}The token has been successfully saved in the config.")
             else:
                 print(f"\n{Fore.LIGHTRED_EX}It seems that you entered an incorrect token. Make sure it matches the format and try again.")
 
@@ -169,12 +169,12 @@ def check_and_configure_config():
             if is_user_agent_valid(user_agent):
                 config["playerok"]["api"]["user_agent"] = user_agent
                 sett.set("config", config)
-                print(f"\n{Fore.GREEN}User Agent has been successfully saved to the config.")
+                print(f"\n{Fore.GREEN}User Agent успешно сохранён в конфиг.")
             else:
-                print(f"\n{Fore.LIGHTRED_EX}It seems that you entered an incorrect User Agent. Make sure there are no non-english characters in it and try again.")
+                print(f"\n{Fore.LIGHTRED_EX}It seems that you entered an incorrect User Agent. Make sure there are no Russian characters in it and try again.")
         
         while not config["playerok"]["api"]["proxy"]:
-            print(f"\n{Fore.WHITE}Enter {Fore.LIGHTBLUE_EX}IPv4 proxy {Fore.WHITE}in format user:password@ip:port or ip:port, in case it is without authorization. If you don't know what it is or don't want to install a proxy, skip this option by pressing Enter."
+            print(f"\n{Fore.WHITE}Enter{Fore.LIGHTBLUE_EX}IPv4 Прокси {Fore.WHITE}in the format user:password@ip:port or ip:port, If he is without authorization. If you don't know what it is, or you don't want to install a proxy, skip this option by pressing Enter."
                 f"\n  {Fore.WHITE}· Example: DRjcQTm3Yc:m8GnUN8Q9L@46.161.30.187:8000")
             proxy = input(f"  {Fore.WHITE}↳ {Fore.LIGHTWHITE_EX}").strip()
             if not proxy:
@@ -188,13 +188,13 @@ def check_and_configure_config():
                 print(f"\n{Fore.LIGHTRED_EX}It seems that you entered the wrong Proxy. Make sure it matches the format and try again.")
 
     while not config["telegram"]["api"]["token"]:
-        print(f"\n{Fore.WHITE}Enter {Fore.CYAN}token of your Telegram bot{Fore.WHITE}. You need to create a bot from @BotFather."
+        print(f"\n{Fore.WHITE}Enter {Fore.CYAN}Token of your Telegram bot{Fore.WHITE}. You need to create a bot at @BotFather."
               f"\n  {Fore.WHITE}· Example: 7257913369:AAG2KjLL3-zvvfSQFSVhaTb4w7tR2iXsJXM")
         token = input(f"  {Fore.WHITE}↳ {Fore.LIGHTWHITE_EX}").strip()
         if is_tg_token_valid(token):
             config["telegram"]["api"]["token"] = token
             sett.set("config", config)
-            print(f"\n{Fore.GREEN}Telegram bot token successfully saved to the config.")
+            print(f"\n{Fore.GREEN}Токен Telegram бота успешно сохранён в конфиг.")
         else:
             print(f"\n{Fore.LIGHTRED_EX}It seems that you entered an incorrect token. Make sure it matches the format and try again.")
 
@@ -205,7 +205,7 @@ def check_and_configure_config():
         if is_password_valid(password):
             config["telegram"]["bot"]["password"] = password
             sett.set("config", config)
-            print(f"\n{Fore.GREEN}The password has been successfully saved in the configuration.")
+            print(f"\n{Fore.GREEN}Пароль успешно сохранён в конфиг.")
         else:
             print(f"\n{Fore.LIGHTRED_EX}Your password does not match. Make sure it matches the format and is not easy and try again.")
 
@@ -217,7 +217,7 @@ def check_and_configure_config():
         sett.set("config", config)
         return check_and_configure_config()
     elif config["playerok"]["api"]["proxy"]:
-        logger.info(f"{Fore.WHITE}The proxy works successfully.")
+        logger.info(f"{Fore.WHITE}Прокси успешно работает.")
 
     if not is_pl_account_working():
         print(f"\n{Fore.LIGHTRED_EX}Failed to connect to your Playerok account. Please make sure that you have the correct token and enter it again.")
@@ -227,10 +227,10 @@ def check_and_configure_config():
         sett.set("config", config)
         return check_and_configure_config()
     else:
-        logger.info(f"{Fore.WHITE}Playerok account has been successfully authorized.")
+        logger.info(f"{Fore.WHITE}Playerok аккаунт успешно авторизован.")
 
     if is_pl_account_banned():
-        print(f"{Fore.LIGHTRED_EX}\nВаш Playerok аккаунт забанен! Увы, я не могу запустить бота на заблокированном аккаунте...")
+        print(f"{Fore.LIGHTRED_EX}\nYour Playerok account is banned! Alas, I can't run the bot on a blocked account...")
         config["playerok"]["api"]["token"] = ""
         config["playerok"]["api"]["user_agent"] = ""
         config["playerok"]["api"]["proxy"] = ""
@@ -252,14 +252,14 @@ if __name__ == "__main__":
         patch_requests()
         setup_logger()
         
-        set_title(f"Playerok Universal v{VERSION} translated by @pashagta555")
+        set_title(f"Playerok Universal v{VERSION} by @alleexxeeyy")
         print(
             f"\n\n   {ACCENT_COLOR}Playerok Universal {Fore.WHITE}v{Fore.LIGHTWHITE_EX}{VERSION}"
-            f"\n    · {Fore.LIGHTWHITE_EX}-"
-            f"\n    · {Fore.LIGHTWHITE_EX}-"
+            f"\n    · {Fore.LIGHTWHITE_EX}https://t.me/alleexxeeyy"
+            f"\n    · {Fore.LIGHTWHITE_EX}https://t.me/alexeyproduction\n\n"
         )
         
-        
+        check_for_updates()
         check_and_configure_config()
 
         modules = load_modules()
@@ -275,8 +275,7 @@ if __name__ == "__main__":
     except Exception as e:
         traceback.print_exc()
         print(
-            f"\n{Fore.LIGHTRED_EX}Ваш бот словил непредвиденную ошибку и был выключен."
-            f"\n\n{Fore.WHITE}Пожалуйста, попробуйте найти свою проблему в нашей статье, в которой собраны все самые частые ошибки.",
-            f"\nСтатья: {Fore.LIGHTWHITE_EX}https://telegra.ph/FunPay-Universal--chastye-oshibki-i-ih-resheniya-08-26 {Fore.WHITE}(CTRL + Клик ЛКМ)\n"
+            f"\n{Fore.LIGHTRED_EX}Your bot caught an unexpected error and was turned off."
+            f"\n\n{Fore.WHITE}ПPlease try to find your problem in our article, which contains all the most common errors."
         )
     raise SystemExit(1)
