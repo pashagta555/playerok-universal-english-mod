@@ -8,16 +8,16 @@ from .. import callback_datas as calls
 
 def settings_text():
     config = sett.get("config")
-    token = config["playerok"]["api"]["token"][:5] + ("*" * 10) or "❌ Не задано"
-    user_agent = config["playerok"]["api"]["user_agent"] or "❌ Не задано"
+    token = config["playerok"]["api"]["token"][:5] + ("*" * 10) or "❌ Not set"
+    user_agent = config["playerok"]["api"]["user_agent"] or "❌ Not set"
     txt = textwrap.dedent(f"""
-        ⚙️ <b>Настройки</b>
+        ⚙️ <b>Settings</b>
 
-        <b>Основные настройки:</b>
-        ┣ Токен: <b>{token}</b>
+        <b>Main settings:</b>
+        ┣ Token: <b>{token}</b>
         ┗ User-Agent: <b>{user_agent}</b>
 
-        Перемещайтесь по разделам ниже, чтобы изменить значения параметров ↓
+        Navigate through the sections below to change parameter values ↓
     """)
     return txt
 
@@ -25,22 +25,22 @@ def settings_text():
 def settings_kb():
     rows = [
         [
-        InlineKeyboardButton(text="🔑 Авторизация", callback_data=calls.SettingsNavigation(to="auth").pack()),
-        InlineKeyboardButton(text="📶 Соединение", callback_data=calls.SettingsNavigation(to="conn").pack()),
-        InlineKeyboardButton(text="♻️ Восстановление", callback_data=calls.SettingsNavigation(to="restore").pack())
+        InlineKeyboardButton(text="🔑 Authorization", callback_data=calls.SettingsNavigation(to="auth").pack()),
+        InlineKeyboardButton(text="📶 Connection", callback_data=calls.SettingsNavigation(to="conn").pack()),
+        InlineKeyboardButton(text="♻️ Restore", callback_data=calls.SettingsNavigation(to="restore").pack())
         ],
         [
-        InlineKeyboardButton(text="✉️ Сообщения", callback_data=calls.MessagesPagination(page=0).pack()),
-        InlineKeyboardButton(text="⌨️ Команды", callback_data=calls.CustomCommandsPagination(page=0).pack()),
-        InlineKeyboardButton(text="🚀 Авто-выдача", callback_data=calls.AutoDeliveriesPagination(page=0).pack())
+        InlineKeyboardButton(text="✉️ Messages", callback_data=calls.MessagesPagination(page=0).pack()),
+        InlineKeyboardButton(text="⌨️ Commands", callback_data=calls.CustomCommandsPagination(page=0).pack()),
+        InlineKeyboardButton(text="🚀 Auto-delivery", callback_data=calls.AutoDeliveriesPagination(page=0).pack())
         ],
         [
-        InlineKeyboardButton(text="👀 Логгер", callback_data=calls.SettingsNavigation(to="logger").pack()),
-        InlineKeyboardButton(text="🔧 Прочее", callback_data=calls.SettingsNavigation(to="other").pack())
+        InlineKeyboardButton(text="👀 Logger", callback_data=calls.SettingsNavigation(to="logger").pack()),
+        InlineKeyboardButton(text="🔧 Other", callback_data=calls.SettingsNavigation(to="other").pack())
         ],
         [
-        InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.MenuNavigation(to="default").pack()),
-        InlineKeyboardButton(text="🔄️ Обновить", callback_data=calls.SettingsNavigation(to="default").pack())
+        InlineKeyboardButton(text="⬅️ Back", callback_data=calls.MenuNavigation(to="default").pack()),
+        InlineKeyboardButton(text="🔄️ Refresh", callback_data=calls.SettingsNavigation(to="default").pack())
         ]
     ]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)

@@ -20,34 +20,34 @@ _main_loop = None
 
 
 def init_main_loop(loop):
-    """Инициализирует основной loop событий."""
+    """Initializes the main event loop."""
     global _main_loop 
     _main_loop = loop
 
 
 def get_main_loop():
-    """Получает основной loop событий."""
+    """Gets the main event loop."""
     return _main_loop
 
 
 def shutdown():
-    """Завершает работу программы (завершает все задачи основного loop`а)."""
+    """Shuts down the program (cancels all tasks in the main loop)."""
     for task in asyncio.all_tasks(_main_loop):
         task.cancel()
     _main_loop.call_soon_threadsafe(_main_loop.stop)
 
 
 def restart():
-    """Перезагружает программу."""
+    """Restarts the program."""
     python = sys.executable
     os.execv(python, [python] + sys.argv)
 
 
 def set_title(title: str):
     """
-    Устанавливает заголовок консоли.
+    Sets the console title.
 
-    :param title: Заголовок.
+    :param title: Title.
     :type title: `str`
     """
     if sys.platform == "win32":
@@ -62,9 +62,9 @@ def set_title(title: str):
 
 def setup_logger(log_file: str = "logs/latest.log"):
     """
-    Настраивает логгер.
+    Sets up the logger.
 
-    :param log_file: Путь к файлу логов.
+    :param log_file: Path to log file.
     :type log_file: `str`
     """
     class ShortLevelFormatter(ColoredFormatter):
@@ -115,9 +115,9 @@ def setup_logger(log_file: str = "logs/latest.log"):
 
 def is_package_installed(requirement_string: str) -> bool:
     """
-    Проверяет, установлена ли библиотека.
+    Checks if a library is installed.
 
-    :param requirement_string: Строка пакета из файла зависимостей.
+    :param requirement_string: Package string from dependencies file.
     :type requirement_string: `str`
     """
     try:
@@ -129,9 +129,9 @@ def is_package_installed(requirement_string: str) -> bool:
 
 def install_requirements(requirements_path: str):
     """
-    Устанавливает зависимости из файла.
+    Installs dependencies from file.
 
-    :param requirements_path: Путь к файлу зависимостей.
+    :param requirements_path: Path to dependencies file.
     :type requirements_path: `str`
     """
     try:
@@ -149,11 +149,11 @@ def install_requirements(requirements_path: str):
         if missing_packages:
             subprocess.check_call([sys.executable, "-m", "pip", "install", *missing_packages])
     except:
-        logger.error(f"{Fore.LIGHTRED_EX}Не удалось установить зависимости из файла \"{requirements_path}\"")
+        logger.error(f"{Fore.LIGHTRED_EX}Failed to install dependencies from file \"{requirements_path}\"")
 
 
 def patch_requests():
-    """Патчит стандартные requests на кастомные с обработкой ошибок."""
+    """Patches standard requests with custom error handling."""
     _orig_request = requests.Session.request
     def _request(self, method, url, **kwargs):  # type: ignore
         for attempt in range(6):
@@ -178,7 +178,7 @@ def patch_requests():
                 delay = float(retry_hdr) if retry_hdr else min(120.0, 5.0 * (2 ** attempt))
             except Exception:
                 delay = min(120.0, 5.0 * (2 ** attempt))
-            delay += random.uniform(0.2, 0.8)  # небольшой джиттер
+            delay += random.uniform(0.2, 0.8)  # small jitter
             time.sleep(delay)
         return resp
     requests.Session.request = _request  # type: ignore
@@ -186,15 +186,15 @@ def patch_requests():
 
 def run_async_in_thread(func: callable, args: list = [], kwargs: dict = {}):
     """ 
-    Запускает функцию асинхронно в новом потоке и в новом лупе.
+    Runs a function asynchronously in a new thread and new loop.
 
-    :param func: Функция.
+    :param func: Function.
     :type func: `callable`
 
-    :param args: Аргументы функции.
+    :param args: Function arguments.
     :type args: `list`
 
-    :param kwargs: Аргументы функции по ключам.
+    :param kwargs: Function keyword arguments.
     :type kwargs: `dict`
     """
     def run():
@@ -210,15 +210,15 @@ def run_async_in_thread(func: callable, args: list = [], kwargs: dict = {}):
 
 def run_forever_in_thread(func: callable, args: list = [], kwargs: dict = {}):
     """ 
-    Запускает функцию в бесконечном лупе в новом потоке.
+    Runs a function in an infinite loop in a new thread.
 
-    :param func: Функция.
+    :param func: Function.
     :type func: `callable`
 
-    :param args: Аргументы функции.
+    :param args: Function arguments.
     :type args: `list`
 
-    :param kwargs: Аргументы функции по ключам.
+    :param kwargs: Function keyword arguments.
     :type kwargs: `dict`
     """
     def run():

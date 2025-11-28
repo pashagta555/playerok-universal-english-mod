@@ -10,10 +10,10 @@ from .. import callback_datas as calls
 def settings_delivs_text():
     auto_deliveries = sett.get("auto_deliveries")
     txt = textwrap.dedent(f"""
-        ⚙️ <b>Настройки</b> → 🚀 <b>Авто-выдача</b>
-        Всего <b>{len(auto_deliveries)}</b> настроенных товаров для авто-выдачи в конфиге
+        ⚙️ <b>Settings</b> → 🚀 <b>Auto-delivery</b>
+        Total <b>{len(auto_deliveries)}</b> configured items for auto-delivery in config
 
-        Перемещайтесь по разделам ниже. Нажмите на ID товара, чтобы перейти в редактирование его авто-выдачи ↓
+        Navigate through the sections below. Click on item ID to go to editing its auto-delivery ↓
     """)
     return txt
 
@@ -32,8 +32,8 @@ def settings_delivs_kb(page: int = 0):
     end_offset = start_offset + items_per_page
 
     for deliv in list(auto_deliveries)[start_offset:end_offset]:
-        keyphrases = ", ".join(deliv.get("keyphrases")) or "❌ Не задано"
-        message = "\n".join(deliv.get("message")) or "❌ Не задано"
+        keyphrases = ", ".join(deliv.get("keyphrases")) or "❌ Not set"
+        message = "\n".join(deliv.get("message")) or "❌ Not set"
         rows.append([InlineKeyboardButton(text=f"{keyphrases[:32] + ('...' if len(keyphrases) > 32 else '')} → {message}", callback_data=calls.AutoDeliveryPage(index=auto_deliveries.index(deliv)).pack())])
 
     if total_pages > 1:
@@ -48,10 +48,10 @@ def settings_delivs_kb(page: int = 0):
         buttons_row.append(btn_next)
         rows.append(buttons_row)
 
-    rows.append([InlineKeyboardButton(text="➕🚀 Добавить", callback_data="enter_new_auto_delivery_keyphrases")])
+    rows.append([InlineKeyboardButton(text="➕🚀 Add", callback_data="enter_new_auto_delivery_keyphrases")])
     rows.append([
-        InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.SettingsNavigation(to="default").pack()),
-        InlineKeyboardButton(text="🔄️ Обновить", callback_data=calls.AutoDeliveriesPagination(page=page).pack())
+        InlineKeyboardButton(text="⬅️ Back", callback_data=calls.SettingsNavigation(to="default").pack()),
+        InlineKeyboardButton(text="🔄️ Refresh", callback_data=calls.AutoDeliveriesPagination(page=page).pack())
     ])
 
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
@@ -60,7 +60,7 @@ def settings_delivs_kb(page: int = 0):
 
 def settings_deliv_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        ⚙️ <b>Настройки</b> → ⌨️ <b>Авто-выдача</b>
+        ⚙️ <b>Settings</b> → 🚀 <b>Auto-delivery</b>
         \n{placeholder}
     """)
     return txt
@@ -68,7 +68,7 @@ def settings_deliv_float_text(placeholder: str):
 
 def settings_new_deliv_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        🚀 <b>Добавление пользовательской авто-выдачи</b>
+        🚀 <b>Adding custom auto-delivery</b>
         \n{placeholder}
     """)
     return txt

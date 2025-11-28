@@ -21,13 +21,13 @@ DATA = [INITIALIZED_USERS]
 
 def get_json(path: str, default: dict | list) -> dict:
     """
-    Получает содержимое файла данных.
-    Создаёт файл данных, если его нет.
+    Gets the contents of a data file.
+    Creates the data file if it doesn't exist.
 
-    :param path: Путь к json файлу.
+    :param path: Path to json file.
     :type path: `str`
 
-    :param default: Стандартная структура файла.
+    :param default: Default file structure.
     :type default: `dict`
     """
     folder_path = os.path.dirname(path)
@@ -46,12 +46,12 @@ def get_json(path: str, default: dict | list) -> dict:
 
 def set_json(path: str, new: dict):
     """
-    Устанавливает новые данные в файл данных.
+    Sets new data in the data file.
 
-    :param path: Путь к json файлу.
+    :param path: Path to json file.
     :type path: `str`
 
-    :param new: Новые данные.
+    :param new: New data.
     :type new: `dict`
     """
     with open(path, 'w', encoding='utf-8') as f:

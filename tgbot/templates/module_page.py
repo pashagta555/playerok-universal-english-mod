@@ -9,33 +9,33 @@ from .. import callback_datas as calls
 
 def module_page_text(module_uuid: UUID):
     module: Module = get_module_by_uuid(module_uuid)
-    if not module: raise Exception("Не удалось найти модуль")
+    if not module: raise Exception("Failed to find module")
     txt = textwrap.dedent(f"""
-        🔧 <b>Управление модулем</b>
+        🔧 <b>Module management</b>
 
-        <b>Модуль</b> <code>{module.meta.name}</code>:          
+        <b>Module</b> <code>{module.meta.name}</code>:          
         ┣ UUID: <b>{module.uuid}</b>
-        ┣ Версия: <b>{module.meta.version}</b>
-        ┣ Описание: <blockquote>{module.meta.description}</blockquote>
-        ┣ Авторы: <b>{module.meta.authors}</b>
-        ┗ Ссылки: <b>{module.meta.links}</b>
+        ┣ Version: <b>{module.meta.version}</b>
+        ┣ Description: <blockquote>{module.meta.description}</blockquote>
+        ┣ Authors: <b>{module.meta.authors}</b>
+        ┗ Links: <b>{module.meta.links}</b>
 
-        🔌 <b>Состояние:</b> {'🟢 Включен' if module.enabled else '🔴 Выключен'}
+        🔌 <b>Status:</b> {'🟢 Enabled' if module.enabled else '🔴 Disabled'}
 
-        Выберите действие для управления ↓
+        Select action for management ↓
     """)
     return txt
 
 
 def module_page_kb(module_uuid: UUID, page: int = 0):
     module: Module = get_module_by_uuid(module_uuid)
-    if not module: raise Exception("Не удалось найти модуль")
+    if not module: raise Exception("Failed to find module")
     rows = [
-        [InlineKeyboardButton(text="🔴 Выключить модуль" if module.enabled else "🟢 Включить модуль", callback_data="switch_module_enabled")],
-        [InlineKeyboardButton(text="♻️ Перезагрузить", callback_data="reload_module")],
+        [InlineKeyboardButton(text="🔴 Disable module" if module.enabled else "🟢 Enable module", callback_data="switch_module_enabled")],
+        [InlineKeyboardButton(text="♻️ Reload", callback_data="reload_module")],
         [
-        InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.ModulesPagination(page=page).pack()),
-        InlineKeyboardButton(text="🔄️ Обновить", callback_data=calls.ModulePage(uuid=module_uuid).pack())
+        InlineKeyboardButton(text="⬅️ Back", callback_data=calls.ModulesPagination(page=page).pack()),
+        InlineKeyboardButton(text="🔄️ Refresh", callback_data=calls.ModulePage(uuid=module_uuid).pack())
         ]
     ]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
@@ -44,7 +44,7 @@ def module_page_kb(module_uuid: UUID, page: int = 0):
 
 def module_page_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        🔧 <b>Управление модулем</b>
+        🔧 <b>Module management</b>
         \n{placeholder}
     """)
     return txt

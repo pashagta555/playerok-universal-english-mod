@@ -17,7 +17,7 @@ async def handler_waiting_for_new_included_restore_item_keyphrases(message: type
     try: 
         await state.set_state(None)
         if len(message.text.strip()) <= 0:
-            raise Exception("❌ Слишком короткое значение")
+            raise Exception("❌ Value is too short")
         
         keyphrases = [phrase.strip() for phrase in message.text.strip().split(",") if len(phrase.strip()) > 0]
         auto_restore_items = sett.get("auto_restore_items")
@@ -29,7 +29,7 @@ async def handler_waiting_for_new_included_restore_item_keyphrases(message: type
         await throw_float_message(
             state=state,
             message=message,
-            text=templ.settings_new_restore_included_float_text(f"✅ Предмет с ключевыми фразами <code>{'</code>, <code>'.join(keyphrases)}</code> успешно включён в восстановление"),
+            text=templ.settings_new_restore_included_float_text(f"✅ Item with keyphrases <code>{'</code>, <code>'.join(keyphrases)}</code> was successfully included in restore"),
             reply_markup=templ.back_kb(calls.IncludedRestoreItemsPagination(page=last_page).pack())
         )
     except Exception as e:
@@ -93,7 +93,7 @@ async def handler_waiting_for_new_excluded_restore_item_keyphrases(message: type
     try: 
         await state.set_state(None)
         if len(message.text.strip()) <= 0:
-            raise Exception("❌ Слишком короткое значение")
+            raise Exception("❌ Value is too short")
         
         keyphrases = [phrase.strip() for phrase in message.text.strip().split(",") if len(phrase.strip()) > 0]
         auto_restore_items = sett.get("auto_restore_items")

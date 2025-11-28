@@ -10,10 +10,10 @@ from .. import callback_datas as calls
 def settings_restore_included_text():
     included_restore_items = sett.get("auto_restore_items").get("included")
     txt = textwrap.dedent(f"""
-        <b>♻️ Восстановление → ➕ Включенные</b>
-        Всего <b>{len(included_restore_items)}</b> включенных предметов для авто-восстановления
+        <b>♻️ Restore → ➕ Included</b>
+        Total <b>{len(included_restore_items)}</b> included items for auto-restore
 
-        Перемещайтесь по разделам ниже. Нажмите на корзину справа от ключевых фраз, чтобы удалить товар из включенных ↓
+        Navigate through the sections below. Click on the trash icon to the right of keyphrases to remove item from included ↓
     """)
     return txt
 
@@ -32,7 +32,7 @@ def settings_restore_included_kb(page: int = 0):
     end_offset = start_offset + items_per_page
 
     for keyphrases in list(included_restore_items)[start_offset:end_offset]:
-        keyphrases_frmtd = ", ".join(keyphrases) or "❌ Не указаны"
+        keyphrases_frmtd = ", ".join(keyphrases) or "❌ Not specified"
         rows.append([
             InlineKeyboardButton(text=f"{keyphrases_frmtd}", callback_data="123"),
             InlineKeyboardButton(text=f"🗑️", callback_data=calls.DeleteIncludedRestoreItem(index=included_restore_items.index(keyphrases)).pack()),
@@ -51,12 +51,12 @@ def settings_restore_included_kb(page: int = 0):
         rows.append(buttons_row)
 
     rows.append([
-        InlineKeyboardButton(text="➕ Добавить", callback_data="enter_new_included_restore_item_keyphrases"),
-        InlineKeyboardButton(text="➕📄 Добавить много", callback_data="send_new_included_restore_items_keyphrases_file"),
+        InlineKeyboardButton(text="➕ Add", callback_data="enter_new_included_restore_item_keyphrases"),
+        InlineKeyboardButton(text="➕📄 Add many", callback_data="send_new_included_restore_items_keyphrases_file"),
     ])
     rows.append([
-        InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.SettingsNavigation(to="restore").pack()),
-        InlineKeyboardButton(text="🔄️ Обновить", callback_data=calls.IncludedRestoreItemsPagination(page=page).pack())
+        InlineKeyboardButton(text="⬅️ Back", callback_data=calls.SettingsNavigation(to="restore").pack()),
+        InlineKeyboardButton(text="🔄️ Refresh", callback_data=calls.IncludedRestoreItemsPagination(page=page).pack())
     ])
 
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
@@ -65,7 +65,7 @@ def settings_restore_included_kb(page: int = 0):
 
 def settings_restore_included_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>♻️ Восстановление → ➕ Включенные</b>
+        <b>♻️ Restore → ➕ Included</b>
         \n{placeholder}
     """)
     return txt
@@ -73,7 +73,7 @@ def settings_restore_included_float_text(placeholder: str):
 
 def settings_new_restore_included_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>♻️➕ Добавление нового включенного предмета</b>
+        <b>♻️➕ Adding new included item</b>
         \n{placeholder}
     """)
     return txt

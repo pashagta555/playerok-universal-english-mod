@@ -32,7 +32,7 @@ async def handler_waiting_for_token(message: types.Message, state: FSMContext):
         await throw_float_message(
             state=state,
             message=message,
-            text=templ.settings_auth_float_text(f"✅ <b>Токен</b> был успешно изменён на <b>{message.text.strip()}</b>"),
+            text=templ.settings_auth_float_text(f"✅ <b>Token</b> was successfully changed to <b>{message.text.strip()}</b>"),
             reply_markup=templ.back_kb(calls.SettingsNavigation(to="auth").pack())
         )
     except Exception as e:
@@ -49,7 +49,7 @@ async def handler_waiting_for_user_agent(message: types.Message, state: FSMConte
     try:
         await state.set_state(None)
         if len(message.text.strip()) <= 3:
-            raise Exception("❌ Слишком короткое значение")
+            raise Exception("❌ Value is too short")
 
         config = sett.get("config")
         config["playerok"]["api"]["user_agent"] = message.text.strip()
@@ -58,7 +58,7 @@ async def handler_waiting_for_user_agent(message: types.Message, state: FSMConte
         await throw_float_message(
             state=state,
             message=message,
-            text=templ.settings_auth_float_text(f"✅ <b>user_agent</b> был успешно изменён на <b>{message.text.strip()}</b>"),
+            text=templ.settings_auth_float_text(f"✅ <b>user_agent</b> was successfully changed to <b>{message.text.strip()}</b>"),
             reply_markup=templ.back_kb(calls.SettingsNavigation(to="auth").pack())
         )
     except Exception as e:
@@ -75,9 +75,9 @@ async def handler_waiting_for_proxy(message: types.Message, state: FSMContext):
     try:
         await state.set_state(None)
         if len(message.text.strip()) <= 3:
-            raise Exception("❌ Слишком короткое значение")
+            raise Exception("❌ Value is too short")
         if not is_eng_str(message.text.strip()):
-            raise Exception("❌ Некорректный прокси")
+            raise Exception("❌ Invalid proxy")
 
         config = sett.get("config")
         config["playerok"]["api"]["proxy"] = message.text.strip()
@@ -86,7 +86,7 @@ async def handler_waiting_for_proxy(message: types.Message, state: FSMContext):
         await throw_float_message(
             state=state,
             message=message,
-            text=templ.settings_auth_float_text(f"✅ <b>Прокси</b> был успешно изменён на <b>{message.text.strip()}</b>"),
+            text=templ.settings_auth_float_text(f"✅ <b>Proxy</b> was successfully changed to <b>{message.text.strip()}</b>"),
             reply_markup=templ.back_kb(calls.SettingsNavigation(to="conn").pack())
         )
     except Exception as e:
@@ -103,9 +103,9 @@ async def handler_waiting_for_requests_timeout(message: types.Message, state: FS
     try:
         await state.set_state(None)
         if not message.text.strip().isdigit():
-            raise Exception("❌ Вы должны ввести числовое значение")       
+            raise Exception("❌ You must enter a numeric value")       
         if int(message.text.strip()) < 0:
-            raise Exception("❌ Слишком низкое значение")
+            raise Exception("❌ Value is too low")
 
         config = sett.get("config")
         config["playerok"]["api"]["requests_timeout"] = int(message.text.strip())
@@ -114,7 +114,7 @@ async def handler_waiting_for_requests_timeout(message: types.Message, state: FS
         await throw_float_message(
             state=state,
             message=message,
-            text=templ.settings_conn_float_text(f"✅ <b>Таймаут запросов</b> был успешно изменён на <b>{message.text.strip()}</b>"),
+            text=templ.settings_conn_float_text(f"✅ <b>Request timeout</b> was successfully changed to <b>{message.text.strip()}</b>"),
             reply_markup=templ.back_kb(calls.SettingsNavigation(to="conn").pack())
         )
     except Exception as e:
@@ -131,9 +131,9 @@ async def handler_waiting_for_listener_requests_delay(message: types.Message, st
     try:
         await state.set_state(None)
         if not message.text.strip().isdigit():
-            raise Exception("❌ Вы должны ввести числовое значение")
+            raise Exception("❌ You must enter a numeric value")
         if int(message.text.strip()) < 0:
-            raise Exception("❌ Слишком низкое значение")
+            raise Exception("❌ Value is too low")
 
         config = sett.get("config")
         config["playerok"]["api"]["listener_requests_delay"] = int(message.text.strip())
@@ -142,7 +142,7 @@ async def handler_waiting_for_listener_requests_delay(message: types.Message, st
         await throw_float_message(
             state=state,
             message=message,
-            text=templ.settings_conn_float_text(f"✅ <b>Периодичность запросов</b> была успешна изменена на <b>{message.text.strip()}</b>"),
+            text=templ.settings_conn_float_text(f"✅ <b>Request frequency</b> was successfully changed to <b>{message.text.strip()}</b>"),
             reply_markup=templ.back_kb(calls.SettingsNavigation(to="conn").pack())
         )
     except Exception as e:
@@ -159,7 +159,7 @@ async def handler_waiting_for_tg_logging_chat_id(message: types.Message, state: 
     try:
         await state.set_state(None) 
         if len(message.text.strip()) < 0:
-            raise Exception("❌ Слишком низкое значение")
+            raise Exception("❌ Value is too low")
         
         if message.text.strip().isdigit(): 
             chat_id = "-100" + str(message.text.strip()).replace("-100", "")
@@ -173,7 +173,7 @@ async def handler_waiting_for_tg_logging_chat_id(message: types.Message, state: 
         await throw_float_message(
             state=state,
             message=message,
-            text=templ.settings_logger_float_text(f"✅ <b>ID чата для логов</b> было успешно изменено на <b>{chat_id}</b>"),
+            text=templ.settings_logger_float_text(f"✅ <b>Chat ID for logs</b> was successfully changed to <b>{chat_id}</b>"),
             reply_markup=templ.back_kb(calls.SettingsNavigation(to="logger").pack())
         )
     except Exception as e:
@@ -200,7 +200,7 @@ async def handler_waiting_for_watermark_value(message: types.Message, state: FSM
         await throw_float_message(
             state=state,
             message=message,
-            text=templ.settings_other_float_text(f"✅ <b>Водяной знак сообщений</b> был успешно изменён на <b>{message.text.strip()}</b>"),
+            text=templ.settings_other_float_text(f"✅ <b>Message watermark</b> was successfully changed to <b>{message.text.strip()}</b>"),
             reply_markup=templ.back_kb(calls.SettingsNavigation(to="other").pack())
         )
     except Exception as e:

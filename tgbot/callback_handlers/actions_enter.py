@@ -18,11 +18,11 @@ router = Router()
 async def callback_enter_token(callback: CallbackQuery, state: FSMContext):
     await state.set_state(states.SettingsStates.waiting_for_token)
     config = sett.get("config")
-    golden_key = config["playerok"]["api"]["token"] or "❌ Не задано"
+    golden_key = config["playerok"]["api"]["token"] or "❌ Not set"
     await throw_float_message(
         state=state, 
         message=callback.message, 
-        text=templ.settings_auth_float_text(f"🔐 Введите новый <b>токен</b> вашего аккаунта ↓\n┗ Текущее: <code>{golden_key}</code>"), 
+        text=templ.settings_auth_float_text(f"🔐 Enter new <b>token</b> for your account ↓\n┗ Current: <code>{golden_key}</code>"), 
         reply_markup=templ.back_kb(calls.SettingsNavigation(to="auth").pack())
     )
 
@@ -31,11 +31,11 @@ async def callback_enter_token(callback: CallbackQuery, state: FSMContext):
 async def callback_enter_user_agent(callback: CallbackQuery, state: FSMContext):
     await state.set_state(states.SettingsStates.waiting_for_user_agent)
     config = sett.get("config")
-    user_agent = config["playerok"]["api"]["user_agent"] or "❌ Не задано"
+    user_agent = config["playerok"]["api"]["user_agent"] or "❌ Not set"
     await throw_float_message(
         state=state, 
         message=callback.message, 
-        text=templ.settings_auth_float_text(f"🎩 Введите новый <b>user_agent</b> вашего браузера ↓\n┗ Текущее: <code>{user_agent}</code>"), 
+        text=templ.settings_auth_float_text(f"🎩 Enter new <b>user_agent</b> for your browser ↓\n┗ Current: <code>{user_agent}</code>"), 
         reply_markup=templ.back_kb(calls.SettingsNavigation(to="auth").pack())
     )
 

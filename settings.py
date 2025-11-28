@@ -80,62 +80,62 @@ MESSAGES = SettingsFile(
         "first_message": {
             "enabled": True,
             "text": [
-                "👋 Привет, {username}, я бот-помощник 𝗣𝗹𝗮𝘆𝗲𝗿𝗼𝗸 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗮𝗹",
+                "👋 Hello, {username}, I'm the 𝗣𝗹𝗮𝘆𝗲𝗿𝗼𝗸 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗮𝗹 bot assistant",
                 "",
-                "💡 Если вы хотите поговорить с продавцом, напишите команду !продавец, чтобы я пригласил его в этот диалог",
+                "💡 If you want to talk to the seller, write the command !seller so I can invite them to this dialog",
                 "",
-                "Чтобы узнать все мои команды, напишите !команды"
+                "To find out all my commands, write !commands"
             ]
         },
         "cmd_error": {
             "enabled": True,
             "text": [
-                "❌ При вводе команды произошла ошибка: {error}"
+                "❌ An error occurred when entering the command: {error}"
             ]
         },
         "cmd_commands": {
             "enabled": True,
             "text": [
-                "🕹️ Основные команды:",
-                "・ !продавец — уведомить и позвать продавца в этот чат"
+                "🕹️ Main commands:",
+                "・ !seller — notify and call the seller to this chat"
             ]
         },
         "cmd_seller": {
             "enabled": True,
             "text": [
-                "💬 Продавец был вызван в этот чат. Ожидайте, пока он подключиться к диалогу..."
+                "💬 The seller has been called to this chat. Please wait while they connect to the dialog..."
             ]
         },
         "new_deal": {
             "enabled": False,
             "text": [
-                "📋 Спасибо за покупку «{deal_item_name}»",
+                "📋 Thank you for purchasing «{deal_item_name}»",
                 ""
-                "Продавца сейчас может не быть на месте, чтобы позвать его, используйте команду !продавец."
+                "The seller may not be available right now, to call them, use the !seller command."
             ]
         },
         "deal_pending": {
             "enabled": False,
             "text": [
-                "⌛ Отправьте нужные данные, чтобы я смог выполнить ваш заказ"
+                "⌛ Send the necessary data so I can fulfill your order"
             ]
         },
         "deal_sent": {
             "enabled": False,
             "text": [
-                "✅ Я подтвердил выполнение вашего заказа! Если вы не получили купленный товар - напишите это в чате"
+                "✅ I've confirmed the completion of your order! If you didn't receive the purchased item - write about it in the chat"
             ]
         },
         "deal_confirmed": {
             "enabled": False,
             "text": [
-                "🌟 Спасибо за успешную сделку. Буду рад, если оставите отзыв. Жду вас в своём магазине в следующий раз, удачи!"
+                "🌟 Thank you for a successful deal. I'd be happy if you leave a review. Looking forward to seeing you in my store next time, good luck!"
             ]
         },
         "deal_refunded": {
             "enabled": False,
             "text": [
-                "📦 Заказ был возвращён. Надеюсь эта сделка не принесла вам неудобств. Жду вас в своём магазине в следующий раз, удачи!"
+                "📦 The order was refunded. I hope this deal didn't cause you any inconvenience. Looking forward to seeing you in my store next time, good luck!"
             ]
         }
     }
@@ -166,15 +166,15 @@ DATA = [CONFIG, MESSAGES, CUSTOM_COMMANDS, AUTO_DELIVERIES, AUTO_RESTORE_ITEMS]
 
 def validate_config(config, default):
     """
-    Проверяет структуру конфига на соответствие стандартному шаблону.
+    Checks the config structure against the default template.
 
-    :param config: Текущий конфиг.
+    :param config: Current config.
     :type config: `dict`
 
-    :param default: Стандартный шаблон конфига.
+    :param default: Default config template.
     :type default: `dict`
 
-    :return: True если структура валидна, иначе False.
+    :return: True if structure is valid, otherwise False.
     :rtype: bool
     """
     for key, value in default.items():
@@ -190,16 +190,16 @@ def validate_config(config, default):
 
 def restore_config(config: dict, default: dict):
     """
-    Восстанавливает недостающие параметры в конфиге из стандартного шаблона.
-    И удаляет параметры из конфига, которых нету в стандартном шаблоне.
+    Restores missing parameters in config from the default template.
+    And removes parameters from config that are not in the default template.
 
-    :param config: Текущий конфиг.
+    :param config: Current config.
     :type config: `dict`
 
-    :param default: Стандартный шаблон конфига.
+    :param default: Default config template.
     :type default: `dict`
 
-    :return: Восстановленный конфиг.
+    :return: Restored config.
     :rtype: `dict`
     """
     config = copy.deepcopy(config)
@@ -220,17 +220,17 @@ def restore_config(config: dict, default: dict):
 
 def get_json(path: str, default: dict, need_restore: bool = True) -> dict:
     """
-    Получает данные файла настроек.
-    Создаёт файл настроек, если его нет.
-    Добавляет новые данные, если такие есть.
+    Gets settings file data.
+    Creates settings file if it doesn't exist.
+    Adds new data if any.
 
-    :param path: Путь к json файлу.
+    :param path: Path to json file.
     :type path: `str`
 
-    :param default: Стандартный шаблон файла.
+    :param default: Default file template.
     :type default: `dict`
 
-    :param need_restore: Нужно ли сделать проверку на целостность конфига.
+    :param need_restore: Whether to check config integrity.
     :type need_restore: `bool`
     """
     folder_path = os.path.dirname(path)
@@ -255,12 +255,12 @@ def get_json(path: str, default: dict, need_restore: bool = True) -> dict:
 
 def set_json(path: str, new: dict):
     """
-    Устанавливает новые данные в файл настроек.
+    Sets new data in the settings file.
 
-    :param path: Путь к json файлу.
+    :param path: Path to json file.
     :type path: `str`
 
-    :param new: Новые данные.
+    :param new: New data.
     :type new: `dict`
     """
     with open(path, 'w', encoding='utf-8') as f:

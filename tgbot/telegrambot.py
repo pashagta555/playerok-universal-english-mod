@@ -50,7 +50,7 @@ class TelegramBot:
 
     async def _set_main_menu(self):
         try:
-            main_menu_commands = [BotCommand(command="/start", description="🏠 Главное меню")]
+            main_menu_commands = [BotCommand(command="/start", description="🏠 Main menu")]
             await self.bot.set_my_commands(main_menu_commands)
         except:
             pass
@@ -58,9 +58,9 @@ class TelegramBot:
     async def _set_short_description(self):
         try:
             short_description = textwrap.dedent(f"""
-                Playerok Universal — Современный бот-помощник для Playerok 🟦
-                ┕ Канал — @alexeyproduction
-                ┕ Бот — @alexey_production_bot
+                Playerok Universal — Modern bot assistant for Playerok 🟦
+                ┕ Channel — @alexeyproduction
+                ┕ Bot — @alexey_production_bot
             """)
             await self.bot.set_my_short_description(short_description=short_description)
         except:
@@ -69,19 +69,19 @@ class TelegramBot:
     async def _set_description(self):
         try:
             description = textwrap.dedent(f"""
-                Playerok Universal — Бесплатный современный бот-помощник для Playerok 🟦
+                Playerok Universal — Free modern bot assistant for Playerok 🟦
                                         
-                🟢 Вечный онлайн
-                ♻️ Авто-восстановление товаров
-                📦 Авто-выдача
-                🕹️ Команды
-                💬 Вызов продавца в чат
+                🟢 Always online
+                ♻️ Auto-restore items
+                📦 Auto-delivery
+                🕹️ Commands
+                💬 Call seller to chat
                                         
-                ⬇️ Скачать бота: https://github.com/alleexxeeyy/playerok-universal
+                ⬇️ Download bot: https://github.com/alleexxeeyy/playerok-universal
                 
-                📣 Канал — @alexeyproduction
-                🤖 Бот — @alexey_production_bot
-                🧑‍💻 Автор — @alleexxeeyy
+                📣 Channel — @alexeyproduction
+                🤖 Bot — @alexey_production_bot
+                🧑‍💻 Author — @alleexxeeyy
             """)
             await self.bot.set_my_description(description=description)
         except:
@@ -98,18 +98,18 @@ class TelegramBot:
         await call_bot_event("ON_TELEGRAM_BOT_INIT", [self])
         
         me = await self.bot.get_me()
-        logger.info(f"{ACCENT_COLOR}Telegram бот {Fore.LIGHTCYAN_EX}@{me.username} {ACCENT_COLOR}запущен и активен")
+        logger.info(f"{ACCENT_COLOR}Telegram bot {Fore.LIGHTCYAN_EX}@{me.username} {ACCENT_COLOR}started and active")
         await self.dp.start_polling(self.bot, skip_updates=True, handle_signals=False)
         
 
     async def call_seller(self, calling_name: str, chat_id: int | str):
         """
-        Пишет админу в Telegram с просьбой о помощи от заказчика.
+        Writes to admin in Telegram with a request for help from the customer.
                 
-        :param calling_name: Никнейм покупателя.
+        :param calling_name: Buyer's nickname.
         :type calling_name: `str`
 
-        :param chat_id: ID чата с заказчиком.
+        :param chat_id: Chat ID with customer.
         :type chat_id: `int` or `str`
         """
         config = sett.get("config")
@@ -123,12 +123,12 @@ class TelegramBot:
         
     async def log_event(self, text: str, kb: InlineKeyboardMarkup | None = None):
         """
-        Логирует событие в чат TG бота.
+        Logs an event to the TG bot chat.
                 
-        :param text: Текст лога.
+        :param text: Log text.
         :type text: `str`
                 
-        :param kb: Клавиатура с кнопками.
+        :param kb: Keyboard with buttons.
         :type kb: `aiogram.types.InlineKeyboardMarkup` or `None`
         """
         config = sett.get("config")
@@ -144,7 +144,7 @@ class TelegramBot:
         else:
             await self.bot.send_message(
                 chat_id=chat_id, 
-                text=f'{text}\n<span class="tg-spoiler">Переключите чат логов на чат с ботом, чтобы отображалась меню с действиями</span>', 
+                text=f'{text}\n<span class="tg-spoiler">Switch log chat to bot chat to display action menu</span>', 
                 reply_markup=None, 
                 parse_mode="HTML"
             )

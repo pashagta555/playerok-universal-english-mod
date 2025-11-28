@@ -8,28 +8,28 @@ from .. import callback_datas as calls
 
 def settings_comm_page_text(command: str):
     custom_commands = sett.get("custom_commands")
-    command_text = "\n".join(custom_commands[command]) or "❌ Не задано"
+    command_text = "\n".join(custom_commands[command]) or "❌ Not set"
     txt = textwrap.dedent(f"""
-        ✏️ <b>Редактирование пользовательской команды</b>
+        ✏️ <b>Editing custom command</b>
 
-        ⌨️ <b>Команда:</b> {command}
-        💬 <b>Ответ:</b> 
+        ⌨️ <b>Command:</b> {command}
+        💬 <b>Response:</b> 
         <blockquote>{command_text}</blockquote>
 
-        Выберите параметр для изменения ↓
+        Select parameter to change ↓
     """)
     return txt
 
 
 def settings_comm_page_kb(command: str, page: int = 0):
     custom_commands = sett.get("custom_commands")
-    command_text = "\n".join(custom_commands[command]) or "❌ Не задано"
+    command_text = "\n".join(custom_commands[command]) or "❌ Not set"
     rows = [
-        [InlineKeyboardButton(text=f"✍️ Ответ: {command_text}", callback_data="enter_custom_command_answer")],
-        [InlineKeyboardButton(text="🗑️ Удалить команду", callback_data="confirm_deleting_custom_command")],
+        [InlineKeyboardButton(text=f"✍️ Response: {command_text}", callback_data="enter_custom_command_answer")],
+        [InlineKeyboardButton(text="🗑️ Delete command", callback_data="confirm_deleting_custom_command")],
         [
-        InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.CustomCommandsPagination(page=page).pack()),
-        InlineKeyboardButton(text="🔄️ Обновить", callback_data=calls.CustomCommandPage(command=command).pack())
+        InlineKeyboardButton(text="⬅️ Back", callback_data=calls.CustomCommandsPagination(page=page).pack()),
+        InlineKeyboardButton(text="🔄️ Refresh", callback_data=calls.CustomCommandPage(command=command).pack())
         ]
     ]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
@@ -38,7 +38,7 @@ def settings_comm_page_kb(command: str, page: int = 0):
 
 def settings_comm_page_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        ✏️ <b>Редактирование пользовательской команды</b>
+        ✏️ <b>Editing custom command</b>
         \n{placeholder}
     """)
     return txt

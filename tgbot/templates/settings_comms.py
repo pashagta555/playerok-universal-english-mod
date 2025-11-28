@@ -10,10 +10,10 @@ from .. import callback_datas as calls
 def settings_comms_text():
     custom_commands = sett.get("custom_commands")
     txt = textwrap.dedent(f"""
-        ⚙️ <b>Настройки</b> → ⌨️ <b>Пользовательские команды</b>
-        Всего <b>{len(custom_commands.keys())}</b> пользовательских команд в конфиге
+        ⚙️ <b>Settings</b> → ⌨️ <b>Custom commands</b>
+        Total <b>{len(custom_commands.keys())}</b> custom commands in config
 
-        Перемещайтесь по разделам ниже. Нажмите на команду, чтобы перейти в её редактирование ↓
+        Navigate through the sections below. Click on a command to go to its editing ↓
     """)
     return txt
 
@@ -48,10 +48,10 @@ def settings_comms_kb(page: int = 0):
         buttons_row.append(btn_next)
         rows.append(buttons_row)
 
-    rows.append([InlineKeyboardButton(text="➕⌨️ Добавить",callback_data="enter_new_custom_command")])
+    rows.append([InlineKeyboardButton(text="➕⌨️ Add",callback_data="enter_new_custom_command")])
     rows.append([
-        InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.SettingsNavigation(to="default").pack()),
-        InlineKeyboardButton(text="🔄️ Обновить", callback_data=calls.CustomCommandsPagination(page=page).pack())
+        InlineKeyboardButton(text="⬅️ Back", callback_data=calls.SettingsNavigation(to="default").pack()),
+        InlineKeyboardButton(text="🔄️ Refresh", callback_data=calls.CustomCommandsPagination(page=page).pack())
     ])
     
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
@@ -60,7 +60,7 @@ def settings_comms_kb(page: int = 0):
 
 def settings_comms_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        ⚙️ <b>Настройки</b> → ⌨️ <b>Пользовательские команды</b>
+        ⚙️ <b>Settings</b> → ⌨️ <b>Custom commands</b>
         \n{placeholder}
     """)
     return txt
@@ -68,7 +68,7 @@ def settings_comms_float_text(placeholder: str):
 
 def settings_new_comm_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        ⚙️ <b>Добавление пользовательской команды</b>
+        ⚙️ <b>Adding custom command</b>
         \n{placeholder}
     """)
     return txt

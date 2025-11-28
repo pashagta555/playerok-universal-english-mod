@@ -8,48 +8,48 @@ from .. import callback_datas as calls
 
 def settings_other_text():
     config = sett.get("config")
-    switch_read_chat_enabled = "🟢 Включено" if config["playerok"]["read_chat"]["enabled"] else "🔴 Выключено"
-    auto_complete_deals_enabled = "🟢 Включено" if config["playerok"]["auto_complete_deals"]["enabled"] else "🔴 Выключено"
-    custom_commands_enabled = "🟢 Включено" if config["playerok"]["custom_commands"]["enabled"] else "🔴 Выключено"
-    auto_deliveries_enabled = "🟢 Включено" if config["playerok"]["auto_deliveries"]["enabled"] else "🔴 Выключено"
-    watermark_enabled = "🟢 Включено" if config["playerok"]["watermark"]["enabled"] else "🔴 Выключено"
-    watermark_value = config["playerok"]["watermark"]["value"] or "❌ Не задано"
+    switch_read_chat_enabled = "🟢 Enabled" if config["playerok"]["read_chat"]["enabled"] else "🔴 Disabled"
+    auto_complete_deals_enabled = "🟢 Enabled" if config["playerok"]["auto_complete_deals"]["enabled"] else "🔴 Disabled"
+    custom_commands_enabled = "🟢 Enabled" if config["playerok"]["custom_commands"]["enabled"] else "🔴 Disabled"
+    auto_deliveries_enabled = "🟢 Enabled" if config["playerok"]["auto_deliveries"]["enabled"] else "🔴 Disabled"
+    watermark_enabled = "🟢 Enabled" if config["playerok"]["watermark"]["enabled"] else "🔴 Disabled"
+    watermark_value = config["playerok"]["watermark"]["value"] or "❌ Not set"
     txt = textwrap.dedent(f"""
-        ⚙️ <b>Настройки → ⌨️ Прочее</b>
+        ⚙️ <b>Settings → 🔧 Other</b>
 
-        👀 <b>Чтение чата перед отправкой сообщения:</b> {switch_read_chat_enabled}
-        ☑️ <b>Авто-подтверждение заказов:</b> {auto_complete_deals_enabled}
-        ⌨️ <b>Пользовательские команды:</b> {custom_commands_enabled}
-        🚀 <b>Авто-выдача:</b> {auto_deliveries_enabled}
-        ©️ <b>Водяной знак под сообщениями:</b> {watermark_enabled}
-        ✍️©️ <b>Водяной знак:</b> {watermark_value}
+        👀 <b>Read chat before sending message:</b> {switch_read_chat_enabled}
+        ☑️ <b>Auto-confirm orders:</b> {auto_complete_deals_enabled}
+        ⌨️ <b>Custom commands:</b> {custom_commands_enabled}
+        🚀 <b>Auto-delivery:</b> {auto_deliveries_enabled}
+        ©️ <b>Watermark under messages:</b> {watermark_enabled}
+        ✍️©️ <b>Watermark:</b> {watermark_value}
 
-        <b>Что такое автоматические ответы на отзывы?</b>
-        Когда покупатель будет оставлять отзыв, бот будет автоматически отвечать на него. В ответе на отзыв будут написаны детали заказа.
+        <b>What are automatic review responses?</b>
+        When a buyer leaves a review, the bot will automatically respond to it. The review response will contain order details.
 
-        Выберите параметр для изменения ↓
+        Select parameter to change ↓
     """)
     return txt
 
 
 def settings_other_kb():
     config = sett.get("config")
-    switch_read_chat_enabled = "🟢 Включено" if config["playerok"]["read_chat"]["enabled"] else "🔴 Выключено"
-    auto_complete_deals_enabled = "🟢 Включено" if config["playerok"]["auto_complete_deals"]["enabled"] else "🔴 Выключено"
-    custom_commands_enabled = "🟢 Включено" if config["playerok"]["custom_commands"]["enabled"] else "🔴 Выключено"
-    auto_deliveries_enabled = "🟢 Включено" if config["playerok"]["auto_deliveries"]["enabled"] else "🔴 Выключено"
-    watermark_enabled = "🟢 Включено" if config["playerok"]["watermark"]["enabled"] else "🔴 Выключено"
-    watermark_value = config["playerok"]["watermark"]["value"] or "❌ Не задано"
+    switch_read_chat_enabled = "🟢 Enabled" if config["playerok"]["read_chat"]["enabled"] else "🔴 Disabled"
+    auto_complete_deals_enabled = "🟢 Enabled" if config["playerok"]["auto_complete_deals"]["enabled"] else "🔴 Disabled"
+    custom_commands_enabled = "🟢 Enabled" if config["playerok"]["custom_commands"]["enabled"] else "🔴 Disabled"
+    auto_deliveries_enabled = "🟢 Enabled" if config["playerok"]["auto_deliveries"]["enabled"] else "🔴 Disabled"
+    watermark_enabled = "🟢 Enabled" if config["playerok"]["watermark"]["enabled"] else "🔴 Disabled"
+    watermark_value = config["playerok"]["watermark"]["value"] or "❌ Not set"
     rows = [
-        [InlineKeyboardButton(text=f"👀 Чтение чата перед отправкой сообщения: {switch_read_chat_enabled}", callback_data="switch_read_chat_enabled")],
-        [InlineKeyboardButton(text=f"☑️ Авто-подтверждение заказов: {auto_complete_deals_enabled}", callback_data="switch_auto_complete_deals_enabled")],
-        [InlineKeyboardButton(text=f"⌨️ Пользовательские команды: {custom_commands_enabled}", callback_data="switch_custom_commands_enabled")],
-        [InlineKeyboardButton(text=f"🚀 Авто-выдача: {auto_deliveries_enabled}", callback_data="switch_auto_deliveries_enabled")],
-        [InlineKeyboardButton(text=f"©️ Водяной знак под сообщениями: {watermark_enabled}", callback_data="switch_watermark_enabled")],
-        [InlineKeyboardButton(text=f"✍️©️ Водяной знак: {watermark_value}", callback_data="enter_watermark_value")],
+        [InlineKeyboardButton(text=f"👀 Read chat before sending message: {switch_read_chat_enabled}", callback_data="switch_read_chat_enabled")],
+        [InlineKeyboardButton(text=f"☑️ Auto-confirm orders: {auto_complete_deals_enabled}", callback_data="switch_auto_complete_deals_enabled")],
+        [InlineKeyboardButton(text=f"⌨️ Custom commands: {custom_commands_enabled}", callback_data="switch_custom_commands_enabled")],
+        [InlineKeyboardButton(text=f"🚀 Auto-delivery: {auto_deliveries_enabled}", callback_data="switch_auto_deliveries_enabled")],
+        [InlineKeyboardButton(text=f"©️ Watermark under messages: {watermark_enabled}", callback_data="switch_watermark_enabled")],
+        [InlineKeyboardButton(text=f"✍️©️ Watermark: {watermark_value}", callback_data="enter_watermark_value")],
         [
-        InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.SettingsNavigation(to="default").pack()),
-        InlineKeyboardButton(text="🔄️ Обновить", callback_data=calls.SettingsNavigation(to="other").pack())
+        InlineKeyboardButton(text="⬅️ Back", callback_data=calls.SettingsNavigation(to="default").pack()),
+        InlineKeyboardButton(text="🔄️ Refresh", callback_data=calls.SettingsNavigation(to="other").pack())
         ]
     ]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
@@ -58,7 +58,7 @@ def settings_other_kb():
 
 def settings_other_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        ⚙️ <b>Настройки → ⌨️ Прочее</b>
+        ⚙️ <b>Settings → 🔧 Other</b>
         \n{placeholder}
     """)
     return txt
