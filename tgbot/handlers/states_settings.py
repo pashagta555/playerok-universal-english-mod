@@ -23,7 +23,7 @@ async def handler_waiting_for_token(message: types.Message, state: FSMContext):
     try:
         await state.set_state(None)
         if len(message.text.strip()) <= 3 or len(message.text.strip()) >= 500:
-            raise Exception("❌ Слишком короткое или длинное значение")
+            raise Exception("❌ Too short or too long value")
 
         config = sett.get("config")
         config["playerok"]["api"]["token"] = message.text.strip()
@@ -191,7 +191,7 @@ async def handler_waiting_for_watermark_value(message: types.Message, state: FSM
         await state.set_state(None)
         data = await state.get_data()
         if len(message.text.strip()) <= 0 or len(message.text.strip()) >= 150:
-            raise Exception("❌ Слишком короткое или длинное значение")
+            raise Exception("❌ Too short or too long value")
 
         config = sett.get("config")
         config["playerok"]["watermark"]["value"] = message.text.strip()

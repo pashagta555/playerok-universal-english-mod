@@ -48,7 +48,7 @@ async def callback_enter_proxy(callback: CallbackQuery, state: FSMContext):
     await throw_float_message(
         state=state, 
         message=callback.message, 
-        text=templ.settings_conn_float_text(f"🌐 Введите новый <b>прокси-сервер</b> (формат: user:pass@ip:port или ip:port) ↓\n┗ Текущее: <code>{proxy}</code>"), 
+        text=templ.settings_conn_float_text(f"🌐 Enter new <b>proxy-server</b> (formate: user:pass@ip:port or ip:port) ↓\n┗ Current: <code>{proxy}</code>"), 
         reply_markup=templ.back_kb(calls.SettingsNavigation(to="conn").pack())
     )
 
@@ -57,11 +57,11 @@ async def callback_enter_proxy(callback: CallbackQuery, state: FSMContext):
 async def callback_enter_requests_timeout(callback: CallbackQuery, state: FSMContext):
     await state.set_state(states.SettingsStates.waiting_for_requests_timeout)
     config = sett.get("config")
-    requests_timeout = config["playerok"]["api"]["requests_timeout"] or "❌ Не задано"
+    requests_timeout = config["playerok"]["api"]["requests_timeout"] or "❌ Not specified"
     await throw_float_message(
         state=state, 
         message=callback.message, 
-        text=templ.settings_conn_float_text(f"🛜 Введите новый <b>таймаут подключения</b> (в секундах) ↓\n┗ Текущее: <code>{requests_timeout}</code>"), 
+        text=templ.settings_conn_float_text(f"🛜 Enter new <b>connection timeout</b> (in seconds) ↓\n┗ Current: <code>{requests_timeout}</code>"), 
         reply_markup=templ.back_kb(calls.SettingsNavigation(to="conn").pack())
     )
 
@@ -70,11 +70,11 @@ async def callback_enter_requests_timeout(callback: CallbackQuery, state: FSMCon
 async def callback_enter_listener_requests_delay(callback: CallbackQuery, state: FSMContext):
     await state.set_state(states.SettingsStates.waiting_for_listener_requests_delay)
     config = sett.get("config")
-    requests_timeout = config["playerok"]["api"]["listener_requests_delay"] or "❌ Не задано"
+    requests_timeout = config["playerok"]["api"]["listener_requests_delay"] or "❌ Not specified"
     await throw_float_message(
         state=state, 
         message=callback.message, 
-        text=templ.settings_conn_float_text(f"⏱️ Введите новую <b>периодичность запросов</b> (в секундах) ↓\n┗ Текущее: <code>{requests_timeout}</code>"), 
+        text=templ.settings_conn_float_text(f"⏱️ Enter new <b>frequency of requests</b> (in seconds) ↓\n┗ Current: <code>{requests_timeout}</code>"), 
         reply_markup=templ.back_kb(calls.SettingsNavigation(to="conn").pack())
     )
 
@@ -83,11 +83,11 @@ async def callback_enter_listener_requests_delay(callback: CallbackQuery, state:
 async def callback_enter_watermark_value(callback: CallbackQuery, state: FSMContext):
     await state.set_state(states.SettingsStates.waiting_for_watermark_value)
     config = sett.get("config")
-    watermark_value = config["playerok"]["watermark"]["value"] or "❌ Не задано"
+    watermark_value = config["playerok"]["watermark"]["value"] or "❌ Not specified"
     await throw_float_message(
         state=state, 
         message=callback.message, 
-        text=templ.settings_other_float_text(f"✍️©️ Введите новый <b>водяной знак</b> под сообщениями ↓\n┗ Текущее: <code>{watermark_value}</code>"), 
+        text=templ.settings_other_float_text(f"✍️©️ Enter new <b>watermark</b> under messages ↓\n┗ Current: <code>{watermark_value}</code>"), 
         reply_markup=templ.back_kb(calls.SettingsNavigation(to="other").pack())
     )
 
@@ -233,7 +233,7 @@ async def callback_enter_auto_delivery_message(callback: CallbackQuery, state: F
         data = await state.get_data()
         auto_delivery_index = data.get("auto_delivery_index")
         if auto_delivery_index is None:
-            raise Exception("❌ Авто-выдача не была найдена, повторите процесс с самого начала")
+            raise Exception("❌ Auto-delivery was not found, repeat the process from the very beginning")
         
         await state.set_state(states.AutoDeliveriesStates.waiting_for_auto_delivery_message)
         auto_deliveries = sett.get("auto_deliveries")
@@ -242,7 +242,7 @@ async def callback_enter_auto_delivery_message(callback: CallbackQuery, state: F
         await throw_float_message(
             state=state, 
             message=callback.message, 
-            text=templ.settings_deliv_page_float_text(f"💬 Введите новое <b>сообщение</b> после покупки\n┗ Текущее: <blockquote>{auto_delivery_message}</blockquote>"), 
+            text=templ.settings_deliv_page_float_text(f"💬 Enter new <b>message</b> after the sale\n┗ Current: <blockquote>{auto_delivery_message}</blockquote>"), 
             reply_markup=templ.back_kb(calls.AutoDeliveryPage(index=auto_delivery_index).pack())
         )
     except Exception as e:
@@ -264,7 +264,7 @@ async def callback_enter_messages_page(callback: CallbackQuery, state: FSMContex
     await throw_float_message(
         state=state, 
         message=callback.message, 
-        text=templ.settings_mess_float_text(f"📃 Введите номер страницы для перехода ↓"), 
+        text=templ.settings_mess_float_text(f"📃 Enter the page number to go ↓"), 
         reply_markup=templ.back_kb(calls.MessagesPagination(page=last_page).pack())
     )
 
@@ -276,16 +276,16 @@ async def callback_enter_message_text(callback: CallbackQuery, state: FSMContext
         last_page = data.get("last_page", 0)
         message_id = data.get("message_id")
         if not message_id:
-            raise Exception("❌ ID сообщения не был найден, повторите процесс с самого начала")
+            raise Exception("❌ The message ID was not found, repeat the process from the very beginning")
         
         await state.set_state(states.MessagesStates.waiting_for_message_text)
         messages = sett.get("messages")
-        mess_text = "\n".join(messages[message_id]["text"]) or "❌ Не задано"
+        mess_text = "\n".join(messages[message_id]["text"]) or "❌ Not specified"
         
         await throw_float_message(
             state=state, 
             message=callback.message, 
-            text=templ.settings_mess_float_text(f"💬 Введите новый <b>текст сообщения</b> <code>{message_id}</code> ↓\n┗ Текущее: <blockquote>{mess_text}</blockquote>"), 
+            text=templ.settings_mess_float_text(f"💬 Enter new <b>message text</b> <code>{message_id}</code> ↓\n┗ Current: <blockquote>{mess_text}</blockquote>"), 
             reply_markup=templ.back_kb(calls.MessagesPagination(page=last_page).pack())
         )
     except Exception as e:

@@ -148,7 +148,7 @@ async def callback_complete_deal(callback: CallbackQuery, state: FSMContext):
     await throw_float_message(
         state=state, 
         message=callback.message, 
-        text=templ.do_action_text(f"✅ Сделка <b>https://playerok.com/deal/{deal_id}</b> была помечена вами, как выполненная"), 
+        text=templ.do_action_text(f"✅ The deal <b>https://playerok.com/deal/{deal_id}</b> was marked as completed"), 
         reply_markup=templ.destroy_kb()
     )
 
