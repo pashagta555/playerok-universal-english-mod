@@ -1,0 +1,55 @@
+{
+    "playerok": {
+        "api": {
+            "token": "",
+            "user_agent": "",
+            "proxy": "",
+            "requests_timeout": 30,
+            "listener_requests_delay": 4
+        },
+        "watermark": {
+            "enabled": true,
+            "value": "©️ 𝗣𝗹𝗮𝘆𝗲𝗿𝗼𝗸 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗮𝗹"
+        },
+        "read_chat": {
+            "enabled": true
+        },
+        "first_message": {
+            "enabled": true
+        },
+        "custom_commands": {
+            "enabled": true
+        },
+        "auto_deliveries": {
+            "enabled": true
+        },
+        "auto_restore_items": {
+            "enabled": true,
+            "all": true
+        },
+        "auto_complete_deals": {
+            "enabled": true
+        },
+        "tg_logging": {
+            "enabled": true,
+            "chat_id": "",
+            "events": {
+                "new_user_message": true,
+                "new_system_message": true,
+                "new_deal": true,
+                "new_review": true,
+                "new_problem": true,
+                "deal_status_changed": true
+            }
+        }
+    },
+    "telegram": {
+        "api": {
+            "token": ""
+        },
+        "bot": {
+            "password": "",
+            "signed_users": []
+        }
+    }
+}
