@@ -13,11 +13,6 @@ def menu_text():
         <b>Playerok UNIVERSAL</b> v{VERSION}
         Helper bot for Playerok
 
-        <b>Links:</b>
-        ┣ <b>@alleexxeeyy</b> — main and only developer
-        ┣ <b>@alexeyproduction</b> — channel where news is published
-        ┗ <b>@alexey_production_bot</b> — bot for purchasing official modules
-
         Navigate through the sections below ↓
     """)
     return txt
