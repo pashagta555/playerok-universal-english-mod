@@ -23,7 +23,7 @@ async def handler_waiting_for_token(message: types.Message, state: FSMContext):
     try:
         await state.set_state(None)
         if len(message.text.strip()) <= 3 or len(message.text.strip()) >= 500:
-            raise Exception("❌ Слишком короткое или длинное значение")
+            raise Exception("❌ Value is too short or too long")
 
         config = sett.get("config")
         config["playerok"]["api"]["token"] = message.text.strip()
@@ -159,7 +159,7 @@ async def handler_waiting_for_tg_logging_chat_id(message: types.Message, state: 
     try:
         await state.set_state(None) 
         if len(message.text.strip()) < 0:
-            raise Exception("❌ Слишком низкое значение")
+            raise Exception("❌ Value is too low")
         
         if message.text.strip().isdigit(): 
             chat_id = "-100" + str(message.text.strip()).replace("-100", "")

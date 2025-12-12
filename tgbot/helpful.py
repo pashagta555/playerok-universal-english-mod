@@ -7,12 +7,12 @@ from . import templates as templ
 
 async def do_auth(message: Message, state: FSMContext) -> Message | None:
     """
-    Начинает процесс авторизации в боте (запрашивает пароль, указанный в конфиге).
+    Starts bot authorization process (requests password specified in config).
 
-    :param message: Исходное сообщение.
+    :param message: Source message.
     :type message: `aiogram.types.Message`
 
-    :param state: Исходное состояние.
+    :param state: Source state.
     :type state: `aiogram.fsm.context.FSMContext`
     """
     from . import states
@@ -21,7 +21,7 @@ async def do_auth(message: Message, state: FSMContext) -> Message | None:
     return await throw_float_message(
         state=state,
         message=message,
-        text=templ.sign_text('🔑 Введите ключ-пароль, указанный вами в конфиге бота ↓\n\n<span class="tg-spoiler">Если вы забыли, его можно посмотреть напрямую в конфиге по пути bot_settings/config.json, параметр password в разделе telegram.bot</span>'),
+        text=templ.sign_text('🔑 Enter the password key you specified in the bot config ↓\n\n<span class="tg-spoiler">If you forgot it, you can view it directly in the config at path bot_settings/config.json, parameter password in section telegram.bot</span>'),
         reply_markup=templ.destroy_kb()
     )
 
@@ -31,25 +31,25 @@ async def throw_float_message(state: FSMContext, message: Message, text: str,
                               callback: CallbackQuery = None,
                               send: bool = False) -> Message | None:
     """
-    Изменяет плавающее сообщение (изменяет текст акцентированного сообщения) или родительское сообщение бота, переданное в аргумент `message`.\n
-    Если не удалось найти акцентированное сообщение, или это сообщение - команда, отправит новое акцентированное сообщение.
+    Changes floating message (changes text of accented message) or parent bot message passed in `message` argument.\n
+    If accented message not found, or this message is a command, sends new accented message.
 
-    :param state: Состояние бота.
+    :param state: Bot state.
     :type state: `aiogram.fsm.context.FSMContext`
     
-    :param message: Переданный в handler объект сообщения.
+    :param message: Message object passed to handler.
     :type message: `aiogram.types.Message`
 
-    :param text: Текст сообщения.
+    :param text: Message text.
     :type text: `str`
 
-    :param reply_markup: Клавиатура сообщения, _опционально_.
-    :type reply_markup: `aiogram.typesInlineKeyboardMarkup.`
+    :param reply_markup: Message keyboard, _optional_.
+    :type reply_markup: `aiogram.types.InlineKeyboardMarkup`
 
-    :param callback: CallbackQuery хендлера, для ответа пустой AnswerCallbackQuery, _опционально_.
+    :param callback: Handler CallbackQuery, for empty AnswerCallbackQuery response, _optional_.
     :type callback: `aiogram.types.CallbackQuery` or `None`
 
-    :param send: Отправить ли новое акцентированное сообщение, _опционально_.
+    :param send: Whether to send new accented message, _optional_.
     :type send: `bool`
     """
     from .telegrambot import get_telegram_bot

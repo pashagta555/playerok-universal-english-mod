@@ -9,15 +9,15 @@ from .events import *
 
 class EventListener:
     """
-    Слушатель событий с Playerok.com.
+    Event listener for Playerok.com.
 
-    :param account: Объект аккаунта.
+    :param account: Account object.
     :type account: `playerokapi.account.Account`
     """
 
     def __init__(self, account: Account):
         self.account: Account = account
-        """ Объект аккаунта. """
+        """ Account object. """
 
         self.__logger = getLogger("playerokapi.listener")
         self.__review_check_deals: list[str] = [] # [deal_id]
@@ -30,12 +30,12 @@ class EventListener:
         self, chat: Chat
     ) -> list[ChatInitializedEvent]:
         """
-        Получает ивент с чата.
+        Gets event from chat.
 
-        :param chat: Объект чата.
+        :param chat: Chat object.
         :type chat: `playerokapi.types.Chat`
 
-        :return: Массив ивентов.
+        :return: Array of events.
         :rtype: `list` of
         `playerokapi.listener.events.ChatInitializedEvent`
         """
@@ -48,12 +48,12 @@ class EventListener:
         self, chats: ChatList
     ) -> list[ChatInitializedEvent]:
         """
-        Получает новые ивенты чатов.
+        Gets new chat events.
 
-        :param chats: Страница чатов.
+        :param chats: Page of chats.
         :type chats: `playerokapi.types.ChatList`
 
-        :return: Массив новых ивентов.
+        :return: Array of new events.
         :rtype: `list` of
         `playerokapi.listener.events.ChatInitializedEvent`
         """
@@ -79,12 +79,12 @@ class EventListener:
         | DealStatusChangedEvent
     ]:
         """
-        Получает ивент с сообщения.
+        Gets event from message.
         
-        :param message: Объект сообщения.
+        :param message: Message object.
         :type message: `playerokapi.types.ChatMessage`
 
-        :return: Массив ивентов.
+        :return: Array of events.
         :rtype: `list` of 
         `playerokapi.listener.events.ChatInitializedEvent` \
         _or_ `playerokapi.listener.events.NewMessageEvent` \
@@ -163,15 +163,15 @@ class EventListener:
         | DealStatusChangedEvent,
     ]:
         """
-        Получает новые ивенты сообщений, сравнивая старые чаты с новыми полученными.
+        Gets new message events by comparing old chats with newly received ones.
         
-        :param old_chats: Старые чаты.
+        :param old_chats: Old chats.
         :type old_chats: `playerokapi.types.ChatList`
         
-        :param new_chats: Новые чаты.
+        :param new_chats: New chats.
         :type new_chats: `playerokapi.types.ChatList`
 
-        :return: Массив новых ивентов.
+        :return: Array of new events.
         :rtype: `list` of 
         `playerokapi.listener.events.ChatInitializedEvent` \
         _or_ `playerokapi.listener.events.NewMessageEvent` \
@@ -243,16 +243,16 @@ class EventListener:
         None
     ]:
         """
-        "Слушает" события в чатах. 
-        Бесконечно отправляет запросы, узнавая новые события из чатов.
+        "Listens" to events in chats. 
+        Continuously sends requests, discovering new events from chats.
 
-        :param requests_delay: Периодичность отправления запросов (в секундах).
+        :param requests_delay: Request frequency (in seconds).
         :type requests_delay: `int` or `float`
 
-        :param get_new_review_events: Нужно ли слушать новые отзывы? (отправляет больше запросов).
+        :param get_new_review_events: Whether to listen for new reviews? (sends more requests).
         :type get_new_review_events: `bool`
 
-        :return: Полученный ивент.
+        :return: Received event.
         :rtype: `Generator` of
         `playerokapi.listener.events.ChatInitializedEvent` \
         _or_ `playerokapi.listener.events.NewMessageEvent` \
@@ -281,5 +281,5 @@ class EventListener:
                         yield event
                 chats = next_chats
             except Exception as e:
-                self.__logger.error(f"Ошибка при получении ивентов: {e}")
+                self.__logger.error(f"Error getting events: {e}")
             time.sleep(requests_delay)

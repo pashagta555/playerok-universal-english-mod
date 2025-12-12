@@ -531,7 +531,7 @@ def user_profile(data: dict) -> "UserProfile":
         return None
     u = UserProfile(
         id=data.get("id"),
-        username=data.get("username", "Поддержка"),
+        username=data.get("username", "Support"),
         role=UserTypes.__members__.get(data.get("role")),
         avatar_url=data.get("avatarURL"),
         is_online=data.get("isOnline"),
@@ -818,10 +818,10 @@ def item_profile_list(data: dict) -> "ItemProfileList":
     )
 
 
-def moderator(data: dict) -> "Moderator": ...  # TODO: Сделать парсинг класса Moderator
+def moderator(data: dict) -> "Moderator": ...  # TODO: Implement Moderator class parsing
 
 
-def event(data: dict): ...  # TODO: Сделать парсинг класса Event
+def event(data: dict): ...  # TODO: Implement Event class parsing
 
 
 def chat(data: dict) -> "Chat":

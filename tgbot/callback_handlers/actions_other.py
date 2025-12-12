@@ -31,7 +31,7 @@ async def callback_delete_included_restore_item(callback: CallbackQuery, callbac
         await state.set_state(None)
         index = callback_data.index
         if index is None:
-            raise Exception("❌ Включенный предмет не был найден, повторите процесс с самого начала")
+            raise Exception("❌ Included item was not found, repeat the process from the beginning")
         
         auto_restore_items = sett.get("auto_restore_items")
         auto_restore_items["included"].pop(index)
@@ -57,7 +57,7 @@ async def callback_delete_excluded_restore_item(callback: CallbackQuery, callbac
         await state.set_state(None)
         index = callback_data.index
         if index is None:
-            raise Exception("❌ Исключенный предмет не был найден, повторите процесс с самого начала")
+            raise Exception("❌ Excluded item was not found, repeat the process from the beginning")
         
         auto_restore_items = sett.get("auto_restore_items")
         auto_restore_items["excluded"].pop(index)
@@ -88,7 +88,7 @@ async def callback_remember_username(callback: CallbackQuery, callback_data: cal
         await throw_float_message(
             state=state, 
             message=callback.message, 
-            text=templ.do_action_text(f"💬 Введите <b>сообщение</b> для отправки <b>{username}</b> ↓"), 
+            text=templ.do_action_text(f"💬 Enter <b>message</b> to send to <b>{username}</b> ↓"), 
             reply_markup=templ.destroy_kb(),
             callback=callback,
             send=True
@@ -105,7 +105,7 @@ async def callback_remember_deal_id(callback: CallbackQuery, callback_data: call
         await throw_float_message(
             state=state, 
             message=callback.message, 
-            text=templ.do_action_text(f'📦✔️ Подтвердите <b>возврат</b> <a href="https://playerok.com/deal/{deal_id}">сделки</a> ↓'), 
+            text=templ.do_action_text(f'📦✔️ Confirm <b>refund</b> of <a href="https://playerok.com/deal/{deal_id}">deal</a> ↓'), 
             reply_markup=templ.confirm_kb(confirm_cb="refund_deal", cancel_cb="destroy"),
             callback=callback,
             send=True
@@ -114,7 +114,7 @@ async def callback_remember_deal_id(callback: CallbackQuery, callback_data: call
         await throw_float_message(
             state=state, 
             message=callback.message, 
-            text=templ.do_action_text(f'☑️✔️ Подтвердите <b>выполнение</b> <a href="https://playerok.com/deal/{deal_id}">сделки</a> ↓'), 
+            text=templ.do_action_text(f'☑️✔️ Confirm <b>completion</b> of <a href="https://playerok.com/deal/{deal_id}">deal</a> ↓'), 
             reply_markup=templ.confirm_kb(confirm_cb="complete_deal", cancel_cb="destroy"),
             callback=callback,
             send=True
@@ -132,7 +132,7 @@ async def callback_refund_deal(callback: CallbackQuery, state: FSMContext):
     await throw_float_message(
         state=state, 
         message=callback.message, 
-        text=templ.do_action_text(f"✅ По сделке <b>https://playerok.com/deal/{deal_id}</b> был оформлен возврат"), 
+        text=templ.do_action_text(f"✅ Refund was issued for deal <b>https://playerok.com/deal/{deal_id}</b>"), 
         reply_markup=templ.destroy_kb()
     )
         
@@ -148,7 +148,7 @@ async def callback_complete_deal(callback: CallbackQuery, state: FSMContext):
     await throw_float_message(
         state=state, 
         message=callback.message, 
-        text=templ.do_action_text(f"✅ Сделка <b>https://playerok.com/deal/{deal_id}</b> была помечена вами, как выполненная"), 
+        text=templ.do_action_text(f"✅ Deal <b>https://playerok.com/deal/{deal_id}</b> was marked by you as completed"), 
         reply_markup=templ.destroy_kb()
     )
 
@@ -179,7 +179,7 @@ async def callback_send_new_included_restore_items_keyphrases_file(callback: Cal
     await throw_float_message(
         state=state, 
         message=callback.message, 
-        text=templ.settings_new_restore_included_float_text(f"📄 Отправьте <b>.txt</b> файл с <b>ключевыми фразами</b>, по одной записи в строке (для каждого товара указываются через запятую, например, \"samp аккаунт, со всеми данными\")"), 
+        text=templ.settings_new_restore_included_float_text(f"📄 Send <b>.txt</b> file with <b>key phrases</b>, one entry per line (for each item separated by commas, e.g., \"samp account, with all data\")"), 
         reply_markup=templ.back_kb(calls.IncludedRestoreItemsPagination(page=last_page).pack())
     )
 
@@ -192,7 +192,7 @@ async def callback_send_new_excluded_restore_items_keyphrases_file(callback: Cal
     await throw_float_message(
         state=state, 
         message=callback.message, 
-        text=templ.settings_new_restore_excluded_float_text(f"📄 Отправьте <b>.txt</b> файл с <b>ключевыми фразами</b>, по одной записи в строке (для каждого товара указываются через запятую, например, \"samp аккаунт, со всеми данными\")"), 
+        text=templ.settings_new_restore_excluded_float_text(f"📄 Send <b>.txt</b> file with <b>key phrases</b>, one entry per line (for each item separated by commas, e.g., \"samp account, with all data\")"), 
         reply_markup=templ.back_kb(calls.ExcludedRestoreItemsPagination(page=last_page).pack())
     )
 
@@ -207,9 +207,9 @@ async def callback_add_new_custom_command(callback: CallbackQuery, state: FSMCon
         new_custom_command = data.get("new_custom_command")
         new_custom_command_answer = data.get("new_custom_command_answer")
         if not new_custom_command:
-            raise Exception("❌ Новая пользовательская команда не была найдена, повторите процесс с самого начала")
+            raise Exception("❌ New custom command was not found, repeat the process from the beginning")
         if not new_custom_command_answer:
-            raise Exception("❌ Ответ на новую пользовательскую команду не был найден, повторите процесс с самого начала")
+            raise Exception("❌ Response to new custom command was not found, repeat the process from the beginning")
 
         custom_commands[new_custom_command] = new_custom_command_answer.splitlines()
         sett.set("custom_commands", custom_commands)
@@ -218,7 +218,7 @@ async def callback_add_new_custom_command(callback: CallbackQuery, state: FSMCon
         await throw_float_message(
             state=state, 
             message=callback.message, 
-            text=templ.settings_new_comm_float_text(f"✅ <b>Пользовательская команда</b> <code>{new_custom_command}</code> была добавлена"), 
+            text=templ.settings_new_comm_float_text(f"✅ <b>Custom command</b> <code>{new_custom_command}</code> was added"), 
             reply_markup=templ.back_kb(calls.CustomCommandsPagination(page=last_page).pack())
         )
     except Exception as e:
@@ -239,12 +239,12 @@ async def callback_confirm_deleting_custom_command(callback: CallbackQuery, stat
         data = await state.get_data()
         custom_command = data.get("custom_command")
         if not custom_command:
-            raise Exception("❌ Пользовательская команда не была найдена, повторите процесс с самого начала")
+            raise Exception("❌ Custom command was not found, repeat the process from the beginning")
         
         await throw_float_message(
             state=state, 
             message=callback.message, 
-            text=templ.settings_comm_page_float_text(f"🗑️ Подтвердите <b>удаление пользовательской команды</b> <code>{custom_command}</code>"), 
+            text=templ.settings_comm_page_float_text(f"🗑️ Confirm <b>deletion of custom command</b> <code>{custom_command}</code>"), 
             reply_markup=templ.confirm_kb(confirm_cb="delete_custom_command", cancel_cb=calls.CustomCommandPage(command=custom_command).pack())
         )
     except Exception as e:
@@ -267,14 +267,14 @@ async def callback_delete_custom_command(callback: CallbackQuery, state: FSMCont
         custom_commands = sett.get("custom_commands")
         custom_command = data.get("custom_command")
         if not custom_command:
-            raise Exception("❌ Пользовательская команда не была найдена, повторите процесс с самого начала")
+            raise Exception("❌ Custom command was not found, repeat the process from the beginning")
         
         del custom_commands[custom_command]
         sett.set("custom_commands", custom_commands)
         await throw_float_message(
             state=state, 
             message=callback.message, 
-            text=templ.settings_comm_page_float_text(f"✅ <b>Пользовательская команда</b> <code>{custom_command}</code> была удалена"), 
+            text=templ.settings_comm_page_float_text(f"✅ <b>Custom command</b> <code>{custom_command}</code> was deleted"), 
             reply_markup=templ.back_kb(calls.CustomCommandsPagination(page=last_page).pack())
         )
     except Exception as e:
@@ -298,9 +298,9 @@ async def callback_add_new_auto_delivery(callback: CallbackQuery, state: FSMCont
         new_auto_delivery_keyphrases = data.get("new_auto_delivery_keyphrases")
         new_auto_delivery_message = data.get("new_auto_delivery_message")
         if not new_auto_delivery_keyphrases:
-            raise Exception("❌ Ключевые фразы авто-выдачи не были найдены, повторите процесс с самого начала")
+            raise Exception("❌ Auto-delivery key phrases were not found, repeat the process from the beginning")
         if not new_auto_delivery_message:
-            raise Exception("❌ Сообщение авто-выдачи не было найдено, повторите процесс с самого начала")
+            raise Exception("❌ Auto-delivery message was not found, repeat the process from the beginning")
         
         auto_deliveries.append({"keyphrases": new_auto_delivery_keyphrases, "message": new_auto_delivery_message.splitlines()})
         sett.set("auto_deliveries", auto_deliveries)
@@ -308,7 +308,7 @@ async def callback_add_new_auto_delivery(callback: CallbackQuery, state: FSMCont
         await throw_float_message(
             state=state, 
             message=callback.message, 
-            text=templ.settings_new_deliv_float_text(f"✅ <b>Авто-выдача</b> была добавлена"), 
+            text=templ.settings_new_deliv_float_text(f"✅ <b>Auto-delivery</b> was added"), 
             reply_markup=templ.back_kb(calls.AutoDeliveriesPagination(page=last_page).pack())
         )
     except Exception as e:
@@ -330,16 +330,16 @@ async def callback_confirm_deleting_auto_delivery(callback: CallbackQuery, state
         data = await state.get_data()
         auto_delivery_index = data.get("auto_delivery_index")
         if auto_delivery_index is None:
-            raise Exception("❌ Авто-выдача не была найдена, повторите процесс с самого начала")
+            raise Exception("❌ Auto-delivery was not found, repeat the process from the beginning")
         
 
         auto_deliveries = sett.get("auto_deliveries")
-        auto_delivery_keyphrases = "</code>, <code>".join(auto_deliveries[auto_delivery_index]["keyphrases"]) or "❌ Не задано"
+        auto_delivery_keyphrases = "</code>, <code>".join(auto_deliveries[auto_delivery_index]["keyphrases"]) or "❌ Not set"
        
         await throw_float_message(
             state=state, 
             message=callback.message, 
-            text=templ.settings_deliv_page_float_text(f"🗑️ Подтвердите <b>удаление пользовательской авто-выдачи</b> для ключевых фраз <code>{auto_delivery_keyphrases}</code>"), 
+            text=templ.settings_deliv_page_float_text(f"🗑️ Confirm <b>deletion of custom auto-delivery</b> for key phrases <code>{auto_delivery_keyphrases}</code>"), 
             reply_markup=templ.confirm_kb(confirm_cb="delete_auto_delivery", cancel_cb=calls.AutoDeliveryPage(index=auto_delivery_index).pack())
         )
     except Exception as e:
@@ -360,7 +360,7 @@ async def callback_delete_auto_delivery(callback: CallbackQuery, state: FSMConte
         data = await state.get_data()
         auto_delivery_index = data.get("auto_delivery_index")
         if auto_delivery_index is None:
-            raise Exception("❌ Авто-выдача не была найдена, повторите процесс с самого начала")
+            raise Exception("❌ Auto-delivery was not found, repeat the process from the beginning")
         
         auto_deliveries = sett.get("auto_deliveries")
         del auto_deliveries[auto_delivery_index]
@@ -370,7 +370,7 @@ async def callback_delete_auto_delivery(callback: CallbackQuery, state: FSMConte
         await throw_float_message(
             state=state, 
             message=callback.message, 
-            text=templ.settings_deliv_page_float_text(f"✅ <b>Авто-выдача</b> была удалена"), 
+            text=templ.settings_deliv_page_float_text(f"✅ <b>Auto-delivery</b> was deleted"), 
             reply_markup=templ.back_kb(calls.AutoDeliveriesPagination(page=last_page).pack())
         )
     except Exception as e:
@@ -393,7 +393,7 @@ async def callback_reload_module(callback: CallbackQuery, state: FSMContext):
         last_page = data.get("last_page", 0)
         module_uuid = data.get("module_uuid")
         if not module_uuid:
-            raise Exception("❌ UUID модуля не был найден, повторите процесс с самого начала")
+            raise Exception("❌ Module UUID was not found, repeat the process from the beginning")
         
         await reload_module(module_uuid)
         return await callback_module_page(callback, calls.ModulePage(uuid=module_uuid), state)

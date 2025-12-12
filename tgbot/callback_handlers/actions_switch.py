@@ -134,7 +134,7 @@ async def callback_switch_message_enabled(callback: CallbackQuery, state: FSMCon
         last_page = data.get("last_page", 0)
         message_id = data.get("message_id")
         if not message_id:
-            raise Exception("❌ ID сообщения не был найден, повторите процесс с самого начала")
+            raise Exception("❌ Message ID was not found, repeat the process from the beginning")
         
         messages = sett.get("messages")
         messages[message_id]["enabled"] = not messages[message_id]["enabled"]
@@ -159,10 +159,10 @@ async def callback_switch_module_enabled(callback: CallbackQuery, state: FSMCont
         last_page = data.get("last_page", 0)
         module_uuid = data.get("module_uuid")
         if not module_uuid:
-            raise Exception("❌ UUID модуля не был найден, повторите процесс с самого начала")
+            raise Exception("❌ Module UUID was not found, repeat the process from the beginning")
         module = get_module_by_uuid(module_uuid)
         if not module:
-            raise Exception("❌ Модуль с этим UUID не был найден, повторите процесс с самого начала")
+            raise Exception("❌ Module with this UUID was not found, repeat the process from the beginning")
 
         await disable_module(module_uuid) if module.enabled else await enable_module(module_uuid)
         return await callback_module_page(callback, calls.ModulePage(uuid=module_uuid), state)
