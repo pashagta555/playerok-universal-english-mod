@@ -15,8 +15,12 @@ INITIALIZED_USERS = DataFile(
     path="bot_data/initialized_users.json",
     default=[]
 )
-
-DATA = [INITIALIZED_USERS]
+SAVED_ITEMS = DataFile(
+    name="saved_items",
+    path="bot_data/saved_items.json",
+    default=[]
+)
+DATA = [INITIALIZED_USERS, SAVED_ITEMS]
 
 
 def get_json(path: str, default: dict | list) -> dict:
@@ -61,7 +65,7 @@ def set_json(path: str, new: dict):
 class Data:
     
     @staticmethod
-    def get(name: str, data: list[DataFile] = DATA) -> dict | None:
+    def get(name: str, data: list[DataFile] = DATA) -> dict | list | None:
         try: 
             file = [file for file in data if file.name == name][0]
             return get_json(file.path, file.default)

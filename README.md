@@ -2,8 +2,8 @@
 [![telegram](https://img.shields.io/badge/telegram-%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB-blue?style=for-the-badge&logo=telegram)](https://t.me/alexeyproduction)
 [![modules](https://img.shields.io/badge/%F0%9F%A7%A9%20%D0%BC%D0%BE%D0%B4%D1%83%D0%BB%D0%B8-%D0%B1%D0%BE%D1%82%D0%B0-green?style=for-the-badge)](https://t.me/alexey_production_bot)
 [![python](https://img.shields.io/badge/python-3.11.x-yellow?style=for-the-badge&logo=python&link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Ftelegram-%25D0%25BA%25D0%25B0%25D0%25BD%25D0%25B0%25D0%25BB-blue%3Fstyle%3Dfor-the-badge%26logo%3Dtelegram)](https://www.python.org/downloads/release/python-3119/)
-[![stars](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Falleexxeeyy%2Fplayerok-universal&query=%24.stargazers_count&style=for-the-badge&label=stars&color=43d433&logo=github)](https://github.com/alleexxeeyy/funpay-universal/stargazers)
-[![forks](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Falleexxeeyy%2Fplayerok-universal&query=%24.forks_count&style=for-the-badge&label=forks&color=%236c70e6&logo=github)](https://github.com/alleexxeeyy/funpay-universal/stargazers)
+[![stars](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Falleexxeeyy%2Fplayerok-universal&query=%24.stargazers_count&style=for-the-badge&label=stars&color=43d433&logo=github)](https://github.com/alleexxeeyy/playerok-universal/stargazers)
+[![forks](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Falleexxeeyy%2Fplayerok-universal&query=%24.forks_count&style=for-the-badge&label=forks&color=%236c70e6&logo=github)](https://github.com/alleexxeeyy/playerok-universal/forks)
 
 Современный бот-помощник для Playerok 🤖🟦
 
@@ -25,6 +25,7 @@
 - Система модулей (плагины, подключаемые к боту)
 - Вечный онлайн на сайте
 - Авто-восстановление предметов
+- Авто-поднятие предметов
 - Приветственное сообщение
 - Пользовательские команды
 - Пользовательская авто-выдача
@@ -38,7 +39,7 @@
 
 ## ⬇️ Установка
 1. Скачайте [последнюю Release версию](https://github.com/alleexxeeyy/playerok-universal/releases/latest) и распакуйте в любое удобное для вас место
-2. Убедитесь, что у вас установлен **Python версии 3.11.x** (на других версиях работа бота не гарантируется). Если не установлен, сделайте это, перейдя по ссылке https://www.python.org/downloads/release/python-31110/ (при установке нажмите на пункт `Add to PATH`)
+2. Убедитесь, что у вас установлен **Python версии 3.11.x** (на других версиях работа бота не гарантируется). Если не установлен, сделайте это, перейдя по ссылке https://www.python.org/downloads/release/python-3119/ (при установке нажмите на пункт `Add to PATH`)
 3. Откройте `install_requirements.bat` и дождитесь установки всех необходимых для работы библиотек, а после закройте окно
 4. Чтобы запустить бота, откройте запускатор `start.bat`
 5. После первого запуска вас попросят настроить бота для работы

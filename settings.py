@@ -1,6 +1,7 @@
 import os
 import json
 import copy
+import tempfile
 from dataclasses import dataclass
 
 
@@ -42,8 +43,15 @@ CONFIG = SettingsFile(
                 "enabled": True
             },
             "auto_restore_items": {
-                "enabled": True,
+                "sold": True,
+                "expired": True,
                 "all": True
+            },
+            "auto_bump_items": {
+                "enabled": False,
+                "all": False,
+                "day_max_sequence": 15,
+                "night_max_sequence": 30,
             },
             "auto_complete_deals": {
                 "enabled": True
@@ -161,7 +169,16 @@ AUTO_RESTORE_ITEMS = SettingsFile(
         "excluded": []
     }
 )
-DATA = [CONFIG, MESSAGES, CUSTOM_COMMANDS, AUTO_DELIVERIES, AUTO_RESTORE_ITEMS]
+AUTO_BUMP_ITEMS = SettingsFile(
+    name="auto_bump_items",
+    path="bot_settings/auto_bump_items.json",
+    need_restore=False,
+    default={
+        "included": [],
+        "excluded": []
+    }
+)
+DATA = [CONFIG, MESSAGES, CUSTOM_COMMANDS, AUTO_DELIVERIES, AUTO_RESTORE_ITEMS, AUTO_BUMP_ITEMS]
 
 
 def validate_config(config, default):
@@ -263,14 +280,25 @@ def set_json(path: str, new: dict):
     :param new: New data.
     :type new: `dict`
     """
-    with open(path, 'w', encoding='utf-8') as f:
-        json.dump(new, f, indent=4, ensure_ascii=False)
+    dir_name = os.path.dirname(path)
+    
+    with tempfile.NamedTemporaryFile( # атомарная запись файла
+        "w",
+        encoding="utf-8",
+        dir=dir_name,
+        delete=False
+    ) as tmp:
+        json.dump(new, tmp, ensure_ascii=False, indent=4)
+        tmp.flush()
+        os.fsync(tmp.fileno())
+
+    os.replace(tmp.name, path)
 
 
 class Settings:
     
     @staticmethod
-    def get(name: str, data: list[SettingsFile] = DATA) -> dict | None:
+    def get(name: str, data: list[SettingsFile] = DATA) -> dict | list | None:
         try: 
             file = [file for file in data if file.name == name][0]
             return get_json(file.path, file.default, file.need_restore)
