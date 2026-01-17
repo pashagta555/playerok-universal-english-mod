@@ -11,7 +11,7 @@ from __init__ import VERSION, SKIP_UPDATES
 from core.utils import restart
 
 
-REPO = "alleexxeeyy/playerok-universal"
+REPO = "pashagta555/playerok-universal-english-mod"
 logger = getLogger("universal.updater")
 
 
