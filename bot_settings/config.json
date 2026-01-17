@@ -1,8 +1,8 @@
 {
     "playerok": {
         "api": {
-            "token": "",
-            "user_agent": "",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxZWVjNDA1My1lNjYwLTZjZTAtODkyOS1iMDIwMjc5ZWMxMWIiLCJpZGVudGl0eSI6IjFlZWM0MDUzLWU2NjUtNmIwMC01ZDMzLTdmZmU2MTViYTFlNyIsInJvbGUiOiJVU0VSIiwidiI6MSwiaWF0IjoxNzY0NDM3NTgzLCJleHAiOjE3OTU5NzM1ODN9.JSAKLnMKUlDm14xOKukNabF4h_7EGL2N65PaSwC0xfc",
+            "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
             "proxy": "",
             "requests_timeout": 30,
             "listener_requests_delay": 4
@@ -25,7 +25,9 @@
         },
         "auto_restore_items": {
             "enabled": true,
-            "all": true
+            "all": true,
+            "sold": true,
+            "expired": true
         },
         "auto_complete_deals": {
             "enabled": true
@@ -41,15 +43,23 @@
                 "new_problem": true,
                 "deal_status_changed": true
             }
+        },
+        "auto_bump_items": {
+            "enabled": false,
+            "all": false,
+            "day_max_sequence": 15,
+            "night_max_sequence": 30
         }
     },
     "telegram": {
         "api": {
-            "token": ""
+            "token": "8051790686:AAG0_FNInHWKStPKOi97Ub8X9eHdbbCrSII"
         },
         "bot": {
-            "password": "",
-            "signed_users": []
+            "password": "Qodpop-9venwo-quqmux",
+            "signed_users": [
+                1226079520
+            ]
         }
     }
 }

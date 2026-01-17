@@ -23,8 +23,7 @@ CONFIG = SettingsFile(
                 "token": "",
                 "user_agent": "",
                 "proxy": "",
-                "requests_timeout": 30,
-                "listener_requests_delay": 4
+                "requests_timeout": 30
             },
             "watermark": {
                 "enabled": True,
@@ -44,7 +43,7 @@ CONFIG = SettingsFile(
             },
             "auto_restore_items": {
                 "sold": True,
-                "expired": True,
+                "expired": False,
                 "all": True
             },
             "auto_bump_items": {

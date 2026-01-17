@@ -1,0 +1,63 @@
+{
+    "first_message": {
+        "enabled": true,
+        "text": [
+            "👋 Hello, {username}, I'm a helper bot for 𝗣𝗹𝗮𝘆𝗲𝗿𝗼𝗸 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗮𝗹",
+            "",
+            "💡 If you want to talk to the seller, write the command !seller so I can invite them to this dialog",
+            "",
+            "To find out all my commands, write !commands"
+        ]
+    },
+    "cmd_error": {
+        "enabled": true,
+        "text": [
+            "❌ An error occurred when entering the command: {error}"
+        ]
+    },
+    "cmd_commands": {
+        "enabled": true,
+        "text": [
+            "🕹️ Main commands:",
+            "・ !seller — notify and call the seller to this chat"
+        ]
+    },
+    "cmd_seller": {
+        "enabled": true,
+        "text": [
+            "💬 The seller has been called to this chat. Please wait while they connect to the dialog..."
+        ]
+    },
+    "new_deal": {
+        "enabled": false,
+        "text": [
+            "📋 Thank you for purchasing «{deal_item_name}»",
+            "",
+            "The seller may not be available right now, to call them, use the command !seller."
+        ]
+    },
+    "deal_pending": {
+        "enabled": false,
+        "text": [
+            "⌛ Send the required data so I can fulfill your order"
+        ]
+    },
+    "deal_sent": {
+        "enabled": false,
+        "text": [
+            "✅ I confirmed the completion of your order! If you did not receive the purchased item - write about it in the chat"
+        ]
+    },
+    "deal_confirmed": {
+        "enabled": false,
+        "text": [
+            "🌟 Thank you for a successful deal. I would be glad if you leave a review. I look forward to seeing you in my store next time, good luck!"
+        ]
+    },
+    "deal_refunded": {
+        "enabled": false,
+        "text": [
+            "📦 The order has been refunded. I hope this deal did not cause you any inconvenience. I look forward to seeing you in my store next time, good luck!"
+        ]
+    }
+}

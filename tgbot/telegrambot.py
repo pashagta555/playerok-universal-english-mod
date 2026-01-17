@@ -15,7 +15,7 @@ from . import router as main_router
 from . import templates as templ
 
 
-logger = logging.getLogger(f"universal.telegram")
+logger = logging.getLogger("universal.telegram")
 
 
 def get_telegram_bot() -> TelegramBot | None:
@@ -47,10 +47,9 @@ class TelegramBot:
                 main_router.include_router(router)
         self.dp.include_router(main_router)
 
-
     async def _set_main_menu(self):
         try:
-            main_menu_commands = [BotCommand(command="/start", description="🏠 Main Menu")]
+            main_menu_commands = [BotCommand(command="/start", description="🏠 Главное меню")]
             await self.bot.set_my_commands(main_menu_commands)
         except:
             pass
@@ -58,9 +57,10 @@ class TelegramBot:
     async def _set_short_description(self):
         try:
             short_description = textwrap.dedent(f"""
-                Playerok Universal — Modern assistant bot for Playerok 🟦
-                ┕ Channel — @alexeyproduction
-                ┕ Bot — @alexey_production_bot
+                Playerok Universal — Современный бот-помощник для Playerok 🟦
+                
+                ・ Канал — @alexeyproduction
+                ・ Бот — @alexey_production_bot
             """)
             await self.bot.set_my_short_description(short_description=short_description)
         except:
@@ -69,24 +69,25 @@ class TelegramBot:
     async def _set_description(self):
         try:
             description = textwrap.dedent(f"""
-                Playerok Universal — Free modern assistant bot for Playerok 🟦
+                🟢 Вечный онлайн
+                ♻️ Авто-восстановление товаров
+                ⬆️ Авто-поднятие товаров
+                📦 Авто-выдача
+                🕹️ Команды
+                💬 Вызов продавца в чат
+                👋 Приветственное сообщение
+                🖌️ Полная кастомизация
+                🔌 Плагины
                                         
-                🟢 Always online
-                ♻️ Auto-restore items
-                📦 Auto-delivery
-                🕹️ Commands
-                💬 Call seller to chat
-                                        
-                ⬇️ Download bot: https://github.com/alleexxeeyy/playerok-universal
+                ⬇️ Скачать бота: https://github.com/alleexxeeyy/playerok-universal
                 
-                📣 Channel — @alexeyproduction
-                🤖 Bot — @alexey_production_bot
-                🧑‍💻 Author — @alleexxeeyy
+                📣 Канал — @alexeyproduction
+                🤖 Бот — @alexey_production_bot
+                🧑‍💻 Автор — @alleexxeeyy
             """)
             await self.bot.set_my_description(description=description)
         except:
             pass
-    
 
     async def run_bot(self):
         self.loop = asyncio.get_running_loop()
@@ -98,20 +99,10 @@ class TelegramBot:
         await call_bot_event("ON_TELEGRAM_BOT_INIT", [self])
         
         me = await self.bot.get_me()
-        logger.info(f"{ACCENT_COLOR}Telegram bot {Fore.LIGHTCYAN_EX}@{me.username} {ACCENT_COLOR}is running and active")
+        logger.info(f"{ACCENT_COLOR}Telegram бот {Fore.LIGHTCYAN_EX}@{me.username} {ACCENT_COLOR}запущен и активен")
         await self.dp.start_polling(self.bot, skip_updates=True, handle_signals=False)
-        
 
     async def call_seller(self, calling_name: str, chat_id: int | str):
-        """
-        Sends message to admin in Telegram with request for help from customer.
-                
-        :param calling_name: Buyer's username.
-        :type calling_name: `str`
-
-        :param chat_id: Chat ID with customer.
-        :type chat_id: `int` or `str`
-        """
         config = sett.get("config")
         for user_id in config["telegram"]["bot"]["signed_users"]:
             await self.bot.send_message(
@@ -122,15 +113,6 @@ class TelegramBot:
             )
         
     async def log_event(self, text: str, kb: InlineKeyboardMarkup | None = None):
-        """
-        Logs event to TG bot chat.
-                
-        :param text: Log text.
-        :type text: `str`
-                
-        :param kb: Keyboard with buttons.
-        :type kb: `aiogram.types.InlineKeyboardMarkup` or `None`
-        """
         config = sett.get("config")
         chat_id = config["playerok"]["tg_logging"]["chat_id"]
         if not chat_id:
@@ -144,7 +126,7 @@ class TelegramBot:
         else:
             await self.bot.send_message(
                 chat_id=chat_id, 
-                text=f'{text}\n<span class="tg-spoiler">Switch log chat to bot chat to display action menu</span>', 
+                text=f'{text}\n<span class="tg-spoiler">Переключите чат логов на чат с ботом, чтобы отображалась меню с действиями</span>', 
                 reply_markup=None, 
                 parse_mode="HTML"
             )
