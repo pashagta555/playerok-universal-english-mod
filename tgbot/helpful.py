@@ -19,8 +19,8 @@ async def do_auth(message: Message, state: FSMContext) -> Message | None:
         state=state,
         message=message,
         text=templ.sign_text(
-            '🔑 Введите ключ-пароль, указанный вами в конфиге бота ↓'
-            '\n\n<span class="tg-spoiler">Если вы забыли, его можно посмотреть напрямую в конфиге по пути bot_settings/config.json, параметр password в разделе telegram.bot</span>'
+            '🔑 Enter the password key specified in the bot config ↓'
+            '\n\n<span class="tg-spoiler">If you forgot it, you can check it directly in the config at path bot_settings/config.json, parameter password in section telegram.bot</span>'
         ),
         reply_markup=templ.destroy_kb()
     )

@@ -49,7 +49,7 @@ class TelegramBot:
 
     async def _set_main_menu(self):
         try:
-            main_menu_commands = [BotCommand(command="/start", description="🏠 Главное меню")]
+            main_menu_commands = [BotCommand(command="/start", description="🏠 Main Menu")]
             await self.bot.set_my_commands(main_menu_commands)
         except:
             pass
@@ -57,10 +57,10 @@ class TelegramBot:
     async def _set_short_description(self):
         try:
             short_description = textwrap.dedent(f"""
-                Playerok Universal — Современный бот-помощник для Playerok 🟦
+                Playerok Universal — Modern helper bot for Playerok 🟦
                 
-                ・ Канал — @alexeyproduction
-                ・ Бот — @alexey_production_bot
+                ・ Channel — @alexeyproduction
+                ・ Bot — @alexey_production_bot
             """)
             await self.bot.set_my_short_description(short_description=short_description)
         except:
@@ -69,21 +69,21 @@ class TelegramBot:
     async def _set_description(self):
         try:
             description = textwrap.dedent(f"""
-                🟢 Вечный онлайн
-                ♻️ Авто-восстановление товаров
-                ⬆️ Авто-поднятие товаров
-                📦 Авто-выдача
-                🕹️ Команды
-                💬 Вызов продавца в чат
-                👋 Приветственное сообщение
-                🖌️ Полная кастомизация
-                🔌 Плагины
+                🟢 Always online
+                ♻️ Auto-restore items
+                ⬆️ Auto-bump items
+                📦 Auto-delivery
+                🕹️ Commands
+                💬 Call seller to chat
+                👋 Welcome message
+                🖌️ Full customization
+                🔌 Plugins
                                         
-                ⬇️ Скачать бота: https://github.com/alleexxeeyy/playerok-universal
+                ⬇️ Download bot: https://github.com/alleexxeeyy/playerok-universal
                 
-                📣 Канал — @alexeyproduction
-                🤖 Бот — @alexey_production_bot
-                🧑‍💻 Автор — @alleexxeeyy
+                📣 Channel — @alexeyproduction
+                🤖 Bot — @alexey_production_bot
+                🧑‍💻 Author — @alleexxeeyy
             """)
             await self.bot.set_my_description(description=description)
         except:
@@ -99,7 +99,7 @@ class TelegramBot:
         await call_bot_event("ON_TELEGRAM_BOT_INIT", [self])
         
         me = await self.bot.get_me()
-        logger.info(f"{ACCENT_COLOR}Telegram бот {Fore.LIGHTCYAN_EX}@{me.username} {ACCENT_COLOR}запущен и активен")
+        logger.info(f"{ACCENT_COLOR}Telegram bot {Fore.LIGHTCYAN_EX}@{me.username} {ACCENT_COLOR}is running and active")
         await self.dp.start_polling(self.bot, skip_updates=True, handle_signals=False)
 
     async def call_seller(self, calling_name: str, chat_id: int | str):
@@ -126,7 +126,7 @@ class TelegramBot:
         else:
             await self.bot.send_message(
                 chat_id=chat_id, 
-                text=f'{text}\n<span class="tg-spoiler">Переключите чат логов на чат с ботом, чтобы отображалась меню с действиями</span>', 
+                text=f'{text}\n<span class="tg-spoiler">Switch the log chat to a chat with the bot to display the menu with actions</span>', 
                 reply_markup=None, 
                 parse_mode="HTML"
             )

@@ -17,7 +17,7 @@ async def handler_waiting_for_day_max_sequence(message: types.Message, state: FS
     try: 
         await state.set_state(None)
         if not message.text.strip().isdigit():
-            raise Exception("❌ Слишком короткое значение")
+            raise Exception("❌ Value is too short")
 
         day_max_sequence = int(message.text.strip())
         config = sett.get("config")
@@ -27,7 +27,7 @@ async def handler_waiting_for_day_max_sequence(message: types.Message, state: FS
         await throw_float_message(
             state=state,
             message=message,
-            text=templ.settings_bump_float_text(f"✅ <b>Максимальная позиция товара днём</b> была успешно изменена на <b>{day_max_sequence}</b>"),
+            text=templ.settings_bump_float_text(f"✅ <b>Maximum item position during day</b> was successfully changed to <b>{day_max_sequence}</b>"),
             reply_markup=templ.back_kb(calls.SettingsNavigation(to="bump").pack())
         )
     except Exception as e:
@@ -44,7 +44,7 @@ async def handler_waiting_for_night_max_sequence(message: types.Message, state: 
     try: 
         await state.set_state(None)
         if not message.text.strip().isdigit():
-            raise Exception("❌ Вы должны ввести числовое значение")
+            raise Exception("❌ You must enter a numeric value")
 
         night_max_sequence = int(message.text.strip())
         config = sett.get("config")
@@ -54,7 +54,7 @@ async def handler_waiting_for_night_max_sequence(message: types.Message, state: 
         await throw_float_message(
             state=state,
             message=message,
-            text=templ.settings_bump_float_text(f"✅ <b>Максимальная позиция товара ночью</b> была успешно изменена на <b>{night_max_sequence}</b>"),
+            text=templ.settings_bump_float_text(f"✅ <b>Maximum item position during night</b> was successfully changed to <b>{night_max_sequence}</b>"),
             reply_markup=templ.back_kb(calls.SettingsNavigation(to="bump").pack())
         )
     except Exception as e:
@@ -71,7 +71,7 @@ async def handler_waiting_for_new_included_bump_item_keyphrases(message: types.M
     try: 
         await state.set_state(None)
         if len(message.text.strip()) <= 0:
-            raise Exception("❌ Слишком короткое значение")
+            raise Exception("❌ Value is too short")
         
         keyphrases = [phrase.strip() for phrase in message.text.strip().split(",") if len(phrase.strip()) > 0]
         auto_bump_items = sett.get("auto_bump_items")
@@ -83,7 +83,7 @@ async def handler_waiting_for_new_included_bump_item_keyphrases(message: types.M
         await throw_float_message(
             state=state,
             message=message,
-            text=templ.settings_new_bump_included_float_text(f"✅ Предмет с ключевыми фразами <code>{'</code>, <code>'.join(keyphrases)}</code> успешно включён в поднятие"),
+            text=templ.settings_new_bump_included_float_text(f"✅ Item with keyphrases <code>{'</code>, <code>'.join(keyphrases)}</code> was successfully included in bump"),
             reply_markup=templ.back_kb(calls.IncludedBumpItemsPagination(page=last_page).pack())
         )
     except Exception as e:
@@ -117,7 +117,7 @@ async def handler_waiting_for_new_included_bump_items_keyphrases_file(message: t
                     keyphrases_list.append(keyphrases)
 
         if len(keyphrases_list) <= 0:
-            raise Exception("❌ Файл не содержит валидных ключевых фраз")
+            raise Exception("❌ File does not contain valid keyphrases")
 
         auto_bump_items = sett.get("auto_bump_items")
         auto_bump_items["included"].extend(keyphrases_list)
@@ -128,7 +128,7 @@ async def handler_waiting_for_new_included_bump_items_keyphrases_file(message: t
         await throw_float_message(
             state=state,
             message=message,
-            text=templ.settings_new_bump_included_float_text(f"✅ Успешно включено <b>{len(keyphrases_list)}</b> предметов из файла в поднятие"),
+            text=templ.settings_new_bump_included_float_text(f"✅ Successfully included <b>{len(keyphrases_list)}</b> items from file in bump"),
             reply_markup=templ.back_kb(calls.IncludedBumpItemsPagination(page=last_page).pack())
         )
     except Exception as e:
@@ -147,7 +147,7 @@ async def handler_waiting_for_new_excluded_bump_item_keyphrases(message: types.M
     try: 
         await state.set_state(None)
         if len(message.text.strip()) <= 0:
-            raise Exception("❌ Слишком короткое значение")
+            raise Exception("❌ Value is too short")
         
         keyphrases = [phrase.strip() for phrase in message.text.strip().split(",") if len(phrase.strip()) > 0]
         auto_bump_items = sett.get("auto_bump_items")
@@ -159,7 +159,7 @@ async def handler_waiting_for_new_excluded_bump_item_keyphrases(message: types.M
         await throw_float_message(
             state=state,
             message=message,
-            text=templ.settings_new_bump_excluded_float_text(f"✅ Предмет с ключевыми фразами <code>{'</code>, <code>'.join(keyphrases)}</code> успешно добавлен в исключения для поднятия"),
+            text=templ.settings_new_bump_excluded_float_text(f"✅ Item with keyphrases <code>{'</code>, <code>'.join(keyphrases)}</code> was successfully added to exclusions for bump"),
             reply_markup=templ.back_kb(calls.ExcludedBumpItemsPagination(page=last_page).pack())
         )
     except Exception as e:
@@ -193,7 +193,7 @@ async def handler_waiting_for_new_excluded_bump_items_keyphrases_file(message: t
                     keyphrases_list.append(keyphrases)
 
         if len(keyphrases_list) <= 0:
-            raise Exception("❌ Файл не содержит валидных ключевых фраз")
+            raise Exception("❌ File does not contain valid keyphrases")
 
         auto_bump_items = sett.get("auto_bump_items")
         auto_bump_items["excluded"].extend(keyphrases_list)
@@ -204,7 +204,7 @@ async def handler_waiting_for_new_excluded_bump_items_keyphrases_file(message: t
         await throw_float_message(
             state=state,
             message=message,
-            text=templ.settings_new_bump_excluded_float_text(f"✅ Успешно добавлено <b>{len(keyphrases_list)}</b> предметов из файла в исключения для поднятия"),
+            text=templ.settings_new_bump_excluded_float_text(f"✅ Successfully added <b>{len(keyphrases_list)}</b> items from file to exclusions for bump"),
             reply_markup=templ.back_kb(calls.ExcludedBumpItemsPagination(page=last_page).pack())
         )
     except Exception as e:

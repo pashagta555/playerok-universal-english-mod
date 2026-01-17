@@ -129,7 +129,7 @@ def install_requirements(requirements_path: str):
         if missing_packages:
             subprocess.check_call([sys.executable, "-m", "pip", "install", *missing_packages])
     except:
-        logger.error(f"{Fore.LIGHTRED_EX}Не удалось установить зависимости из файла \"{requirements_path}\"")
+        logger.error(f"{Fore.LIGHTRED_EX}Failed to install dependencies from file \"{requirements_path}\"")
 
 
 def patch_requests():
@@ -158,7 +158,7 @@ def patch_requests():
                 delay = float(retry_hdr) if retry_hdr else min(120.0, 5.0 * (2 ** attempt))
             except Exception:
                 delay = min(120.0, 5.0 * (2 ** attempt))
-            delay += random.uniform(0.2, 0.8)  # небольшой джиттер
+            delay += random.uniform(0.2, 0.8)  # small jitter
             time.sleep(delay)
         return resp
 

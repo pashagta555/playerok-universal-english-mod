@@ -259,7 +259,7 @@ async def callback_send_new_included_bump_items_keyphrases_file(callback: Callba
     await throw_float_message(
         state=state, 
         message=callback.message, 
-        text=templ.settings_new_bump_included_float_text(f"📄 Отправьте <b>.txt</b> файл с <b>ключевыми фразами</b>, по одной записи в строке (для каждого товара указываются через запятую, например, \"samp аккаунт, со всеми данными\")"), 
+        text=templ.settings_new_bump_included_float_text(f"📄 Send a <b>.txt</b> file with <b>keyphrases</b>, one entry per line (for each item, specify them separated by commas, for example, \"samp account, with all data\")"), 
         reply_markup=templ.back_kb(calls.IncludedBumpItemsPagination(page=last_page).pack())
     )
 
@@ -272,7 +272,7 @@ async def callback_send_new_excluded_bump_items_keyphrases_file(callback: Callba
     await throw_float_message(
         state=state, 
         message=callback.message, 
-        text=templ.settings_new_bump_excluded_float_text(f"📄 Отправьте <b>.txt</b> файл с <b>ключевыми фразами</b>, по одной записи в строке (для каждого товара указываются через запятую, например, \"samp аккаунт, со всеми данными\")"), 
+        text=templ.settings_new_bump_excluded_float_text(f"📄 Send a <b>.txt</b> file with <b>keyphrases</b>, one entry per line (for each item, specify them separated by commas, for example, \"samp account, with all data\")"), 
         reply_markup=templ.back_kb(calls.ExcludedBumpItemsPagination(page=last_page).pack())
     )
 

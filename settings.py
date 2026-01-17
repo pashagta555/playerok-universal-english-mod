@@ -281,7 +281,7 @@ def set_json(path: str, new: dict):
     """
     dir_name = os.path.dirname(path)
     
-    with tempfile.NamedTemporaryFile( # атомарная запись файла
+    with tempfile.NamedTemporaryFile( # atomic file write
         "w",
         encoding="utf-8",
         dir=dir_name,
