@@ -28,21 +28,21 @@ def get_account() -> Account | None:
 
 class Account:
     """
-    Класс, описывающий данные и методы Playerok аккаунта.
+    Class describing Playerok account data and methods.
 
-    :param token: Токен аккаунта.
+    :param token: Account token.
     :type token: `str`
 
-    :param user_agent: Юзер-агент браузера.
+    :param user_agent: Browser user agent.
     :type user_agent: `str`
 
-    :param proxy: IPV4 прокси в формате: `user:pass@ip:port` или `ip:port`, _опционально_.
+    :param proxy: IPV4 proxy in format: `user:pass@ip:port` or `ip:port`, _optional_.
     :type proxy: `str` or `None`
 
-    :param requests_timeout: Таймаут ожидания ответов на запросы.
+    :param requests_timeout: Request response timeout.
     :type requests_timeout: `int`
 
-    :param request_max_retries: Максимальное количество повторных попыток отправки запроса, если была обнаружена CloudFlare защита.
+    :param request_max_retries: Maximum number of retry attempts for sending request if CloudFlare protection was detected.
     :type request_max_retries: `int`
     """
     def __new__(cls, *args, **kwargs) -> Account:
@@ -60,51 +60,51 @@ class Account:
             **kwargs
         ):
         self.token = token
-        """Токен сессии аккаунта."""
+        """Account session token."""
         self.user_agent = user_agent or "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"
-        """Юзер-агент браузера."""
+        """Browser user agent."""
         self.requests_timeout = requests_timeout
-        """Таймаут ожидания ответов на запросы."""
+        """Request response timeout."""
         self.proxy = proxy
-        """Прокси."""
+        """Proxy."""
         self.__proxy_string = f"http://{self.proxy.replace('https://', '').replace('http://', '')}" if self.proxy else None
-        """Строка прокси."""
+        """Proxy string."""
         self.request_max_retries = request_max_retries
-        """Максимальное количество повторных попыток отправки запроса."""
+        """Maximum number of retry attempts for sending request."""
 
         self.base_url = "https://playerok.com"
-        """Базовый URL для всех запросов."""
+        """Base URL for all requests."""
 
         self.id: str | None = None
-        """ID аккаунта. \n\n_Заполняется при первом использовании get()_"""
+        """Account ID. \n\n_Filled on first use of get()_"""
         self.username: str | None = None
-        """Никнейм аккаунта. \n\n_Заполняется при первом использовании get()_"""
+        """Account username. \n\n_Filled on first use of get()_"""
         self.email: str | None = None
-        """Email почта аккаунта. \n\n_Заполняется при первом использовании get()_"""
+        """Account email. \n\n_Filled on first use of get()_"""
         self.role: str | None = None
-        """Роль аккаунта. \n\n_Заполняется при первом использовании get()_"""
+        """Account role. \n\n_Filled on first use of get()_"""
         self.support_chat_id: str | None = None
-        """ID чата поддержки. \n\n_Заполняется при первом использовании get()_"""
+        """Support chat ID. \n\n_Filled on first use of get()_"""
         self.system_chat_id: str | None = None
-        """ID системного чата. \n\n_Заполняется при первом использовании get()_"""
+        """System chat ID. \n\n_Filled on first use of get()_"""
         self.unread_chats_counter: int | None = None
-        """Количество непрочитанных чатов. \n\n_Заполняется при первом использовании get()_"""
+        """Unread chats count. \n\n_Filled on first use of get()_"""
         self.is_blocked: bool | None = None
-        """Заблокирован ли аккаунт. \n\n_Заполняется при первом использовании get()_"""
+        """Whether account is blocked. \n\n_Filled on first use of get()_"""
         self.is_blocked_for: str | None = None
-        """Причина блокировки аккаунта. \n\n_Заполняется при первом использовании get()_"""
+        """Account block reason. \n\n_Filled on first use of get()_"""
         self.created_at: str | None = None
-        """Дата создания аккаунта. \n\n_Заполняется при первом использовании get()_"""
+        """Account creation date. \n\n_Filled on first use of get()_"""
         self.last_item_created_at: str | None = None
-        """Дата создания последнего предмета. \n\n_Заполняется при первом использовании get()_"""
+        """Last item creation date. \n\n_Filled on first use of get()_"""
         self.has_frozen_balance: bool | None = None
-        """Заморожен ли баланс аккаунта. \n\n_Заполняется при первом использовании get()_"""
+        """Whether account balance is frozen. \n\n_Filled on first use of get()_"""
         self.has_confirmed_phone_number: bool | None = None
-        """Подтверждён ли номер телефона. \n\n_Заполняется при первом использовании get()_"""
+        """Whether phone number is confirmed. \n\n_Filled on first use of get()_"""
         self.can_publish_items: bool | None = None
-        """Может ли продавать предметы. \n\n_Заполняется при первом использовании get()_"""
+        """Whether can sell items. \n\n_Filled on first use of get()_"""
         self.profile: AccountProfile | None = None
-        """Профиль аккаунта (не путать с профилем пользователя). \n\n_Заполняется при первом использовании get()_"""
+        """Account profile (not to be confused with user profile). \n\n_Filled on first use of get()_"""
 
         self.__cert_path = os.path.join(os.path.dirname(__file__), "cacert.pem")
         self.__tmp_cert_path = os.path.join(tempfile.gettempdir(), "cacert.pem")
@@ -133,24 +133,24 @@ class Account:
         files: dict | None = None
     ) -> requests.Response:
         """
-        Отправляет запрос на сервер playerok.com.
+        Sends a request to playerok.com server.
 
-        :param method: Метод запроса: post, get.
+        :param method: Request method: post, get.
         :type method: `str`
 
-        :param url: URL запроса.
+        :param url: Request URL.
         :type url: `str`
 
-        :param headers: Заголовки запроса.
+        :param headers: Request headers.
         :type headers: `dict[str, str]`
         
-        :param payload: Payload запроса.
+        :param payload: Request payload.
         :type payload: `dict[str, str]` or `None`
         
-        :param files: Файлы запроса.
+        :param files: Request files.
         :type files: `dict` or `None`
 
-        :return: Ответа запроса requests.
+        :return: requests.Response object.
         :rtype: `requests.Response`
         """
         _headers = {
@@ -223,7 +223,7 @@ class Account:
                 break
             self._refresh_clients()
             delay = min(120.0, 5.0 * (2 ** attempt)) 
-            self.logger.error(f"Cloudflare Detected, пробую отправить запрос снова через {delay} секунд")
+            self.logger.error(f"Cloudflare Detected, trying to send request again in {delay} seconds")
             time.sleep(delay)
         else:
             raise CloudflareDetectedException(resp)
@@ -235,7 +235,7 @@ class Account:
                     if exc.error_code != 500:
                         break
                     delay = min(120.0, 2 ** attempt)
-                    self.logger.error(f"500 Error Code, пробую отправить запрос снова через {delay} секунд")
+                    self.logger.error(f"500 Error Code, trying to send request again in {delay} seconds")
                     time.sleep(delay)
                 else:
                     raise exc
@@ -247,9 +247,9 @@ class Account:
     
     def get(self) -> Account:
         """
-        Получает/обновляет данные об аккаунте.
+        Gets/updates account data.
 
-        :return: Объект аккаунта с обновлёнными данными.
+        :return: Account object with updated data.
         :rtype: `playerokapi.account.Account`
         """
         headers = {"accept": "*/*"}
@@ -306,20 +306,20 @@ class Account:
         username: str | None = None
     ) -> types.UserProfile:
         """
-        Получает профиль пользователя.\n
-        Можно получить по любому из двух параметров:
+        Gets user profile.\n
+        Can be obtained by either of two parameters:
 
-        :param id: ID пользователя, _опционально_.
+        :param id: User ID, _optional_.
         :type id: `str` or `None`
 
-        :param username: Никнейм пользователя, _опционально_.
+        :param username: User username, _optional_.
         :type username: `str` or `None`
 
-        :return: Объект профиля пользователя.
+        :return: User profile object.
         :rtype: `playerokapi.types.UserProfile`
         """
         if not any([id, username]):
-            raise TypeError("Не был передан ни один из обязательных аргументов: id, username")
+            raise TypeError("None of the required arguments were provided: id, username")
         
         headers = {"accept": "*/*"}
         payload = {
@@ -353,21 +353,21 @@ class Account:
         after_cursor: str = None
     ) -> types.ItemDealList:
         """
-        Получает сделки аккаунта.
+        Gets account deals.
 
-        :param count: Кол-во сделок, которые нужно получить (не более 24 за один запрос).
+        :param count: Number of deals to get (no more than 24 per request).
         :type count: `int`
 
-        :param statuses: Статусы заявок, которые нужно получать, _опционально_.
+        :param statuses: Deal statuses to get, _optional_.
         :type statuses: `list[playerokapi.enums.ItemDealsStatuses]` or `None`
 
-        :param direction: Направление сделок, _опционально_.
+        :param direction: Deal direction, _optional_.
         :type direction: `playerokapi.enums.ItemDealsDirections` or `None`
 
-        :param after_cursor: Курсор, с которого будет идти парсинг (если нету - ищет с самого начала страницы), _опционально_.
+        :param after_cursor: Cursor to start parsing from (if not provided - starts from the beginning of the page), _optional_.
         :type after_cursor: `str`
         
-        :return: Страница сделок.
+        :return: Deals page.
         :rtype: `playerokapi.types.ItemDealList`
         """
         str_statuses = [status.name for status in statuses] if statuses else None
@@ -404,12 +404,12 @@ class Account:
         deal_id: str
     ) -> types.ItemDeal:
         """
-        Получает сделку.
+        Gets a deal.
 
-        :param deal_id: ID сделки.
+        :param deal_id: Deal ID.
         :type deal_id: `str`
         
-        :return: Объект сделки.
+        :return: Deal object.
         :rtype: `playerokapi.types.ItemDeal`
         """
         headers = {"accept": "*/*"}
@@ -437,16 +437,16 @@ class Account:
         new_status: ItemDealStatuses
     ) -> types.ItemDeal:
         """
-        Обновляет статус сделки
-        (используется, чтобы подтвердить, оформить возврат и т.д).
+        Updates deal status
+        (used to confirm, process refund, etc.).
 
-        :param deal_id: ID сделки.
+        :param deal_id: Deal ID.
         :type deal_id: `str`
 
-        :param new_status: Новый статус сделки.
+        :param new_status: New deal status.
         :type new_status: `playerokapi.enums.ItemDealStatuses`
         
-        :return: Объект обновлённой сделки.
+        :return: Updated deal object.
         :rtype: `playerokapi.types.ItemDeal`
         """
         headers = {"accept": "*/*"}
@@ -471,18 +471,18 @@ class Account:
         after_cursor: str = None
     ) -> types.GameList:
         """
-        Получает все игры или/и приложения.
+        Gets all games and/or applications.
 
-        :param count: Кол-во игр, которые нужно получить (не более 24 за один запрос).
+        :param count: Number of games to get (no more than 24 per request).
         :type count: `int`
 
-        :param type: Тип игр, которые нужно получать. По умолчанию не указано, значит будут все сразу, _опционально_.
+        :param type: Type of games to get. If not specified, all will be returned, _optional_.
         :type type: `playerokapi.enums.GameTypes` or `None`
 
-        :param after_cursor: Курсор, с которого будет идти парсинг (если нету - ищет с самого начала страницы), _опционально_.
+        :param after_cursor: Cursor to start parsing from (if not provided - starts from the beginning of the page), _optional_.
         :type after_cursor: `str`
         
-        :return: Страница игр.
+        :return: Games page.
         :rtype: `playerokapi.types.GameList`
         """
         headers = {"accept": "*/*"}
@@ -514,20 +514,20 @@ class Account:
         slug: str | None = None
     ) -> types.Game:
         """
-        Получает игру/приложение.\n
-        Можно получить по любому из двух параметров:
+        Gets a game/application.\n
+        Can be obtained by either of two parameters:
 
-        :param id: ID игры/приложения, _опционально_.
+        :param id: Game/application ID, _optional_.
         :type id: `str` or `None`
 
-        :param slug: Имя страницы игры/приложения, _опционально_.
+        :param slug: Game/application page name, _optional_.
         :type slug: `str` or `None`
         
-        :return: Объект игры.
+        :return: Game object.
         :rtype: `playerokapi.types.Game`
         """
         if not any([id, slug]):
-            raise TypeError("Не был передан ни один из обязательных аргументов: id, slug")
+            raise TypeError("None of the required arguments were provided: id, slug")
         
         headers = {"accept": "*/*"}
         payload = {
@@ -554,25 +554,25 @@ class Account:
         slug: str | None = None
     ) -> types.GameCategory:
         """
-        Получает категорию игры/приложения.\n
-        Можно получить параметру `id` или по связке параметров `game_id` и `slug`
+        Gets a game/application category.\n
+        Can be obtained by `id` parameter or by combination of `game_id` and `slug` parameters
 
-        :param id: ID категории, _опционально_.
+        :param id: Category ID, _optional_.
         :type id: `str` or `None`
 
-        :param game_id: ID игры категории (лучше указывать в связке со slug, чтобы находить точную категорию), _опционально_.
+        :param game_id: Game category ID (better to specify together with slug to find exact category), _optional_.
         :type game_id: `str` or `None`
 
-        :param slug: Имя страницы категории, _опционально_.
+        :param slug: Category page name, _optional_.
         :type slug: `str` or `None`
         
-        :return: Объект категории игры.
+        :return: Game category object.
         :rtype: `playerokapi.types.GameCategory`
         """
         if not id and not all([game_id, slug]):
             if not id and (game_id or slug):
-                raise TypeError("Связка аргументов game_id, slug была передана не полностью")
-            raise TypeError("Не был передан ни один из обязательных аргументов: id, game_id, slug")
+                raise TypeError("Arguments game_id, slug combination was not provided completely")
+            raise TypeError("None of the required arguments were provided: id, game_id, slug")
 
         headers = {"accept": "*/*"}
         payload = {
@@ -601,21 +601,21 @@ class Account:
         after_cursor: str | None = None
     ) -> types.GameCategoryAgreementList:
         """
-        Получает соглашения пользователя на продажу предметов в категории (если пользователь уже принял эти соглашения - список будет пуст).
+        Gets user agreements for selling items in category (if user has already accepted these agreements - list will be empty).
 
-        :param game_category_id: ID категории игры.
+        :param game_category_id: Game category ID.
         :type game_category_id: `str`
 
-        :param user_id: ID пользователя, чьи соглашения нужно получить. Если не указан, будет получать по ID вашего аккаунта, _опционально_.
+        :param user_id: User ID whose agreements to get. If not specified, will get by your account ID, _optional_.
         :type user_id: `str` or `None`
 
-        :param count: Кол-во соглашений, которые нужно получить (не более 24 за один запрос).
+        :param count: Number of agreements to get (no more than 24 per request).
         :type count: `int`
         
-        :param after_cursor: Курсор, с которого будет идти парсинг (если нету - ищет с самого начала страницы), _опционально_.
+        :param after_cursor: Cursor to start parsing from (if not provided - starts from the beginning of the page), _optional_.
         :type after_cursor: `str` or `None`
         
-        :return: Страница соглашений.
+        :return: Agreements page.
         :rtype: `playerokapi.types.GameCategoryAgreementList`
         """
         headers = {"accept": "*/*"}
@@ -649,18 +649,18 @@ class Account:
         after_cursor: str | None = None
     ) -> types.GameCategoryObtainingTypeList:
         """
-        Получает типы (способы) получения предмета в категории.
+        Gets types (methods) of obtaining items in category.
         
-        :param game_category_id: ID категории игры.
+        :param game_category_id: Game category ID.
         :type game_category_id: `str`
 
-        :param count: Кол-во соглашений, которые нужно получить (не более 24 за один запрос).
+        :param count: Number of agreements to get (no more than 24 per request).
         :type count: `int`
         
-        :param after_cursor: Курсор, с которого будет идти парсинг (если нету - ищет с самого начала страницы), _опционально_.
+        :param after_cursor: Cursor to start parsing from (if not provided - starts from the beginning of the page), _optional_.
         :type after_cursor: `str` or `None`
         
-        :return: Страница соглашений.
+        :return: Agreements page.
         :rtype: `playerokapi.types.GameCategoryAgreementList`
         """
         headers = {"accept": "*/*"}
@@ -695,24 +695,24 @@ class Account:
         after_cursor: str | None = None
     ) -> types.GameCategoryInstructionList:
         """
-        Получает инструкции по продаже/покупке в категории.
+        Gets instructions for selling/buying in category.
         
-        :param game_category_id: ID категории игры.
+        :param game_category_id: Game category ID.
         :type game_category_id: `str`
         
-        :param obtaining_type_id: ID типа (способа) получения предмета.
+        :param obtaining_type_id: Item obtaining type (method) ID.
         :type obtaining_type_id: `str`
 
-        :param count: Кол-во инструкций, которые нужно получить (не более 24 за один запрос).
+        :param count: Number of instructions to get (no more than 24 per request).
         :type count: `int`
         
-        :param type: Тип инструкции: для продавца или для покупателя, _опционально_.
+        :param type: Instruction type: for seller or buyer, _optional_.
         :type type: `enums.GameCategoryInstructionTypes` or `None`
 
-        :param after_cursor: Курсор, с которого будет идти парсинг (если нету - ищет с самого начала страницы), _опционально_.
+        :param after_cursor: Cursor to start parsing from (if not provided - starts from the beginning of the page), _optional_.
         :type after_cursor: `str` or `None`
         
-        :return: Страница инструкий.
+        :return: Instructions page.
         :rtype: `playerokapi.types.GameCategoryInstructionList`
         """
         headers = {"accept": "*/*"}
@@ -749,24 +749,24 @@ class Account:
         after_cursor: str | None = None
     ) -> types.GameCategoryDataFieldList:
         """
-        Получает поля с данными категории (которые отправляются после покупки).
+        Gets category data fields (which are sent after purchase).
         
-        :param game_category_id: ID категории игры.
+        :param game_category_id: Game category ID.
         :type game_category_id: `str`
         
-        :param obtaining_type_id: ID типа (способа) получения предмета.
+        :param obtaining_type_id: Item obtaining type (method) ID.
         :type obtaining_type_id: `str`
 
-        :param count: Кол-во инструкций, которые нужно получить (не более 24 за один запрос).
+        :param count: Number of instructions to get (no more than 24 per request).
         :type count: `int`
         
-        :param type: Тип полей с данными, _опционально_.
+        :param type: Data fields type, _optional_.
         :type type: `enums.GameCategoryDataFieldTypes` or `None`
 
-        :param after_cursor: Курсор, с которого будет идти парсинг (если нету - ищет с самого начала страницы), _опционально_.
+        :param after_cursor: Cursor to start parsing from (if not provided - starts from the beginning of the page), _optional_.
         :type after_cursor: `str` or `None`
         
-        :return: Страница полей с данными.
+        :return: Data fields page.
         :rtype: `playerokapi.types.GameCategoryDataFieldList`
         """
         headers = {"accept": "*/*"}
@@ -802,21 +802,21 @@ class Account:
         after_cursor: str | None = None
     ) -> types.ChatList:
         """
-        Получает все чаты аккаунта.
+        Gets all account chats.
 
-        :param count: Кол-во чатов, которые нужно получить (не более 24 за один запрос).
+        :param count: Number of chats to get (no more than 24 per request).
         :type count: `int`
 
-        :param type: Тип чатов, которые нужно получать. По умолчанию не указано, значит будут все сразу, _опционально_.
+        :param type: Type of chats to get. If not specified, all will be returned, _optional_.
         :type type: `playerokapi.enums.ChatTypes` or `None`
 
-        :param status: Статус чатов, которые нужно получать. По умолчанию не указано, значит будут любые, _опционально_.
+        :param status: Status of chats to get. If not specified, any will be returned, _optional_.
         :type status: `playerokapi.enums.ChatStatuses` or `None`
         
-        :param after_cursor: Курсор, с которого будет идти парсинг (если нету - ищет с самого начала страницы), _опционально_.
+        :param after_cursor: Cursor to start parsing from (if not provided - starts from the beginning of the page), _optional_.
         :type after_cursor: `str` or `None`
         
-        :return: Страница чатов.
+        :return: Chats page.
         :rtype: `playerokapi.types.ChatList`
         """
         headers = {"accept": "*/*"}
@@ -850,12 +850,12 @@ class Account:
         chat_id: str
     ) -> types.Chat:
         """
-        Получает чат.
+        Gets a chat.
 
-        :param chat_id: ID чата.
+        :param chat_id: Chat ID.
         :type chat_id: `str`
         
-        :return: Объект чата.
+        :return: Chat object.
         :rtype: `playerokapi.types.Chat`
         """
         headers = {"accept": "*/*"}
@@ -881,12 +881,12 @@ class Account:
         username: str
     ) -> types.Chat | None:
         """
-        Получает чат по никнейму собеседника.
+        Gets chat by interlocutor username.
 
-        :param username: Никнейм собеседника.
+        :param username: Interlocutor username.
         :type username: `str`
 
-        :return: Объект чата.
+        :return: Chat object.
         :rtype: `playerokapi.types.Chat` or `None`
         """
         next_cursor = None
@@ -906,18 +906,18 @@ class Account:
         after_cursor: str | None = None
     ) -> types.ChatMessageList:
         """
-        Получает сообщения чата.
+        Gets chat messages.
 
-        :param chat_id: ID чата.
+        :param chat_id: Chat ID.
         :type chat_id: `str`
 
-        :param count: Кол-во сообщений, которые нужно получить (не более 24 за один запрос).
+        :param count: Number of messages to get (no more than 24 per request).
         :type count: `int`
 
-        :param after_cursor: Курсор, с которого будет идти парсинг (если нету - ищет с самого начала страницы), _опционально_.
+        :param after_cursor: Cursor to start parsing from (if not provided - starts from the beginning of the page), _optional_.
         :type after_cursor: `str` or `None`
         
-        :return: Страница сообщений.
+        :return: Messages page.
         :rtype: `playerokapi.types.ChatMessageList`
         """
         headers = {"accept": "*/*"}
@@ -950,12 +950,12 @@ class Account:
         chat_id: str
     ) -> types.Chat:
         """
-        Помечает чат как прочитанный (все сообщения).
+        Marks chat as read (all messages).
 
-        :param chat_id: ID чата.
+        :param chat_id: Chat ID.
         :type chat_id: `str`
 
-        :return: Объект чата с обновлёнными данными.
+        :return: Chat object with updated data.
         :rtype: `playerokapi.types.Chat`
         """
         headers = {"accept": "*/*"}
@@ -980,26 +980,26 @@ class Account:
         mark_chat_as_read: bool = False
     ) -> types.ChatMessage:
         """
-        Отправляет сообщение в чат.\n
-        Можно отправить текстовое сообщение `text` или фотографию `photo_file_path`.
+        Sends a message to chat.\n
+        Can send text message `text` or photo `photo_file_path`.
 
-        :param chat_id: ID чата, в который нужно отправить сообщение.
+        :param chat_id: Chat ID to send message to.
         :type chat_id: `str`
 
-        :param text: Текст сообщения, _опционально_.
+        :param text: Message text, _optional_.
         :type text: `str` or `None`
 
-        :param photo_file_path: Путь к файлу фотографии, _опционально_.
+        :param photo_file_path: Photo file path, _optional_.
         :type photo_file_path: `str` or `None`
 
-        :param mark_chat_as_read: Пометить чат, как прочитанный перед отправкой, _опционально_.
+        :param mark_chat_as_read: Mark chat as read before sending, _optional_.
         :type mark_chat_as_read: `bool`
 
-        :return: Объект отправленного сообщения.
+        :return: Sent message object.
         :rtype: `playerokapi.types.ChatMessage`
         """
         if not any([text, photo_file_path]):
-            raise TypeError("Не был передан ни один из обязательных аргументов: text, photo_file_path")
+            raise TypeError("None of the required arguments were provided: text, photo_file_path")
         
         if mark_chat_as_read:
             self.mark_chat_as_read(chat_id=chat_id)
@@ -1037,35 +1037,35 @@ class Account:
         attachments: list[str]
     ) -> types.Item:
         """
-        Создаёт предмет (после создания помещается в черновик, а не сразу выставляется на продажу).
+        Creates an item (after creation it is placed in draft, not immediately put up for sale).
 
-        :param game_category_id: ID категории игры, в которой необходимо создать предмет.
+        :param game_category_id: Game category ID in which to create the item.
         :type game_category_id: `str`
 
-        :param obtaining_type_id: ID типа получения предмета.
+        :param obtaining_type_id: Item obtaining type ID.
         :type obtaining_type_id: `str`
 
-        :param name: Название предмета.
+        :param name: Item name.
         :type name: `str`
 
-        :param price: Цена предмета.
+        :param price: Item price.
         :type price: `int` or `str`
 
-        :param description: Описание предмета.
+        :param description: Item description.
         :type description: `str`
 
-        :param options: Массив **выбранных** опций (аттрибутов) предмета.
+        :param options: Array of **selected** item options (attributes).
         :type options: `list[playerokapi.types.GameCategoryOption]`
 
-        :param data_fields: Массив полей с данными предмета. \n
-            !!! Должны быть заполнены данные с типом поля `ITEM_DATA`, то есть те данные, которые указываются при заполнении информации о товаре.
-            Поля с типом `OBTAINING_DATA` **заполнять и передавать не нужно**, так как эти данные будет указывать сам покупатель при оформлении предмета.
+        :param data_fields: Array of item data fields. \n
+            !!! Must be filled with field type `ITEM_DATA`, i.e., the data specified when filling item information.
+            Fields with type `OBTAINING_DATA` **should not be filled or passed**, as the buyer will specify this data when ordering the item.
         :type data_fields: `list[playerokapi.types.GameCategoryDataField]`
 
-        :param attachments: Массив файлов-приложений предмета. Указываются пути к файлам.
+        :param attachments: Array of item attachment files. File paths are specified.
         :type attachments: `list[str]`
 
-        :return: Объект созданного предмета.
+        :return: Created item object.
         :rtype: `playerokapi.types.Item`
         """
         payload_attributes = {option.field: option.value for option in options}
@@ -1115,35 +1115,35 @@ class Account:
         add_attachments: list[str] | None = None
     ) -> types.Item:
         """
-        Обновляет предмет аккаунта.
+        Updates account item.
 
-        :param id: ID предмета.
+        :param id: Item ID.
         :type id: `str`
 
-        :param name: Название предмета.
+        :param name: Item name.
         :type name: `str` or `None`
 
-        :param price: Цена предмета.
+        :param price: Item price.
         :type price: `int` or `str` or `None`
 
-        :param description: Описание предмета.
+        :param description: Item description.
         :type description: `str` or `None`
 
-        :param options: Массив **выбранных** опций (аттрибутов) предмета.
+        :param options: Array of **selected** item options (attributes).
         :type options: `list[playerokapi.types.GameCategoryOption]` or `None`
 
-        :param data_fields: Массив полей с данными предмета. \n
-            !!! Должны быть заполнены данные с типом поля `ITEM_DATA`, то есть те данные, которые указываются при заполнении информации о товаре.
-            Поля с типом `OBTAINING_DATA` **заполнять и передавать не нужно**, так как эти данные будет указывать сам покупатель при оформлении предмета.
+        :param data_fields: Array of item data fields. \n
+            !!! Must be filled with field type `ITEM_DATA`, i.e., the data specified when filling item information.
+            Fields with type `OBTAINING_DATA` **should not be filled or passed**, as the buyer will specify this data when ordering the item.
         :type data_fields: `list[playerokapi.types.GameCategoryDataField]` or `None`
 
-        :param remove_attachments: Массив ID файлов-приложений предмета, которые нужно удалить.
+        :param remove_attachments: Array of item attachment file IDs to remove.
         :type remove_attachments: `list[str]` or `None`
 
-        :param add_attachments: Массив файлов-приложений предмета, которые нужно добавить. Указываются пути к файлам.
+        :param add_attachments: Array of item attachment files to add. File paths are specified.
         :type add_attachments: `list[str]` or `None`
 
-        :return: Объект обновлённого предмета.
+        :return: Updated item object.
         :rtype: `playerokapi.types.Item`
         """
         payload_attributes = {option.field: option.value for option in options} if options is not None else None
@@ -1188,9 +1188,9 @@ class Account:
         id: str
     ) -> bool:
         """
-        Полностью удаляет предмет вашего аккаунта.
+        Completely deletes your account item.
 
-        :param id: ID предмета.
+        :param id: Item ID.
         :type id: `str`
         """
         headers = {"accept": "*/*"}
@@ -1212,18 +1212,18 @@ class Account:
         transaction_provider_id: TransactionProviderIds = TransactionProviderIds.LOCAL
     ) -> types.Item:
         """
-        Выставляет предмет на продажу.
+        Publishes item for sale.
 
-        :param item_id: ID предмета.
+        :param item_id: Item ID.
         :type item_id: `str`
 
-        :param priority_status_id: ID статуса приоритета предмета, под которым его нужно выставить на продажу.
+        :param priority_status_id: Item priority status ID under which to publish it for sale.
         :type priority_status_id: `str`
 
-        :param transaction_provider_id: ID провайдера транзакции.
+        :param transaction_provider_id: Transaction provider ID.
         :type transaction_provider_id: `playerokapi.types.TransactionProviderIds`
 
-        :return: Объект опубликованного предмета.
+        :return: Published item object.
         :rtype: `playerokapi.types.Item`
         """
         headers = {"accept": "*/*"}
@@ -1251,29 +1251,29 @@ class Account:
         after_cursor: str | None = None
     ) -> types.ItemProfileList:
         """
-        Получает предметы игры/приложения.\n
-        Можно получить по любому из двух параметров: `game_id`, `category_id`.
+        Gets game/application items.\n
+        Can get by either of two parameters: `game_id`, `category_id`.
 
-        :param game_id: ID игры/приложения, _опционально_.
+        :param game_id: Game/application ID, _optional_.
         :type game_id: `str` or `None`
 
-        :param category_id: ID категории игры/приложения, _опционально_.
+        :param category_id: Game/application category ID, _optional_.
         :type category_id: `str` or `None`
 
-        :param count: Кол-во предеметов, которые нужно получить (не более 24 за один запрос).
+        :param count: Number of items to get (no more than 24 per request).
         :type count: `int`
 
-        :param status: Тип предметов, которые нужно получать: активные или проданные. По умолчанию активные.
+        :param status: Type of items to get: active or sold. Default is active.
         :type status: `playerokapi.enums.ItemStatuses`
 
-        :param after_cursor: Курсор, с которого будет идти парсинг (если нету - ищет с самого начала страницы), _опционально_.
+        :param after_cursor: Cursor to start parsing from (if not provided - starts from the beginning of the page), _optional_.
         :type after_cursor: `str` or `None`
         
-        :return: Страница профилей предметов.
+        :return: Item profiles page.
         :rtype: `playerokapi.types.ItemProfileList`
         """
         if not any([game_id, category_id]):
-            raise TypeError("Не был передан ни один из обязательных аргументов: game_id, category_id")
+            raise TypeError("None of the required arguments were provided: game_id, category_id")
         
         headers = {"accept": "*/*"}
         filter = {"gameId": game_id, "status": [status.name] if status else None} if not category_id else {"gameCategoryId": category_id, "status": [status.name] if status else None}
@@ -1303,20 +1303,20 @@ class Account:
         slug: str | None = None
     ) -> types.MyItem | types.Item | types.ItemProfile:
         """
-        Получает предмет (товар).\n
-        Можно получить по любому из двух параметров:
+        Gets item (product).\n
+        Can get by either of two parameters:
 
-        :param id: ID предмета, _опционально_.
+        :param id: Item ID, _optional_.
         :type id: `str` or `None`
 
-        :param slug: Имя страницы предмета, _опционально_.
+        :param slug: Item page name, _optional_.
         :type slug: `str` or `None`
         
-        :return: Объект предмета.
+        :return: Item object.
         :rtype: `playerokapi.types.MyItem` or `playerokapi.types.Item` or `playerokapi.types.ItemProfile`
         """
         if not any([id, slug]):
-            raise TypeError("Не был передан ни один из обязательных аргументов: id, slug")
+            raise TypeError("None of the required arguments were provided: id, slug")
         
         headers = {"accept": "*/*"}
         payload = {
@@ -1349,15 +1349,15 @@ class Account:
         item_price: str
     ) -> list[types.ItemPriorityStatus]:
         """
-        Получает статусы приоритетов для предмета.
+        Gets priority statuses for item.
 
-        :param item_id: ID предмета.
+        :param item_id: Item ID.
         :type item_id: `str`
 
-        :param item_price: Цена предмета.
+        :param item_price: Item price.
         :type item_price: `int` or `str`
         
-        :return: Массив статусов приоритета предмета.
+        :return: Array of item priority statuses.
         :rtype: `list[playerokapi.types.ItemPriorityStatus]`
         """
         headers = {"accept": "*/*"}
@@ -1386,21 +1386,21 @@ class Account:
         transaction_provider_id: TransactionProviderIds = TransactionProviderIds.LOCAL
     ) -> types.Item:
         """
-        Повышает статус приоритета предмета.
+        Increases item priority status.
 
-        :param item_id: ID предмета.
+        :param item_id: Item ID.
         :type item_id: `str`
 
-        :param priority_status_id: ID статуса приоритета, на который нужно изменить.
+        :param priority_status_id: Priority status ID to change to.
         :type priority_status_id: `int` or `str`
 
-        :param payment_method_id: Метод оплаты, _опционально_.
+        :param payment_method_id: Payment method, _optional_.
         :type payment_method_id: `playerokapi.enums.TransactionPaymentMethodIds` or `None`
 
-        :param transaction_provider_id: ID провайдера транзакции (LOCAL - с баланса кошелька на сайте).
+        :param transaction_provider_id: Transaction provider ID (LOCAL - from wallet balance on site).
         :type transaction_provider_id: `playerokapi.enums.TransactionProviderIds`
         
-        :return: Объект обновлённого предмета.
+        :return: Updated item object.
         :rtype: `playerokapi.types.Item`
         """
         headers = {"accept": "*/*"}
@@ -1427,12 +1427,12 @@ class Account:
         direction: TransactionProviderDirections = TransactionProviderDirections.IN
     ) -> list[types.TransactionProvider]:
         """
-        Получает всех провайдеров транзакций.
+        Gets all transaction providers.
 
-        :param direction: Направление транзакций (пополнение/вывод).
+        :param direction: Transaction direction (deposit/withdrawal).
         :type direction: `playerokapi.enums.TransactionProviderDirections`
         
-        :return: Список провайдеров транзакий.
+        :return: List of transaction providers.
         :rtype: `list` of `playerokapi.types.TransactionProvider`
         """
         headers = {"accept": "*/*"}
@@ -1465,30 +1465,30 @@ class Account:
         after_cursor: str | None = None
     ) -> TransactionList:
         """
-        Получает все транзакции аккаунта.
+        Gets all account transactions.
 
-        :param count: Кол-во транзакциий которые нужно получить (не более 24 за один запрос).
+        :param count: Number of transactions to get (no more than 24 per request).
         :type count: `int`
 
-        :param operation: Операция транзакции, _опционально_.
+        :param operation: Transaction operation, _optional_.
         :type operation: `playerokapi.enums.TransactionOperations` or `None`
 
-        :param min_value: Минимальная сумма транзакции, _опционально_.
+        :param min_value: Minimum transaction amount, _optional_.
         :type min_value: `int` or `None`
 
-        :param max_value: Максимальная сумма транзакции, _опционально_.
+        :param max_value: Maximum transaction amount, _optional_.
         :type max_value: `int` or `None`
 
-        :param provider_id: ID провайдера транзакции, _опционально_.
+        :param provider_id: Transaction provider ID, _optional_.
         :type provider_id: `playerokapi.enums.TransactionProviderIds` or `None`
 
-        :param status: Статус транзакции, _опционально_.
+        :param status: Transaction status, _optional_.
         :type status: `playerokapi.enums.TransactionStatuses` or `None`
 
-        :param after_cursor: Курсор, с которого будет идти парсинг (если нету - ищет с самого начала страницы), _опционально_.
+        :param after_cursor: Cursor to start parsing from (if not provided - starts from the beginning of the page), _optional_.
         :type after_cursor: `str` or `None`
         
-        :return: Страница транзакций.
+        :return: Transactions page.
         :rtype: `playerokapi.types.TransactionList`
         """
         headers = {"accept": "*/*"}
@@ -1525,9 +1525,9 @@ class Account:
     
     def get_sbp_bank_members(self) -> list[SBPBankMember]:
         """
-        Получает всех членов банка СБП.
+        Gets all SBP bank members.
 
-        :return: Объект провайдера транзакции.
+        :return: Transaction provider object.
         :rtype: `list` of `playerokapi.types.SBPBankMember`
         """
         headers = {"accept": "*/*"}
@@ -1552,18 +1552,18 @@ class Account:
         direction: SortDirections = SortDirections.ASC
     ) -> types.UserBankCardList:
         """
-        Получает верифицированные карты аккаунта.
+        Gets verified account cards.
 
-        :param count: Кол-во банковских карт, которые нужно получить (не более 24 за один запрос).
+        :param count: Number of bank cards to get (no more than 24 per request).
         :type count: `int`
 
-        :param after_cursor: Курсор, с которого будет идти парсинг (если нету - ищет с самого начала страницы), _опционально_.
+        :param after_cursor: Cursor to start parsing from (if not provided - starts from the beginning of the page), _optional_.
         :type after_cursor: `str` or `None`
 
-        :param direction: Тип сортировки банковских карт.
+        :param direction: Bank cards sort type.
         :type direction: `playerokapi.enums.SortDirections`
         
-        :return: Страница банковских карт пользователя.
+        :return: User bank cards page.
         :rtype: `playerokapi.types.UserBankCardList`
         """
         headers = {"accept": "*/*"}
@@ -1595,12 +1595,12 @@ class Account:
         card_id: str
     ) -> bool:
         """
-        Удаляет карту из сохранённых в аккаунте.
+        Deletes card from saved in account.
 
-        :param card_id: ID банковской карты.
+        :param card_id: Bank card ID.
         :type card_id: `str`
         
-        :return: True, если карта удалилась, иначе False
+        :return: True if card was deleted, otherwise False
         :rtype: `bool`
         """
         headers = {"accept": "*/*"}
@@ -1626,24 +1626,24 @@ class Account:
         sbp_bank_member_id: str | None = None
     ) -> types.Transaction:
         """
-        Создаёт запрос на вывод средств с баланса аккаунта.
+        Creates withdrawal request from account balance.
 
-        :param provider: Провайдер транзакции.
+        :param provider: Transaction provider.
         :type provider: `playerokapi.enums.TransactionProviderIds`
 
-        :param account: ID добавленной карты или номер телефона, если провайдер СБП, на которые нужно совершить вывод.
+        :param account: Added card ID or phone number if provider is SBP, to which to make withdrawal.
         :type account: `str`
 
-        :param value: Сумма вывода.
+        :param value: Withdrawal amount.
         :type value: `int`
 
-        :param payment_method_id: ID платёжного метода, _опционально_.
+        :param payment_method_id: Payment method ID, _optional_.
         :type payment_method_id: `playerokapi.enums.TransactionPaymentMethodIds` or `None`
 
-        :param sbp_bank_member_id: ID члена банка СБП (только если указан провайдер СБП), _опционально_.
+        :param sbp_bank_member_id: SBP bank member ID (only if SBP provider is specified), _optional_.
         :type sbp_bank_member_id: `str` or `None`
         
-        :return: Объект транзакции вывода.
+        :return: Withdrawal transaction object.
         :rtype: `playerokapi.types.Transaction`
         """
         headers = {"accept": "*/*"}
@@ -1671,12 +1671,12 @@ class Account:
         transaction_id: str
     ) -> types.Transaction:
         """
-        Удаляет транзакцию (например, можно отменить вывод).
+        Deletes transaction (e.g., can cancel withdrawal).
 
-        :param transaction_id: ID транзакции.
+        :param transaction_id: Transaction ID.
         :type transaction_id: `str`
         
-        :return: Объект отменённой транзакции.
+        :return: Cancelled transaction object.
         :rtype: `playerokapi.types.Transaction`
         """
         headers = {"accept": "*/*"}

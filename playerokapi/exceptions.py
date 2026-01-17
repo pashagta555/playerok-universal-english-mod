@@ -3,9 +3,9 @@ import requests
 
 class CloudflareDetectedException(Exception):
     """
-    Ошибка обнаружения Cloudflare защиты при отправке запроса.
+    Error detected by Cloudflare protection when sending a request.
 
-    :param response: Объект ответа.
+    :param response: Response object.
     :type response: `requests.Response`
     """
 
@@ -16,18 +16,18 @@ class CloudflareDetectedException(Exception):
 
     def __str__(self):
         msg = (
-            f"Ошибка: CloudFlare заметил подозрительную активность при отправке запроса на сайт Playerok."
-            f"\nКод ошибки: {self.status_code}"
-            f"\nОтвет: {self.html_text}"
+            f"Error: CloudFlare detected suspicious activity when sending a request to Playerok site."
+            f"\nError code: {self.status_code}"
+            f"\nResponse: {self.html_text}"
         )
         return msg
 
 
 class RequestFailedError(Exception):
     """
-    Ошибка, которая возбуждается, если код ответа не равен 200.
+    Error that is raised if the response status code is not 200.
 
-    :param response: Объект ответа.
+    :param response: Response object.
     :type response: `requests.Response`
     """
 
@@ -38,18 +38,18 @@ class RequestFailedError(Exception):
 
     def __str__(self):
         msg = (
-            f"Ошибка запроса к {self.response.url}"
-            f"\nКод ошибки: {self.status_code}"
-            f"\nОтвет: {self.html_text}"
+            f"Request error to {self.response.url}"
+            f"\nError code: {self.status_code}"
+            f"\nResponse: {self.html_text}"
         )
         return msg
 
 
 class RequestError(Exception):
     """
-    Ошибка, которая возбуждается, если возникла ошибка при отправке запроса.
+    Error that is raised if an error occurred when sending a request.
 
-    :param response: Объект ответа.
+    :param response: Response object.
     :type response: `requests.Response`
     """
 
@@ -61,15 +61,15 @@ class RequestError(Exception):
 
     def __str__(self):
         msg = (
-            f"Ошибка запроса к {self.response.url}"
-            f"\nКод ошибки: {self.error_code}"
-            f"\nСообщение: {self.error_message}"
+            f"Request error to {self.response.url}"
+            f"\nError code: {self.error_code}"
+            f"\nMessage: {self.error_message}"
         )
         return msg
 
 
 class UnauthorizedError(Exception):
-    """Ошибка, которая возбуждается, если не удалось авторизоваться в аккаунте Playerok."""
+    """Error that is raised if it failed to authorize in the Playerok account."""
 
     def __str__(self):
-        return "Не удалось подключиться к аккаунту Playerok. Может вы указали неверный token?"
+        return "Failed to connect to Playerok account. Maybe you specified an incorrect token?"

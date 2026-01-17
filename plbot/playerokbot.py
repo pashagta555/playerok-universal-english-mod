@@ -81,7 +81,7 @@ class PlayerokBot:
         ).get()
 
         self.__saved_chats: dict[str, Chat] = {}
-        """Словарь последних запомненных чатов.\nВ формате: {`chat_id` _or_ `username`: `chat_obj`, ...}"""
+        """Dictionary of recently remembered chats.\nFormat: {`chat_id` _or_ `username`: `chat_obj`, ...}"""
 
     def get_chat_by_id(self, chat_id: str) -> Chat:
         if chat_id in self.__saved_chats:
@@ -131,26 +131,26 @@ class PlayerokBot:
     def send_message(self, chat_id: str, text: str | None = None, photo_file_path: str | None = None,
                      mark_chat_as_read: bool = None, exclude_watermark: bool = False, max_attempts: int = 3) -> ChatMessage:
         """
-        Кастомный метод отправки сообщения в чат Playerok.
-        Пытается отправить за 3 попытки, если не удалось - выдаёт ошибку в консоль.\n
-        Можно отправить текстовое сообщение `text` или фотографию `photo_file_path`.
+        Custom method for sending a message to Playerok chat.
+        Attempts to send with 3 tries, if failed - outputs error to console.\n
+        Can send text message `text` or photo `photo_file_path`.
 
-        :param chat_id: ID чата, в который нужно отправить сообщение.
+        :param chat_id: Chat ID to send message to.
         :type chat_id: `str`
 
-        :param text: Текст сообщения, _опционально_.
+        :param text: Message text, _optional_.
         :type text: `str` or `None`
 
-        :param photo_file_path: Путь к файлу фотографии, _опционально_.
+        :param photo_file_path: Path to photo file, _optional_.
         :type photo_file_path: `str` or `None`
 
-        :param mark_chat_as_read: Пометить чат, как прочитанный перед отправкой, _опционально_.
+        :param mark_chat_as_read: Mark chat as read before sending, _optional_.
         :type mark_chat_as_read: `bool`
 
-        :param exclude_watermark: Пропустить и не использовать водяной знак под сообщением?
+        :param exclude_watermark: Skip and don't use watermark under message?
         :type exclude_watermark: `bool`
 
-        :return: Объект отправленного сообщения.
+        :return: Sent message object.
         :rtype: `PlayerokAPI.types.ChatMessage`
         """
         if not text and not photo_file_path:
@@ -231,15 +231,15 @@ class PlayerokBot:
 
     def get_my_items(self, count: int = -1, statuses: list[ItemStatuses] | None = None) -> list[ItemProfile]:
         """
-        Получает все предметы аккаунта.
+        Gets all account items.
 
-        :param count: Кол-во предеметов, которые нужно получить (не более 24 за один запрос) или -1, если нужно получить все, _опционально_.
+        :param count: Number of items to get (no more than 24 per request) or -1 if need to get all, _optional_.
         :type count: `int`
 
-        :param statuses: Массив статусов предметов, которые нужно получить. Некоторые статусы можно получить только, если это профиль вашего аккаунта. Если не указано, получает сразу все возможные.
+        :param statuses: Array of item statuses to get. Some statuses can only be obtained if this is your account profile. If not specified, gets all possible at once.
         :type statuses: `list[playerokapi.enums.ItemStatuses]` or `None`
 
-        :return: Массив предметов профиля.
+        :return: Array of profile items.
         :rtype: `list` of `playerokapi.types.ItemProfile`
         """
         my_items: list[ItemProfile] = []
@@ -699,13 +699,13 @@ class PlayerokBot:
             ip, port = self.config["playerok"]["api"]["proxy"].split("@")[1].split(":") if "@" in self.config["playerok"]["api"]["proxy"] else self.config["playerok"]["api"]["proxy"]
             ip = ".".join([("*" * len(nums)) if i >= 3 else nums for i, nums in enumerate(ip.split("."), start=1)])
             port = f"{port[:3]}**"
-            user = f"{user[:3]}*****" if user else "Без авторизации"
-            password = f"{password[:3]}*****" if password else "Без авторизации"
+            user = f"{user[:3]}*****" if user else "No authorization"
+            password = f"{password[:3]}*****" if password else "No authorization"
             self.logger.info(f"{ACCENT_COLOR}───────────────────────────────────────")
-            self.logger.info(f"{ACCENT_COLOR}Информация о прокси:")
+            self.logger.info(f"{ACCENT_COLOR}Proxy information:")
             self.logger.info(f" ・ IP: {Fore.LIGHTWHITE_EX}{ip}:{port}")
-            self.logger.info(f" ・ Юзер: {Fore.LIGHTWHITE_EX}{user}")
-            self.logger.info(f" ・ Пароль: {Fore.LIGHTWHITE_EX}{password}")
+            self.logger.info(f" ・ User: {Fore.LIGHTWHITE_EX}{user}")
+            self.logger.info(f" ・ Password: {Fore.LIGHTWHITE_EX}{password}")
             self.logger.info(f"{ACCENT_COLOR}───────────────────────────────────────")
             self.logger.info("")
 
@@ -723,6 +723,6 @@ class PlayerokBot:
                 await call_playerok_event(event.type, [self, event])
 
         run_async_in_thread(listener_loop)
-        self.logger.info("Слушатель событий запущен")
+        self.logger.info("Event listener started")
 
         await call_bot_event("ON_PLAYEROK_BOT_INIT", [self])

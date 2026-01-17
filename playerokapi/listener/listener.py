@@ -26,15 +26,15 @@ from .events import *
 
 class EventListener:
     """
-    Слушатель событий с Playerok.com.
+    Event listener for Playerok.com.
 
-    :param account: Объект аккаунта.
+    :param account: Account object.
     :type account: `playerokapi.account.Account`
     """
 
     def __init__(self, account: Account):
         self.account: Account = account
-        """ Объект аккаунта. """
+        """ Account object. """
 
         self.chat_subscriptions = {}
         self.review_check_deals = []
@@ -234,12 +234,12 @@ class EventListener:
                     self.chats.append(chat)
                     break
 
-        if not is_subscribed: # если ещё не были подписаны на чат - подписываемся и получаем новое сообщение в этом ивенте
+        if not is_subscribed: # if not yet subscribed to chat - subscribe and get new message in this event
             self._subscribe_chat_message_created(chat.id)
             if is_new_chat:
                 events.append(ChatInitializedEvent(chat))
             events.extend(self._parse_message_events(message, chat))
-        # иначе, если уже подписаны на чат - сообщение будет получаться из chatMessageCreated
+        # otherwise, if already subscribed to chat - message will be received from chatMessageCreated
         
         return events
         
@@ -266,7 +266,7 @@ class EventListener:
         except:
             ssl_context = None
 
-        chat_list = self.account.get_chats(count=24) # инициализация первых 24 чатов
+        chat_list = self.account.get_chats(count=24) # initialize first 24 chats
         self.chats = [chat for chat in chat_list.chats]
         for chat_ in self.chats:
             yield ChatInitializedEvent(chat_)
@@ -317,7 +317,7 @@ class EventListener:
                             for event in events:
                                 yield event
             except websocket._exceptions.WebSocketException as e:
-                self.logger.error(f"Ошибка при подключении к WebSocket`у, пробую переподключиться...")
+                self.logger.error(f"Error connecting to WebSocket, trying to reconnect...")
                 time.sleep(3)
 
     def _should_check_deal(self, deal_id, delay=30, max_tries=30) -> bool:
@@ -362,7 +362,7 @@ class EventListener:
         sleep_time = delay - (time.time() - self._last_chat_check)
         if sleep_time > 0: time.sleep(sleep_time)
     
-    def listen_new_deals(self): # слушает новые сделки в новосозданных чатах
+    def listen_new_deals(self): # listens for new deals in newly created chats
         while True:
             self._possible_new_chat.wait()
             self._wait_for_check_new_chats()
