@@ -19,7 +19,7 @@ def get_releases():
     response = requests.get(f"https://api.github.com/repos/{REPO}/releases")
     response.raise_for_status()
     if response.status_code != 200:
-        raise Exception(f"Ошибка запроса к GitHub API: {response.status_code}")
+        raise Exception(f"GitHub API request error: {response.status_code}")
     return response.json()
 
 
@@ -41,7 +41,7 @@ def download_update(release_info: dict) -> bytes:
     zip_url = release_info['zipball_url']
     zip_response = requests.get(zip_url)
     if zip_response.status_code != 200:
-        raise Exception(f"При скачивании архива обновления произошла ошибка: {zip_response.status_code}")
+        raise Exception(f"Error downloading update archive: {zip_response.status_code}")
     return zip_response.content
 
 
@@ -56,7 +56,7 @@ def install_update(release_info: dict, content: bytes) -> bool:
                     archive_root = os.path.join(temp_dir, item)
                     break
             if not archive_root:
-                raise Exception("В архиве нет корневой папки!")
+                raise Exception("Archive has no root folder!")
             for root, _, files in os.walk(archive_root):
                 for file in files:
                     src = os.path.join(root, file)
@@ -76,28 +76,28 @@ def check_for_updates():
         versions = [release["tag_name"] for release in releases]
         
         if VERSION not in versions:
-            logger.info(f"Вашей версии {Fore.LIGHTWHITE_EX}{VERSION} {Fore.WHITE}нету в релизах репозитория. Последняя версия: {Fore.LIGHTWHITE_EX}{latest_release['tag_name']}")
+            logger.info(f"Your version {Fore.LIGHTWHITE_EX}{VERSION} {Fore.WHITE}is not in the repository releases. Latest version: {Fore.LIGHTWHITE_EX}{latest_release['tag_name']}")
             return
         elif Version(VERSION) == Version(latest_release["tag_name"]):
-            logger.info(f"У вас установлена последняя версия: {Fore.LIGHTWHITE_EX}{VERSION}")
+            logger.info(f"You have the latest version installed: {Fore.LIGHTWHITE_EX}{VERSION}")
             return
         elif Version(VERSION) < Version(latest_release["tag_name"]):
-            logger.info(f"{Fore.YELLOW}Доступна новая версия: {Fore.LIGHTWHITE_EX}{latest_release['tag_name']}")
+            logger.info(f"{Fore.YELLOW}New version available: {Fore.LIGHTWHITE_EX}{latest_release['tag_name']}")
             if SKIP_UPDATES:
                 logger.info(
-                    f"Пропускаю установку обновления. Если вы хотите автоматически скачивать обновления, измените значение "
-                    f"{Fore.LIGHTWHITE_EX}SKIP_UPDATES{Fore.WHITE} на {Fore.YELLOW}False {Fore.WHITE}в файле инициализации {Fore.LIGHTWHITE_EX}(__init__.py)"
+                    f"Skipping update installation. If you want to automatically download updates, change the value "
+                    f"{Fore.LIGHTWHITE_EX}SKIP_UPDATES{Fore.WHITE} to {Fore.YELLOW}False {Fore.WHITE}in the initialization file {Fore.LIGHTWHITE_EX}(__init__.py)"
                 )
                 return
             
-            logger.info(f"Загружаю обновление {latest_release['tag_name']}...")
+            logger.info(f"Downloading update {latest_release['tag_name']}...")
             bytes = download_update(latest_release)
             if not bytes:
                 print("no bytes")
                 return
-            logger.info(f"Устанавливаю обновление {latest_release['tag_name']}...")
+            logger.info(f"Installing update {latest_release['tag_name']}...")
             if install_update(latest_release, bytes):
-                logger.info(f"{Fore.YELLOW}Обновление {Fore.LIGHTWHITE_EX}{latest_release['tag_name']} {Fore.YELLOW}было успешно установлено.")
+                logger.info(f"{Fore.YELLOW}Update {Fore.LIGHTWHITE_EX}{latest_release['tag_name']} {Fore.YELLOW}was successfully installed.")
                 restart()
     except Exception as e:
-        logger.error(f"{Fore.LIGHTRED_EX}Ошибка при обновлении: {Fore.WHITE}{e}")
+        logger.error(f"{Fore.LIGHTRED_EX}Update error: {Fore.WHITE}{e}")

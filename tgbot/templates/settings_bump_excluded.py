@@ -10,10 +10,10 @@ from .. import callback_datas as calls
 def settings_bump_excluded_text():
     excluded_bump_items = sett.get("auto_bump_items").get("excluded")
     txt = textwrap.dedent(f"""
-        <b>⬆️ Поднятие → ➖ Исключенные</b>
-        Всего <b>{len(excluded_bump_items)}</b> исключенных предметов из авто-поднятия
+        <b>⬆️ Bump → ➖ Excluded</b>
+        Total <b>{len(excluded_bump_items)}</b> excluded items from auto-bump
 
-        Перемещайтесь по разделам ниже. Нажмите на корзину справа от ключевых фраз, чтобы удалить товар из исключенных ↓
+        Navigate through the sections below. Click on the trash can to the right of keyphrases to remove an item from excluded ↓
     """)
     return txt
 
@@ -32,7 +32,7 @@ def settings_bump_excluded_kb(page: int = 0):
     end_offset = start_offset + items_per_page
 
     for keyphrases in list(excluded_bump_items)[start_offset:end_offset]:
-        keyphrases_frmtd = ", ".join(keyphrases) or "❌ Не указано"
+        keyphrases_frmtd = ", ".join(keyphrases) or "❌ Not specified"
         rows.append([
             InlineKeyboardButton(text=f"{keyphrases_frmtd}", callback_data="123"),
             InlineKeyboardButton(text=f"🗑️", callback_data=calls.DeleteExcludedBumpItem(index=excluded_bump_items.index(keyphrases)).pack()),
@@ -51,12 +51,12 @@ def settings_bump_excluded_kb(page: int = 0):
         rows.append(buttons_row)
 
     rows.append([
-        InlineKeyboardButton(text="➕ Добавить", callback_data="enter_new_excluded_bump_item_keyphrases"),
-        InlineKeyboardButton(text="➕📄 Добавить много", callback_data="send_new_excluded_bump_items_keyphrases_file")
+        InlineKeyboardButton(text="➕ Add", callback_data="enter_new_excluded_bump_item_keyphrases"),
+        InlineKeyboardButton(text="➕📄 Add many", callback_data="send_new_excluded_bump_items_keyphrases_file")
     ])
     rows.append([
-        InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.SettingsNavigation(to="bump").pack()),
-        InlineKeyboardButton(text="🔄️ Обновить", callback_data=calls.ExcludedBumpItemsPagination(page=page).pack())
+        InlineKeyboardButton(text="⬅️ Back", callback_data=calls.SettingsNavigation(to="bump").pack()),
+        InlineKeyboardButton(text="🔄️ Refresh", callback_data=calls.ExcludedBumpItemsPagination(page=page).pack())
     ])
 
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
@@ -65,7 +65,7 @@ def settings_bump_excluded_kb(page: int = 0):
 
 def settings_bump_excluded_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>⬆️ Поднятие → ➖ Исключенные</b>
+        <b>⬆️ Bump → ➖ Excluded</b>
         \n{placeholder}
     """)
     return txt
@@ -73,7 +73,7 @@ def settings_bump_excluded_float_text(placeholder: str):
 
 def settings_new_bump_excluded_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>⬆️➖ Добавление нового исключенного предмета</b>
+        <b>⬆️➖ Adding new excluded item</b>
         \n{placeholder}
     """)
     return txt

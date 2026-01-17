@@ -10,10 +10,10 @@ from .. import callback_datas as calls
 def settings_bump_included_text():
     included_bump_items = sett.get("auto_bump_items").get("included")
     txt = textwrap.dedent(f"""
-        <b>⬆️ Поднятие → ➕ Включенные</b>
-        Всего <b>{len(included_bump_items)}</b> включенных предметов для авто-поднятия
+        <b>⬆️ Bump → ➕ Included</b>
+        Total <b>{len(included_bump_items)}</b> included items for auto-bump
 
-        Перемещайтесь по разделам ниже. Нажмите на корзину справа от ключевых фраз, чтобы удалить товар из включенных ↓
+        Navigate through the sections below. Click on the trash can to the right of keyphrases to remove an item from included ↓
     """)
     return txt
 
@@ -32,7 +32,7 @@ def settings_bump_included_kb(page: int = 0):
     end_offset = start_offset + items_per_page
 
     for keyphrases in list(included_bump_items)[start_offset:end_offset]:
-        keyphrases_frmtd = ", ".join(keyphrases) or "❌ Не указано"
+        keyphrases_frmtd = ", ".join(keyphrases) or "❌ Not specified"
         rows.append([
             InlineKeyboardButton(text=f"{keyphrases_frmtd}", callback_data="123"),
             InlineKeyboardButton(text=f"🗑️", callback_data=calls.DeleteIncludedBumpItem(index=included_bump_items.index(keyphrases)).pack()),
@@ -51,12 +51,12 @@ def settings_bump_included_kb(page: int = 0):
         rows.append(buttons_row)
 
     rows.append([
-        InlineKeyboardButton(text="➕ Добавить", callback_data="enter_new_included_bump_item_keyphrases"),
-        InlineKeyboardButton(text="➕📄 Добавить много", callback_data="send_new_included_bump_items_keyphrases_file"),
+        InlineKeyboardButton(text="➕ Add", callback_data="enter_new_included_bump_item_keyphrases"),
+        InlineKeyboardButton(text="➕📄 Add many", callback_data="send_new_included_bump_items_keyphrases_file"),
     ])
     rows.append([
-        InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.SettingsNavigation(to="bump").pack()),
-        InlineKeyboardButton(text="🔄️ Обновить", callback_data=calls.IncludedBumpItemsPagination(page=page).pack())
+        InlineKeyboardButton(text="⬅️ Back", callback_data=calls.SettingsNavigation(to="bump").pack()),
+        InlineKeyboardButton(text="🔄️ Refresh", callback_data=calls.IncludedBumpItemsPagination(page=page).pack())
     ])
 
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
@@ -65,7 +65,7 @@ def settings_bump_included_kb(page: int = 0):
 
 def settings_bump_included_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>⬆️ Поднятие → ➕ Включенные</b>
+        <b>⬆️ Bump → ➕ Included</b>
         \n{placeholder}
     """)
     return txt
@@ -73,7 +73,7 @@ def settings_bump_included_float_text(placeholder: str):
 
 def settings_new_bump_included_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>⬆️➕ Добавление нового включенного предмета</b>
+        <b>⬆️➕ Adding new included item</b>
         \n{placeholder}
     """)
     return txt
