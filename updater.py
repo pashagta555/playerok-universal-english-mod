@@ -93,7 +93,6 @@ def check_for_updates():
             logger.info(f"Downloading update {latest_release['tag_name']}...")
             bytes = download_update(latest_release)
             if not bytes:
-                print("no bytes")
                 return
             logger.info(f"Installing update {latest_release['tag_name']}...")
             if install_update(latest_release, bytes):
