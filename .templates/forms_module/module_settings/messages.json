@@ -1,0 +1,95 @@
+{
+    "cmd_writein": {
+        "enabled": true,
+        "text": [
+            "✏️ Step 1. Enter surnames, name, middle names",
+            "",
+            "💡 For example: Petrov Ivan Olegovich",
+            "",
+            "Enter yours Full name:"
+        ]
+    },
+    "entering_fullname_error": {
+        "enabled": true,
+        "text": [
+            "❌ Step 1. Error input Full name",
+            "",
+            "Make sure, What text corresponds format",
+            "",
+            "Enter Full name again:"
+        ]
+    },
+    "enter_age": {
+        "enabled": true,
+        "text": [
+            "✏️ Step 2. Enter age",
+            "",
+            "💡 For example: 18",
+            "",
+            "Enter mine age:"
+        ]
+    },
+    "entering_age_error": {
+        "enabled": true,
+        "text": [
+            "❌ Step 2. Error input age",
+            "",
+            "Make sure, What You introduced numeric meaning",
+            "",
+            "Enter age again:"
+        ]
+    },
+    "enter_hobby": {
+        "enabled": true,
+        "text": [
+            "✏️ Step 3. Enter hobby",
+            "",
+            "💡 For example: Drawing",
+            "",
+            "Enter yours hobby:"
+        ]
+    },
+    "entering_username_error": {
+        "enabled": true,
+        "text": [
+            "❌ Step 3. Error input hobby",
+            "",
+            "Make sure, What text corresponds format",
+            "",
+            "Enter hobby again:"
+        ]
+    },
+    "form_filled_out": {
+        "enabled": true,
+        "text": [
+            "✅ Questionnaire was filled!",
+            "",
+            "Yours data:",
+            "・ Full name: {fullname}",
+            "・ Age: {age}",
+            "・ Hobby: {hobby}",
+            "",
+            "💡 Use team !my profile, to view data again"
+        ]
+    },
+    "cmd_myform": {
+        "enabled": true,
+        "text": [
+            "📝 Yours questionnaire",
+            "",
+            "・ Full name: {fullname}",
+            "・ Age: {age}",
+            "・ Hobby: {hobby}",
+            "",
+            "💡 Use team !fill out, to fill out questionnaire again"
+        ]
+    },
+    "cmd_myform_error": {
+        "enabled": true,
+        "text": [
+            "❌ At opening yours questionnaires happened error",
+            "",
+            "{reason}"
+        ]
+    }
+}
