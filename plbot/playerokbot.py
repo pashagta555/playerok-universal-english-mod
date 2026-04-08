@@ -384,7 +384,7 @@ class PlayerokBot:
                     f"{Fore.WHITE}Position:{Fore.LIGHTWHITE_EX}{sequence} {Fore.WHITE}→ {Fore.YELLOW}1"
                 )
         except Exception as e:
-            logger.error(f"{Fore.LIGHTRED_EX}Error when picking up an item "{item.name}»: {Fore.WHITE}{e}")
+            logger.error(f"{Fore.LIGHTRED_EX}Error when picking up an item \"{item.name}\": {Fore.WHITE}{e}")
 
     def bump_items(self): 
         self.latest_events_times["auto_bump_items"] = datetime.now().isoformat()
@@ -449,9 +449,9 @@ class PlayerokBot:
                 if new_item.status in (ItemStatuses.PENDING_APPROVAL, ItemStatuses.APPROVED):
                     logger.info(f"{Fore.LIGHTWHITE_EX}«{item_name_frmtd}» {Fore.WHITE}— {Fore.YELLOW}the item has been restored")
                 else:
-                    logger.error(f"{Fore.LIGHTRED_EX}Failed to restore item "{item_name_frmtd}». His status:{Fore.WHITE}{new_item.status.name}")
+                    logger.error(f"{Fore.LIGHTRED_EX}Failed to restore item \"{item_name_frmtd}\". Its status: {Fore.WHITE}{new_item.status.name}")
         except Exception as e:
-            logger.error(f"{Fore.LIGHTRED_EX}Error when restoring an item "{item.name}»: {Fore.WHITE}{e}")
+            logger.error(f"{Fore.LIGHTRED_EX}Error when restoring an item \"{item.name}\": {Fore.WHITE}{e}")
             
     def restore_expired_items(self):
         try:

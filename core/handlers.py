@@ -185,7 +185,7 @@ async def call_bot_event(event: str, args: list = [], func = None):
         try:
             await handler(*args)
         except Exception as e:
-            logger.error(f"{Fore.LIGHTRED_EX}Error processing handler "{handler.__module__}.{handler.__qualname__}» for bot event "{event}»: {Fore.WHITE}{e}")
+            logger.error(f"{Fore.LIGHTRED_EX}Error processing handler \"{handler.__module__}.{handler.__qualname__}\" for bot event \"{event}\": {Fore.WHITE}{e}")
 
 
 async def call_playerok_event(event: EventTypes, args: list = []):
@@ -203,4 +203,4 @@ async def call_playerok_event(event: EventTypes, args: list = []):
         try:
             await handler(*args)
         except Exception as e:
-            logger.error(f"{Fore.LIGHTRED_EX}Error processing handler "{handler.__module__}.{handler.__qualname__}» for the Playerok event "{event.name}»: {Fore.WHITE}{e}")
+            logger.error(f"{Fore.LIGHTRED_EX}Error processing handler \"{handler.__module__}.{handler.__qualname__}\" for the Playerok event \"{event.name}\": {Fore.WHITE}{e}")
