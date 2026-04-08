@@ -129,8 +129,8 @@ MESSAGES = SettingsFile(
         "new_deal": {
             "enabled": False,
             "text": [
-                "📋 Thank you for purchasing "{deal_item_name}"",
-                ""
+                "📋 Thank you for purchasing \"{deal_item_name}\"",
+                "",
                 "The seller may not be available right now; to call him, use the command !seller."
             ]
         },
