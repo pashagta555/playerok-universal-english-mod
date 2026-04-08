@@ -1,0 +1,95 @@
+{
+    "cmd_writein": {
+        "enabled": true,
+        "text": [
+            "✏️ Step 1. Enter last name, first name, and patronymic",
+            "",
+            "💡 Example: Smith John Robert",
+            "",
+            "Enter your full name:"
+        ]
+    },
+    "entering_fullname_error": {
+        "enabled": true,
+        "text": [
+            "❌ Step 1. Full name input error",
+            "",
+            "Make sure the text matches the expected format",
+            "",
+            "Enter your full name again:"
+        ]
+    },
+    "enter_age": {
+        "enabled": true,
+        "text": [
+            "✏️ Step 2. Enter age",
+            "",
+            "💡 Example: 18",
+            "",
+            "Enter your age:"
+        ]
+    },
+    "entering_age_error": {
+        "enabled": true,
+        "text": [
+            "❌ Step 2. Age input error",
+            "",
+            "Make sure you entered a numeric value",
+            "",
+            "Enter your age again:"
+        ]
+    },
+    "enter_hobby": {
+        "enabled": true,
+        "text": [
+            "✏️ Step 3. Enter hobby",
+            "",
+            "💡 Example: Drawing",
+            "",
+            "Enter your hobby:"
+        ]
+    },
+    "entering_username_error": {
+        "enabled": true,
+        "text": [
+            "❌ Step 3. Hobby input error",
+            "",
+            "Make sure the text matches the expected format",
+            "",
+            "Enter your hobby again:"
+        ]
+    },
+    "form_filled_out": {
+        "enabled": true,
+        "text": [
+            "✅ The form has been completed!",
+            "",
+            "Your details:",
+            "・ Full name: {fullname}",
+            "・ Age: {age}",
+            "・ Hobby: {hobby}",
+            "",
+            "💡 Use the !my profile command to view your details again"
+        ]
+    },
+    "cmd_myform": {
+        "enabled": true,
+        "text": [
+            "📝 Your profile",
+            "",
+            "・ Full name: {fullname}",
+            "・ Age: {age}",
+            "・ Hobby: {hobby}",
+            "",
+            "💡 Use the !fill in command to fill out the form again"
+        ]
+    },
+    "cmd_myform_error": {
+        "enabled": true,
+        "text": [
+            "❌ An error occurred while opening your profile",
+            "",
+            "{reason}"
+        ]
+    }
+}
