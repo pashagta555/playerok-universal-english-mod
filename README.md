@@ -5,117 +5,117 @@
 [![stars](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Falleexxeeyy%2Fplayerok-universal&query=%24.stargazers_count&style=for-the-badge&label=stars&color=43d433&logo=github)](https://github.com/alleexxeeyy/playerok-universal/stargazers)
 [![forks](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Falleexxeeyy%2Fplayerok-universal&query=%24.forks_count&style=for-the-badge&label=forks&color=%236c70e6&logo=github)](https://github.com/alleexxeeyy/playerok-universal/forks)
 
-Modern bot assistant for Playerok 🤖🟦
+Modern bot-assistant For Playerok 🤖🟦
 
 ---
 
 ## 🗺️ Navigation
-- [Bot functionality](#-functionality)
-- [Bot installation](#%EF%B8%8F-installation)
+- [Functional bot](#-functional)
+- [Installation bot](#%EF%B8%8F-installation)
 - [Useful links](#-useful-links)
-- [For developers](#-for-developers)
+- [For developers](#-For-developers)
 
-## 🔧 Functionality
-### 🤖💬 Telegram bot with full control
-- Setting any parameter from the config in a couple of steps
-- View bot statistics and account profile
-- Bot event management
+## 🔧 Functional
+### 🤖💬 Telegram bot With complete management
+- Settings any parameter from config V a couple actions
+- View statistics bot And profile account
+- Control events bot
 
-### ⚙️ Wide range of possibilities
-- System of modules (plugins connected to the bot)
-- Eternal online on the site
-- Auto-recovery of items
-- Auto-lifting objects
-- Automatic delivery of goods
-- Auto-withdrawal
-- Auto-confirmation of transactions
+### ⚙️ Wide spectrum opportunities
+- System modules (plugins, pluggable To bot)
+- Eternal online on website
+- Auto-recovery items
+- Auto-raising items
+- Auto-issuance goods
+- Auto-conclusion funds
+- Auto-confirmation transactions
 - Welcome message
-- Custom commands
-- Custom auto-issue
-- Command `!seller` to call the seller in chat
-- Editing and enabling/disabling each message
-- Notifications in TG about new messages, orders, reviews, etc.
+- Custom teams
+- Custom auto-issuance
+- Team `!salesman` For call seller V chat
+- Editing And inclusion/shutdown everyone messages
+- Notifications V TG O new messages, orders, reviews And T.d.
 
 ### 🌐 More advanced
-- Connect to proxy HTTPS IPv4
-- Configuring request intervals
+- Connection To proxy HTTPS IPv4
+- Settings intervals requests
 
 ## ⬇️ Installation
-1. Download [latest Release version](https://github.com/alleexxeeyy/playerok-universal/releases/latest) and unpack it to any place convenient for you
-2. Make sure you have ** installedPython version 3.12.x** (on other versions the bot is not guaranteed to work). If not installed, do so by following the link https://www.python.org/downloads/release/python-31210/ (When installing, click on `Add to PATH`)
-3. Open `install_requirements.bat` and wait until all the libraries necessary for operation are installed, and then close the window
-4. To launch the bot, open the launcher `start.bat`
-5. After the first launch, you will be asked to configure the bot to work
+1. Download [last Release version](https://github.com/alleexxeeyy/playerok-universal/releases/latest) And unpack V any comfortable For you place
+2. Make sure, What at you installed **Python versions 3.12.x** (on others versions Job bot Not guaranteed). If Not installed, do This, passing By link https://www.python.org/downloads/release/python-31210/ (at installation click on paragraph `Add to PATH`)
+3. Open `install_requirements.bat` And wait installations everyone necessary For work libraries, A after close window
+4. To run bot, open launcher `start.bat`
+5. After first launch you will ask tune bot For work
 
-[Having problems installing? Click on me](https://telegra.ph/FunPay-Universal--chastye-oshibki-i-ih-resheniya-08-26)
+[Arose problems With installation? Click on me](https://telegra.ph/FunPay-Universal--chastye-oshibki-i-ih-resheniya-08-26)
 
 ## 📚 For developers
 
-The modular system helps to implement additional functionality into the bot, made by enthusiasts. Essentially, this is the same as plugins, but in a more convenient format.
-You can create your own module based on [template](.templates/forms_module).
+Modular system helps deploy V bot additional functional, made enthusiasts. By essentially, This same, What And plugins, But V more convenient format.
+You you can create mine module, leaning on on [formulaic](.templates/forms_module).
 
 <details>
-  <summary><strong>📌 Main events</strong></summary>
+  <summary><strong>📌 Basic events</strong></summary>
 
-  ### Bot events (BOT_EVENT_HANDLERS)
+  ### Events bot (BOT_EVENT_HANDLERS)
 
-  Events that are executed when a certain bot action occurs.
+  Events, which are being carried out at certain action bot.
 
-  | Event | When | is called Passed Arguments |
+  | Event | When called | Transmissible arguments |
   |-------|------------------|------------------------|
-  | `ON_MODULE_ENABLED` | When you turn on the module | `Module` |
-  | `ON_MODULE_DISABLED` | When the module is turned off | `Module` |
-  | `ON_INIT` | When initializing the bot | `-` |
-  | `ON_PLAYEROK_BOT_INIT` | During initialization (startup) Playerok bot | `PlayerokBot` |
-  | `ON_TELEGRAM_BOT_INIT` | During initialization (startup) Telegram bot | `TelegramBot` |
+  | `ON_MODULE_ENABLED` | At inclusion module | `Module` |
+  | `ON_MODULE_DISABLED` | At turning off module | `Module` |
+  | `ON_INIT` | At initialization bot | `-` |
+  | `ON_PLAYEROK_BOT_INIT` | At initialization (launch) Playerok bot | `PlayerokBot` |
+  | `ON_TELEGRAM_BOT_INIT` | At initialization (launch) Telegram bot | `TelegramBot` |
 
   ### Events Playerok (PLAYEROK_EVENT_HANDLERS)
 
-  Events received in the event listener in Playerok both.
+  Events, received V listener events V Playerok both.
 
-  | Event | When | is called Passed Arguments |
+  | Event | When called | Transmissible arguments |
   |-------|------------------|------------------------|
   | `EventTypes.CHAT_INITIALIZED` | Chat initialized | `PlayerokBot`, `ChatInitializedEvent` |
-  | `EventTypes.NEW_MESSAGE` | New chat message | `PlayerokBot`, `NewMessageEvent` |
-  | `EventTypes.NEW_DEAL` | A new transaction was created (when the buyer paid for the item) | `PlayerokBot`, `NewDealEvent` |
-  | `EventTypes.NEW_REVIEW` | New review of the deal | `PlayerokBot`, `NewReviewEvent` |
+  | `EventTypes.NEW_MESSAGE` | New message V chat | `PlayerokBot`, `NewMessageEvent` |
+  | `EventTypes.NEW_DEAL` | Created new deal (When buyer paid product) | `PlayerokBot`, `NewDealEvent` |
+  | `EventTypes.NEW_REVIEW` | New review By deal | `PlayerokBot`, `NewReviewEvent` |
   | `EventTypes.DEAL_CONFIRMED` | Deal confirmed | `PlayerokBot`, `DealConfirmedEvent` |
-  | `EventTypes.DEAL_ROLLED_BACK` | The seller issued a refund of the transaction | `PlayerokBot`, `DealRolledBackEvent` |
-  | `EventTypes.DEAL_HAS_PROBLEM` | The user reported a problem with the transaction | `PlayerokBot`, `DealHasProblemEvent` |
-  | `EventTypes.DEAL_PROBLEM_RESOLVED` | The problem in the deal has been resolved | `PlayerokBot`, `DealProblemResolvedEvent` |
-  | `EventTypes.DEAL_STATUS_CHANGED` | Transaction status changed | `PlayerokBot`, `DealStatusChangedEvent` |
-  | `EventTypes.ITEM_PAID` | The user paid for the item | `PlayerokBot`, `ItemPaidEvent` |
-  | `EventTypes.ITEM_SENT` | Item shipped (seller confirmed transaction completed) | `PlayerokBot`, `ItemSentEvent` |
+  | `EventTypes.DEAL_ROLLED_BACK` | Salesman issued return deals | `PlayerokBot`, `DealRolledBackEvent` |
+  | `EventTypes.DEAL_HAS_PROBLEM` | User reported O problem V deal | `PlayerokBot`, `DealHasProblemEvent` |
+  | `EventTypes.DEAL_PROBLEM_RESOLVED` | Problem V deal resolved | `PlayerokBot`, `DealProblemResolvedEvent` |
+  | `EventTypes.DEAL_STATUS_CHANGED` | Status deals changed | `PlayerokBot`, `DealStatusChangedEvent` |
+  | `EventTypes.ITEM_PAID` | User paid item | `PlayerokBot`, `ItemPaidEvent` |
+  | `EventTypes.ITEM_SENT` | Item sent (salesman confirmed execution deals) | `PlayerokBot`, `ItemSentEvent` |
 
 </details>
 
 <details>
-  <summary><strong>📁 Module structure</strong></summary>  
+  <summary><strong>📁 Structure module</strong></summary>  
   
-  </br>A module is a folder that contains important components. You can study the structure of a module based on the [template module](.templates/forms_module), but you should understand that this is just an example made by us.
+  </br>Module - This folder, inside which are important components. You you can study structure module, leaning on on [formulaic module](.templates/forms_module), But costs understand, What This only example, made us.
 
-  Mandatory handler constants:
+  Mandatory constants handlers:
   | Constant | Type | Description |
   |-----------|-----|----------|
-  | `BOT_EVENT_HANDLERS` | `dict[str, list[Any]]` | This dictionary defines bot event handlers |
-  | `PLAYEROK_EVENT_HANDLERS` | `dict[EventTypes, list[Any]` | This dictionary defines event handlers Playerok |
-  | `TELEGRAM_BOT_ROUTERS` | `list[Router]` | This array specifies modular routers Telegram bot |
+  | `BOT_EVENT_HANDLERS` | `dict[str, list[Any]]` | IN this dictionary are given handlers events bot |
+  | `PLAYEROK_EVENT_HANDLERS` | `dict[EventTypes, list[Any]` | IN this dictionary are given handlers events Playerok |
+  | `TELEGRAM_BOT_ROUTERS` | `list[Router]` | IN this array are given routers modular Telegram bot  |
 
-  Required metadata constants:
+  Mandatory constants metadata:
   | Constant | Type | Description |
   |-----------|-----|----------|
   | `PREFIX` | `str` | Prefix |
   | `VERSION` | `str` | Version |
-  | `NAME` | `str` | Title |
+  | `NAME` | `str` | Name |
   | `DESCRIPTION` | `str` | Description |
-  | `AUTHORS` | `str` | Author |
-  | `LINKS` | `str` | Author links |
+  | `AUTHORS` | `str` | Authors |
+  | `LINKS` | `str` | Links on authors |
 
-  Also, if a module requires additional dependencies, it must have a dependency file**requirements.txt**, which will be downloaded themselves when all bot modules are loaded.
+  Also, If module requires additional dependencies, V him must be file dependencies **requirements.txt**, which will themselves download at loading everyone modules bot.
 
-  #### 🔧 Sample content:
-  Please note that the metadata was placed in a separate file `meta.py`, but are imported into `__init__.py`.
-  This is done to avoid import conflicts in the further part of the module code.
+  #### 🔧 Example content:
+  Please pay attention, What metadata were passed V separate file `meta.py`, But imported V `__init__.py`.
+  This made For avoidance conflicts import V further parts code module.
 
   **`meta.py`**:
   ```python
@@ -124,7 +124,7 @@ You can create your own module based on [template](.templates/forms_module).
   PREFIX = f"{Fore.LIGHTCYAN_EX}[test module]{Fore.WHITE}"
   VERSION = "0.1"
   NAME = "test_module"
-  DESCRIPTION = "Test module. /test_module V Telegram bot for management"
+  DESCRIPTION = "Test module. /test_module V Telegram both For management"
   AUTHORS = "@alleexxeeyy"
   LINKS = "https://t.me/alleexxeeyy, https://t.me/alexeyproduction"
   ```
@@ -153,7 +153,7 @@ You can create your own module based on [template](.templates/forms_module).
   async def on_module_enabled(module: Module):
       try:
           set_module(module)
-          print(f"{PREFIX} The module is connected and active")
+          print(f"{PREFIX} Module connected And active")
       except:
           await disable_module(_module.uuid)
   
@@ -176,13 +176,13 @@ You can create your own module based on [template](.templates/forms_module).
 <details>
   <summary><strong>🛠️ Useful tools</strong></summary>  
   
-  ### 📝 Customized configuration file and data file wrappers
-  Instead of once again struggling with configuration files and writing code to manage them, we have prepared a ready-made solution for you.
-  The bot has already configured classes in the files [`settings.py`](settings.py) and [`data.py`](data.py)
+  ### 📝 Customized wrappers files configurations And files data
+  Instead of Togo, to extra once suffer With files configurations, writing code For departments them, We prepared For you ready solution.
+  U bot There is already customized classes V files [`settings.py`](settings.py) And [`data.py`](data.py)
 
-  #### How does this work?
-  Let's say you want to create a configuration file in your module, for this you will need to create a file `settings.py` in the root of the module folder.
-  Contents`settings.py` should be something like this:
+  #### How This works?
+  Let's say, You want create file configurations V his module, For this to you need to will create file `settings.py` V root folders module.
+  Content `settings.py` should be approximately next:
   ```python
   import os
   from settings import (
@@ -192,14 +192,14 @@ You can create your own module based on [template](.templates/forms_module).
 
 
   CONFIG = SettingsFile(
-      name="config", #  configuration file name
-      path=os.path.join(os.path.dirname(__file__), "module_settings", "config.json"), #  path to the configuration file (in this case relative to the module folder)
-      need_restore=True, #  do I need to restore the config?
+      name="config", #  Name file configurations
+      path=os.path.join(os.path.dirname(__file__), "module_settings", "config.json"), #  path To file configurations (V given case relatively folders module)
+      need_restore=True, #  need to whether restore config
       default={
           "bool_param": True,
           "str_param": "qwerty",
           "int_param": 123
-      } #  standard file content
+      } #  standard content file
   )
 
   DATA = [CONFIG]
@@ -216,37 +216,37 @@ You can create your own module based on [template](.templates/forms_module).
           return sett.set(name, new, DATA)
   ```
 
-  The configuration file is specified using the ` dataclassSettingsFile`, which in turn is transferred to the array `DATA`.
+  File configurations is given With with help dataclass `SettingsFile`, which V my queue, transmitted V array `DATA`.
   
-  Next, you can get data from the config or save data to the config like this:
+  Next, get data from config or save data V config Can Here So:
   ```python
   from . import settings as sett
 
-  config = sett.get("config") #  we get the config
+  config = sett.get("config") #  we get config
   print(config["bool_param"]) # -> True
   print(config["str_param"]) #  -> qwerty
   print(config["int_param"]) #  -> 123
   config["bool_param"] = False
   config["str_param"] = "uiop"
   config["int_param"] = 456
-  sett.set("config", config) #  set the config to a new value
+  sett.set("config", config) #  we ask config new meaning
   ```
 
-  By assigning a new value to the config, it is immediately written to its file. Also, upon receipt, the current data is taken from the file.
+  By asking config new meaning, it straightaway is recorded V his file. Also And at receiving, are taken current data from file.
 
-  Description of dataclass arguments `SettingsFile`:
+  Description arguments dataclass `SettingsFile`:
   | Argument | Description |
   |----------|----------|
-  | `name` | The name of the configuration file that we will use when receiving and writing |
-  | `path` | Path to configuration file |
-  | `need_restore` | Do I need to restore the config? Let's say you have added new data to the standard config value, but it is missing from the previously created **previously** configuration file. If the parameter is enabled, the script will check the current config data with the standard ones specified, and if the current data does not contain one or another key that is in the standard value, it will be automatically added to the config. Also, if the value type of a standard config key does not match the existing one (for example, the type in the file is **string**, and the standard value is **numeric**), this key in the current config will also be replaced with the standard value |
-  | `default` | Default configuration file value |
+  | `name` | Name file configurations, which we will use at receiving And records |
+  | `path` | Path To file configurations |
+  | `need_restore` | Need to whether restore config? Let's say, V standard meaning config at you added new data, A V already created **previously** file configurations They none. If parameter included, script will check current data config with standard indicated, And If V current data Not will Togo or other key, which There is V standard meaning, He automatically will be added V config. So same, If type values key standard config Not corresponds existing (For example, V file **string** type, A V standard meaning **numerical**), Also this key V current config will replaced on standard meaning |
+  | `default` | Standard meaning file configurations |
 
 
-  </br>The data file is structured in exactly the same way, but it is needed to store information collected by the script itself, and not specified by users.
-  For example, you want to create a data file in your module, for this you will need to create a file `data.py` in the root of the module folder.
+  </br>Exactly Also arranged And file data, But He needed For storage information, collected ourselves script, A Not specified users.
+  For example, You want create file data V his module, For this to you need to will create file `data.py` V root folders module.
   
-  Contents`data.py` should be something like this:
+  Content `data.py` should be approximately next:
   ```python
   import os
   from data import (
@@ -256,9 +256,9 @@ You can create your own module based on [template](.templates/forms_module).
 
 
   LATEST_EVENTS_TIMES = DataFile(
-      name="new_forms", #  data file name
-      path=os.path.join(os.path.dirname(__file__), "module_data", "new_forms.json"), #  path to the data file (in this case relative to the module folder)
-      default={} #  standard file content
+      name="new_forms", #  Name file data
+      path=os.path.join(os.path.dirname(__file__), "module_data", "new_forms.json"), #  path To file data (V given case relatively folders module)
+      default={} #  standard content file
   )
 
   DATA = [LATEST_EVENTS_TIMES]
@@ -275,14 +275,14 @@ You can create your own module based on [template](.templates/forms_module).
           return data.set(name, new, DATA)
   ```
 
-  Everything here is similar to the configuration file, only it serves a different task.
+  Here All similarly file configurations, only serves For another tasks.
 
 
-  ### 🔌 Convenient management of module states
-  Using methods from `core/modules.py`, You can conveniently turn on/off/reboot the current module.
-  In order to do this, you must first obtain UUID the currently running module, which is generated when it is initialized.
+  ### 🔌 Convenient control states module
+  Using methods from `core/modules.py`, Can comfortable include/turn off/reboot current module.
+  For Togo, to This do, need to before total get UUID current running module, which generated at his initialization.
   
-  For example, in the file `__init__.py` you can do this:
+  For example, V file `__init__.py` Can do So:
   ```python
   # import ...
 
@@ -305,16 +305,16 @@ You can create your own module based on [template](.templates/forms_module).
   # ...
   ```
 
-  And then manage the module in any convenient place:
+  A Then V any convenient place manage module:
   ```python
   from core.modules import enable_module, disable_module, reload_module
 
   from . import get_module
 
 
-  await disable_module(get_module().uuid) #  turns off the module
+  await disable_module(get_module().uuid) #  turns off module
   await enable_module(get_module().uuid) #  includes module
-  await reload_module(get_module().uuid) #  reloads the module
+  await reload_module(get_module().uuid) #  reboots module
   ```
 
 </details>
@@ -322,14 +322,14 @@ You can create your own module based on [template](.templates/forms_module).
 <details>
   <summary><strong>❗ Notes</strong></summary>
 
-  </br>Functional Telegram bot is written in the library aiogram 3, user functionality implementation system Telegram The bot works on the basis of routers, which merge with the main, main router of the bot.
-  And the way they merge together, complications can arise if e.g. Callback the data has the same name. Therefore, after writing the functionality Telegram bot for the module, better rename it
-  this data in a unique way so that it does not match the names of the main bot or additional plug-ins.
+  </br>Functional Telegram bot written on library aiogram 3, system implementation custom functionality Telegram bot works on basis routers, which merge With main, main router bot.
+  AND So, How They merge together, can arise complications, If, For example Callback data have identical Name. That's why, after writing functionality Telegram bot For module, better rename
+  these data unique way, to They Not coincided With names main bot or additional connected modules.
 
 </details>
 
 
 ## 🔗 Useful links
-- Developer: https://github.com/alleexxeeyy (The profile contains current links to all contacts for communication)
+- Developer: https://github.com/alleexxeeyy (V profile There is current links on All contacts For communications)
 - Telegram channel: https://t.me/alexeyproduction
-- Telegram bot for purchasing official modules: https://t.me/alexey_production_bot
+- Telegram bot For purchases official modules: https://t.me/alexey_production_bot

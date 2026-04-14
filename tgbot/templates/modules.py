@@ -10,9 +10,9 @@ from .. import callback_datas as calls
 def modules_text():
     modules = get_modules()
     txt = textwrap.dedent(f"""
-        <b>🔌 Modules</b>
+        <b>🔌 Модули</b>
 
-        Total <b>{len(modules)}</b> connected modules:
+        Всего <b>{len(modules)}</b> подключенных модулей:
     """)
     return txt
 
@@ -47,7 +47,7 @@ def modules_kb(page: int = 0):
         rows.append(buttons_row)
 
     rows.append([
-        InlineKeyboardButton(text="⬅️ Back", callback_data=calls.MenuNavigation(to="default").pack())
+        InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.MenuNavigation(to="default").pack())
     ])
 
     kb = InlineKeyboardMarkup(inline_keyboard=rows)

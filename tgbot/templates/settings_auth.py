@@ -9,13 +9,13 @@ from .. import callback_datas as calls
 def settings_auth_text():
     config = sett.get("config")
     
-token = config["playerok"]["api"]["token"][:5] + ("*" * 10) or "❌ Not set"
-user_agent = config["playerok"]["api"]["user_agent"] or "❌ Not set"
+    token = config["playerok"]["api"]["token"][:5] + ("*" * 10) or "❌ Не задано"
+    user_agent = config["playerok"]["api"]["user_agent"] or "❌ Не задано"
     
     txt = textwrap.dedent(f"""
-<b>🔑 Authorization</b>
+        <b>🔑 Авторизация</b>
 
-<b>🔐 Token:</b> {token}
+        <b>🔐 Токен:</b> {token}
         <b>🎩 User Agent:</b> {user_agent}
     """)
     return txt
@@ -24,13 +24,13 @@ user_agent = config["playerok"]["api"]["user_agent"] or "❌ Not set"
 def settings_auth_kb():
     config = sett.get("config")
     
-token = config["playerok"]["api"]["token"][:5] + ("*" * 10) or "❌ Not set"
-user_agent = config["playerok"]["api"]["user_agent"] or "❌ Not set"
+    token = config["playerok"]["api"]["token"][:5] + ("*" * 10) or "❌ Не задано"
+    user_agent = config["playerok"]["api"]["user_agent"] or "❌ Не задано"
     
     rows = [
-[InlineKeyboardButton(text=f"🔐 Token:{token}", callback_data="enter_token")],
+        [InlineKeyboardButton(text=f"🔐 Токен: {token}", callback_data="enter_token")],
         [InlineKeyboardButton(text=f"🎩 User Agent: {user_agent}", callback_data="enter_user_agent")],
-[InlineKeyboardButton(text="⬅️ Back", callback_data=calls.SettingsNavigation(to="default").pack())]
+        [InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.SettingsNavigation(to="default").pack())]
     ]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
     return kb
@@ -38,7 +38,7 @@ user_agent = config["playerok"]["api"]["user_agent"] or "❌ Not set"
 
 def settings_auth_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-<b>🔑 Authorization</b>
+        <b>🔑 Авторизация</b>
         \n{placeholder}
     """)
     return txt

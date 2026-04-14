@@ -2,92 +2,92 @@
     "cmd_writein": {
         "enabled": true,
         "text": [
-            "✏️ Step 1. Enter last name, first name, patronymic",
+            "✏️ Шаг 1. Ввод фамилии, имени, отчества",
             "",
-            "💡 For example: Petrov Ivan Olegovich",
+            "💡 Например: Петров Иван Олегович",
             "",
-            "Enter your full name:"
+            "Введите своё ФИО:"
         ]
     },
     "entering_fullname_error": {
         "enabled": true,
         "text": [
-            "❌ Step 1. Error entering full name",
+            "❌ Шаг 1. Ошибка ввода ФИО",
             "",
-            "Make sure the text matches the format"
+            "Убедитесь, что текст соответствует формату",
             "",
-            "Enter your full name again:"
+            "Введите ФИО снова:"
         ]
     },
     "enter_age": {
         "enabled": true,
         "text": [
-            "✏️ Step 2. Enter age",
+            "✏️ Шаг 2. Ввод возраста",
             "",
-            "💡 For example: 18",
+            "💡 Например: 18",
             "",
-            "Enter your age:"
+            "Введите свой возраст:"
         ]
     },
     "entering_age_error": {
         "enabled": true,
         "text": [
-            "❌ Step 2. Error entering age",
+            "❌ Шаг 2. Ошибка ввода возраста",
             "",
-            "Make sure you entered a numeric value"
+            "Убедитесь, что вы ввели числовое значение",
             "",
-            "Enter your age again:"
+            "Введите возраст снова:"
         ]
     },
     "enter_hobby": {
         "enabled": true,
         "text": [
-            "✏️ Step 3. Entering a hobby",
+            "✏️ Шаг 3. Ввод хобби",
             "",
-            "💡 For example: Drawing",
+            "💡 Например: Рисование",
             "",
-            "Enter your hobby:"
+            "Введите своё хобби:"
         ]
     },
     "entering_username_error": {
         "enabled": true,
         "text": [
-            "❌ Step 3. Error entering hobby",
+            "❌ Шаг 3. Ошибка ввода хобби",
             "",
-            "Make sure the text matches the format"
+            "Убедитесь, что текст соответствует формату",
             "",
-            "Enter hobby again:"
+            "Введите хобби снова:"
         ]
     },
     "form_filled_out": {
         "enabled": true,
         "text": [
-            "✅ The form has been completed!",
+            "✅ Анкета была заполнена!",
             "",
-            "Your details:",
-            "・ Full name: {fullname}",
-            "・Age: {age}",
-            "・ Hobby: {hobby}",
+            "Ваши данные:",
+            "・ ФИО: {fullname}",
+            "・ Возраст: {age}",
+            "・ Хобби: {hobby}",
             "",
-            "💡 Use the command !myprofile to view the data again"
+            "💡 Используйте команду !мояанкета, чтобы просмотреть данные снова"
         ]
     },
     "cmd_myform": {
         "enabled": true,
         "text": [
-            "📝Your profile"
+            "📝 Ваша анкета",
             "",
-            "・ Full name: {fullname}",
-            "・Age: {age}",
-            "・ Hobby: {hobby}",
+            "・ ФИО: {fullname}",
+            "・ Возраст: {age}",
+            "・ Хобби: {hobby}",
             "",
-            "💡 Use the !fill command to fill out the form again"
+            "💡 Используйте команду !заполнить, чтобы заполнить анкету заново"
         ]
     },
     "cmd_myform_error": {
         "enabled": true,
         "text": [
-            "❌ An error occurred while opening your profile,"
+            "❌ При открытии вашей анкеты произошла ошибка",
             "",
             "{reason}"
         ]

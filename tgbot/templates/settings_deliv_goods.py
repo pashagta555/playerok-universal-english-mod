@@ -10,9 +10,9 @@ from .. import callback_datas as calls
 def settings_deliv_goods_text(index=0):
     goods = sett.get("auto_deliveries")[index].get("goods", [])
     txt = textwrap.dedent(f"""
-<b>📦 Automatic pick-up items</b>
+        <b>📦 Товары авто-выдачи</b>
 
-Total <b>{len(goods)}</b> products:
+        Всего <b>{len(goods)}</b> товаров:
     """)
     return txt
 
@@ -49,8 +49,8 @@ def settings_deliv_goods_kb(index=0, page=0):
         buttons_row.append(btn_next)
         rows.append(buttons_row)
 
-rows.append([InlineKeyboardButton(text="➕ Add", callback_data="enter_auto_delivery_goods_add")])
-rows.append([InlineKeyboardButton(text="⬅️ Back", callback_data=calls.AutoDeliveryPage(index=index).pack())])
+    rows.append([InlineKeyboardButton(text="➕ Добавить", callback_data="enter_auto_delivery_goods_add")])
+    rows.append([InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.AutoDeliveryPage(index=index).pack())])
 
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
     return kb
@@ -58,7 +58,7 @@ rows.append([InlineKeyboardButton(text="⬅️ Back", callback_data=calls.AutoDe
 
 def settings_deliv_goods_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-<b>📦 Automatic pick-up items</b>
+        <b>📦 Товары авто-выдачи</b>
         \n{placeholder}
     """)
     return txt
@@ -66,7 +66,7 @@ def settings_deliv_goods_float_text(placeholder: str):
 
 def settings_new_deliv_goods_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-<b>➕📦 Adding a product</b>
+        <b>➕📦 Добавление товара</b>
         \n{placeholder}
     """)
     return txt

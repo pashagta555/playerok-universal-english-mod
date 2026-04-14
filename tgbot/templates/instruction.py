@@ -6,15 +6,15 @@ from .. import callback_datas as calls
         
 def instruction_text():
     txt = textwrap.dedent(f"""
-        <b>📖 Instructions</b>
+        <b>📖 Инструкция</b>
     """)
     return txt
 
 
 def instruction_kb():
     rows = [
-        [InlineKeyboardButton(text="⌨️ Commands", callback_data=calls.InstructionNavigation(to="commands").pack())],
-        [InlineKeyboardButton(text="⬅️ Back", callback_data=calls.MenuNavigation(to="default").pack())]
+        [InlineKeyboardButton(text="⌨️ Команды", callback_data=calls.InstructionNavigation(to="commands").pack())],
+        [InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.MenuNavigation(to="default").pack())]
     ]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
     return kb
@@ -22,15 +22,15 @@ def instruction_kb():
 
 def instruction_comms_text():
     txt = textwrap.dedent(f"""
-        <b>⌨️ Teams</b>
+        <b>⌨️ Команды</b>
                           
-        ・ <code>!commands</code> - displays a menu with commands available to the buyer
-        ・ <code>!seller</code> - notifies and calls the seller into a dialogue with the buyer (writes you a message in Telegram asking for help)
+        ・ <code>!команды</code> — отображает меню с доступными для покупателя командами
+        ・ <code>!продавец</code> — уведомляет и вызывает продавца в диалог с покупателем (пишет вам в Telegram сообщение с просьбой о помощи)
     """)
     return txt
 
 
 def instruction_comms_kb():
-    rows = [[InlineKeyboardButton(text="⬅️ Back", callback_data=calls.InstructionNavigation(to="default").pack())]]
+    rows = [[InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.InstructionNavigation(to="default").pack())]]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
     return kb

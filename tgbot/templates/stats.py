@@ -11,63 +11,63 @@ def stats_text():
         stats = get_stats()
         
         txt = textwrap.dedent(f"""
-            <b>📊 Statistics</b>
+            <b>📊 Статистика</b>
 
             ━━━━━━━━━━━━━━
             
-            <b>⏰ In the last 24 hours:</b>
+            <b>⏰ За последние 24 часа:</b>
             
-            <b>📋 Orders:</b>
-            <b>・</b> ➕ Active: {stats['day']['active']}
-            <b>・</b> ➖ Completed: {stats['day']['completed']}
-            <b>・</b> 🔙 Refunds: {stats['day']['refunded']}
-            <b>・</b> ♾️ Total: {stats['day']['orders']}
+            <b>📋 Заказы:</b>
+            <b>・</b> ➕ Активных: {stats['day']['active']}
+            <b>・</b> ➖ Завершённых: {stats['day']['completed']}
+            <b>・</b> 🔙 Возвратов: {stats['day']['refunded']}
+            <b>・</b> ♾️ Всего: {stats['day']['orders']}
             
-            <b>💸 Earned:</b> {stats['day']['profit']} rub.
-            <b>🔥 Best product:</b> {stats['day']['best']}
+            <b>💸 Заработано:</b> {stats['day']['profit']} руб.
+            <b>🔥 Лучший товар:</b> {stats['day']['best']}
 
             ━━━━━━━━━━━━━━
 
-            <b>📅 Over the last week:</b>
+            <b>📅 За последнюю неделю:</b>
             
-            <b>📋 Orders:</b>
-            <b>・</b> ➕ Active: {stats['week']['active']}
-            <b>・</b> ➖ Completed: {stats['week']['completed']}
-            <b>・</b> 🔙 Refunds: {stats['week']['refunded']}
-            <b>・</b> ♾️ Total: {stats['week']['orders']}
+            <b>📋 Заказы:</b>
+            <b>・</b> ➕ Активных: {stats['week']['active']}
+            <b>・</b> ➖ Завершённых: {stats['week']['completed']}
+            <b>・</b> 🔙 Возвратов: {stats['week']['refunded']}
+            <b>・</b> ♾️ Всего: {stats['week']['orders']}
             
-            <b>💸 Earned:</b> {stats['week']['profit']} rub.
-            <b>🔥 Best product:</b> {stats['week']['best']}
+            <b>💸 Заработано:</b> {stats['week']['profit']} руб.
+            <b>🔥 Лучший товар:</b> {stats['week']['best']}
 
             ━━━━━━━━━━━━━━
 
-            <b>🗓 Over the last month:</b>
+            <b>🗓 За последний месяц:</b>
             
-            <b>📋 Orders:</b>
-            <b>・</b> ➕ Active: {stats['month']['active']}
-            <b>・</b> ➖ Completed: {stats['month']['completed']}
-            <b>・</b> 🔙 Refunds: {stats['month']['refunded']}
-            <b>・</b> ♾️ Total: {stats['month']['orders']}
+            <b>📋 Заказы:</b>
+            <b>・</b> ➕ Активных: {stats['month']['active']}
+            <b>・</b> ➖ Завершённых: {stats['month']['completed']}
+            <b>・</b> 🔙 Возвратов: {stats['month']['refunded']}
+            <b>・</b> ♾️ Всего: {stats['month']['orders']}
             
-            <b>💸 Earned:</b> {stats['month']['profit']} rub.
-            <b>🔥 Best product:</b> {stats['month']['best']}
+            <b>💸 Заработано:</b> {stats['month']['profit']} руб.
+            <b>🔥 Лучший товар:</b> {stats['month']['best']}
 
             ━━━━━━━━━━━━━━
             
-            <b>📈 All time:</b>
+            <b>📈 За все время:</b>
             
-            <b>📋 Orders:</b>
-            <b>・</b> ➕ Active: {stats['all']['active']}
-            <b>・</b> ➖ Completed: {stats['all']['completed']}
-            <b>・</b> 🔙 Refunds: {stats['all']['refunded']}
-            <b>・</b> ♾️ Total: {stats['all']['orders']}
+            <b>📋 Заказы:</b>
+            <b>・</b> ➕ Активных: {stats['all']['active']}
+            <b>・</b> ➖ Завершённых: {stats['all']['completed']}
+            <b>・</b> 🔙 Возвратов: {stats['all']['refunded']}
+            <b>・</b> ♾️ Всего: {stats['all']['orders']}
             
-            <b>💸 Earned:</b> {stats['all']['profit']} rub.
-            <b>🔥 Best product:</b> {stats['all']['best']}
+            <b>💸 Заработано:</b> {stats['all']['profit']} руб.
+            <b>🔥 Лучший товар:</b> {stats['all']['best']}
 
             ━━━━━━━━━━━━━━
             
-            <i>Counted only while using the bot</i>
+            <i>Подсчитывается только во время использования бота</i>
         """)
         return txt
     except:
@@ -77,7 +77,7 @@ def stats_text():
 
 def stats_kb():
     rows = [
-        [InlineKeyboardButton(text="⬅️ Back", callback_data=calls.MenuNavigation(to="default").pack())]
+        [InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.MenuNavigation(to="default").pack())]
     ]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
     return kb

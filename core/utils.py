@@ -101,9 +101,9 @@ def setup_logger(log_file: str = "logs/latest.log"):
 
 def is_package_installed(requirement_string: str) -> bool:
     """
-    Checks if the library is installed.
+    Проверяет, установлена ли библиотека.
 
-    :param requirement_string: Package string from the dependency file.
+    :param requirement_string: Строка пакета из файла зависимостей.
     :type requirement_string: str
     """
     
@@ -122,9 +122,9 @@ def is_package_installed(requirement_string: str) -> bool:
 
 def install_requirements(requirements_path: str):
     """
-    Installs dependencies from a file.
+    Устанавливает зависимости из файла.
 
-    :param requirements_path: Path to the dependency file.
+    :param requirements_path: Путь к файлу зависимостей.
     :type requirements_path: str
     """
     
@@ -135,7 +135,8 @@ def install_requirements(requirements_path: str):
         with open(requirements_path, "r", encoding="utf-8") as f:
             lines = f.readlines()
 
-        for line in lines:line = line.strip()
+        for line in lines:
+            line = line.strip()
             if not line or line.startswith("#") or line.startswith("-"):
                 continue
 
@@ -152,7 +153,7 @@ def install_requirements(requirements_path: str):
                 ])
                 return
     except Exception as e:
-        logger.error(f"Failed to install dependencies from file \"{requirements_path}\": {e}")
+        logger.error(f"Не удалось установить зависимости из файла \"{requirements_path}\": {e}")
 
 
 def patch_requests():
@@ -185,8 +186,8 @@ def patch_requests():
             try: delay = float(retry_hdr) if retry_hdr else min(120.0, 5.0 * (2 ** attempt))
             except: delay = min(120.0, 5.0 * (2 ** attempt))
             
-            logger.debug(f"{url} — {err}. I'm trying to send the request again via {delay} sec.")
-            delay += random.uniform(0.2, 0.8)  # slight jitter
+            logger.debug(f"{url} — {err}. Пробую отправить запрос снова через {delay} сек.")
+            delay += random.uniform(0.2, 0.8)  # небольшой джиттер
             time.sleep(delay)
         return resp
 

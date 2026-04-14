@@ -18,7 +18,7 @@ async def handler_waiting_for_messages_page(message: types.Message, state: FSMCo
         await state.set_state(None)
         
         if not message.text.isdigit():
-            raise Exception("❌ You must enter a numeric value")
+            raise Exception("❌ Вы должны ввести числовое значение")
         
         page = int(message.text) - 1
         await state.update_data(last_page=page)
@@ -49,7 +49,7 @@ async def handler_waiting_for_message_text(message: types.Message, state: FSMCon
         message_id = data.get("message_id")
         
         if len(message.text) <= 0:
-            raise Exception("❌ The text is too short")
+            raise Exception("❌ Слишком короткий текст")
 
         messages = sett.get("messages")
         message_split_lines = message.text.split('\n')
@@ -59,7 +59,7 @@ async def handler_waiting_for_message_text(message: types.Message, state: FSMCon
         await throw_float_message(
             state=state,
             message=message,
-            text=templ.settings_mess_page_float_text(f"✅ <b>Message text</b> <code>{message_id}</code> was successfully changed to <blockquote>{message.text}</blockquote>"),
+            text=templ.settings_mess_page_float_text(f"✅ <b>Текст сообщения</b> <code>{message_id}</code> был успешно изменён на <blockquote>{message.text}</blockquote>"),
             reply_markup=templ.back_kb(calls.MessagePage(message_id=message_id).pack())
         )
     except Exception as e:

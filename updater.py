@@ -19,7 +19,7 @@ def get_releases():
     response = requests.get(f"https://api.github.com/repos/{REPO}/releases", timeout=5)
     response.raise_for_status()
     if response.status_code != 200:
-        raise Exception(f"Request error GitHub API: {response.status_code}")
+        raise Exception(f"Error request To GitHub API: {response.status_code}")
     return response.json()
 
 
@@ -41,7 +41,7 @@ def download_update(release_info: dict) -> bytes:
     zip_url = release_info['zipball_url']
     zip_response = requests.get(zip_url)
     if zip_response.status_code != 200:
-        raise Exception(f"Error downloading update archive: {zip_response.status_code}")
+        raise Exception(f"Error at downloading archive updates: {zip_response.status_code}")
     return zip_response.content
 
 
@@ -56,7 +56,7 @@ def install_update(release_info: dict, content: bytes) -> bool:
                     archive_root = os.path.join(temp_dir, item)
                     break
             if not archive_root:
-                raise Exception("There is no root folder in the archive!")
+                raise Exception("IN archive No root folders!")
             for root, _, files in os.walk(archive_root):
                 for file in files:
                     src = os.path.join(root, file)
@@ -76,27 +76,27 @@ def check_for_updates():
         versions = [release["tag_name"] for release in releases]
         
         if VERSION not in versions:
-            logger.info(f"Your version {Fore.LIGHTWHITE_EX}{VERSION} {Fore.WHITE}There is no repository in the releases. Latest version: {Fore.LIGHTWHITE_EX}{latest_release['tag_name']}")
+            logger.info(f"yours versions {Fore.LIGHTWHITE_EX}{VERSION} {Fore.WHITE}There is not V releases repository. Last version: {Fore.LIGHTWHITE_EX}{latest_release['tag_name']}")
             return
         elif Version(VERSION) == Version(latest_release["tag_name"]):
-            logger.info(f"You have the latest version installed: {Fore.LIGHTWHITE_EX}{VERSION}")
+            logger.info(f"U you installed last version: {Fore.LIGHTWHITE_EX}{VERSION}")
             return
         elif Version(VERSION) < Version(latest_release["tag_name"]):
-            logger.info(f"{Fore.YELLOW}New version available: {Fore.LIGHTWHITE_EX}{latest_release['tag_name']}")
+            logger.info(f"{Fore.YELLOW}Available new version: {Fore.LIGHTWHITE_EX}{latest_release['tag_name']}")
             if SKIP_UPDATES:
                 logger.info(
-                    f"I skip installing the update. If you want to download updates automatically, change the value "
-                    f"{Fore.LIGHTWHITE_EX}SKIP_UPDATES{Fore.WHITE} on {Fore.YELLOW}False {Fore.WHITE}in the initialization file {Fore.LIGHTWHITE_EX}(__init__.py)"
+                    f"I'm skipping installation updates. If You want automatically download updates, change meaning "
+                    f"{Fore.LIGHTWHITE_EX}SKIP_UPDATES{Fore.WHITE} on {Fore.YELLOW}False {Fore.WHITE}V file initialization {Fore.LIGHTWHITE_EX}(__init__.py)"
                 )
                 return
             
-            logger.info(f"Downloading update {latest_release['tag_name']}...")
+            logger.info(f"Loading update {latest_release['tag_name']}...")
             bytes = download_update(latest_release)
             if not bytes:
                 return
-            logger.info(f"Installing the update {latest_release['tag_name']}...")
+            logger.info(f"Installing update {latest_release['tag_name']}...")
             if install_update(latest_release, bytes):
-                logger.info(f"{Fore.YELLOW}Update {Fore.LIGHTWHITE_EX}{latest_release['tag_name']} {Fore.YELLOW}was installed successfully.")
+                logger.info(f"{Fore.YELLOW}Update {Fore.LIGHTWHITE_EX}{latest_release['tag_name']} {Fore.YELLOW}was successfully installed.")
                 restart()
     except Exception as e:
-        logger.error(f"{Fore.LIGHTRED_EX}Error during update: {Fore.WHITE}{e}")
+        logger.error(f"{Fore.LIGHTRED_EX}Error at update: {Fore.WHITE}{e}")

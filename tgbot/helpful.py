@@ -2,13 +2,13 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import (
     InlineKeyboardMarkup, 
     Message, 
-    CallbackQuery 
+    CallbackQuery, 
     InputMediaPhoto, 
     FSInputFile
 )
 from aiogram.exceptions import TelegramAPIError, TelegramBadRequest
 
-from . import templates as template
+from . import templates as templ
 
 
 async def do_auth(message: Message, state: FSMContext) -> Message | None:
@@ -19,8 +19,8 @@ async def do_auth(message: Message, state: FSMContext) -> Message | None:
         state=state,
         message=message,
         text=templ.sign_text(
-            '🔑 Enter the password key you specified in the bot config ↓'
-            '\n\n<span class="tg-spoiler">If you forgot, you can view it directly in the config along the path bot_settings/config.json, password parameter in the telegram.bot section</span>'
+            '🔑 Введите ключ-пароль, указанный вами в конфиге бота ↓'
+            '\n\n<span class="tg-spoiler">Если вы забыли, его можно посмотреть напрямую в конфиге по пути bot_settings/config.json, параметр password в разделе telegram.bot</span>'
         ),
         reply_markup=templ.destroy_kb()
     )

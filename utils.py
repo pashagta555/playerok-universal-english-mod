@@ -118,7 +118,8 @@ def is_tg_bot_exists() -> bool:
         response = requests.get(
             f"https://api.telegram.org/bot{token}/getMe", 
             proxies=proxies,
-            timeout=5)
+            timeout=5
+        )
         
         data = response.json()
         return data.get("ok", False) is True and data.get("result", {}).get("is_bot", False) is True
@@ -146,119 +147,119 @@ def configure_config():
     while not config["playerok"]["api"]["token"]:
         while not config["playerok"]["api"]["token"]:
             print(
-f"\n{Fore.WHITE}Enter the {Fore.LIGHTBLUE_EX}token {Fore.WHITE}of your Playerok account."
-f"You can find it out from Cookie data, use the Cookie-Editor extension."
-f"\n {Fore.WHITE}· Example: eyJhbGciOiJIUzI1NiIsInR5cCI1IkpXVCJ9.eyJzdWIiOiIxZWUxMzg0Ni..."
+                f"\n{Fore.WHITE}Enter {Fore.LIGHTBLUE_EX}token {Fore.WHITE}your Playerok account. "
+                f"His Can to know from Cookie-data, take advantage expansion Cookie-Editor."
+                f"\n  {Fore.WHITE}· Example: eyJhbGciOiJIUzI1NiIsInR5cCI1IkpXVCJ9.eyJzdWIiOiIxZWUxMzg0Ni..."
             )
             token = input(f"  {Fore.WHITE}↳ {Fore.LIGHTWHITE_EX}").strip()
             if is_token_valid(token):
                 config["playerok"]["api"]["token"] = token
                 sett.set("config", config)
-print(f"\n{Fore.GREEN}The token was successfully saved to the config.")
+                print(f"\n{Fore.GREEN}Token successfully saved V config.")
             else:
                 print(
-f"\n{Fore.LIGHTRED_EX}It looks like you entered an incorrect token."
-f"Make sure it matches the format and try again."
+                    f"\n{Fore.LIGHTRED_EX}It seems, What You introduced incorrect token. "
+                    f"Make sure, What He corresponds format And try it more once."
                 )
 
         while not config["playerok"]["api"]["user_agent"]:
             print(
-f"\n{Fore.WHITE}Enter {Fore.LIGHTMAGENTA_EX}User Agent {Fore.WHITE}of your browser."
-f"It can be copied from the website {Fore.LIGHTWHITE_EX}https://whatmyuseragent.com."
-f"Or you can skip this option by pressing Enter."
-f"\n  {Fore.WHITE}· Example: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+                f"\n{Fore.WHITE}Enter {Fore.LIGHTMAGENTA_EX}User Agent {Fore.WHITE}your browser. "
+                f"His Can copy on website {Fore.LIGHTWHITE_EX}https://whatmyuseragent.com. "
+                f"Or You you can skip this parameter, pressing Enter."
+                f"\n  {Fore.WHITE}· Example: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
             )
             user_agent = input(f"  {Fore.WHITE}↳ {Fore.LIGHTWHITE_EX}").strip()
             if not user_agent:
-print(f"\n{Fore.YELLOW}You missed entering the User Agent. Please note that in this case the bot may become unstable.")
+                print(f"\n{Fore.YELLOW}You missed input User Agent. Please note, What V like this case bot Maybe work unstable.")
                 break
             if is_user_agent_valid(user_agent):
                 config["playerok"]["api"]["user_agent"] = user_agent
                 sett.set("config", config)
-print(f"\n{Fore.GREEN}User Agent was successfully saved to the config.")
+                print(f"\n{Fore.GREEN}User Agent successfully saved V config.")
             else:
                 print(
-f"\n{Fore.LIGHTRED_EX}It looks like you entered an incorrect User Agent."
-f"Make sure there are no Russian characters in it and try again."
+                    f"\n{Fore.LIGHTRED_EX}It seems, What You introduced incorrect User Agent. "
+                    f"Make sure, What V him No Russians characters And try it more once."
                 )
         
         while not config["playerok"]["api"]["proxy"]:
             print(
-f"\n{Fore.WHITE}Enter {Fore.LIGHTBLUE_EX}IPv4 HTTP Proxy {Fore.WHITE}for Playerok account."
-f"Format: user:password@ip:port or ip:port if it is without authorization."
-f"If you don't know what this is, or don't want to install a proxy, skip this option by pressing Enter."
-f"\n {Fore.WHITE}· Example: DRjcQTm3Yc:m8GnUN8Q9L@46.161.30.187:8000"
+                f"\n{Fore.WHITE}Enter {Fore.LIGHTBLUE_EX}IPv4 HTTP Proxy {Fore.WHITE}For Playerok account. "
+                f"Format: user:password@ip:port or ip:port, If He without authorization. "
+                f"If You Not you know What This, or Not want install proxy - skip it this parameter, pressing Enter."
+                f"\n  {Fore.WHITE}· Example: DRjcQTm3Yc:m8GnUN8Q9L@46.161.30.187:8000"
             )
             proxy = input(f"  {Fore.WHITE}↳ {Fore.LIGHTWHITE_EX}").strip()
             if not proxy:
-print(f"\n{Fore.WHITE}You missed entering a proxy.")
+                print(f"\n{Fore.WHITE}You missed input proxy.")
                 break
             if is_proxy_valid(proxy):
                 config["playerok"]["api"]["proxy"] = proxy
                 sett.set("config", config)
-print(f"\n{Fore.GREEN}The proxy was successfully saved to the config.")
+                print(f"\n{Fore.GREEN}Proxy successfully saved V config.")
             else:
                 print(
-f"\n{Fore.LIGHTRED_EX}It looks like you entered an incorrect Proxy."
-f"Make sure it matches the format and try again."
+                    f"\n{Fore.LIGHTRED_EX}It seems, What You introduced incorrect Proxy. "
+                    f"Make sure, What He corresponds format And try it more once."
                 )
 
     while not config["telegram"]["api"]["token"]:
         while not config["telegram"]["api"]["token"]:
             print(
-f"\n{Fore.WHITE}Enter the {Fore.CYAN}token of your Telegram bot{Fore.WHITE}. The bot must be created by @BotFather."
-f"\n {Fore.WHITE}· Example: 7257913369:AAG2KjLL3-zvvfSQFSVhaTb4w7tR2iXsJXM"
+                f"\n{Fore.WHITE}Enter {Fore.CYAN}token your Telegram bot{Fore.WHITE}. Botha need to create at @BotFather."
+                f"\n  {Fore.WHITE}· Example: 7257913369:AAG2KjLL3-zvvfSQFSVhaTb4w7tR2iXsJXM"
             )
             token = input(f"  {Fore.WHITE}↳ {Fore.LIGHTWHITE_EX}").strip()
             if is_tg_token_valid(token):
                 config["telegram"]["api"]["token"] = token
                 sett.set("config", config)
-print(f"\n{Fore.GREEN}Telegram bot token has been successfully saved to the config.")
+                print(f"\n{Fore.GREEN}Token Telegram bot successfully saved V config.")
             else:
                 print(
-f"\n{Fore.LIGHTRED_EX}It looks like you entered an incorrect token."
-f"Make sure it matches the format and try again."
+                    f"\n{Fore.LIGHTRED_EX}It seems, What You introduced incorrect token. "
+                    f"Make sure, What He corresponds format And try it more once."
                 )
 
         while not config["telegram"]["api"]["proxy"]:
             print(
-f"\n{Fore.WHITE}Enter {Fore.LIGHTBLUE_EX}IPv4 HTTP Proxy {Fore.WHITE}for Telegram bot."
-f"Format: user:password@ip:port or ip:port if it is without authorization."
-f"If you don't know what this is, or don't want to install a proxy, skip this option by pressing Enter."
-f"\n {Fore.WHITE}· Example: DRjcQTm3Yc:m8GnUN8Q9L@46.161.30.187:8000"
+                f"\n{Fore.WHITE}Enter {Fore.LIGHTBLUE_EX}IPv4 HTTP Proxy {Fore.WHITE}For Telegram bot. "
+                f"Format: user:password@ip:port or ip:port, If He without authorization. "
+                f"If You Not you know What This, or Not want install proxy - skip it this parameter, pressing Enter."
+                f"\n  {Fore.WHITE}· Example: DRjcQTm3Yc:m8GnUN8Q9L@46.161.30.187:8000"
             )
             proxy = input(f"  {Fore.WHITE}↳ {Fore.LIGHTWHITE_EX}").strip()
             if not proxy:
-print(f"\n{Fore.WHITE}You missed entering a proxy.")
+                print(f"\n{Fore.WHITE}You missed input proxy.")
                 break
             if is_proxy_valid(proxy):
                 config["telegram"]["api"]["proxy"] = proxy
                 sett.set("config", config)
-print(f"\n{Fore.GREEN}The proxy was successfully saved to the config.")
+                print(f"\n{Fore.GREEN}Proxy successfully saved V config.")
             else:
                 print(
-f"\n{Fore.LIGHTRED_EX}It looks like you entered an incorrect proxy."
-f"Make sure it matches the format and try again."
+                    f"\n{Fore.LIGHTRED_EX}It seems, What You introduced incorrect proxy. "
+                    f"Make sure, What He corresponds format And try it more once."
                 )
 
     while not config["telegram"]["bot"]["password"]:
         print(
-f"\n{Fore.WHITE}Create and enter a {Fore.YELLOW}password for your Telegram bot{Fore.WHITE}."
-f"The bot will ask for this password every time another user tries to interact with your Telegram bot."
-f"\n{Fore.WHITE}· The password must be complex, at least 6 and no more than 64 characters long."
+            f"\n{Fore.WHITE}Come up with And enter {Fore.YELLOW}password For your Telegram bot{Fore.WHITE}. "
+            f"Bot will request this password at each new attempt interactions someone else's user With yours Telegram bot."
+            f"\n  {Fore.WHITE}· Password must be complex, length Not less 6 And Not more 64 characters."
         )
         password = input(f"  {Fore.WHITE}↳ {Fore.LIGHTWHITE_EX}").strip()
         if is_password_valid(password):
             config["telegram"]["bot"]["password"] = password
             sett.set("config", config)
-print(f"\n{Fore.GREEN}Password successfully saved to config.")
+            print(f"\n{Fore.GREEN}Password successfully saved V config.")
         else:
-print(f"\n{Fore.LIGHTRED_EX}Your password is not suitable. Make sure it is in the correct format and is not lightweight and try again.")
+            print(f"\n{Fore.LIGHTRED_EX}Your password Not fits. Make sure, What He corresponds format And Not is light And try it more once.")
 
     if config["playerok"]["api"]["proxy"] and not is_proxy_working(config["playerok"]["api"]["proxy"]):
         print(
-f"\n{Fore.LIGHTRED_EX}It seems that the proxy for the Playerok account is not working."
-f"Please check it and enter it again."
+            f"\n{Fore.LIGHTRED_EX}It seems, What proxy For Playerok account Not works. "
+            f"Please, check his And enter again."
         )
         config["playerok"]["api"]["token"] = ""
         config["playerok"]["api"]["user_agent"] = ""
@@ -266,12 +267,12 @@ f"Please check it and enter it again."
         sett.set("config", config)
         return configure_config()
     elif config["playerok"]["api"]["proxy"]:
-logger.info(f"{Fore.LIGHTYELLOW_EX}Playerok proxy is running successfully.")
+        logger.info(f"{Fore.LIGHTYELLOW_EX}Playerok proxy successfully works.")
 
     if not is_pl_account_working():
         print(
-f"\n{Fore.LIGHTRED_EX}Could not connect to your Playerok account."
-f"Please make sure you have the correct token and enter it again."
+            f"\n{Fore.LIGHTRED_EX}Not succeeded connect To yours Playerok account. "
+            f"Please, make sure, What at you indicated loyal token And enter his again."
         )
         config["playerok"]["api"]["token"] = ""
         config["playerok"]["api"]["user_agent"] = ""
@@ -279,12 +280,12 @@ f"Please make sure you have the correct token and enter it again."
         sett.set("config", config)
         return configure_config()
     else:
-logger.info(f"{Fore.LIGHTYELLOW_EX}Playerok account has been successfully authorized.")
+        logger.info(f"{Fore.LIGHTYELLOW_EX}Playerok account successfully authorized.")
 
     if is_pl_account_banned():
         print(
-f"{Fore.LIGHTRED_EX}\nYour Playerok account has been banned! "
-f"Sorry, I can't run the bot on a blocked account..."
+            f"{Fore.LIGHTRED_EX}\nYour Playerok account banned! "
+            f"Alas, I Not Can run bot on blocked account..."
         )
         config["playerok"]["api"]["token"] = ""
         config["playerok"]["api"]["user_agent"] = ""
@@ -297,27 +298,27 @@ f"Sorry, I can't run the bot on a blocked account..."
         "https://api.telegram.org/"
     ):
         print(
-f"{Fore.LIGHTRED_EX}\nIt seems that the proxy for the Telegram bot is not working."
-f"Please check it and enter it again."
+            f"{Fore.LIGHTRED_EX}\nIt seems, What proxy For Telegram bot Not works. "
+            f"Please, check his And enter again."
         )
         config["telegram"]["api"]["token"] = ""
         config["telegram"]["api"]["proxy"] = ""
         sett.set("config", config)
         return configure_config()
     elif config["telegram"]["api"]["proxy"]:
-logger.info(f"{Fore.LIGHTYELLOW_EX}Telegram proxy is running successfully.")
+        logger.info(f"{Fore.LIGHTYELLOW_EX}Telegram proxy successfully works.")
 
     if not is_tg_bot_exists():
         print(
-f"{Fore.LIGHTRED_EX}\nFailed to connect to your Telegram bot."
-f"If you are in Russia, you need to connect a proxy to the Telegram bot or use a VPN, due to blocking by the RKN."
+            f"{Fore.LIGHTRED_EX}\nNot succeeded connect To yours Telegram bot. "
+            f"If You you are on territories Russia, to you need to connect proxy To Telegram bot or use VPN, V mind blocking with sides RKN."
         )
         config["telegram"]["api"]["token"] = ""
         config["telegram"]["api"]["proxy"] = ""
         sett.set("config", config)
         return configure_config()
     else:
-logger.info(f"{Fore.LIGHTYELLOW_EX}Telegram bot is running successfully.")
+        logger.info(f"{Fore.LIGHTYELLOW_EX}Telegram bot successfully works.")
 
 
 def get_stats():

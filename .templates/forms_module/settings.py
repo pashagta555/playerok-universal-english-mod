@@ -1,6 +1,6 @@
 import os
 from settings import (
-    Settings as set,
+    Settings as sett,
     SettingsFile
 )
 
@@ -26,92 +26,92 @@ MESSAGES = SettingsFile(
         "cmd_writein": {
             "enabled": True,
             "text": [
-                "✏️ Step 1. Introduction of families, names, fatherhoods",
+                "✏️ Шаг 1. Ввод фамилии, имени, отчества",
                 "",
-                "💡 For example: Petrov Ivan Olegovich",
+                "💡 Например: Петров Иван Олегович",
                 "",
-                "Enter your FIO:"
+                "Введите своё ФИО:"
             ]
         },
         "entering_fullname_error": {
             "enabled": True,
             "text": [
-                "❌ Step 1. FIO input error",
+                "❌ Шаг 1. Ошибка ввода ФИО",
                 "",
-                "Make sure the text matches the format",
+                "Убедитесь, что текст соответствует формату",
                 "",
-                "Enter the full name of the dream:"
+                "Введите ФИО снова:"
             ]
         },
         "enter_age": {
             "enabled": True,
             "text": [
-                "✏️ Step 2. Introduction of age",
+                "✏️ Шаг 2. Ввод возраста",
                 "",
-                "💡 For example: 18",
+                "💡 Например: 18",
                 "",
-                "Enter your age:"
+                "Введите свой возраст:"
             ]
         },
         "entering_age_error": {
             "enabled": True,
             "text": [
-                "❌ Step 2. Age input error",
+                "❌ Шаг 2. Ошибка ввода возраста",
                 "",
-                "Make sure that you entered numerical value",
+                "Убедитесь, что вы ввели числовое значение",
                 "",
-                "Enter the Age of Dreams:"
+                "Введите возраст снова:"
             ]
         },
         "enter_hobby": {
             "enabled": True,
             "text": [
-                "✏️ Step 3. Introduction hobby",
+                "✏️ Шаг 3. Ввод хобби",
                 "",
-                "💡 Example: Drawing",
+                "💡 Например: Рисование",
                 "",
-                "Enter your hobby:"
+                "Введите своё хобби:"
             ]
         },
         "entering_username_error": {
             "enabled": True,
             "text": [
-                "❌ Step 3. Hobby input error",
+                "❌ Шаг 3. Ошибка ввода хобби",
                 "",
-                "Make sure the text matches the format",
+                "Убедитесь, что текст соответствует формату",
                 "",
-                "Enter the dream hobby:"
+                "Введите хобби снова:"
             ]
         },
         "form_filled_out": {
             "enabled": True,
             "text": [
-                "The survey was filled in!",
+                "✅ Анкета была заполнена!",
                 "",
-                "Your data:",
-                "・ FIO: {fullname}",
-                "・ Age: {age}",
-                "・ Hobby: {hobby}",
+                "Ваши данные:",
+                "・ ФИО: {fullname}",
+                "・ Возраст: {age}",
+                "・ Хобби: {hobby}",
                 "",
-                "💡 Use the !mysurvey command to view dream data"
+                "💡 Используйте команду !мояанкета, чтобы просмотреть данные снова"
             ]
         },
         "cmd_myform": {
             "enabled": True,
             "text": [
-                "📝 Your Survey",
+                "📝 Ваша анкета",
                 "",
-                "・ FIO: {fullname}",
-                "・ Age: {age}",
-                "・ Hobby: {hobby}",
+                "・ ФИО: {fullname}",
+                "・ Возраст: {age}",
+                "・ Хобби: {hobby}",
                 "",
-                "💡 Use the !fill command to fill out the survey again"
+                "💡 Используйте команду !заполнить, чтобы заполнить анкету заново"
             ]
         },
         "cmd_myform_error": {
             "enabled": True,
             "text": [
-                "❌ There was an error opening your survey",
+                "❌ При открытии вашей анкеты произошла ошибка",
                 "",
                 "{reason}"
             ]

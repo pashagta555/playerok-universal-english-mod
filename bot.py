@@ -63,7 +63,7 @@ async def start_playerok_bot():
 
 if __name__ == "__main__":
     try:
-        install_requirements("requirements.txt") # installing missing dependencies, if any
+        install_requirements("requirements.txt") # installation missing dependencies, If such There is
         patch_requests()
         setup_logger()
         
@@ -96,12 +96,12 @@ if __name__ == "__main__":
     except Exception as e:
         traceback.print_exc()
         print(
-            f"\n\n{Fore.LIGHTRED_EX}Your bot encountered an unexpected error and was turned off."
-            f"\n\n{Fore.WHITE}Please try to find your problem in our article, which contains all the most common errors.",
-            f"\nArticle: {Fore.LIGHTWHITE_EX}https://telegra.ph/FunPay-Universal--chastye-oshibki-i-ih-resheniya-08-26 {Fore.WHITE}(CTRL + Click LMB)\n\n"
+            f"\n\n{Fore.LIGHTRED_EX}Your bot caught it unexpected error And was off."
+            f"\n\n{Fore.WHITE}Please, try it find my problem V our article, V which collected All the most frequent errors.",
+            f"\nArticle: {Fore.LIGHTWHITE_EX}https://telegra.ph/FunPay-Universal--chastye-oshibki-i-ih-resheniya-08-26 {Fore.WHITE}(CTRL + Cry LMB)\n\n"
         )
     except KeyboardInterrupt:
         print(
-            f"\n\n{Fore.YELLOW}The bot has stopped working"
-            f"\n{Fore.WHITE}(you clicked Ctrl + C)\n\n"
+            f"\n\n{Fore.YELLOW}Job bot stopped "
+            f"\n{Fore.WHITE}(You pressed Ctrl + C)\n\n"
         )

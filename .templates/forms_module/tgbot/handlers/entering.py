@@ -19,7 +19,7 @@ async def handler_entering_message_text(message: types.Message, state: FSMContex
     try:
         await state.set_state(None)
         if len(message.text.strip()) <= 0:
-raise Exception("❌ Text is too short")
+            raise Exception("❌ Слишком короткий текст")
 
         data = await state.get_data()
         messages = sett.get("messages")
@@ -28,7 +28,7 @@ raise Exception("❌ Text is too short")
         sett.set("messages", messages)
         await throw_float_message(state=state,
                                   message=message,
-text=templ.settings_mess_page_float_text(f"✅ <b>Message text</b> <code>{data['message_id']}</code> was successfully changed to <blockquote>{message.text.strip()}</blockquote>"),
+                                  text=templ.settings_mess_page_float_text(f"✅ <b>Текст сообщения</b> <code>{data['message_id']}</code> был успешно изменён на <blockquote>{message.text.strip()}</blockquote>"),
                                   reply_markup=main_templ.back_kb(calls.FORMS_MessagePage(message_id=data.get("message_id")).pack()))
     except Exception as e:
         if e is not TelegramAPIError:
@@ -43,7 +43,7 @@ async def handler_entering_messages_page(message: types.Message, state: FSMConte
     try: 
         await state.set_state(None)
         if not message.text.strip().isdigit():
-raise Exception("❌ You must enter a numeric value")
+            raise Exception("❌ Вы должны ввести числовое значение")
         
         await state.update_data(last_page=int(message.text.strip())-1)
         await throw_float_message(state=state,

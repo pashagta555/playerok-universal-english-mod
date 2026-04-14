@@ -9,9 +9,9 @@ from .. import callback_datas as calls
 
 def settings_withdrawal_cards_text(bank_cards: list[UserBankCard]):
     txt = textwrap.dedent(f"""
-        <b>💳 Bank cards</b>
+        <b>💳 Банковские карты</b>
 
-        Total <b>{len(bank_cards)}</b> card:
+        Всего <b>{len(bank_cards)}</b> карт:
     """)
     return txt
 
@@ -48,12 +48,12 @@ def settings_withdrawal_cards_kb(bank_cards: list[UserBankCard], page=0):
         rows.append(buttons_row)
 
     rows.append([
-        InlineKeyboardButton(text="· 💳 Cards RU ·", callback_data="123"),
-        InlineKeyboardButton(text="📱 SBP Banks", callback_data=calls.SbpBanksPagination(page=0).pack()),
+        InlineKeyboardButton(text="· 💳 Карты RU ·", callback_data="123"),
+        InlineKeyboardButton(text="📱 СБП банки", callback_data=calls.SbpBanksPagination(page=0).pack()),
         InlineKeyboardButton(text="💲 USDT (TRC20)", callback_data="enter_usdt_address")
     ])
     rows.append([
-        InlineKeyboardButton(text="⬅️ Back", callback_data=calls.SettingsNavigation(to="withdrawal").pack()),
+        InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.SettingsNavigation(to="withdrawal").pack()),
     ])
 
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
@@ -62,7 +62,7 @@ def settings_withdrawal_cards_kb(bank_cards: list[UserBankCard], page=0):
 
 def settings_withdrawal_cards_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>💳 Bank cards</b>
+        <b>💳 Банковские карты</b>
         \n{placeholder}
     """)
     return txt

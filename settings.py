@@ -100,68 +100,68 @@ MESSAGES = SettingsFile(
         "first_message": {
             "enabled": True,
             "text": [
-                "👋 Hello, {username}, I'm a bot assistant 𝗣𝗹𝗮𝘆𝗲𝗿𝗼𝗸 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗮𝗹",
+                "👋 Hello, {username}, I bot-assistant 𝗣𝗹𝗮𝘆𝗲𝗿𝗼𝗸 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗮𝗹",
                 "",
-                "💡 If you want to talk to the seller, write the command !seller so that I can invite him to this dialogue."
+                "💡 If You want talk With seller, write team !salesman, to I invited his V this dialogue",
                 "",
-                "To find out all my commands, write !commands"
+                "To to know All my teams, write !teams"
             ]
         },
         "cmd_error": {
             "enabled": True,
             "text": [
-                "❌ An error occurred while entering the command: {error}"
+                "❌ At input teams happened error: {error}"
             ]
         },
         "cmd_commands": {
             "enabled": True,
             "text": [
-                "🕹️ Basic commands:",
-                "・ !seller - notify and invite the seller to this chat"
+                "🕹️ Basic teams:",
+                "・ !salesman — notify And call seller V this chat"
             ]
         },
         "cmd_seller": {
             "enabled": True,
             "text": [
-                "💬 The seller was called to this chat. Wait for him to join the dialogue..."
+                "💬 Salesman was called V this chat. Expect, Bye He connect To dialogue..."
             ]
         },
         "new_deal": {
             "enabled": False,
             "text": [
-                "📋 Thanks for your purchase «{deal_item_name}»",
+                "📋 Thank you for purchase «{deal_item_name}»",
                 ""
-                "The seller may not be available right now; to call him, use the command !seller."
+                "Seller Now Maybe Not be on place, to call his, use team !salesman."
             ]
         },
         "deal_pending": {
             "enabled": False,
             "text": [
-                "⌛ Send the necessary information so that I can complete your order"
+                "⌛ Send necessary data, to I smog execute your order"
             ]
         },
         "deal_sent": {
             "enabled": False,
             "text": [
-                "✅ I have confirmed your order! If you have not received the purchased product, write it in the chat"
+                "✅ I confirmed execution your order! If You Not received bought product - write This V chat"
             ]
         },
         "deal_confirmed": {
             "enabled": False,
             "text": [
-                "🌟 Thank you for a successful transaction. I will be glad if you leave a review. I look forward to seeing you in my store next time, good luck!"
+                "🌟 Thank you for successful deal. Will glad, If leave it review. I am waiting you V his store V next once, Good luck!"
             ]
         },
         "deal_refunded": {
             "enabled": False,
             "text": [
-                "📦 The order was returned. I hope this transaction did not cause you any inconvenience. I look forward to seeing you in my store next time, good luck!"
+                "📦 Order was returned. Hope, this deal Not brought to you inconvenience. I am waiting you V his store V next once, Good luck!"
             ]
         },
         "new_review": {
             "enabled": False,
             "text": [
-                "✨ Thanks for {review_rating}⭐ review! I hope you liked the quality of the work performed"
+                "✨ Thank you for {review_rating}⭐ review! Hope, to you I liked it quality completed work"
             ]
         }
     }
@@ -210,15 +210,15 @@ DATA = [CONFIG, MESSAGES, CUSTOM_COMMANDS, AUTO_DELIVERIES, AUTO_RESTORE_ITEMS, 
 
 def validate_config(config, default):
     """
-    Checks the config structure for compliance with the standard template.
+    Checks structure config on correspondence standard template.
 
     :param config: Current config.
     :type config: `dict`
 
-    :param default: Standard template configuration.
+    :param default: Standard sample config.
     :type default: `dict`
 
-    :return: True if the structure is valid, otherwise False.
+    :return: True If structure valid, otherwise False.
     :rtype: bool
     """
     
@@ -235,16 +235,16 @@ def validate_config(config, default):
 
 def restore_config(config: dict, default: dict):
     """
-    Restores missing parameters in the config from the standard template.
-    And removes parameters from the config that are not in the standard template.
+    Restores missing parameters V config from standard template.
+    AND deletes parameters from config, which There is not V standard template.
 
     :param config: Current config.
     :type config: `dict`
 
-    :param default: Standard template configuration.
+    :param default: Standard sample config.
     :type default: `dict`
 
-    :return: Restored config.
+    :return: Refurbished config.
     :rtype: `dict`
     """
     config = copy.deepcopy(config)
@@ -265,17 +265,17 @@ def restore_config(config: dict, default: dict):
 
 def get_json(path: str, default: dict, need_restore: bool = True) -> dict:
     """
-    Retrieves settings file data.
-    Creates a settings file if it does not exist.
-    Adds new data, if any.
+    Receives data file settings.
+    Creates file settings, If his No.
+    Adds new data, If such There is.
 
-    :param path: Path to json file
+    :param path: Path To json file.
     :type path: `str`
 
-    :param default: Standard file template.
+    :param default: Standard sample file.
     :type default: `dict`
 
-    :param need_restore: Is it necessary to check the integrity of the config.
+    :param need_restore: Need to whether do check on integrity config.
     :type need_restore: `bool`
     """
     
@@ -302,9 +302,9 @@ def get_json(path: str, default: dict, need_restore: bool = True) -> dict:
 
 def set_json(path: str, new: dict):
     """
-    Sets new data to the settings file.
+    Installs new data V file settings.
 
-    :param path: Path to json file
+    :param path: Path To json file.
     :type path: `str`
 
     :param new: New data.
@@ -312,7 +312,7 @@ def set_json(path: str, new: dict):
     """
     dir_name = os.path.dirname(path)
     
-    with tempfile.NamedTemporaryFile( # atomic file write
+    with tempfile.NamedTemporaryFile( # atomic record file
         "w",
         encoding="utf-8",
         dir=dir_name,

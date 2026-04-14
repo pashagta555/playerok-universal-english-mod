@@ -58,7 +58,7 @@ class TelegramBot:
 
     async def _set_main_menu(self):
         try:
-            main_menu_commands = [BotCommand(command="/start", description="🏠 Main menu")]
+            main_menu_commands = [BotCommand(command="/start", description="🏠 Главное меню")]
             await self.bot.set_my_commands(main_menu_commands)
         except:
             pass
@@ -66,7 +66,7 @@ class TelegramBot:
     async def _set_short_description(self):
         try:
             short_description = textwrap.dedent(f"""
-                Playerok Universal — free bot assistant for playerok.com
+                Playerok Universal — бесплатный бот-помощник для playerok.com
                 
                 📢 @alexeyproduction
                 🤖 @alexey_production_bot
@@ -79,24 +79,24 @@ class TelegramBot:
     async def _set_description(self):
         try:
             description = textwrap.dedent(f"""
-                🟢 Eternal online
-                ♻️ Auto-recovery of goods
-                ⬆️ Auto-lifting of goods
-                💸 Auto-withdrawal
-                🚀 Automatic delivery of goods
-                ❗ Custom commands
-                💬 Call the seller
-                👋 Welcome message
-                📊 Detailed statistics
-                📲 Notifications in Telegram
-                🖌️ Customization
-                🔌 Plugins
+                🟢 Вечный онлайн
+                ♻️ Авто-восстановление товаров
+                ⬆️ Авто-поднятие товаров
+                💸 Авто-вывод средств
+                🚀 Авто-выдача товаров
+                ❗ Кастомные команды
+                💬 Вызов продавца
+                👋 Приветственное сообщение
+                📊 Подробная статистика
+                📲 Уведомления в Telegram
+                🖌️ Кастомизация
+                🔌 Плагины
                                         
-                ⬇️ Download bot: https://github.com/alleexxeeyy/playerok-universal
+                ⬇️ Скачать бота: https://github.com/alleexxeeyy/playerok-universal
                 
-                📢 Channel: @alexeyproduction
-                🤖 Bot: @alexey_production_bot
-                🧑‍💻 Author: @alleexxeeyy
+                📢 Канал: @alexeyproduction
+                🤖 Бот: @alexey_production_bot
+                🧑‍💻 Автор: @alleexxeeyy
             """)
             await self.bot.set_my_description(description=description)
         except:
@@ -113,7 +113,7 @@ class TelegramBot:
         
         me = await self.bot.get_me()
         logger.info("")
-        logger.info(f"{Fore.LIGHTBLUE_EX}Telegram bot {Fore.LIGHTWHITE_EX}@{me.username} {Fore.LIGHTBLUE_EX}started and active")
+        logger.info(f"{Fore.LIGHTBLUE_EX}Telegram бот {Fore.LIGHTWHITE_EX}@{me.username} {Fore.LIGHTBLUE_EX}запущен и активен")
         
         if self.proxy:
             if "@" in self.proxy:
@@ -130,10 +130,10 @@ class TelegramBot:
 
             logger.info("")
             logger.info(f"{Fore.LIGHTBLUE_EX}───────────────────────────────────────")
-            logger.info(f"{Fore.LIGHTBLUE_EX}Proxy information:")
+            logger.info(f"{Fore.LIGHTBLUE_EX}Информация о прокси:")
             logger.info(f" · IP: {Fore.LIGHTWHITE_EX}{ip}:{port}")
-            logger.info(f" · User: {Fore.LIGHTWHITE_EX}{user}")
-            logger.info(f" · Password: {Fore.LIGHTWHITE_EX}{password}")
+            logger.info(f" · Юзер: {Fore.LIGHTWHITE_EX}{user}")
+            logger.info(f" · Пароль: {Fore.LIGHTWHITE_EX}{password}")
             logger.info(f"{Fore.LIGHTBLUE_EX}───────────────────────────────────────")
 
         while True:
@@ -164,7 +164,7 @@ class TelegramBot:
         else:
             await self.bot.send_message(
                 chat_id=chat_id, 
-                text=f'{text}\n<span class="tg-spoiler">Switch the log chat to chat with the bot so that a menu with actions is displayed</span>', 
+                text=f'{text}\n<span class="tg-spoiler">Переключите чат логов на чат с ботом, чтобы отображалось меню с действиями</span>', 
                 reply_markup=None, 
                 parse_mode="HTML"
             )

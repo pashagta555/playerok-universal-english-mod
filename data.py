@@ -38,13 +38,13 @@ DATA = [INITIALIZED_USERS, SAVED_ITEMS, CACHED_ORDERS, LATEST_EVENTS_TIMES]
 
 def get_json(path: str, default: dict | list) -> dict:
     """
-    Gets the contents of a data file.
-    Creates a data file if it does not exist.
+    Receives content file data.
+    Creates file data, If his No.
 
-    :param path: Path to json file
+    :param path: Path To json file.
     :type path: `str`
 
-    :param default: Standard file structure.
+    :param default: Standard structure file.
     :type default: `dict`
     """
     
@@ -64,9 +64,9 @@ def get_json(path: str, default: dict | list) -> dict:
 
 def set_json(path: str, new: dict):
     """
-    Installs new data into the data file.
+    Installs new data V file data.
 
-    :param path: Path to json file
+    :param path: Path To json file.
     :type path: `str`
 
     :param new: New data.

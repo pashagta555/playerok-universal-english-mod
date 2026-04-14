@@ -1,7 +1,7 @@
 import textwrap
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from settings import Settings as set
+from settings import Settings as sett
 
 from .. import callback_datas as calls
 
@@ -11,21 +11,21 @@ def settings_deliv_page_text(index: int):
     deliv = auto_deliveries[index]
     
     piece = deliv.get("piece")
-    piece_str = "Piece by piece" if piece else "Message"
-    keyphrases = "</code>, <code>".join(deliv.get("keyphrases")) or "❌ Not specified"
+    piece_str = "Поштучно" if piece else "Сообщением"
+    keyphrases = "</code>, <code>".join(deliv.get("keyphrases")) or "❌ Не задано"
 
     if piece:
         total_goods = len(deliv.get("goods", []))
-        part = f"<b>📦 Products:</b> {total_goods} pcs."
+        part = f"<b>📦 Товары:</b> {total_goods} шт."
     else:
-        message = "\n".join(deliv.get("message")) or "❌ Not specified"
-        part = f"<b>💬 Message:</b> <blockquote>{message}</blockquote>"
+        message = "\n".join(deliv.get("message")) or "❌ Не задано"
+        part = f"<b>💬 Сообщение:</b> <blockquote>{message}</blockquote>"
     
     txt = textwrap.dedent(f"""
-        <b>📄🚀 Auto-issue page</b>
+        <b>📄🚀 Страница авто-выдачи</b>
 
-        <b>⚡ Issue type:</b> {piece_str}
-        <b>🔑 Key phrases:</b> <code>{keyphrases}</code>
+        <b>⚡ Тип выдачи:</b> {piece_str}
+        <b>🔑 Ключевые фразы:</b> <code>{keyphrases}</code>
         
         {part}
     """)
@@ -37,21 +37,21 @@ def settings_deliv_page_kb(index: int, page: int = 0):
     deliv = auto_deliveries[index]
     
     piece = deliv.get("piece")
-    piece_str = "Piece by piece" if piece else "Message"
-    keyphrases = ", ".join(deliv.get("keyphrases")) or "❌ Not specified"
+    piece_str = "Поштучно" if piece else "Сообщением"
+    keyphrases = ", ".join(deliv.get("keyphrases")) or "❌ Не задано"
     
     total_goods = len(deliv.get("goods", []))
-    message = "\n".join(deliv.get("message", [])) or "❌ Not specified"
+    message = "\n".join(deliv.get("message", [])) or "❌ Не задано"
     
     rows = [
-        [InlineKeyboardButton(text=f"⚡ Delivery type: {piece_str}", callback_data="switch_auto_delivery_piece")],
-        [InlineKeyboardButton(text=f"🔑 Key phrases: {keyphrases}", callback_data="enter_auto_delivery_keyphrases")],
+        [InlineKeyboardButton(text=f"⚡ Тип выдачи: {piece_str}", callback_data="switch_auto_delivery_piece")],
+        [InlineKeyboardButton(text=f"🔑 Ключевые фразы: {keyphrases}", callback_data="enter_auto_delivery_keyphrases")],
         [
-        InlineKeyboardButton(text=f"💬 Message: {message}", callback_data="enter_auto_delivery_message")
-        if not piece else InlineKeyboardButton(text=f"📦 Products: {total_goods} pcs. | 👈 Click to edit", callback_data=calls.DelivGoodsPagination(page=0).pack())
+        InlineKeyboardButton(text=f"💬 Сообщение: {message}", callback_data="enter_auto_delivery_message")
+        if not piece else InlineKeyboardButton(text=f"📦 Товары: {total_goods} шт. | 👈 Нажми для редактирования", callback_data=calls.DelivGoodsPagination(page=0).pack())
         ],
-        [InlineKeyboardButton(text="🗑️Delete", callback_data="confirm_deleting_auto_delivery")],
-        [InlineKeyboardButton(text="⬅️ Back", callback_data=calls.AutoDeliveriesPagination(page=page).pack())]
+        [InlineKeyboardButton(text="🗑️ Удалить", callback_data="confirm_deleting_auto_delivery")],
+        [InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.AutoDeliveriesPagination(page=page).pack())]
     ]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
     return kb
@@ -59,7 +59,7 @@ def settings_deliv_page_kb(index: int, page: int = 0):
 
 def settings_deliv_page_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>📄🚀 Auto-issue page</b>
+        <b>📄🚀 Страница авто-выдачи</b>
         \n{placeholder}
     """)
     return txt
@@ -67,7 +67,7 @@ def settings_deliv_page_float_text(placeholder: str):
 
 def settings_deliv_page_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>📄🚀 Auto-issue page</b>
+        <b>📄🚀 Страница авто-выдачи</b>
         \n{placeholder}
     """)
     return txt

@@ -3,9 +3,9 @@ import requests
 
 class CloudflareDetectedException(Exception):
     """
-    Cloudflare protection detection error when sending request.
+    Ошибка обнаружения Cloudflare защиты при отправке запроса.
 
-    :param response: The response object.
+    :param response: Объект ответа.
     :type response: `requests.Response`
     """
 
@@ -16,18 +16,18 @@ class CloudflareDetectedException(Exception):
 
     def __str__(self):
         msg = (
-            f"Error: CloudFlare detected suspicious activity when sending a request to the Playerok website."
-            f"\nError code: {self.status_code}"
-            f"\nAnswer: {self.html_text}"
+            f"Ошибка: CloudFlare заметил подозрительную активность при отправке запроса на сайт Playerok."
+            f"\nКод ошибки: {self.status_code}"
+            f"\nОтвет: {self.html_text}"
         )
         return msg
 
 
 class RequestFailedError(Exception):
     """
-    The exception that is thrown if the response code is not 200.
+    Исключение, которое возбуждается, если код ответа не равен 200.
 
-    :param response: The response object.
+    :param response: Объект ответа.
     :type response: `requests.Response`
     """
 
@@ -38,18 +38,18 @@ class RequestFailedError(Exception):
 
     def __str__(self):
         msg = (
-            f"Request error to {self.response.url}"
-            f"\nError code: {self.status_code}"
-            f"\nAnswer: {self.html_text}"
+            f"Ошибка запроса к {self.response.url}"
+            f"\nКод ошибки: {self.status_code}"
+            f"\nОтвет: {self.html_text}"
         )
         return msg
 
 
 class RequestPlayerokError(Exception):
     """
-    An exception that is thrown if there is a request error on the Playerok side.
+    Исключение, которое возбуждается, если возникла ошибка запроса на стороне Playerok.
 
-    :param response: The response object.
+    :param response: Объект ответа.
     :type response: `requests.Response`
     """
 
@@ -61,21 +61,21 @@ class RequestPlayerokError(Exception):
 
     def __str__(self):
         msg = (
-            f"Request error to {self.response.url}"
-            f"\nError code: {self.error_code}"
-            f"\nMessage: {self.error_message}"
+            f"Ошибка запроса к {self.response.url}"
+            f"\nКод ошибки: {self.error_code}"
+            f"\nСообщение: {self.error_message}"
         )
         return self.error_message or msg
 
 
 class RequestSendingError(Exception):
     """
-    The exception that is thrown if the request fails to be sent after several attempts.
+    Исключение, которое возбуждается, если не удалось отправить запрос за несколько попыток.
 
-    :param url: Request URL.
+    :param url: URL запроса.
     :type url: `str`
 
-    :param error: Error text.
+    :param error: Текст ошибки.
     :type error: `str`
     """
 
@@ -85,14 +85,14 @@ class RequestSendingError(Exception):
 
     def __str__(self):
         msg = (
-            f"Error when trying to send a request to {self.url}"
-            f"\nError text: {self.error}"
+            f"Ошибка при попытке отправить запрос к {self.url}"
+            f"\nТекст ошибки: {self.error}"
         )
         return msg
 
 
 class UnauthorizedError(Exception):
-    """An exception that is thrown if it is not possible to log in to your Playerok account."""
+    """Исключение, которое возбуждается, если не удалось авторизоваться в аккаунте Playerok."""
 
     def __str__(self):
-        return "Failed to connect to your Playerok account. Maybe you specified the wrong token?"
+        return "Не удалось подключиться к аккаунту Playerok. Может вы указали неверный token?"

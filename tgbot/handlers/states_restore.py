@@ -21,7 +21,7 @@ async def handler_waiting_for_new_included_restore_item_keyphrases(message: type
         last_page = data.get("last_page", 0)
         
         if len(message.text) <= 0:
-raise Exception("❌ Value too short")
+            raise Exception("❌ Слишком короткое значение")
         
         keyphrases = [phrase.strip() for phrase in message.text.split(",") if phrase.strip()]
         
@@ -32,7 +32,7 @@ raise Exception("❌ Value too short")
         await throw_float_message(
             state=state,
             message=message,
-text=templ.settings_new_restore_included_float_text(f"✅ Item with key phrases <code>{'</code>, <code>'.join(keyphrases)}</code> was successfully included in the restoration"),
+            text=templ.settings_new_restore_included_float_text(f"✅ Предмет с ключевыми фразами <code>{'</code>, <code>'.join(keyphrases)}</code> успешно включён в восстановление"),
             reply_markup=templ.back_kb(calls.IncludedRestoreItemsPagination(page=last_page).pack())
         )
     except Exception as e:
@@ -68,7 +68,7 @@ async def handler_waiting_for_new_included_restore_items_keyphrases_file(message
                     keyphrases_list.append(keyphrases)
 
         if len(keyphrases_list) <= 0:
-raise Exception("❌ The file does not contain valid keywords")
+            raise Exception("❌ Файл не содержит валидных ключевых фраз")
 
         auto_restore_items = sett.get("auto_restore_items")
         auto_restore_items["included"].extend(keyphrases_list)
@@ -77,14 +77,15 @@ raise Exception("❌ The file does not contain valid keywords")
         await throw_float_message(
             state=state,
             message=message,
-text=templ.settings_new_restore_included_float_text(f"✅ Successfully included <b>{len(keyphrases_list)}</b> items from the file in recovery"),
+            text=templ.settings_new_restore_included_float_text(f"✅ Успешно включено <b>{len(keyphrases_list)}</b> предметов из файла в восстановление"),
             reply_markup=templ.back_kb(calls.IncludedRestoreItemsPagination(page=last_page).pack())
         )
     except Exception as e:
         await throw_float_message(
             state=state,
             message=message,
-            text=templ.settings_new_restore_included_float_text(e),reply_markup=templ.back_kb(calls.IncludedRestoreItemsPagination(page=last_page).pack())
+            text=templ.settings_new_restore_included_float_text(e), 
+            reply_markup=templ.back_kb(calls.IncludedRestoreItemsPagination(page=last_page).pack())
         )
 
 
@@ -97,7 +98,7 @@ async def handler_waiting_for_new_excluded_restore_item_keyphrases(message: type
         last_page = data.get("last_page", 0)
         
         if len(message.text) <= 0:
-raise Exception("❌ Value too short")
+            raise Exception("❌ Слишком короткое значение")
         
         keyphrases = [phrase.strip() for phrase in message.text.split(",") if phrase.strip()]
         
@@ -108,7 +109,7 @@ raise Exception("❌ Value too short")
         await throw_float_message(
             state=state,
             message=message,
-text=templ.settings_new_restore_excluded_float_text(f"✅ Item with key phrases <code>{'</code>, <code>'.join(keyphrases)}</code> successfully added to recovery exceptions"),
+            text=templ.settings_new_restore_excluded_float_text(f"✅ Предмет с ключевыми фразами <code>{'</code>, <code>'.join(keyphrases)}</code> успешно добавлен в исключения для восстановления"),
             reply_markup=templ.back_kb(calls.ExcludedRestoreItemsPagination(page=last_page).pack())
         )
     except Exception as e:
@@ -144,7 +145,7 @@ async def handler_waiting_for_new_excluded_restore_items_keyphrases_file(message
                     keyphrases_list.append(keyphrases)
 
         if len(keyphrases_list) <= 0:
-raise Exception("❌ The file does not contain valid keywords")
+            raise Exception("❌ Файл не содержит валидных ключевых фраз")
 
         auto_restore_items = sett.get("auto_restore_items")
         auto_restore_items["excluded"].extend(keyphrases_list)
@@ -153,7 +154,7 @@ raise Exception("❌ The file does not contain valid keywords")
         await throw_float_message(
             state=state,
             message=message,
-text=templ.settings_new_restore_excluded_float_text(f"✅ Successfully added <b>{len(keyphrases_list)}</b> items from the file to the recovery exceptions"),
+            text=templ.settings_new_restore_excluded_float_text(f"✅ Успешно добавлено <b>{len(keyphrases_list)}</b> предметов из файла в исключения для восстановления"),
             reply_markup=templ.back_kb(calls.ExcludedRestoreItemsPagination(page=last_page).pack())
         )
     except Exception as e:

@@ -114,7 +114,8 @@ def transaction_provider(data: dict) -> "TransactionProvider":
 
 def transaction(data: dict) -> "Transaction":
     from .types import Transaction
-    if not data:return None
+    if not data:
+        return None
 
     return Transaction(
         id=data.get("id"),
@@ -480,7 +481,7 @@ def user_profile(data: dict) -> "UserProfile":
     
     return UserProfile(
         id=data.get("id"),
-        username=data.get("username", "Support"),
+        username=data.get("username", "Поддержка"),
         role=UserTypes.__members__.get(data.get("role")),
         avatar_url=data.get("avatarURL"),
         is_online=data.get("isOnline"),
@@ -750,11 +751,11 @@ def item_profile_list(data: dict) -> "ItemProfileList":
     )
 
 
-def moderator(data: dict) -> "Moderator": # TODO: Parse a class Moderator
+def moderator(data: dict) -> "Moderator": # TODO: Сделать парсинг класса Moderator
     ...  
 
 
-def event(data: dict): # TODO: Parse a class Event
+def event(data: dict): # TODO: Сделать парсинг класса Event
     ...  
 
 

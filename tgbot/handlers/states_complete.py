@@ -21,7 +21,7 @@ async def handler_waiting_for_new_included_complete_deal_keyphrases(message: typ
         last_page = data.get("last_page", 0)
         
         if len(message.text) <= 0:
-raise Exception("❌ Value too short")
+            raise Exception("❌ Слишком короткое значение")
         
         keyphrases = [phrase.strip() for phrase in message.text.split(",") if phrase.strip()]
         
@@ -33,7 +33,7 @@ raise Exception("❌ Value too short")
             state=state,
             message=message,
             text=templ.settings_new_complete_included_float_text(
-"✅ Item successfully included in confirmation"
+                "✅ Предмет успешно включён в подтверждение"
             ),
             reply_markup=templ.back_kb(calls.IncludedCompleteDealsPagination(page=last_page).pack())
         )
@@ -70,7 +70,7 @@ async def handler_waiting_for_new_included_complete_deals_keyphrases_file(messag
                     keyphrases_list.append(keyphrases)
 
         if len(keyphrases_list) <= 0:
-raise Exception("❌ The file does not contain valid keywords")
+            raise Exception("❌ Файл не содержит валидных ключевых фраз")
 
         auto_complete_deals = sett.get("auto_complete_deals")
         auto_complete_deals["included"].extend(keyphrases_list)
@@ -80,7 +80,7 @@ raise Exception("❌ The file does not contain valid keywords")
             state=state,
             message=message,
             text=templ.settings_new_complete_included_float_text(
-f"✅ Successfully included <b>{len(keyphrases_list)} items</b> from the file in confirmation"
+                f"✅ Успешно включено <b>{len(keyphrases_list)} предметов</b> из файла в подтверждение"
             ),
             reply_markup=templ.back_kb(calls.IncludedCompleteDealsPagination(page=last_page).pack())
         )
@@ -102,7 +102,7 @@ async def handler_waiting_for_new_excluded_complete_deal_keyphrases(message: typ
         last_page = data.get("last_page", 0)
         
         if len(message.text) <= 0:
-raise Exception("❌ Value too short")
+            raise Exception("❌ Слишком короткое значение")
         
         keyphrases = [phrase.strip() for phrase in message.text.split(",") if phrase.strip()]
         
@@ -114,7 +114,7 @@ raise Exception("❌ Value too short")
             state=state,
             message=message,
             text=templ.settings_new_complete_excluded_float_text(
-"✅ Item has been successfully added to exclusions for confirmation"
+                "✅ Предмет успешно добавлен в исключения для подтверждения"
             ),
             reply_markup=templ.back_kb(calls.ExcludedCompleteDealsPagination(page=last_page).pack())
         )
@@ -151,7 +151,7 @@ async def handler_waiting_for_new_excluded_complete_deals_keyphrases_file(messag
                     keyphrases_list.append(keyphrases)
 
         if len(keyphrases_list) <= 0:
-raise Exception("❌ The file does not contain valid keywords")
+            raise Exception("❌ Файл не содержит валидных ключевых фраз")
 
         auto_complete_deals = sett.get("auto_complete_deals")
         auto_complete_deals["excluded"].extend(keyphrases_list)
@@ -161,7 +161,7 @@ raise Exception("❌ The file does not contain valid keywords")
             state=state,
             message=message,
             text=templ.settings_new_complete_excluded_float_text(
-f"✅ Successfully added <b>{len(keyphrases_list)} items</b> from file to exceptions for confirmation"
+                f"✅ Успешно добавлено <b>{len(keyphrases_list)} предметов</b> из файла в исключения для подтверждения"
             ),
             reply_markup=templ.back_kb(calls.ExcludedCompleteDealsPagination(page=last_page).pack())
         )

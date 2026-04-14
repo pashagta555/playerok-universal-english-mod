@@ -18,7 +18,7 @@ async def handler_waiting_for_custom_commands_page(message: types.Message, state
         await state.set_state(None)
         
         if not message.text.strip().isdigit():
-raise Exception("❌ You must enter a numeric value")
+            raise Exception("❌ Вы должны ввести числовое значение")
         
         await state.update_data(last_page=int(message.text.strip()) - 1)
         
@@ -44,7 +44,7 @@ async def handler_waiting_for_new_custom_command(message: types.Message, state: 
         await state.set_state(None)
         
         if len(message.text.strip()) <= 0 or len(message.text.strip()) >= 32:
-raise Exception("❌ The command is too short or long")
+            raise Exception("❌ Слишком короткая или длинная команда")
 
         data = await state.get_data()
         
@@ -54,7 +54,7 @@ raise Exception("❌ The command is too short or long")
         await throw_float_message(
             state=state,
             message=message,
-text=templ.settings_new_comm_float_text(f"💬 Enter <b>command response</b> <code>{message.text.strip()}</code>:"),
+            text=templ.settings_new_comm_float_text(f"💬 Введите <b>ответ для команды</b> <code>{message.text.strip()}</code>:"),
             reply_markup=templ.back_kb(calls.CustomCommandsPagination(page=data.get("last_page", 0)).pack())
         )
     except Exception as e:
@@ -73,7 +73,7 @@ async def handler_waiting_for_new_custom_command_answer(message: types.Message, 
         await state.set_state(None)
         
         if len(message.text.strip()) <= 0:
-raise Exception("❌ Too short answer")
+            raise Exception("❌ Слишком короткий ответ")
 
         data = await state.get_data()
         
@@ -86,9 +86,9 @@ raise Exception("❌ Too short answer")
             state=state,
             message=message,
             text=templ.settings_new_comm_float_text(
-f"✔️ Confirm <b>adding a new command:</b>"
-f"\n<b>· Command:</b> {cmd}"
-f"\n<b>· Answer:</b> <blockquote>{answr}</blockquote>"
+                f"✔️ Подтвердите <b>добавление новой команды:</b>"
+                f"\n<b>· Команда:</b> {cmd}"
+                f"\n<b>· Ответ:</b> <blockquote>{answr}</blockquote>"
             ),
             reply_markup=templ.confirm_kb(confirm_cb="add_new_custom_command", cancel_cb=calls.CustomCommandsPagination(page=data.get("last_page", 0)).pack())
         )
@@ -108,7 +108,7 @@ async def handler_waiting_for_custom_command_answer(message: types.Message, stat
         await state.set_state(None)
         
         if len(message.text.strip()) <= 0:
-raise Exception("❌ Text is too short")
+            raise Exception("❌ Слишком короткий текст")
 
         data = await state.get_data()
         
@@ -119,7 +119,7 @@ raise Exception("❌ Text is too short")
         await throw_float_message(
             state=state,
             message=message,
-text=templ.settings_comm_page_float_text(f"✅ <b>Response text</b> command <code>{data['custom_command']}</code> was successfully changed to: <blockquote>{message.text.strip()}</blockquote>"),
+            text=templ.settings_comm_page_float_text(f"✅ <b>Текст ответа</b> команды <code>{data['custom_command']}</code> был успешно изменён на: <blockquote>{message.text.strip()}</blockquote>"),
             reply_markup=templ.back_kb(calls.CustomCommandPage(command=data["custom_command"]).pack())
         )
     except Exception as e:

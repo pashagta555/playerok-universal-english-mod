@@ -9,15 +9,15 @@ from .. import callback_datas as calls
 def settings_mess_page_text(message_id: int):
     messages = sett.get("messages")
     
-enabled = "🟢 Enabled" if messages[message_id]["enabled"] else "🔴 Disabled"
-message_text = "\n".join(messages[message_id]["text"]) or "❌ Not set"
+    enabled = "🟢 Включено" if messages[message_id]["enabled"] else "🔴 Выключено"
+    message_text = "\n".join(messages[message_id]["text"]) or "❌ Не задано"
     
     txt = textwrap.dedent(f"""
-<b>📄💬 Message Page</b>
+        <b>📄💬 Страница сообщения</b>
 
-<b>🆔 Message ID:</b> {message_id}
-<b>💡 Status:</b> {enabled}
-<b>💬 Message text:</b> <blockquote>{message_text}</blockquote>
+        <b>🆔 ID сообщения:</b> {message_id}
+        <b>💡 Состояние:</b> {enabled}
+        <b>💬 Текст сообщения:</b> <blockquote>{message_text}</blockquote>
     """)
     return txt
 
@@ -25,13 +25,13 @@ message_text = "\n".join(messages[message_id]["text"]) or "❌ Not set"
 def settings_mess_page_kb(message_id: int, page: int = 0):
     messages = sett.get("messages")
     
-enabled = "🟢 Enabled" if messages[message_id]["enabled"] else "🔴 Disabled"
-message_text = "\n".join(messages[message_id]["text"]) or "❌ Not set"
+    enabled = "🟢 Включено" if messages[message_id]["enabled"] else "🔴 Выключено"
+    message_text = "\n".join(messages[message_id]["text"]) or "❌ Не задано"
     
     rows = [
-[InlineKeyboardButton(text=f"💡 State: {enabled}", callback_data="switch_message_enabled")],
-[InlineKeyboardButton(text=f"💬 Message text: {message_text}", callback_data="enter_message_text")],
-[InlineKeyboardButton(text="⬅️ Back", callback_data=calls.MessagesPagination(page=page).pack())]
+        [InlineKeyboardButton(text=f"💡 Состояние: {enabled}", callback_data="switch_message_enabled")],
+        [InlineKeyboardButton(text=f"💬 Текст сообщения: {message_text}", callback_data="enter_message_text")],
+        [InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.MessagesPagination(page=page).pack())]
     ]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
     return kb
@@ -39,7 +39,7 @@ message_text = "\n".join(messages[message_id]["text"]) or "❌ Not set"
 
 def settings_mess_page_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-<b>📄💬 Message Page</b>
+        <b>📄💬 Страница сообщения</b>
         \n{placeholder}
     """)
     return txt

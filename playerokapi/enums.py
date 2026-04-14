@@ -2,325 +2,325 @@ from enum import Enum
 
 
 class EventTypes(Enum):
-"""Event types."""
+    """Types events."""
 
     CHAT_INITIALIZED = 0
-"""Chat has initialized."""
+    """Chat initialized."""
     NEW_MESSAGE = 1
-"""New message in chat."""
+    """New message V chat."""
     NEW_DEAL = 2
-"""A new transaction was created (when the buyer paid for the goods)."""
+    """Created new deal (When buyer paid product)."""
     NEW_REVIEW = 3
-"""New review from buyer."""
+    """New review from buyer."""
     DEAL_CONFIRMED = 4
-"""Transaction confirmed (buyer confirmed receipt of item)."""
+    """Deal confirmed (buyer confirmed receiving subject)."""
     DEAL_CONFIRMED_AUTOMATICALLY = 5
-"""The transaction is confirmed automatically (if the buyer does not contact for a long time)."""
+    """Deal confirmed automatically (If buyer for a long time Not comes out on connection)."""
     DEAL_ROLLED_BACK = 6
-"""The seller has issued a refund of the transaction."""
+    """Salesman issued return deals."""
     DEAL_HAS_PROBLEM = 7
-"""A user reported a problem with the transaction."""
+    """User reported O problem V deal."""
     DEAL_PROBLEM_RESOLVED = 8
-"""The problem in the transaction has been resolved."""
+    """Problem V deal resolved."""
     DEAL_STATUS_CHANGED = 9
-"""The transaction status has been changed."""
+    """Status deals changed."""
     ITEM_PAID = 10
-"""The user paid for the item."""
+    """User paid item."""
     ITEM_SENT = 11
-"""The item has been sent (the seller has confirmed the completion of the transaction)."""
+    """Item sent (salesman confirmed execution deals)."""
 
 
 class ItemLogEvents(Enum):
-"""Item log events."""
+    """Events lairs subject."""
 
     PAID = 0
-"""The seller confirmed the completion of the transaction."""
+    """Salesman confirmed execution deals."""
     SENT = 1
-"""The transaction item has been sent."""
+    """Product deals sent."""
     DEAL_CONFIRMED = 2
-"""Deal confirmed."""
+    """Deal confirmed."""
     DEAL_ROLLED_BACK = 3
-"""Transaction returned."""
+    """Deal returned."""
     PROBLEM_REPORTED = 4
-"""A complaint has been sent (a problem has been created)."""
+    """Sent complaint (created problem)."""
     PROBLEM_RESOLVED = 5
-"""Problem solved."""
+    """Problem resolved."""
 
 
 class TransactionOperations(Enum):
-"""Transaction operations."""
+    """Operations transactions."""
 
     DEPOSIT = 0
-"""Replenishment."""
+    """Replenishment."""
     BUY = 1
-"""Payment for goods."""
+    """Payment goods."""
     SELL = 2
-"""Sale of goods."""
+    """Sale goods."""
     ITEM_DEFAULT_PRIORITY = 3
-"""Pay for free priority."""
+    """Payment free priority."""
     ITEM_PREMIUM_PRIORITY = 4
-"""Premium priority payment."""
+    """Payment premium priority."""
     WITHDRAW = 5
-"""Pay."""
+    """Pay."""
     MANUAL_BALANCE_INCREASE = 6
-"""Accrual to account balance."""
+    """Accrual on balance account."""
     MANUAL_BALANCE_DECREASE = 7
-"""Write off account balance."""
+    """Write-off With balance account."""
     REFERRAL_BONUS = 8
-"""Inviting a friend (referral)."""
+    """Invitation friend (referral)."""
     STEAM_DEPOSIT = 9
-"""Payment for Steam replenishment."""
+    """Payment replenishment Steam."""
 
 
 class TransactionDirections(Enum):
-"""Transaction operations."""
+    """Operations transactions."""
 
     IN = 0
-"""Accrual."""
+    """Accrual."""
     OUT = 1
-"""Magazine."""
+    """Write-off."""
 
 
 class TransactionStatuses(Enum):
-"""Transaction statuses."""
+    """Statuses transactions."""
 
     PENDING = 0
-"""Pending (the transaction has been paid, but the money for it has not yet been credited to the balance)."""
+    """IN waiting (transaction paid, But money for her more Not arrived on balance)."""
     PROCESSING = 1
-"""Frozen."""
+    """IN freezing."""
     CONFIRMED = 2
-"""Transaction transaction confirmed."""
+    """Deal transactions confirmed."""
     ROLLED_BACK = 3
-"""Refund on transaction transaction."""
+    """Return By deal transactions."""
     FAILED = 4
-"""Transaction error."""
+    """Error transactions."""
 
 
 class TransactionPaymentMethodIds(Enum):
-"""Transaction method ID."""
+    """ID methods transactions."""
 
     MIR = 0
-"""Using MIR bank cards."""
+    """WITH with help banking kart WORLD."""
     VISA_MASTERCARD = 1
-"""Using VISA/Mastercard bank cards."""
+    """WITH with help banking kart VISA/Mastercard."""
     ERIP = 2
-"""With the help of ERIP."""
+    """WITH with help ERIP."""
 
 
 class TransactionProviderDirections(Enum):
-"""Transaction Provider Directions."""
+    """Directions providers transactions."""
 
     IN = 0
-"""Replenishment."""
+    """Replenishment."""
     OUT = 1
-"""Conclusion."""
+    """Conclusion."""
 
 
 class TransactionProviderIds(Enum):
-"""Transaction provider ID."""
+    """ID providers transactions."""
 
     LOCAL = 0
-"""Using your account balance."""
+    """WITH with help balance account."""
     SBP = 1
-"""With the help of SBP."""
+    """WITH with help SBP."""
     BANK_CARD_RU = 2
-"""Using a Russian bank card."""
+    """WITH with help banking cards Russia."""
     BANK_CARD_BY = 3
-"""Using a Belarusian bank card."""
+    """WITH with help banking cards Belarus."""
     BANK_CARD = 4
-"""Using a foreign bank card."""
+    """WITH with help foreign banking cards."""
     YMONEY = 5
-"""With the help of YuMoney."""
+    """WITH with help YuMoney."""
     USDT = 6
-"""Cryptocurrency USDT (TRC20)."""
+    """Cryptocurrency USDT (TRC20)."""
     PENDING_INCOME = 7
-"""Replenishment from frozen funds."""
+    """Replenishment from frozen funds."""
 
 
 class BankCardTypes(Enum):
-"""Types of bank cards."""
+    """Types banking kart."""
 
     MIR = 0
-"""MIR bank card."""
+    """Banking map WORLD."""
     VISA = 1
-"""VISA bank card."""
+    """Banking map VISA."""
     MASTERCARD = 2
-"""Mastercard bank card."""
+    """Banking map Mastercard."""
 
 
 class ItemDealStatuses(Enum):
-"""Transaction status."""
+    """States deals."""
 
     PAID = 0
-"""The transaction has been paid."""
+    """Deal paid."""
     PENDING = 1
-"""Transaction pending shipment of goods."""
+    """Deal V waiting sending goods."""
     SENT = 2
-"""The seller confirmed the completion of the transaction."""
+    """Salesman confirmed execution deals."""
     CONFIRMED = 3
-"""Deal confirmed."""
+    """Deal confirmed."""
     CONFIRMED_AUTOMATICALLY = 4
-"""The transaction was confirmed automatically."""
+    """Deal confirmed automatically."""
     ROLLED_BACK = 5
-"""Transaction returned."""
+    """Deal returned."""
 
 
 class ItemDealDirections(Enum):
-"""Transaction directions."""
+    """Directions deals."""
 
     IN = 0
-"""Purchase."""
+    """Purchase."""
     OUT = 1
-"""Sale."""
+    """Sale."""
 
 
 class GameTypes(Enum):
-"""Types of games."""
+    """Types games."""
 
     GAME = 0
-"""Game."""
+    """Game."""
     APPLICATION = 1
-"""Appendix."""
+    """Application."""
 
 
 class UserTypes(Enum):
-"""User types."""
+    """Types users."""
 
     USER = 0
-"""Regular user."""
+    """Ordinary user."""
     MODERATOR = 1
-"""Moderator."""
+    """Moderator."""
     BOT = 2
-"""Bot."""
+    """Bot."""
 
 
 class ChatTypes(Enum):
-"""Chat types."""
+    """Types chats."""
 
     PM = 0
-"""Private chat (dialogue with the user)."""
+    """Private chat (dialogue With user)."""
     NOTIFICATIONS = 1
-"""Chat notifications."""
+    """Chat notifications."""
     SUPPORT = 2
-"""Support chat."""
+    """Chat support."""
 
 
 class ChatStatuses(Enum):
-"""Chat statuses."""
+    """Statuses chats."""
 
     NEW = 0
-"""New chat (there are no read messages in it)."""
+    """New chat (V him No neither single read messages)."""
     FINISHED = 1
-"""The chat is available, you can chat in it now."""
+    """Chat available, V him Now Can correspond."""
 
 
 class ChatMessageButtonTypes(Enum):
-"""Types of message buttons."""
+    """Types buttons messages."""
 
-# TODO: Finish all types of message buttons
+    # TODO: Finish All types buttons messages
     REDIRECT = 0
-"""Redirects to a link."""
+    """Redirects on link."""
     LOTTERY = 1
-"""Redirects to a draw/promotion."""
+    """Redirects on draw/share."""
 
 
 class ItemStatuses(Enum):
-"""Item statuses."""
+    """Statuses items."""
 
     PENDING_APPROVAL = 0
-"""Pending acceptance (under moderation)."""
+    """Waiting adoption (on verification moderation)."""
     PENDING_MODERATION = 1
-"""Waiting for changes to be reviewed by moderation."""
+    """Waiting checks changes moderation."""
     APPROVED = 2
-"""Active (accepted by moderation)."""
+    """Active (accepted moderation)."""
     DECLINED = 3
-"""Rejected."""
+    """Rejected."""
     BLOCKED = 4
-"""Locked."""
+    """Locked."""
     EXPIRED = 5
-"""Wanted."""
+    """Expired."""
     SOLD = 6
-"""Sold."""
+    """Sold."""
     DRAFT = 7
-"""Draft (if the item is not for sale)."""
+    """Draft (If item Not exhibited on sale)."""
 
 
 class ReviewStatuses(Enum):
-"""Review statuses."""
+    """Statuses reviews."""
 
     APPROVED = 0
-"""Active."""
+    """Active."""
     DELETED = 1
-"""Remote."""
+    """Remote."""
 
 
 class SortDirections(Enum):
-"""Sort types."""
+    """Types sorting."""
 
     DESC = 0
-"""Descending."""
+    """By descending."""
     ASC = 1
-"""Ascending."""
+    """By increasing."""
 
 
 class PriorityTypes(Enum):
-"""Priority types."""
+    """Types priorities."""
 
     DEFAULT = 0
-"""Standard priority."""
+    """Standard priority."""
     PREMIUM = 1
-"""Premium Priority."""
+    """Premium priority."""
 
 
 class GameCategoryAgreementIconTypes(Enum):
-"""Types of buyer agreement icons in a specific category."""
+    """Types icons agreements buyer V certain categories."""
 
-# TODO: Complete all types of agreement icons
+    # TODO: Finish All types icons agreements
     RESTRICTION = 0
-"""Limitation."""
+    """Limitation."""
     CONFIRMATION = 0
-"""Confirmation."""
+    """Confirmation."""
 
 
 class GameCategoryOptionTypes(Enum):
-"""Category option types."""
+    """Types options categories."""
 
-# TODO: Complete all types of category options
+    # TODO: Finish All types options categories
     SELECTOR = 0
-"""Select type."""
+    """Choice type."""
     SWITCH = 1
-"""Switch."""
+    """Switch."""
 
 
 class GameCategoryDataFieldTypes(Enum):
-"""Types of fields with game category data."""
+    """Types fields With data categories games."""
 
     ITEM_DATA = 0
-"""Item data."""
+    """Data subject."""
     OBTAINING_DATA = 1
-"""Data received (after purchasing an item)."""
+    """Received data (after purchases subject)."""
 
 
 class GameCategoryDataFieldInputTypes(Enum):
-"""Types of input fields with game category data."""
+    """Types entered fields With data categories games."""
 
-# TODO: Complete all types of input data fields
+    # TODO: Finish All types entered date-fields
     INPUT = 0
-"""Input value (entered by the buyer when checking out the item)."""
+    """Input meaning (introduced buyer at registration subject)."""
 
 
 class GameCategoryAutoConfirmPeriods(Enum):
-"""Automatic transaction confirmation periods in the game category."""
+    """Periods automatic confirmation deals V categories games."""
 
-# TODO: Complete all auto-confirmation periods
+    # TODO: Finish All periods auto-confirmation
     SEVEN_DEYS = 0
-"""Seven days."""
+    """Seven days."""
 
 
 class GameCategoryInstructionTypes(Enum):
-"""Types of category instructions."""
+    """Types instructions categories."""
 
     FOR_SELLER = 0
-"""For the seller."""
+    """For seller."""
     FOR_BUYER = 1
-"""For the buyer."""
+    """For buyer."""
