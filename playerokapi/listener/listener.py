@@ -32,9 +32,9 @@ logger = getLogger("playerokapi.listener")
 
 class EventListener:
     """
-    Слушатель событий с Playerok.com.
+    Listener events With Playerok.com.
 
-    :param account: Объект аккаунта.
+    :param account: Object account.
     :type account: `playerokapi.account.Account`
     """
 
@@ -347,7 +347,7 @@ class EventListener:
                         # yield event
                         self.q.put(event)
         except Exception:
-            logger.debug(f"Ошибка обработки сообщения в WebSocket`е: {traceback.format_exc()}")
+            logger.debug(f"Error processing messages V WebSocket`e: {traceback.format_exc()}")
         
     def listen_new_messages(self):
         headers = {
@@ -382,7 +382,7 @@ class EventListener:
         # except:
         #     ssl_context = None
 
-        try: self.chats = self.account.get_chats(count=24).chats # инициализация первых 24 чатов
+        try: self.chats = self.account.get_chats(count=24).chats # initialization first 24 chats
         except: self.chats = []
 
         self._process_chats_last_messages(self.chats)
@@ -454,7 +454,7 @@ class EventListener:
                         
                         yield NewReviewEvent(deal, deal.chat)
                 except:
-                    logger.debug(f"Ошибка проверки новых отзывов в сделке {deal_id}: {traceback.format_exc()}")
+                    logger.debug(f"Error checks new reviews V deal {deal_id}: {traceback.format_exc()}")
             time.sleep(1)
 
     def _wait_for_check_new_chats(self, delay=10):
@@ -476,7 +476,7 @@ class EventListener:
                 for _ in range(3):
                     try:
                         if by_event:
-                            time.sleep(8) # плеерок может не сразу отобразить актуальные чаты
+                            time.sleep(8) # player Maybe Not straightaway display current chats
                         
                         chats = self.account.get_chats(count=5, type=ChatTypes.PM).chats
                         for chat in chats:
@@ -495,7 +495,7 @@ class EventListener:
                                 break
                                     
                         if possible_chats:
-                            break # если найдены чаты с возможными новыми сделками - останавливаем цикл
+                            break # If found chats With possible new transactions - stop cycle
 
                         if not by_event:
                             time.sleep(8)
@@ -505,7 +505,7 @@ class EventListener:
                 for chat in possible_chats:
                     last_msg = chat.last_message
                     
-                    # Новый чат — смотрим last_message сначала (быстрый путь)
+                    # New chat — look last_message at first (fast path)
                     if (
                         last_msg and last_msg.text == "{{ITEM_PAID}}"
                         and (now - self._parse_iso(last_msg.created_at).astimezone(timezone.utc)).total_seconds() <= 90
@@ -515,8 +515,8 @@ class EventListener:
                             yield event
                         continue
 
-                    # медленный путь: last_message перебит новым сообщением от покупателя.
-                    # запрашиваем историю и ищем {{ITEM_PAID}} среди первых сообщений.
+                    # slow path: last_message interrupted new message from buyer.
+                    # we request history And looking for {{ITEM_PAID}} among first messages.
                     try:
                         time.sleep(1)
                         messages = self.account.get_chat_messages(chat.id, count=12).messages
@@ -525,7 +525,7 @@ class EventListener:
                             msg for msg in messages
                             if msg.text == "{{ITEM_PAID}}"
                             and (now - self._parse_iso(msg.created_at).astimezone(timezone.utc)).total_seconds() <= 90 
-                            # ^ проверка на то, что эта сделка была совершена недавно
+                            # ^ examination on That, What this deal was committed recently
                             ),
                             None
                         )
@@ -535,16 +535,16 @@ class EventListener:
                             for event in events:
                                 yield event
                     except:
-                        logger.debug(f"Ошибка получения истории сообщений нового чата {chat.id}: {traceback.format_exc()}")
+                        logger.debug(f"Error receiving history messages new chat {chat.id}: {traceback.format_exc()}")
             except websocket._exceptions.WebSocketException:
                 pass
             except:
-                logger.debug(f"Ошибка проверки новых сделок: {traceback.format_exc()}")
+                logger.debug(f"Error checks new transactions: {traceback.format_exc()}")
             
             self._last_chats_check = time.time()
 
-    def listen_deal_statuses(self): # слушает изменения статусов во всех активных сделках
-        while True: # TODO: Доработать, проверить ещё раз на баги 
+    def listen_deal_statuses(self): # listens changes statuses in everyone active transactions
+        while True: # TODO: Finalize, check more once on bugs 
             for chat_id, deals in list(self.active_deals.items()):
                 for _ in range(3):
                     try: 
@@ -579,7 +579,7 @@ class EventListener:
 
                             self._set_active_deal(chat, msg.deal, msg_date)
                     except:
-                        logger.debug(f"Ошибка проверки статусов в сделке {deal_id}: {traceback.format_exc()}")
+                        logger.debug(f"Error checks statuses V deal {deal_id}: {traceback.format_exc()}")
                     time.sleep(8)
             time.sleep(1)
 

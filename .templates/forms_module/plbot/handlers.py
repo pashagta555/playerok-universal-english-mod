@@ -35,7 +35,7 @@ def msg(message_name: str, **kwargs) -> str | None:
 
 
 def is_fullname_valid(fullname: str) -> bool:
-    pattern = r'^[А-Яа-яЁё]+ [А-Яа-яЁё]+ [А-Яа-яЁё]+$'
+    pattern = r'^[A-Yaa-IYO]+ [A-Yaa-IYO]+ [A-Yaa-IYO]+$'
     return bool(re.match(pattern, fullname.strip()))
 
 
@@ -44,19 +44,19 @@ def is_age_valid(age: str) -> bool:
 
 
 def is_hobby_valid(hobby: str) -> bool:
-    pattern = r'^[А-Яа-яЁё\s\-]+$'
+    pattern = r'^[A-Yaa-IYO\s\-]+$'
     return bool(re.match(pattern, hobby.strip()))
 
 
 async def handle_cmds(plbot: 'PlayerokBot', event: NewMessageEvent):
     global new_forms
-    if event.message.text.lower() == "!мояанкета":
+    if event.message.text.lower() == "!my profile":
         form = forms.get(event.message.user.username)
         if not form:
-            plbot.send_message(event.chat.id, msg("cmd_myform_error", reason="Ваша анкета не была найдена.\nИспользуйте команду !заполнить, чтобы заполнить анкету."))
+            plbot.send_message(event.chat.id, msg("cmd_myform_error", reason="Yours questionnaire Not was found.\nUse team !fill out, to fill out questionnaire."))
             return
         plbot.send_message(event.chat.id, msg("cmd_myform", fullname=form["fullname"], age=form["age"], hobby=form["hobby"]))
-    elif event.message.text.lower() == "!заполнить":
+    elif event.message.text.lower() == "!fill out":
         new_forms[event.message.user.username] = {
             "fullname": "",
             "age": "",
@@ -76,7 +76,7 @@ async def handle_new_form_waiting_for_fullname(plbot: 'PlayerokBot', event: NewM
     new_forms[event.message.user.username]["fullname"] = fullname
     new_forms[event.message.user.username]["state"] = "waiting_for_age"
     if config["playerok"]["bot"]["log_states"]:
-        logger.info(f"{PREFIX} {Fore.LIGHTWHITE_EX}{event.message.user.username} {Fore.WHITE}указал в анкете ФИО: {Fore.LIGHTWHITE_EX}{fullname}")
+        logger.info(f"{PREFIX} {Fore.LIGHTWHITE_EX}{event.message.user.username} {Fore.WHITE}indicated V questionnaire Full name: {Fore.LIGHTWHITE_EX}{fullname}")
     plbot.send_message(event.chat.id, msg("enter_age"))
 
 
@@ -89,7 +89,7 @@ async def handle_new_form_waiting_for_age(plbot: 'PlayerokBot', event: NewMessag
     new_forms[event.message.user.username]["age"] = int(age)
     new_forms[event.message.user.username]["state"] = "waiting_for_hobby"
     if config["playerok"]["bot"]["log_states"]:
-        logger.info(f"{PREFIX} {Fore.LIGHTWHITE_EX}{event.message.user.username} {Fore.WHITE}указал в анкете возраст: {Fore.LIGHTWHITE_EX}{age}")
+        logger.info(f"{PREFIX} {Fore.LIGHTWHITE_EX}{event.message.user.username} {Fore.WHITE}indicated V questionnaire age: {Fore.LIGHTWHITE_EX}{age}")
     plbot.send_message(event.chat.id, msg("enter_hobby"))
 
 
@@ -107,7 +107,7 @@ async def handle_new_form_waiting_for_hobby(plbot: 'PlayerokBot', event: NewMess
     }
     del new_forms[event.message.user.username]
     if config["playerok"]["bot"]["log_states"]:
-        logger.info(f"{PREFIX} {Fore.LIGHTWHITE_EX}{event.message.user.username} {Fore.WHITE}указал в анкете хобби: {Fore.LIGHTWHITE_EX}{hobby}")
+        logger.info(f"{PREFIX} {Fore.LIGHTWHITE_EX}{event.message.user.username} {Fore.WHITE}indicated V questionnaire hobby: {Fore.LIGHTWHITE_EX}{hobby}")
     plbot.send_message(event.chat.id, msg("form_filled_out", fullname=forms[event.message.user.username]["fullname"], age=forms[event.message.user.username]["age"], hobby=forms[event.message.user.username]["hobby"]))
     
 

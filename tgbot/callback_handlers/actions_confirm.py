@@ -20,7 +20,7 @@ async def callback_confirm_bump_items(callback: CallbackQuery, state: FSMContext
     await throw_float_message(
         state=state,
         message=callback.message, 
-        text=templ.events_float_text("⬆️✔️ Подтвердите <b>поднятие предметов</b> ↓"), 
+        text=templ.events_float_text("⬆️✔️ Confirm <b>raising items</b> ↓"), 
         reply_markup=templ.confirm_kb("bump_items", calls.MenuNavigation(to="events").pack())
     )
 
@@ -31,6 +31,6 @@ async def callback_confirm_withdrawal(callback: CallbackQuery, state: FSMContext
     await throw_float_message(
         state=state,
         message=callback.message, 
-        text=templ.events_float_text("💸✔️ Подтвердите <b>вывод средств</b> ↓"), 
+        text=templ.events_float_text("💸✔️ Confirm <b>conclusion funds</b> ↓"), 
         reply_markup=templ.confirm_kb("request_withdrawal", calls.MenuNavigation(to="events").pack())
     )

@@ -10,9 +10,9 @@ from .. import callback_datas as calls
 def settings_complete_excluded_text():
     excluded_complete_deals = sett.get("auto_complete_deals").get("excluded")
     txt = textwrap.dedent(f"""
-        <b>☑️➖ Исключенные</b>
+        <b>☑️➖ Excluded</b>
 
-        Всего <b>{len(excluded_complete_deals)}</b> исключенных предметов:
+        Total <b>{len(excluded_complete_deals)}</b> excluded items:
     """)
     return txt
 
@@ -32,7 +32,7 @@ def settings_complete_excluded_kb(page=0):
     end_offset = start_offset + items_per_page
 
     for keyphrases in list(excluded_complete_deals)[start_offset:end_offset]:
-        keyphrases_frmtd = ", ".join(keyphrases) or "❌ Не указаны"
+        keyphrases_frmtd = ", ".join(keyphrases) or "❌ Not indicated"
         rows.append([
             InlineKeyboardButton(text=f"{keyphrases_frmtd}", callback_data="123"),
             InlineKeyboardButton(text=f"🗑️", callback_data=calls.DeleteExcludedCompleteDeal(index=excluded_complete_deals.index(keyphrases)).pack()),
@@ -51,11 +51,11 @@ def settings_complete_excluded_kb(page=0):
         rows.append(buttons_row)
 
     rows.append([
-        InlineKeyboardButton(text="➕ Добавить", callback_data="enter_new_excluded_complete_deal_keyphrases"),
-        InlineKeyboardButton(text="➕📄 Добавить много", callback_data="send_new_excluded_complete_deals_keyphrases_file"),
+        InlineKeyboardButton(text="➕ Add", callback_data="enter_new_excluded_complete_deal_keyphrases"),
+        InlineKeyboardButton(text="➕📄 Add many", callback_data="send_new_excluded_complete_deals_keyphrases_file"),
     ])
     rows.append([
-        InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.SettingsNavigation(to="complete").pack()),
+        InlineKeyboardButton(text="⬅️ Back", callback_data=calls.SettingsNavigation(to="complete").pack()),
     ])
 
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
@@ -64,7 +64,7 @@ def settings_complete_excluded_kb(page=0):
 
 def settings_complete_excluded_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>☑️➖ Исключенные</b>
+        <b>☑️➖ Excluded</b>
         \n{placeholder}
     """)
     return txt
@@ -72,7 +72,7 @@ def settings_complete_excluded_float_text(placeholder: str):
 
 def settings_new_complete_excluded_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>☑️➖ Добавление исключенного предмета</b>
+        <b>☑️➖ Addition excluded subject</b>
         \n{placeholder}
     """)
     return txt

@@ -8,25 +8,25 @@ from .. import callback_datas as calls
 
 def settings_comm_page_text(command: str):
     custom_commands = sett.get("custom_commands")
-    command_text = "\n".join(custom_commands[command]) or "❌ Не задано"
+    command_text = "\n".join(custom_commands[command]) or "❌ Not given"
     
     txt = textwrap.dedent(f"""
-        <b>📄❗ Страница команды</b>
+        <b>📄❗ Page teams</b>
 
-        <b>⌨️ Команда:</b> {command}
-        <b>💬 Ответ:</b> <blockquote>{command_text}</blockquote>
+        <b>⌨️ Team:</b> {command}
+        <b>💬 Answer:</b> <blockquote>{command_text}</blockquote>
     """)
     return txt
 
 
 def settings_comm_page_kb(command: str, page: int = 0):
     custom_commands = sett.get("custom_commands")
-    command_text = "\n".join(custom_commands[command]) or "❌ Не задано"
+    command_text = "\n".join(custom_commands[command]) or "❌ Not given"
     
     rows = [
-        [InlineKeyboardButton(text=f"💬 Ответ: {command_text}", callback_data="enter_custom_command_answer")],
-        [InlineKeyboardButton(text="🗑️ Удалить", callback_data="confirm_deleting_custom_command")],
-        [InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.CustomCommandsPagination(page=page).pack())]
+        [InlineKeyboardButton(text=f"💬 Answer: {command_text}", callback_data="enter_custom_command_answer")],
+        [InlineKeyboardButton(text="🗑️ Delete", callback_data="confirm_deleting_custom_command")],
+        [InlineKeyboardButton(text="⬅️ Back", callback_data=calls.CustomCommandsPagination(page=page).pack())]
     ]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
     return kb
@@ -34,7 +34,7 @@ def settings_comm_page_kb(command: str, page: int = 0):
 
 def settings_comm_page_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>📄❗ Страница команды</b>
+        <b>📄❗ Page teams</b>
         \n{placeholder}
     """)
     return txt

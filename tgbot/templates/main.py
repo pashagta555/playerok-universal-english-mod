@@ -6,7 +6,7 @@ from .. import callback_datas as calls
 
 def error_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>❌ Ошибка</b>
+        <b>❌ Error</b>
 
         <blockquote>{placeholder}</blockquote>
     """)
@@ -14,26 +14,26 @@ def error_text(placeholder: str):
 
 
 def back_kb(cb: str):
-    rows = [[InlineKeyboardButton(text="⬅️ Назад", callback_data=cb)]]
+    rows = [[InlineKeyboardButton(text="⬅️ Back", callback_data=cb)]]
     return InlineKeyboardMarkup(inline_keyboard=rows)
 
 
 def confirm_kb(confirm_cb: str, cancel_cb: str):
     rows = [[
-        InlineKeyboardButton(text="✅ Подтвердить", callback_data=confirm_cb),
-        InlineKeyboardButton(text="❌ Отменить", callback_data=cancel_cb)
+        InlineKeyboardButton(text="✅ Confirm", callback_data=confirm_cb),
+        InlineKeyboardButton(text="❌ Cancel", callback_data=cancel_cb)
     ]]
     return InlineKeyboardMarkup(inline_keyboard=rows)
 
 
 def destroy_kb():
-    rows = [[InlineKeyboardButton(text="❌ Закрыть", callback_data="destroy")]]
+    rows = [[InlineKeyboardButton(text="❌ Close", callback_data="destroy")]]
     return InlineKeyboardMarkup(inline_keyboard=rows)
 
 
 def do_action_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>🧩 Действие</b>
+        <b>🧩 Action</b>
         \n{placeholder}
     """)
     return txt
@@ -48,16 +48,16 @@ def log_text(title: str, text: str):
 
 
 def log_new_mess_kb(username: str):
-    rows = [[InlineKeyboardButton(text="💬 Написать", callback_data=calls.RememberUsername(name=username, do="send_mess").pack())]]
+    rows = [[InlineKeyboardButton(text="💬 Write", callback_data=calls.RememberUsername(name=username, do="send_mess").pack())]]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
     return kb
 
 
 def log_new_deal_kb(username: str, deal_id: str):
     rows = [[
-        InlineKeyboardButton(text="💬 Написать", callback_data=calls.RememberUsername(name=username, do="send_mess").pack()),
-        InlineKeyboardButton(text="☑️ Выполнил", callback_data=calls.RememberDealId(de_id=deal_id, do="complete").pack()),
-        InlineKeyboardButton(text="📦 Возврат", callback_data=calls.RememberDealId(de_id=deal_id, do="refund").pack())
+        InlineKeyboardButton(text="💬 Write", callback_data=calls.RememberUsername(name=username, do="send_mess").pack()),
+        InlineKeyboardButton(text="☑️ Completed", callback_data=calls.RememberDealId(de_id=deal_id, do="complete").pack()),
+        InlineKeyboardButton(text="📦 Return", callback_data=calls.RememberDealId(de_id=deal_id, do="refund").pack())
     ]]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
     return kb
@@ -65,8 +65,8 @@ def log_new_deal_kb(username: str, deal_id: str):
 
 def log_new_review_kb(username: str, deal_id: str):
     rows = [[
-        InlineKeyboardButton(text="💬🌟 Ответить на отзыв", callback_data=calls.RememberDealId(de_id=deal_id, do="answer_rev").pack()),
-        InlineKeyboardButton(text="💬 Написать", callback_data=calls.RememberUsername(name=username, do="send_mess").pack())
+        InlineKeyboardButton(text="💬🌟 Answer on review", callback_data=calls.RememberDealId(de_id=deal_id, do="answer_rev").pack()),
+        InlineKeyboardButton(text="💬 Write", callback_data=calls.RememberUsername(name=username, do="send_mess").pack())
     ]]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
     return kb
@@ -74,7 +74,7 @@ def log_new_review_kb(username: str, deal_id: str):
 
 def sign_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>🔐 Авторизация</b>
+        <b>🔐 Authorization</b>
         \n{placeholder}
     """)
     return txt
@@ -82,7 +82,7 @@ def sign_text(placeholder: str):
 
 def call_seller_text(calling_name, chat_link):
     txt = textwrap.dedent(f"""
-        🆘 <b>{calling_name}</b> требуется ваша помощь!
+        🆘 <b>{calling_name}</b> required yours help!
         {chat_link}
     """)
     return txt

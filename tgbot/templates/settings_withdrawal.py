@@ -10,7 +10,7 @@ from .. import callback_datas as calls
 def settings_withdrawal_text(card: UserBankCard = None, sbp_bank: SBPBankMember = None):
     config = sett.get("config")
     
-    enabled = "🟢 Включено" if config["playerok"]["auto_withdrawal"]["enabled"] else "🔴 Выключено"
+    enabled = "🟢 Included" if config["playerok"]["auto_withdrawal"]["enabled"] else "🔴 Off"
     interval = config["playerok"]["auto_withdrawal"]["interval"]
     usdt_address = config["playerok"]["auto_withdrawal"]["usdt_address"]
     
@@ -23,18 +23,18 @@ def settings_withdrawal_text(card: UserBankCard = None, sbp_bank: SBPBankMember 
     elif usdt_address: 
         details = f"{usdt_address} (USDT TRC20)"
     else: 
-        details = "Не указано"
+        details = "Not indicated"
     
     txt = textwrap.dedent(f"""
-        <b>💸 Авто-вывод</b>
+        <b>💸 Auto-conclusion</b>
 
-        <b>🔃 Авто-вывод средств:</b> {enabled}
-        <b>⏱️ Интервал:</b> {interval} сек.
+        <b>🔃 Auto-conclusion funds:</b> {enabled}
+        <b>⏱️ Interval:</b> {interval} sec.
 
-        <b>💳 Реквизиты:</b> {details}
+        <b>💳 Details:</b> {details}
 
-        <b>Что такое авто-вывод средств?</b>
-        Бот будет автоматически с указанным интервалом создавать вывод всех средств на аккаунте по указанным реквизитам
+        <b>What such auto-conclusion funds?</b>
+        Bot will automatically With specified interval create conclusion everyone funds on account By specified details
     """)
     return txt
 
@@ -42,7 +42,7 @@ def settings_withdrawal_text(card: UserBankCard = None, sbp_bank: SBPBankMember 
 def settings_withdrawal_kb(card: UserBankCard = None, sbp_bank: SBPBankMember = None):
     config = sett.get("config")
     
-    enabled = "🟢 Включено" if config["playerok"]["auto_withdrawal"]["enabled"] else "🔴 Выключено"
+    enabled = "🟢 Included" if config["playerok"]["auto_withdrawal"]["enabled"] else "🔴 Off"
     interval = config["playerok"]["auto_withdrawal"]["interval"]
     usdt_address = config["playerok"]["auto_withdrawal"]["usdt_address"]
     
@@ -55,13 +55,13 @@ def settings_withdrawal_kb(card: UserBankCard = None, sbp_bank: SBPBankMember = 
     elif usdt_address: 
         details = f"{usdt_address} (USDT TRC20)"
     else: 
-        details = "Не указано"
+        details = "Not indicated"
 
     rows = [
-        [InlineKeyboardButton(text=f"🔃 Авто-вывод средств: {enabled}", callback_data="switch_auto_withdrawal_enabled")],
-        [InlineKeyboardButton(text=f"⏱️ Интервал: {interval} сек.", callback_data="enter_auto_withdrawal_interval")],
-        [InlineKeyboardButton(text=f"💳 Реквизиты: {details}", callback_data=calls.BankCardsPagination(page=0).pack())],
-        [InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.SettingsNavigation(to="default").pack())]
+        [InlineKeyboardButton(text=f"🔃 Auto-conclusion funds: {enabled}", callback_data="switch_auto_withdrawal_enabled")],
+        [InlineKeyboardButton(text=f"⏱️ Interval: {interval} sec.", callback_data="enter_auto_withdrawal_interval")],
+        [InlineKeyboardButton(text=f"💳 Details: {details}", callback_data=calls.BankCardsPagination(page=0).pack())],
+        [InlineKeyboardButton(text="⬅️ Back", callback_data=calls.SettingsNavigation(to="default").pack())]
     ]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
     return kb
@@ -69,7 +69,7 @@ def settings_withdrawal_kb(card: UserBankCard = None, sbp_bank: SBPBankMember = 
 
 def settings_withdrawal_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>💸 Авто-вывод</b>
+        <b>💸 Auto-conclusion</b>
         \n{placeholder}
     """)
     return txt

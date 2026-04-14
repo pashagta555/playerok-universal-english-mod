@@ -9,9 +9,9 @@ from .. import callback_datas as calls
 
 def settings_withdrawal_sbp_text(sbp_banks: list[SBPBankMember]):
     txt = textwrap.dedent(f"""
-        <b>📱 СБП банки</b>
+        <b>📱 SBP banks</b>
 
-        Всего <b>{len(sbp_banks)}</b> банков:
+        Total <b>{len(sbp_banks)}</b> banks:
     """)
     return txt
 
@@ -51,12 +51,12 @@ def settings_withdrawal_sbp_kb(sbp_banks: list[SBPBankMember], page=0):
         rows.append(buttons_row)
 
     rows.append([
-        InlineKeyboardButton(text="💳 Карты RU", callback_data=calls.BankCardsPagination(page=0).pack()),
-        InlineKeyboardButton(text="· 📱 СБП банки ·", callback_data="123"),
+        InlineKeyboardButton(text="💳 Cards RU", callback_data=calls.BankCardsPagination(page=0).pack()),
+        InlineKeyboardButton(text="· 📱 SBP banks ·", callback_data="123"),
         InlineKeyboardButton(text="💲 USDT (TRC20)", callback_data="enter_usdt_address")
     ])
     rows.append([
-        InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.SettingsNavigation(to="withdrawal").pack()),
+        InlineKeyboardButton(text="⬅️ Back", callback_data=calls.SettingsNavigation(to="withdrawal").pack()),
     ])
 
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
@@ -65,7 +65,7 @@ def settings_withdrawal_sbp_kb(sbp_banks: list[SBPBankMember], page=0):
 
 def settings_withdrawal_sbp_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>📱 СБП банки</b>
+        <b>📱 SBP banks</b>
         \n{placeholder}
     """)
     return txt

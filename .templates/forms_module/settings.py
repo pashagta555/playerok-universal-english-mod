@@ -26,92 +26,92 @@ MESSAGES = SettingsFile(
         "cmd_writein": {
             "enabled": True,
             "text": [
-                "✏️ Шаг 1. Ввод фамилии, имени, отчества",
+                "✏️ Step 1. Enter surnames, name, middle names",
                 "",
-                "💡 Например: Петров Иван Олегович",
+                "💡 For example: Petrov Ivan Olegovich",
                 "",
-                "Введите своё ФИО:"
+                "Enter yours Full name:"
             ]
         },
         "entering_fullname_error": {
             "enabled": True,
             "text": [
-                "❌ Шаг 1. Ошибка ввода ФИО",
+                "❌ Step 1. Error input Full name",
                 "",
-                "Убедитесь, что текст соответствует формату",
+                "Make sure, What text corresponds format",
                 "",
-                "Введите ФИО снова:"
+                "Enter Full name again:"
             ]
         },
         "enter_age": {
             "enabled": True,
             "text": [
-                "✏️ Шаг 2. Ввод возраста",
+                "✏️ Step 2. Enter age",
                 "",
-                "💡 Например: 18",
+                "💡 For example: 18",
                 "",
-                "Введите свой возраст:"
+                "Enter mine age:"
             ]
         },
         "entering_age_error": {
             "enabled": True,
             "text": [
-                "❌ Шаг 2. Ошибка ввода возраста",
+                "❌ Step 2. Error input age",
                 "",
-                "Убедитесь, что вы ввели числовое значение",
+                "Make sure, What You introduced numeric meaning",
                 "",
-                "Введите возраст снова:"
+                "Enter age again:"
             ]
         },
         "enter_hobby": {
             "enabled": True,
             "text": [
-                "✏️ Шаг 3. Ввод хобби",
+                "✏️ Step 3. Enter hobby",
                 "",
-                "💡 Например: Рисование",
+                "💡 For example: Drawing",
                 "",
-                "Введите своё хобби:"
+                "Enter yours hobby:"
             ]
         },
         "entering_username_error": {
             "enabled": True,
             "text": [
-                "❌ Шаг 3. Ошибка ввода хобби",
+                "❌ Step 3. Error input hobby",
                 "",
-                "Убедитесь, что текст соответствует формату",
+                "Make sure, What text corresponds format",
                 "",
-                "Введите хобби снова:"
+                "Enter hobby again:"
             ]
         },
         "form_filled_out": {
             "enabled": True,
             "text": [
-                "✅ Анкета была заполнена!",
+                "✅ Questionnaire was filled!",
                 "",
-                "Ваши данные:",
-                "・ ФИО: {fullname}",
-                "・ Возраст: {age}",
-                "・ Хобби: {hobby}",
+                "Yours data:",
+                "・ Full name: {fullname}",
+                "・ Age: {age}",
+                "・ Hobby: {hobby}",
                 "",
-                "💡 Используйте команду !мояанкета, чтобы просмотреть данные снова"
+                "💡 Use team !my profile, to view data again"
             ]
         },
         "cmd_myform": {
             "enabled": True,
             "text": [
-                "📝 Ваша анкета",
+                "📝 Yours questionnaire",
                 "",
-                "・ ФИО: {fullname}",
-                "・ Возраст: {age}",
-                "・ Хобби: {hobby}",
+                "・ Full name: {fullname}",
+                "・ Age: {age}",
+                "・ Hobby: {hobby}",
                 "",
-                "💡 Используйте команду !заполнить, чтобы заполнить анкету заново"
+                "💡 Use team !fill out, to fill out questionnaire again"
             ]
         },
         "cmd_myform_error": {
             "enabled": True,
             "text": [
-                "❌ При открытии вашей анкеты произошла ошибка",
+                "❌ At opening yours questionnaires happened error",
                 "",
                 "{reason}"
             ]

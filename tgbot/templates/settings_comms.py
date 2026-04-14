@@ -10,9 +10,9 @@ from .. import callback_datas as calls
 def settings_comms_text():
     custom_commands = sett.get("custom_commands")
     txt = textwrap.dedent(f"""
-        <b>❗ Команды</b>
+        <b>❗ Teams</b>
 
-        Всего <b>{len(custom_commands)}</b> команд:
+        Total <b>{len(custom_commands)}</b> teams:
     """)
     return txt
 
@@ -48,9 +48,9 @@ def settings_comms_kb(page=0):
         buttons_row.append(btn_next)
         rows.append(buttons_row)
 
-    rows.append([InlineKeyboardButton(text="➕ Добавить",callback_data="enter_new_custom_command")])
+    rows.append([InlineKeyboardButton(text="➕ Add",callback_data="enter_new_custom_command")])
     rows.append([
-        InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.SettingsNavigation(to="default").pack()),
+        InlineKeyboardButton(text="⬅️ Back", callback_data=calls.SettingsNavigation(to="default").pack()),
     ])
     
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
@@ -59,7 +59,7 @@ def settings_comms_kb(page=0):
 
 def settings_comms_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>❗ Команды</b>
+        <b>❗ Teams</b>
         \n{placeholder}
     """)
     return txt
@@ -67,7 +67,7 @@ def settings_comms_float_text(placeholder: str):
 
 def settings_new_comm_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>➕❗ Добавление команды</b>
+        <b>➕❗ Addition teams</b>
         \n{placeholder}
     """)
     return txt

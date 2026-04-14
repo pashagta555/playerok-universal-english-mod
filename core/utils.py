@@ -101,9 +101,9 @@ def setup_logger(log_file: str = "logs/latest.log"):
 
 def is_package_installed(requirement_string: str) -> bool:
     """
-    Проверяет, установлена ли библиотека.
+    Checks, installed whether library.
 
-    :param requirement_string: Строка пакета из файла зависимостей.
+    :param requirement_string: Line package from file dependencies.
     :type requirement_string: str
     """
     
@@ -122,9 +122,9 @@ def is_package_installed(requirement_string: str) -> bool:
 
 def install_requirements(requirements_path: str):
     """
-    Устанавливает зависимости из файла.
+    Installs dependencies from file.
 
-    :param requirements_path: Путь к файлу зависимостей.
+    :param requirements_path: Path To file dependencies.
     :type requirements_path: str
     """
     
@@ -153,7 +153,7 @@ def install_requirements(requirements_path: str):
                 ])
                 return
     except Exception as e:
-        logger.error(f"Не удалось установить зависимости из файла \"{requirements_path}\": {e}")
+        logger.error(f"Not succeeded install dependencies from file \"{requirements_path}\": {e}")
 
 
 def patch_requests():
@@ -186,8 +186,8 @@ def patch_requests():
             try: delay = float(retry_hdr) if retry_hdr else min(120.0, 5.0 * (2 ** attempt))
             except: delay = min(120.0, 5.0 * (2 ** attempt))
             
-            logger.debug(f"{url} — {err}. Пробую отправить запрос снова через {delay} сек.")
-            delay += random.uniform(0.2, 0.8)  # небольшой джиттер
+            logger.debug(f"{url} — {err}. I'm trying send request again through {delay} sec.")
+            delay += random.uniform(0.2, 0.8)  # small jitter
             time.sleep(delay)
         return resp
 

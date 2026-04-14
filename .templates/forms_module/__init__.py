@@ -28,7 +28,7 @@ def get_module():
 
 async def on_module_enabled(module: Module):
     set_module(module)
-    logger.info(f"{PREFIX} Модуль подключен и активен")
+    logger.info(f"{PREFIX} Module connected And active")
 
 
 BOT_EVENT_HANDLERS = {

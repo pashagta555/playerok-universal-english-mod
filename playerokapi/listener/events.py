@@ -5,29 +5,29 @@ import time
 
 class BaseEvent:
     """
-    Базовый класс события.
+    Base Class events.
 
-    :param event_type: Тип события.
+    :param event_type: Type events.
     :type event_type: `PlayerokAPI.enums.EventTypes`
 
-    :param chat: Объект чата, в котором произошло событие.
+    :param chat: Object chat, V which happened event.
     :type chat: `PlayerokAPI.types.Chat`
     """
 
     def __init__(self, event_type: EventTypes, chat: types.Chat):
         self.type = event_type
-        """ Тип события. """
+        """ Type events. """
         self.chat = chat
-        """ Объект чата, в котором произошло событие. """
+        """ Object chat, V which happened event. """
         self.time = time.time()
-        """ Время события. """
+        """ Time events. """
 
 
 class ChatInitializedEvent(BaseEvent):
     """
-    Класс события: обнаружен чат при первом запросе Runner'а.
+    Class events: discovered chat at first request Runner'A.
 
-    :param chat: Объект обнаруженного чата.
+    :param chat: Object discovered chat.
     :type chat: `PlayerokAPI.types.Chat`
     """
 
@@ -36,119 +36,119 @@ class ChatInitializedEvent(BaseEvent):
             EventTypes.CHAT_INITIALIZED, chat
         )
         self.chat: types.Chat = chat
-        """ Объект обнаруженного чата. """
+        """ Object discovered chat. """
 
 
 class NewMessageEvent(BaseEvent):
     """
-    Класс события: новое сообщение в чате.
+    Class events: new message V chat.
 
-    :param message: Объект полученного сообщения.
+    :param message: Object received messages.
     :type message: `PlayerokAPI.types.ChatMessage`
 
-    :param chat: Объект чата, в котором произошло событие.
+    :param chat: Object chat, V which happened event.
     :type chat: `PlayerokAPI.types.Chat`
     """
 
     def __init__(self, message: types.ChatMessage, chat: types.Chat):
         super(NewMessageEvent, self).__init__(EventTypes.NEW_MESSAGE, chat)
         self.message: types.ChatMessage = message
-        """ Объект полученного сообщения. """
+        """ Object received messages. """
 
 
 class NewDealEvent(BaseEvent):
     """
-    Класс события: новая созданная сделка (когда покупатель оплатил предмет).
+    Class events: new created deal (When buyer paid item).
 
-    :param deal: Объект новой сделки.
+    :param deal: Object new deals.
     :type deal: `PlayerokAPI.types.ItemDeal`
 
-    :param chat: Объект чата, в котором произошло событие.
+    :param chat: Object chat, V which happened event.
     :type chat: `PlayerokAPI.types.Chat`
     """
 
     def __init__(self, deal: types.ItemDeal, chat: types.Chat):
         super(NewDealEvent, self).__init__(EventTypes.NEW_DEAL, chat)
         self.deal: types.ItemDeal = deal
-        """ Объект сделки. """
+        """ Object deals. """
 
 
 class NewReviewEvent(BaseEvent):
     """
-    Класс события: новый отзыв от покупателя.
+    Class events: new review from buyer.
 
-    :param deal: Объект сделки с отзывом.
+    :param deal: Object deals With review.
     :type deal: `PlayerokAPI.types.ItemDeal`
 
-    :param chat: Объект чата, в котором произошло событие.
+    :param chat: Object chat, V which happened event.
     :type chat: `PlayerokAPI.types.Chat`
     """
 
     def __init__(self, deal: types.ItemDeal, chat: types.Chat):
         super(NewReviewEvent, self).__init__(EventTypes.NEW_REVIEW, chat)
         self.deal: types.ItemDeal = deal
-        """ Объект сделки. """
+        """ Object deals. """
 
 
 class DealConfirmedEvent(BaseEvent):
     """
-    Класс события: покупатель подтвердил сделку.
+    Class events: buyer confirmed deal.
 
-    :param deal: Объект сделки.
+    :param deal: Object deals.
     :type deal: `PlayerokAPI.types.ItemDeal`
 
-    :param chat: Объект чата, в котором произошло событие.
+    :param chat: Object chat, V which happened event.
     :type chat: `PlayerokAPI.types.Chat`
     """
 
     def __init__(self, deal: types.ItemDeal, chat: types.Chat):
         super(DealConfirmedEvent, self).__init__(EventTypes.DEAL_CONFIRMED, chat)
         self.deal: types.ItemDeal = deal
-        """ Объект сделки. """
+        """ Object deals. """
 
 
 class DealRolledBackEvent(BaseEvent):
     """
-    Класс события: продавец вернул средства за сделку.
+    Class events: salesman returned funds for deal.
 
-    :param deal: Объект сделки.
+    :param deal: Object deals.
     :type deal: `PlayerokAPI.types.ItemDeal`
 
-    :param chat: Объект чата, в котором произошло событие.
+    :param chat: Object chat, V which happened event.
     :type chat: `PlayerokAPI.types.Chat`
     """
 
     def __init__(self, deal: types.ItemDeal, chat: types.Chat):
         super(DealRolledBackEvent, self).__init__(EventTypes.DEAL_ROLLED_BACK, chat)
         self.deal: types.ItemDeal = deal
-        """ Объект сделки. """
+        """ Object deals. """
 
 
 class DealHasProblemEvent(BaseEvent):
     """
-    Класс события: кто-то сообщил о проблеме в сделке.
+    Class events: Who-That reported O problem V deal.
 
-    :param deal: Объект сделки.
+    :param deal: Object deals.
     :type deal: `PlayerokAPI.types.ItemDeal`
 
-    :param chat: Объект чата, в котором произошло событие.
+    :param chat: Object chat, V which happened event.
     :type chat: `PlayerokAPI.types.Chat`
     """
 
     def __init__(self, deal: types.ItemDeal, chat: types.Chat):
         super(DealHasProblemEvent, self).__init__(EventTypes.DEAL_HAS_PROBLEM, chat)
         self.deal: types.ItemDeal = deal
-        """ Объект сделки. """
+        """ Object deals. """
 
 
 class DealProblemResolvedEvent(BaseEvent):
     """
-    Класс события: проблема в сделке решена.
+    Class events: problem V deal resolved.
 
-    :param deal: Объект сделки.
+    :param deal: Object deals.
     :type deal: `PlayerokAPI.types.ItemDeal`
 
-    :param chat: Объект чата, в котором произошло событие.
+    :param chat: Object chat, V which happened event.
     :type chat: `PlayerokAPI.types.Chat`
     """
 
@@ -157,17 +157,17 @@ class DealProblemResolvedEvent(BaseEvent):
             EventTypes.DEAL_PROBLEM_RESOLVED, chat
         )
         self.deal: types.ItemDeal = deal
-        """ Объект сделки. """
+        """ Object deals. """
 
 
 class DealStatusChangedEvent(BaseEvent):
     """
-    Класс события: статус сделки изменён.
+    Class events: status deals changed.
 
-    :param deal: Объект сделки.
+    :param deal: Object deals.
     :type deal: `PlayerokAPI.types.ItemDeal`
 
-    :param chat: Объект чата, в котором произошло событие.
+    :param chat: Object chat, V which happened event.
     :type chat: `PlayerokAPI.types.Chat`
     """
 
@@ -176,38 +176,38 @@ class DealStatusChangedEvent(BaseEvent):
             EventTypes.DEAL_STATUS_CHANGED, chat
         )
         self.deal: types.ItemDeal = deal
-        """ Объект сделки. """
+        """ Object deals. """
 
 
 class ItemPaidEvent(BaseEvent):
     """
-    Класс события: предмет оплачен.
+    Class events: item paid.
 
-    :param deal: Объект сделки.
+    :param deal: Object deals.
     :type deal: `PlayerokAPI.types.Item`
 
-    :param chat: Объект чата, в котором произошло событие.
+    :param chat: Object chat, V which happened event.
     :type chat: `PlayerokAPI.types.Chat`
     """
 
     def __init__(self, deal: types.ItemDeal, chat: types.Chat):
         super(ItemPaidEvent, self).__init__(EventTypes.ITEM_PAID, chat)
         self.deal: types.ItemDeal = deal
-        """ Объект сделки. """
+        """ Object deals. """
 
 
 class ItemSentEvent(BaseEvent):
     """
-    Класс события: предмет отправлен покупателю.
+    Class events: item sent to the buyer.
 
-    :param deal: Объект сделки.
+    :param deal: Object deals.
     :type deal: `PlayerokAPI.types.Item`
 
-    :param chat: Объект чата, в котором произошло событие.
+    :param chat: Object chat, V which happened event.
     :type chat: `PlayerokAPI.types.Chat`
     """
 
     def __init__(self, deal: types.ItemDeal, chat: types.Chat):
         super(ItemSentEvent, self).__init__(EventTypes.ITEM_SENT, chat)
         self.deal: types.ItemDeal = deal
-        """ Объект Сделки. """
+        """ Object Transactions. """

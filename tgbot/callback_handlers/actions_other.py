@@ -244,7 +244,7 @@ async def callback_remember_username(callback: CallbackQuery, callback_data: cal
         await throw_float_message(
             state=state,
             message=callback.message,
-            text=templ.do_action_text(f"💬 Введите <b>сообщение</b> для отправки <b>{username}</b>:"),
+            text=templ.do_action_text(f"💬 Enter <b>message</b> For sending <b>{username}</b>:"),
             reply_markup=templ.destroy_kb(),
             callback=callback,
             send=True
@@ -264,7 +264,7 @@ async def callback_remember_deal_id(callback: CallbackQuery, callback_data: call
         await throw_float_message(
             state=state,
             message=callback.message,
-            text=templ.do_action_text(f'📦✔️ Подтвердите <b>возврат</b> <a href="https://playerok.com/deal/{deal_id}">сделки</a>:'),
+            text=templ.do_action_text(f'📦✔️ Confirm <b>return</b> <a href="https://playerok.com/deal/{deal_id}">deals</a>:'),
             reply_markup=templ.confirm_kb(confirm_cb="refund_deal", cancel_cb="destroy"),
             callback=callback,
             send=True
@@ -273,7 +273,7 @@ async def callback_remember_deal_id(callback: CallbackQuery, callback_data: call
         await throw_float_message(
             state=state,
             message=callback.message,
-            text=templ.do_action_text(f'☑️✔️ Подтвердите <b>выполнение</b> <a href="https://playerok.com/deal/{deal_id}">сделки</a>:'),
+            text=templ.do_action_text(f'☑️✔️ Confirm <b>execution</b> <a href="https://playerok.com/deal/{deal_id}">deals</a>:'),
             reply_markup=templ.confirm_kb(confirm_cb="complete_deal", cancel_cb="destroy"),
             callback=callback,
             send=True
@@ -307,7 +307,7 @@ async def callback_select_sbp_bank(callback: CallbackQuery, callback_data: calls
     await throw_float_message(
         state=state,
         message=callback.message,
-        text=templ.settings_withdrawal_sbp_float_text(f"📲 Введите <b>номер телефона</b>, на который нужно будет совершать вывод:"),
+        text=templ.settings_withdrawal_sbp_float_text(f"📲 Enter <b>number phone</b>, on which need to will commit conclusion:"),
         reply_markup=templ.back_kb(calls.SettingsNavigation(to="withdrawal").pack())
     )
 
@@ -328,7 +328,7 @@ async def callback_set_new_deliv_piece(callback: CallbackQuery, callback_data: c
             state=state,
             message=callback.message,
             text=templ.settings_new_deliv_float_text(
-                f"📦 Отправьте <b>товары</b> для поштучной выдачи (1 строка = 1 товар, можно прислать .txt файл с товарами):"
+                f"📦 Send <b>goods</b> For piece by piece issuance (1 line = 1 product, Can send .txt file With goods):"
             ),
             reply_markup=templ.back_kb(calls.AutoDeliveriesPagination(page=last_page).pack()),
             callback=callback
@@ -339,7 +339,7 @@ async def callback_set_new_deliv_piece(callback: CallbackQuery, callback_data: c
             state=state,
             message=callback.message,
             text=templ.settings_new_deliv_float_text(
-                f"💬 Введите <b>сообщение авто-выдачи</b>, которое будет отправляться после покупки товара:"
+                f"💬 Enter <b>message auto-issuance</b>, which will go after purchases goods:"
             ),
             reply_markup=templ.back_kb(calls.AutoDeliveriesPagination(page=last_page).pack()),
             callback=callback
@@ -360,7 +360,7 @@ async def callback_refund_deal(callback: CallbackQuery, state: FSMContext):
     await throw_float_message(
         state=state,
         message=callback.message,
-        text=templ.do_action_text(f"✅ По сделке <b>https://playerok.com/deal/{deal_id}</b> был оформлен возврат"),
+        text=templ.do_action_text(f"✅ By deal <b>https://playerok.com/deal/{deal_id}</b> was issued return"),
         reply_markup=templ.destroy_kb()
     )
 
@@ -379,7 +379,7 @@ async def callback_complete_deal(callback: CallbackQuery, state: FSMContext):
     await throw_float_message(
         state=state,
         message=callback.message,
-        text=templ.do_action_text(f"✅ Сделка <b>https://playerok.com/deal/{deal_id}</b> была помечена вами, как выполненная"),
+        text=templ.do_action_text(f"✅ Deal <b>https://playerok.com/deal/{deal_id}</b> was marked you, How completed"),
         reply_markup=templ.destroy_kb()
     )
 
@@ -392,7 +392,7 @@ async def callback_bump_items(callback: CallbackQuery, state: FSMContext):
         await throw_float_message(
             state=state,
             message=callback.message,
-            text=templ.events_float_text(f"⬆️ Идёт <b>поднятие предметов</b>, ожидайте (см. консоль)..."),
+            text=templ.events_float_text(f"⬆️ coming <b>raising items</b>, wait (cm. console)..."),
             reply_markup=templ.back_kb(calls.MenuNavigation(to="events").pack())
         )
 
@@ -402,7 +402,7 @@ async def callback_bump_items(callback: CallbackQuery, state: FSMContext):
         await throw_float_message(
             state=state,
             message=callback.message,
-            text=templ.events_float_text(f"⬆️✅ <b>Предметы</b> были успешно подняты"),
+            text=templ.events_float_text(f"⬆️✅ <b>Items</b> were successfully raised"),
             reply_markup=templ.back_kb(calls.MenuNavigation(to="events").pack())
         )
     except Exception as e:
@@ -422,7 +422,7 @@ async def callback_request_withdrawal(callback: CallbackQuery, state: FSMContext
         await throw_float_message(
             state=state,
             message=callback.message,
-            text=templ.events_float_text(f"💸 Создаю <b>транзакцию на вывод средств</b>, ожидайте (см. консоль)..."),
+            text=templ.events_float_text(f"💸 I create <b>transaction on conclusion funds</b>, wait (cm. console)..."),
             reply_markup=templ.back_kb(calls.MenuNavigation(to="events").pack())
         )
 
@@ -433,14 +433,14 @@ async def callback_request_withdrawal(callback: CallbackQuery, state: FSMContext
             await throw_float_message(
                 state=state,
                 message=callback.message,
-                text=templ.events_float_text(f"✅ <b>Транзакция на вывод средств</b> была успешно создана"),
+                text=templ.events_float_text(f"✅ <b>Transaction on conclusion funds</b> was successfully created"),
                 reply_markup=templ.back_kb(calls.MenuNavigation(to="events").pack())
             )
         else:
             await throw_float_message(
                 state=state,
                 message=callback.message,
-                text=templ.events_float_text(f"❌ Не удалось создать <b>транзакцию на вывод средств</b> (см. консоль на наличие ошибок)"),
+                text=templ.events_float_text(f"❌ Not succeeded create <b>transaction on conclusion funds</b> (cm. console on availability errors)"),
                 reply_markup=templ.back_kb(calls.MenuNavigation(to="events").pack())
             )
     except Exception as e:
@@ -507,8 +507,8 @@ async def callback_send_new_included_restore_items_keyphrases_file(callback: Cal
         state=state,
         message=callback.message,
         text=templ.settings_new_restore_included_float_text(
-            "📄 Отправьте <b>.txt</b> файл с <b>ключевыми фразами</b>, по одной записи в строке "
-            "(для каждого товара указываются через запятую, например, \"samp аккаунт, со всеми данными\")"
+            "📄 Send <b>.txt</b> file With <b>key phrases</b>, By one records V line "
+            "(For everyone goods are indicated through comma, For example, \"samp account, with everyone data\")"
         ),
         reply_markup=templ.back_kb(calls.IncludedRestoreItemsPagination(page=last_page).pack())
     )
@@ -524,8 +524,8 @@ async def callback_send_new_excluded_restore_items_keyphrases_file(callback: Cal
         state=state,
         message=callback.message,
         text=templ.settings_new_restore_excluded_float_text(
-            "📄 Отправьте <b>.txt</b> файл с <b>ключевыми фразами</b>, по одной записи в строке "
-            "(для каждого товара указываются через запятую, например, \"samp аккаунт, со всеми данными\")"
+            "📄 Send <b>.txt</b> file With <b>key phrases</b>, By one records V line "
+            "(For everyone goods are indicated through comma, For example, \"samp account, with everyone data\")"
         ),
         reply_markup=templ.back_kb(calls.ExcludedRestoreItemsPagination(page=last_page).pack())
     )
@@ -541,8 +541,8 @@ async def callback_send_new_included_complete_deals_keyphrases_file(callback: Ca
         state=state,
         message=callback.message,
         text=templ.settings_new_complete_included_float_text(
-            "📄 Отправьте <b>.txt</b> файл с <b>ключевыми фразами</b>, по одной записи в строке "
-            "(для каждого товара указываются через запятую, например, \"samp аккаунт, со всеми данными\")"
+            "📄 Send <b>.txt</b> file With <b>key phrases</b>, By one records V line "
+            "(For everyone goods are indicated through comma, For example, \"samp account, with everyone data\")"
         ),
         reply_markup=templ.back_kb(calls.IncludedCompleteDealsPagination(page=last_page).pack())
     )
@@ -558,8 +558,8 @@ async def callback_send_new_excluded_complete_deals_keyphrases_file(callback: Ca
         state=state,
         message=callback.message,
         text=templ.settings_new_complete_excluded_float_text(
-            "📄 Отправьте <b>.txt</b> файл с <b>ключевыми фразами</b>, по одной записи в строке "
-            "(для каждого товара указываются через запятую, например, \"samp аккаунт, со всеми данными\")"
+            "📄 Send <b>.txt</b> file With <b>key phrases</b>, By one records V line "
+            "(For everyone goods are indicated through comma, For example, \"samp account, with everyone data\")"
         ),
         reply_markup=templ.back_kb(calls.ExcludedCompleteDealsPagination(page=last_page).pack())
     )
@@ -575,8 +575,8 @@ async def callback_send_new_included_bump_items_keyphrases_file(callback: Callba
         state=state,
         message=callback.message,
         text=templ.settings_new_bump_included_float_text(
-            "📄 Отправьте <b>.txt</b> файл с <b>ключевыми фразами</b>, по одной записи в строке "
-            "(для каждого товара указываются через запятую, например, \"samp аккаунт, со всеми данными\")"
+            "📄 Send <b>.txt</b> file With <b>key phrases</b>, By one records V line "
+            "(For everyone goods are indicated through comma, For example, \"samp account, with everyone data\")"
         ),
         reply_markup=templ.back_kb(calls.IncludedBumpItemsPagination(page=last_page).pack())
     )
@@ -592,8 +592,8 @@ async def callback_send_new_excluded_bump_items_keyphrases_file(callback: Callba
         state=state,
         message=callback.message,
         text=templ.settings_new_bump_excluded_float_text(
-            "📄 Отправьте <b>.txt</b> файл с <b>ключевыми фразами</b>, по одной записи в строке "
-            "(для каждого товара указываются через запятую, например, \"samp аккаунт, со всеми данными\")"
+            "📄 Send <b>.txt</b> file With <b>key phrases</b>, By one records V line "
+            "(For everyone goods are indicated through comma, For example, \"samp account, with everyone data\")"
         ),
         reply_markup=templ.back_kb(calls.ExcludedBumpItemsPagination(page=last_page).pack())
     )
@@ -624,7 +624,7 @@ async def callback_add_new_custom_command(callback: CallbackQuery, state: FSMCon
         await throw_float_message(
             state=state,
             message=callback.message,
-            text=templ.settings_new_comm_float_text(f"✅ <b>Команда</b> <code>{command}</code> была успешно добавлена"),
+            text=templ.settings_new_comm_float_text(f"✅ <b>Team</b> <code>{command}</code> was successfully added"),
             reply_markup=templ.back_kb(calls.CustomCommandsPagination(page=last_page).pack())
         )
     except Exception as e:
@@ -655,7 +655,7 @@ async def callback_confirm_deleting_custom_command(callback: CallbackQuery, stat
         await throw_float_message(
             state=state,
             message=callback.message,
-            text=templ.settings_comm_page_float_text(f"🗑️ Подтвердите <b>удаление команды</b> <code>{command}</code>"),
+            text=templ.settings_comm_page_float_text(f"🗑️ Confirm <b>deletion teams</b> <code>{command}</code>"),
             reply_markup=templ.confirm_kb(
                 confirm_cb="delete_custom_command", 
                 cancel_cb=calls.CustomCommandPage(command=command).pack()
@@ -693,7 +693,7 @@ async def callback_delete_custom_command(callback: CallbackQuery, state: FSMCont
         await throw_float_message(
             state=state,
             message=callback.message,
-            text=templ.settings_comm_page_float_text(f"✅ <b>Команда</b> <code>{command}</code> была удалена"),
+            text=templ.settings_comm_page_float_text(f"✅ <b>Team</b> <code>{command}</code> was deleted"),
             reply_markup=templ.back_kb(calls.CustomCommandsPagination(page=last_page).pack())
         )
     except Exception as e:
@@ -742,7 +742,7 @@ async def callback_add_new_auto_delivery(callback: CallbackQuery, state: FSMCont
         await throw_float_message(
             state=state,
             message=callback.message,
-            text=templ.settings_new_deliv_float_text(f"✅ <b>Авто-выдача</b> была успешно добавлена"),
+            text=templ.settings_new_deliv_float_text(f"✅ <b>Auto-issuance</b> was successfully added"),
             reply_markup=templ.back_kb(calls.AutoDeliveriesPagination(page=last_page).pack())
         )
     except Exception as e:
@@ -774,7 +774,7 @@ async def callback_confirm_deleting_auto_delivery(callback: CallbackQuery, state
             state=state,
             message=callback.message,
             text=templ.settings_deliv_page_float_text(
-                "🗑️ Подтвердите <b>удаление авто-выдачи</b>:"
+                "🗑️ Confirm <b>deletion auto-issuance</b>:"
             ),
             reply_markup=templ.confirm_kb(
                 confirm_cb="delete_auto_delivery", 
@@ -813,7 +813,7 @@ async def callback_delete_auto_delivery(callback: CallbackQuery, state: FSMConte
         await throw_float_message(
             state=state,
             message=callback.message,
-            text=templ.settings_deliv_page_float_text("✅ <b>Авто-выдача</b> была удалена"),
+            text=templ.settings_deliv_page_float_text("✅ <b>Auto-issuance</b> was deleted"),
             reply_markup=templ.back_kb(calls.AutoDeliveriesPagination(page=last_page).pack())
         )
     except Exception as e:
@@ -899,7 +899,7 @@ async def callback_select_logs_file_lines(callback: CallbackQuery, state: FSMCon
     await throw_float_message(
         state=state,
         message=callback.message,
-        text=templ.logs_float_text("Выберите объём файла:"),
+        text=templ.logs_float_text("Select volume file:"),
         reply_markup=templ.logs_file_lines_kb()
     )
 
@@ -913,7 +913,7 @@ async def callback_send_logs_file(callback: CallbackQuery, callback_data: calls.
     try:
         src_dir = Path(__file__).resolve().parents[2]
         logs_file = os.path.join(src_dir, "logs", "latest.log")
-        txt_file = os.path.join(src_dir, "logs", "Лог работы.txt")
+        txt_file = os.path.join(src_dir, "logs", "Log work.txt")
         
         if lines > 0:
             with open(logs_file, 'r', encoding='utf-8') as f:

@@ -10,9 +10,9 @@ from .. import callback_datas as calls
 def settings_delivs_text():
     auto_deliveries = sett.get("auto_deliveries")
     txt = textwrap.dedent(f"""
-        <b>🚀 Авто-выдача</b>
+        <b>🚀 Auto-issuance</b>
 
-        Всего <b>{len(auto_deliveries)}</b> товаров с авто-выдачей:
+        Total <b>{len(auto_deliveries)}</b> goods With auto-issuance:
     """)
     return txt
 
@@ -34,15 +34,15 @@ def settings_delivs_kb(page=0):
     for deliv in list(auto_deliveries)[start_offset:end_offset]:
         piece = deliv.get("piece")
         sym = "📦" if piece else "💬"
-        keyphrases = ", ".join(deliv.get("keyphrases")) or "❌ Не задано"
+        keyphrases = ", ".join(deliv.get("keyphrases")) or "❌ Not given"
         keyphrases_frmtd = keyphrases[:32] + ("..." if len(keyphrases) > 32 else "")
         
         if piece:
             goods = deliv.get("goods", [])
-            part = f"{len(goods)} товаров"
+            part = f"{len(goods)} goods"
         else:
             message = deliv.get("message", [])
-            part = "\n".join(message) or "❌ Не задано"
+            part = "\n".join(message) or "❌ Not given"
         
         rows.append([InlineKeyboardButton(
             text=f"{sym} {keyphrases_frmtd} → {part}", 
@@ -61,8 +61,8 @@ def settings_delivs_kb(page=0):
         buttons_row.append(btn_next)
         rows.append(buttons_row)
 
-    rows.append([InlineKeyboardButton(text="➕ Добавить", callback_data="enter_new_auto_delivery_keyphrases")])
-    rows.append([InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.SettingsNavigation(to="default").pack())])
+    rows.append([InlineKeyboardButton(text="➕ Add", callback_data="enter_new_auto_delivery_keyphrases")])
+    rows.append([InlineKeyboardButton(text="⬅️ Back", callback_data=calls.SettingsNavigation(to="default").pack())])
 
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
     return kb
@@ -70,7 +70,7 @@ def settings_delivs_kb(page=0):
 
 def settings_deliv_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>🚀 Авто-выдача</b>
+        <b>🚀 Auto-issuance</b>
         \n{placeholder}
     """)
     return txt
@@ -78,7 +78,7 @@ def settings_deliv_float_text(placeholder: str):
 
 def settings_new_deliv_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>➕🚀 Добавление авто-выдачи</b>
+        <b>➕🚀 Addition auto-issuance</b>
         \n{placeholder}
     """)
     return txt
@@ -86,9 +86,9 @@ def settings_new_deliv_float_text(placeholder: str):
 
 def settings_new_deliv_piece_kb(last_page=0):
     rows = [
-        [InlineKeyboardButton(text="📦 Несколько товаров", callback_data=calls.SetNewDelivPiece(val=True).pack())],
-        [InlineKeyboardButton(text="💬 Одно сообщение", callback_data=calls.SetNewDelivPiece(val=False).pack())],
-        [InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.AutoDeliveriesPagination(page=last_page).pack())]
+        [InlineKeyboardButton(text="📦 Some goods", callback_data=calls.SetNewDelivPiece(val=True).pack())],
+        [InlineKeyboardButton(text="💬 One message", callback_data=calls.SetNewDelivPiece(val=False).pack())],
+        [InlineKeyboardButton(text="⬅️ Back", callback_data=calls.AutoDeliveriesPagination(page=last_page).pack())]
     ]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
     return kb

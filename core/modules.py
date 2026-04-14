@@ -46,9 +46,9 @@ loaded_modules: list[Module] = []
 
 def get_modules():
     """
-    Возвращает загруженные модули.
+    Returns loaded modules.
 
-    :return: Загруженные модули
+    :return: Loaded modules
     :rtype: `list` of `core.modules.Module`
     """
     return loaded_modules
@@ -56,9 +56,9 @@ def get_modules():
 
 def set_modules(modules: list[Module]):
     """
-    Устанавливает загруженные модули.
+    Installs loaded modules.
 
-    :param modules: Новые загруженные модули
+    :param modules: New loaded modules
     :type modules: `list` of `core.modules.Module`
     """
     global loaded_modules
@@ -67,12 +67,12 @@ def set_modules(modules: list[Module]):
 
 def get_module_by_uuid(module_uuid: UUID) -> Module | None:
     """ 
-    Получает модуль по UUID.
+    Receives module By UUID.
     
-    :param module_uuid: UUID модуля.
+    :param module_uuid: UUID module.
     :type module_uuid: `uuid.UUID`
 
-    :return: Объект модуля.
+    :return: Object module.
     :rtype: `core.modules.Module` or `None`
     """
     try: return [module for module in loaded_modules if module.uuid == module_uuid][0]
@@ -95,23 +95,23 @@ async def _enable_module(module: Module) -> bool:
 
 async def enable_module(module_uuid: UUID) -> bool:
     """
-    Включает модуль и добавляет его хендлеры.
+    Includes module And adds his handlers.
 
-    :param module_uuid: UUID модуля.
+    :param module_uuid: UUID module.
     :type module_uuid: `uuid.UUID`
 
-    :return: True, если модуль был включен. False, если не был включен.
+    :return: True, If module was included. False, If Not was included.
     :rtype: `bool`
     """
     try:
         module = get_module_by_uuid(module_uuid)
     
         await _enable_module(module)
-        logger.info(f"Модуль {Fore.LIGHTWHITE_EX}{module.meta.name} {Fore.WHITE}включен")
+        logger.info(f"Module {Fore.LIGHTWHITE_EX}{module.meta.name} {Fore.WHITE}included")
         
         return True
     except Exception as e:
-        logger.error(f"{Fore.LIGHTRED_EX}Ошибка при включении модуля {module_uuid}: {Fore.WHITE}{e}")
+        logger.error(f"{Fore.LIGHTRED_EX}Error at inclusion module {module_uuid}: {Fore.WHITE}{e}")
         return False
 
 
@@ -131,34 +131,34 @@ async def _disable_module(module: Module) -> bool:
 
 async def disable_module(module_uuid: UUID) -> bool:
     """ 
-    Выключает модуль и удаляет его хендлеры.
+    Turns off module And deletes his handlers.
     
-    :param module_uuid: UUID модуля.
+    :param module_uuid: UUID module.
     :type module_uuid: `uuid.UUID`
 
-    :return: True, если модуль был выключен. False, если не был выключен.
+    :return: True, If module was off. False, If Not was off.
     :rtype: `bool`
     """
     try:
         module = get_module_by_uuid(module_uuid)
     
         await _disable_module(module)
-        logger.info(f"Модуль {Fore.LIGHTWHITE_EX}{module.meta.name} {Fore.WHITE}выключен")
+        logger.info(f"Module {Fore.LIGHTWHITE_EX}{module.meta.name} {Fore.WHITE}off")
         
         return True
     except Exception as e:
-        logger.error(f"{Fore.LIGHTRED_EX}Ошибка при выключении модуля {module_uuid}: {Fore.WHITE}{e}")
+        logger.error(f"{Fore.LIGHTRED_EX}Error at turning off module {module_uuid}: {Fore.WHITE}{e}")
         return False
 
 
 async def reload_module(module_uuid: str):
     """
-    Перезагружает модуль (отгружает и импортирует снова).
+    Reboots module (ships And imports again).
     
-    :param module_uuid: UUID модуля.
+    :param module_uuid: UUID module.
     :type module_uuid: `uuid.UUID`
 
-    :return: True, если модуль был перезагружен. False, если не был перезагружен.
+    :return: True, If module was rebooted. False, If Not was rebooted.
     :rtype: `bool`
     """
     try:
@@ -170,15 +170,15 @@ async def reload_module(module_uuid: str):
         importlib.import_module(f"modules.{module._dir_name}")
         await _enable_module(module)
 
-        logger.info(f"Модуль {Fore.LIGHTWHITE_EX}{module.meta.name} {Fore.WHITE}перезагружен")
+        logger.info(f"Module {Fore.LIGHTWHITE_EX}{module.meta.name} {Fore.WHITE}rebooted")
         return True
     except Exception as e:
-        logger.error(f"{Fore.LIGHTRED_EX}Ошибка при перезагрузке модуля {module_uuid}: {Fore.WHITE}{e}")
+        logger.error(f"{Fore.LIGHTRED_EX}Error at reboot module {module_uuid}: {Fore.WHITE}{e}")
         return False
 
 
 def load_modules() -> list[Module]:
-    """Загружает все модули из папки modules."""
+    """Loads All modules from folders modules."""
     global loaded_modules
     
     modules = []
@@ -221,23 +221,23 @@ def load_modules() -> list[Module]:
                 )
                 modules.append(module_data)
             except Exception as e:
-                logger.error(f"{Fore.LIGHTRED_EX}Ошибка при загрузке модуля {name}: {Fore.WHITE}{e}")
+                logger.error(f"{Fore.LIGHTRED_EX}Error at loading module {name}: {Fore.WHITE}{e}")
     
     return modules
 
 
 def _format_string(count: int):
     last_num = int(str(count)[-1])
-    if last_num == 1: return f"Подключен {Fore.LIGHTWHITE_EX}{count} модуль"
-    elif 2 <= last_num <= 4: return f"Подключено {Fore.LIGHTWHITE_EX}{count} модуля"
-    elif 5 <= last_num <= 9 or last_num == 0: return f"Подключено {Fore.LIGHTWHITE_EX}{count} модулей"
+    if last_num == 1: return f"Connected {Fore.LIGHTWHITE_EX}{count} module"
+    elif 2 <= last_num <= 4: return f"Connected {Fore.LIGHTWHITE_EX}{count} module"
+    elif 5 <= last_num <= 9 or last_num == 0: return f"Connected {Fore.LIGHTWHITE_EX}{count} modules"
 
 
 async def connect_modules(modules: list[Module]):
     """
-    Подключает загруженные модули.
+    Connects loaded modules.
     
-    :param modules: Загруженные модули
+    :param modules: Loaded modules
     :type modules: `list` of `core.modules.Module`
     """
     global loaded_modules
@@ -246,7 +246,7 @@ async def connect_modules(modules: list[Module]):
         try:
             await _enable_module(module)
         except Exception as e:
-            logger.error(f"{Fore.LIGHTRED_EX}Ошибка при подключении модуля {module.meta.name}: {Fore.WHITE}{e}")
+            logger.error(f"{Fore.LIGHTRED_EX}Error at connection module {module.meta.name}: {Fore.WHITE}{e}")
     
     connected_modules = [module for module in loaded_modules if module.enabled]
     names = [f"{Fore.YELLOW}{module.meta.name} {Fore.LIGHTWHITE_EX}{module.meta.version}" for module in connected_modules]

@@ -31,7 +31,7 @@ async def callback_forms_enter_messages_page(callback: CallbackQuery, state: FSM
     await state.set_state(states.FORMS_MessagesStates.entering_page)
     await throw_float_message(state=state, 
                               message=callback.message, 
-                              text=templ.settings_mess_float_text(f"📃 Введите номер страницы для перехода ↓"), 
+                              text=templ.settings_mess_float_text(f"📃 Enter number pages For transition ↓"), 
                               reply_markup=main_templ.back_kb(calls.FORMS_MessagesPagination(page=last_page).pack()))
 
 @router.callback_query(F.data == "forms_switch_message_enabled")
@@ -41,7 +41,7 @@ async def callback_forms_switch_message_enabled(callback: CallbackQuery, state: 
         last_page = data.get("last_page") or 0
         message_id = data.get("message_id")
         if not message_id:
-            raise Exception("❌ ID сообщения не был найден, повторите процесс с самого начала")
+            raise Exception("❌ ID messages Not was found, repeat process With himself started")
         
         messages = sett.get("messages")
         messages[message_id]["enabled"] = not messages[message_id]["enabled"]
@@ -63,14 +63,14 @@ async def callback_forms_enter_message_text(callback: CallbackQuery, state: FSMC
         last_page = data.get("last_page") or 0
         message_id = data.get("message_id")
         if not message_id:
-            raise Exception("❌ ID сообщения не был найден, повторите процесс с самого начала")
+            raise Exception("❌ ID messages Not was found, repeat process With himself started")
         
         await state.set_state(states.FORMS_MessagePageStates.entering_message_text)
         messages = sett.get("messages")
-        mess_text = "\n".join(messages[message_id]["text"]) or "❌ Не задано"
+        mess_text = "\n".join(messages[message_id]["text"]) or "❌ Not given"
         await throw_float_message(state=state, 
                                   message=callback.message, 
-                                  text=templ.settings_mess_float_text(f"💬 Введите новый <b>текст сообщения</b> <code>{message_id}</code> ↓\n┗ Текущее: <blockquote>{mess_text}</blockquote>"), 
+                                  text=templ.settings_mess_float_text(f"💬 Enter new <b>text messages</b> <code>{message_id}</code> ↓\n┗ Current: <blockquote>{mess_text}</blockquote>"), 
                                   reply_markup=main_templ.back_kb(calls.FORMS_MessagesPagination(page=last_page).pack()))
     except Exception as e:
         if e is not TelegramAPIError:

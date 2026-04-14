@@ -18,7 +18,7 @@ async def handler_waiting_for_auto_deliveries_page(message: types.Message, state
         await state.set_state(None)
         
         if not message.text.isdigit():
-            raise Exception("❌ Вы должны ввести числовое значение")
+            raise Exception("❌ You should enter numeric meaning")
         
         page = int(message.text) - 1
         await state.update_data(last_page=page)
@@ -26,7 +26,7 @@ async def handler_waiting_for_auto_deliveries_page(message: types.Message, state
         await throw_float_message(
             state=state,
             message=message,
-            text=templ.settings_delivs_float_text(f"📃 Введите номер страницы для перехода:"),
+            text=templ.settings_delivs_float_text(f"📃 Enter number pages For transition:"),
             reply_markup=templ.settings_delivs_kb(page)
         )
     except Exception as e:
@@ -49,7 +49,7 @@ async def handler_waiting_for_new_auto_delivery_keyphrases(message: types.Messag
         last_page = data.get("last_page", 0)
         
         if len(message.text) <= 0:
-            raise Exception("❌ Слишком короткое значение")
+            raise Exception("❌ Too much short meaning")
         
         keyphrases = [phrase.strip() for phrase in message.text.split(",")]
         
@@ -59,7 +59,7 @@ async def handler_waiting_for_new_auto_delivery_keyphrases(message: types.Messag
         await throw_float_message(
             state=state,
             message=message,
-            text=templ.settings_new_deliv_float_text(f"🛒 Выберите <b>тип авто-выдачи</b>:"),
+            text=templ.settings_new_deliv_float_text(f"🛒 Select <b>type auto-issuance</b>:"),
             reply_markup=templ.settings_new_deliv_piece_kb(last_page)
         )
     except Exception as e:
@@ -80,7 +80,7 @@ async def handler_waiting_for_new_auto_delivery_message(message: types.Message, 
         last_page = data.get("last_page", 0)
         
         if len(message.text) <= 0:
-            raise Exception("❌ Слишком короткое значение")
+            raise Exception("❌ Too much short meaning")
 
         await state.update_data(new_auto_delivery_message=message.text)
         
@@ -92,10 +92,10 @@ async def handler_waiting_for_new_auto_delivery_message(message: types.Message, 
             state=state,
             message=message,
             text=templ.settings_new_deliv_float_text(
-                f"✔️ Подтвердите <b>добавление авто-выдачи</b>:"
-                f"\n<b>· Ключевые фразы:</b> <code>{phrases}</code>"
-                f"\n<b>· Тип выдачи:</b> Сообщением"
-                f"\n<b>· Сообщение:</b> {msg}"
+                f"✔️ Confirm <b>addition auto-issuance</b>:"
+                f"\n<b>· Key phrases:</b> <code>{phrases}</code>"
+                f"\n<b>· Type issuance:</b> Message"
+                f"\n<b>· Message:</b> {msg}"
             ),
             reply_markup=templ.confirm_kb(
                 confirm_cb="add_new_auto_delivery", 
@@ -121,7 +121,7 @@ async def handler_waiting_for_new_auto_delivery_goods(message: types.Message, st
         
         if message.text:
             if len(message.text.strip()) == 0:
-                raise Exception("❌ Слишком короткое значение")
+                raise Exception("❌ Too much short meaning")
 
             goods = [g.strip() for g in message.text.splitlines() if g.strip()]
         elif message.document:
@@ -130,14 +130,14 @@ async def handler_waiting_for_new_auto_delivery_goods(message: types.Message, st
             content = file_bytes.read().decode("utf-8", errors="ignore")
 
             if len(content.strip()) == 0:
-                raise Exception("❌ Файл пустой")
+                raise Exception("❌ File empty")
 
             goods = [g.strip() for g in content.splitlines() if g.strip()]
         else:
-            raise Exception("❌ Отправьте текст или файл")
+            raise Exception("❌ Send text or file")
         
         if not goods:
-            raise Exception("❌ Не удалось извлечь товары")
+            raise Exception("❌ Not succeeded extract goods")
         
         await state.update_data(new_auto_delivery_goods=goods)
         
@@ -148,10 +148,10 @@ async def handler_waiting_for_new_auto_delivery_goods(message: types.Message, st
             state=state,
             message=message,
             text=templ.settings_new_deliv_float_text(
-                f"✔️ Подтвердите <b>добавление авто-выдачи</b>:"
-                f"\n<b>· Ключевые фразы:</b> <code>{phrases}</code>"
-                f"\n<b>· Тип выдачи:</b> Поштучно"
-                f"\n<b>· Товары:</b> {len(goods)} шт."
+                f"✔️ Confirm <b>addition auto-issuance</b>:"
+                f"\n<b>· Key phrases:</b> <code>{phrases}</code>"
+                f"\n<b>· Type issuance:</b> Piece by piece"
+                f"\n<b>· Goods:</b> {len(goods)} pcs."
             ),
             reply_markup=templ.confirm_kb(
                 confirm_cb="add_new_auto_delivery", 
@@ -176,7 +176,7 @@ async def handler_waiting_for_auto_delivery_keyphrases(message: types.Message, s
         index = data.get("auto_delivery_index")
 
         if len(message.text) <= 0:
-            raise Exception("❌ Слишком короткое значение")
+            raise Exception("❌ Too much short meaning")
         
         auto_deliveries = sett.get("auto_deliveries")
         keyphrases = [phrase.strip() for phrase in message.text.split(",")]
@@ -188,7 +188,7 @@ async def handler_waiting_for_auto_delivery_keyphrases(message: types.Message, s
         await throw_float_message(
             state=state,
             message=message,
-            text=templ.settings_deliv_page_float_text(f"✅ <b>Ключевые фразы</b> были успешно изменены на: <code>{keyphrases_str}</code>"),
+            text=templ.settings_deliv_page_float_text(f"✅ <b>Key phrases</b> were successfully changed on: <code>{keyphrases_str}</code>"),
             reply_markup=templ.back_kb(calls.AutoDeliveryPage(index=index).pack())
         )
     except Exception as e:
@@ -209,7 +209,7 @@ async def handler_waiting_for_auto_delivery_message(message: types.Message, stat
         index = data.get("auto_delivery_index")
         
         if len(message.text) <= 0:
-            raise Exception("❌ Слишком короткий текст")
+            raise Exception("❌ Too much short text")
         
         auto_deliveries = sett.get("auto_deliveries")
         auto_deliveries[index]["message"] = message.text.splitlines()
@@ -218,7 +218,7 @@ async def handler_waiting_for_auto_delivery_message(message: types.Message, stat
         await throw_float_message(
             state=state,
             message=message,
-            text=templ.settings_deliv_page_float_text(f"✅ <b>Сообщение авто-выдачи</b> было успешно изменено на: <blockquote>{message.text}</blockquote>"),
+            text=templ.settings_deliv_page_float_text(f"✅ <b>Message auto-issuance</b> was successfully changed on: <blockquote>{message.text}</blockquote>"),
             reply_markup=templ.back_kb(calls.AutoDeliveryPage(index=index).pack())
         )
     except Exception as e:
@@ -241,7 +241,7 @@ async def handler_waiting_for_auto_delivery_goods_add(message: types.Message, st
         
         if message.text:
             if len(message.text.strip()) == 0:
-                raise Exception("❌ Слишком короткое значение")
+                raise Exception("❌ Too much short meaning")
 
             goods = [g.strip() for g in message.text.splitlines() if g.strip()]
         elif message.document:
@@ -250,14 +250,14 @@ async def handler_waiting_for_auto_delivery_goods_add(message: types.Message, st
             content = file_bytes.read().decode("utf-8", errors="ignore")
 
             if len(content.strip()) == 0:
-                raise Exception("❌ Файл пустой")
+                raise Exception("❌ File empty")
 
             goods = [g.strip() for g in content.splitlines() if g.strip()]
         else:
-            raise Exception("❌ Отправьте текст или файл")
+            raise Exception("❌ Send text or file")
         
         if not goods:
-            raise Exception("❌ Не удалось извлечь товары")
+            raise Exception("❌ Not succeeded extract goods")
         
         auto_deliveries = sett.get("auto_deliveries")
         auto_deliveries[index]["goods"].extend(goods)
@@ -267,7 +267,7 @@ async def handler_waiting_for_auto_delivery_goods_add(message: types.Message, st
             state=state,
             message=message,
             text=templ.settings_new_deliv_goods_float_text(
-                f"✅ <b>{len(goods)} товаров</b> успешно добавлено в авто-выдачу"
+                f"✅ <b>{len(goods)} goods</b> successfully added V auto-issuance"
             ),
             reply_markup=templ.back_kb(calls.DelivGoodsPagination(page=last_page).pack())
         )

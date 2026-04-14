@@ -89,9 +89,9 @@ class PlayerokBot:
     def get_chat_by_username(self, username: str) -> Chat:
         if username in self.__saved_chats:
             return self.__saved_chats[username]
-        if username.lower() == "поддержка":
+        if username.lower() == "support":
             chat = self.account.get_chat(self.account.support_chat_id)
-        elif username.lower() == "уведомления":
+        elif username.lower() == "notifications":
             chat = self.account.get_chat(self.account.system_chat_id)
         else:
             chat = self.account.get_chat_by_username(username)
@@ -103,19 +103,19 @@ class PlayerokBot:
         try: 
             self.account = self.playerok_account = self.account.get()
         except Exception as e:
-            logger.error(f"{Fore.LIGHTRED_EX}Ошибка при обновлении аккаунта: {Fore.WHITE}{e}")
+            logger.error(f"{Fore.LIGHTRED_EX}Error at update account: {Fore.WHITE}{e}")
 
     def check_banned(self):
         try:
             user = self.account.get_user(self.account.id)
             if user.is_blocked:
                 logger.critical("")
-                logger.critical(f"{Fore.LIGHTRED_EX}Ваш Playerok аккаунт был заблокирован! К сожалению, я не могу продолжать работу на заблокированном аккаунте...")
-                logger.critical(f"Напишите в тех. поддержку Playerok, чтобы узнать причину бана и как можно быстрее решить эту проблему.")
+                logger.critical(f"{Fore.LIGHTRED_EX}Your Playerok account was blocked! TO unfortunately, I Not Can continue work on blocked account...")
+                logger.critical(f"Write V those. support Playerok, to to know reason ban And How Can faster decide this problem.")
                 logger.critical("")
                 shutdown()
         except Exception as e:
-            logger.error(f"{Fore.LIGHTRED_EX}Ошибка при проверке на блокировку: {Fore.WHITE}{e}")
+            logger.error(f"{Fore.LIGHTRED_EX}Error at verification on blocking: {Fore.WHITE}{e}")
     
     def msg(self, message_name: str, messages_config_name: str = "messages", 
             messages_data: dict = DATA, **kwargs) -> str | None:
@@ -129,13 +129,13 @@ class PlayerokBot:
             return None
         message_lines: list[str] = mess.get("text", [])
         if not message_lines:
-            return f"Сообщение {message_name} пустое"
+            return f"Message {message_name} empty"
         try:
             msg = "\n".join([line.format_map(SafeDict(**kwargs)) for line in message_lines])
             return msg
         except:
             pass
-        return f"Не удалось получить сообщение {message_name}"
+        return f"Not succeeded get message {message_name}"
         
     def _event_datetime(self, latest_event_time, event_interval):
         if latest_event_time:
@@ -150,8 +150,8 @@ class PlayerokBot:
     def send_message(self, chat_id: str, text: str | None = None, photo_file_path: str | None = None,
                      mark_chat_as_read: bool = None, exclude_watermark: bool = False, max_attempts: int = 3) -> ChatMessage | None:
         """
-        Кастомный метод отправки сообщения в чат Playerok.
-        Пытается отправить за N попыток, если не удалось - выдаёт ошибку в консоль.
+        Custom method sending messages V chat Playerok.
+        Tries send for N attempts, If Not succeeded - issues error V console.
         """
         
         if not any((text, photo_file_path)): 
@@ -180,8 +180,8 @@ class PlayerokBot:
                 else: msg = photo_file_path
                 
                 logger.error(
-                    f"{Fore.LIGHTRED_EX}Ошибка при отправке сообщения {Fore.LIGHTWHITE_EX}«{msg}» "
-                    f"{Fore.LIGHTRED_EX}в чат {Fore.LIGHTWHITE_EX}{chat_id} {Fore.LIGHTRED_EX}: {Fore.WHITE}{e}"
+                    f"{Fore.LIGHTRED_EX}Error at sending messages {Fore.LIGHTWHITE_EX}«{msg}» "
+                    f"{Fore.LIGHTRED_EX}V chat {Fore.LIGHTWHITE_EX}{chat_id} {Fore.LIGHTRED_EX}: {Fore.WHITE}{e}"
                 )
                 return
         
@@ -189,8 +189,8 @@ class PlayerokBot:
         else: msg = photo_file_path
         
         logger.error(
-            f"{Fore.LIGHTRED_EX}Не удалось отправить сообщение {Fore.LIGHTWHITE_EX}«{msg}» "
-            f"{Fore.LIGHTRED_EX}в чат {Fore.LIGHTWHITE_EX}{chat_id}"
+            f"{Fore.LIGHTRED_EX}Not succeeded send message {Fore.LIGHTWHITE_EX}«{msg}» "
+            f"{Fore.LIGHTRED_EX}V chat {Fore.LIGHTWHITE_EX}{chat_id}"
         )
 
     def _serealize_item(self, item: ItemProfile) -> dict:
@@ -256,8 +256,8 @@ class PlayerokBot:
         statuses: list[ItemStatuses] | None = None
     ) -> list[ItemProfile]:
         """
-        Получает все предметы аккаунта и сохраняет их.
-        Берёт из сохранённых предметы, которые не удалось получить
+        Receives All items account And saves their.
+        Beret from saved items, which Not succeeded get
         """
         
         my_items: list[ItemProfile] = []
@@ -340,17 +340,17 @@ class PlayerokBot:
                 
                 prem_status = next((st for st in statuses if st.type == PriorityTypes.PREMIUM or st.price > 0), None)
                 if not prem_status:
-                    raise Exception("PREMIUM статус не найден")
+                    raise Exception("PREMIUM status Not found")
                 
                 time.sleep(1)
                 self.account.increase_item_priority_status(item.id, prem_status.id)
                     
                 logger.info(
-                    f"{Fore.LIGHTWHITE_EX}«{name_frmtd}» {Fore.WHITE}— {Fore.YELLOW}поднят. "
-                    f"{Fore.WHITE}Позиция: {Fore.LIGHTWHITE_EX}{item.sequence} {Fore.WHITE}→ {Fore.YELLOW}1"
+                    f"{Fore.LIGHTWHITE_EX}«{name_frmtd}» {Fore.WHITE}— {Fore.YELLOW}raised. "
+                    f"{Fore.WHITE}Position: {Fore.LIGHTWHITE_EX}{item.sequence} {Fore.WHITE}→ {Fore.YELLOW}1"
                 )
         except Exception as e:
-            logger.error(f"{Fore.LIGHTRED_EX}Ошибка при поднятии предмета «{name_frmtd}»: {Fore.WHITE}{e}")
+            logger.error(f"{Fore.LIGHTRED_EX}Error at raising subject «{name_frmtd}»: {Fore.WHITE}{e}")
 
     def bump_items(self): 
         try:
@@ -363,7 +363,7 @@ class PlayerokBot:
             for item in up_items:
                 self.bump_item(item)
         except Exception as e:
-            logger.error(f"{Fore.LIGHTRED_EX}Ошибка при поднятии предметов: {Fore.WHITE}{e}")
+            logger.error(f"{Fore.LIGHTRED_EX}Error at raising items: {Fore.WHITE}{e}")
 
     def restore_item(self, item: Item | MyItem | ItemProfile):
         try:
@@ -409,11 +409,11 @@ class PlayerokBot:
                 new_item = self.account.publish_item(item.id, pr_status.id)
                 
                 if new_item.status in (ItemStatuses.PENDING_APPROVAL, ItemStatuses.APPROVED):
-                    logger.info(f"{Fore.LIGHTWHITE_EX}«{name_frmtd}» {Fore.WHITE}— {Fore.YELLOW}товар восстановлен")
+                    logger.info(f"{Fore.LIGHTWHITE_EX}«{name_frmtd}» {Fore.WHITE}— {Fore.YELLOW}product restored")
                 else:
-                    logger.error(f"{Fore.LIGHTRED_EX}Не удалось восстановить предмет «{name_frmtd}». Его текущий статус: {Fore.WHITE}{new_item.status.name}")
+                    logger.error(f"{Fore.LIGHTRED_EX}Not succeeded restore item «{name_frmtd}». His current status: {Fore.WHITE}{new_item.status.name}")
         except Exception as e:
-            logger.error(f"{Fore.LIGHTRED_EX}Ошибка при восстановлении предмета «{name_frmtd}»: {Fore.WHITE}{e}")
+            logger.error(f"{Fore.LIGHTRED_EX}Error at restoration subject «{name_frmtd}»: {Fore.WHITE}{e}")
             
     def restore_expired_items(self):
         try:
@@ -428,7 +428,7 @@ class PlayerokBot:
                 time.sleep(0.5)
                 self.restore_item(item)
         except Exception as e:
-            logger.error(f"{Fore.LIGHTRED_EX}Ошибка при восстановлении истёкших предметов: {Fore.WHITE}{e}")
+            logger.error(f"{Fore.LIGHTRED_EX}Error at restoration expired items: {Fore.WHITE}{e}")
 
     def request_withdrawal(self) -> bool:
         try:
@@ -439,7 +439,7 @@ class PlayerokBot:
             self.account = self.account.get()
             balance = self.account.profile.balance.withdrawable
             if balance <= 500:
-                raise Exception("Слишком маленький баланс. Транзакция должна быть на сумму от 500₽")
+                raise Exception("Too much small balance. Transaction should be on amount from 500₽")
             
             if self.config["playerok"]["auto_withdrawal"]["credentials_type"] == "card":
                 provider = TransactionProviderIds.BANK_CARD_RU
@@ -457,10 +457,10 @@ class PlayerokBot:
                 sbp_bank_member_id=sbp_bank_member_id
             )
             
-            logger.info(f"{Fore.LIGHTWHITE_EX}{balance or '?'}₽ {Fore.WHITE}— {Fore.YELLOW}транзакция на вывод создана")
+            logger.info(f"{Fore.LIGHTWHITE_EX}{balance or '?'}₽ {Fore.WHITE}— {Fore.YELLOW}transaction on conclusion created")
             return True
         except Exception as e:
-            logger.error(f"{Fore.LIGHTRED_EX}Ошибка при создании транзакции на вывод {balance}₽: {Fore.WHITE}{e}")
+            logger.error(f"{Fore.LIGHTRED_EX}Error at creation transactions on conclusion {balance}₽: {Fore.WHITE}{e}")
         return False
 
 
@@ -471,7 +471,7 @@ class PlayerokBot:
         if not chat_user:
             chat_user = message.user.username
         
-        ch_header = f"Новое сообщение в чате с {chat_user}:"
+        ch_header = f"New message V chat With {chat_user}:"
         
         logger.info(f"{ACCENT_COLOR}{ch_header.replace(chat_user, f'{Fore.LIGHTCYAN_EX}{chat_user}')}")
         logger.info(f"{ACCENT_COLOR}│ {Fore.LIGHTWHITE_EX}{message.user.username}:")
@@ -481,7 +481,7 @@ class PlayerokBot:
         text = ""
         
         if message.text is not None: text = message.text
-        elif message.file is not None: text = f"{Fore.LIGHTMAGENTA_EX}Изображение {Fore.WHITE}({message.file.url})"
+        elif message.file is not None: text = f"{Fore.LIGHTMAGENTA_EX}Image {Fore.WHITE}({message.file.url})"
         
         for raw_line in text.split("\n"):
             if not raw_line.strip():
@@ -498,36 +498,36 @@ class PlayerokBot:
 
     def log_new_deal(self, deal: ItemDeal):
         logger.info(f"{Fore.YELLOW}───────────────────────────────────────")
-        logger.info(f"{Fore.YELLOW}Новая сделка {deal.id}:")
-        logger.info(f" · Покупатель: {Fore.LIGHTWHITE_EX}{deal.user.username}")
-        logger.info(f" · Товар: {Fore.LIGHTWHITE_EX}{deal.item.name}")
-        logger.info(f" · Сумма: {Fore.LIGHTWHITE_EX}{deal.item.price}₽")
+        logger.info(f"{Fore.YELLOW}New deal {deal.id}:")
+        logger.info(f" · Buyer: {Fore.LIGHTWHITE_EX}{deal.user.username}")
+        logger.info(f" · Product: {Fore.LIGHTWHITE_EX}{deal.item.name}")
+        logger.info(f" · Sum: {Fore.LIGHTWHITE_EX}{deal.item.price}₽")
         logger.info(f"{Fore.YELLOW}───────────────────────────────────────")
 
     def log_new_review(self, deal: ItemDeal):
         logger.info(f"{Fore.YELLOW}───────────────────────────────────────")
-        logger.info(f"{Fore.YELLOW}Новый отзыв по сделке {deal.id}:")
-        logger.info(f" · Оценка: {Fore.LIGHTYELLOW_EX}{'★' * deal.review.rating or 5} ({deal.review.rating or 5})")
-        logger.info(f" · Текст: {Fore.LIGHTWHITE_EX}{deal.review.text}")
-        logger.info(f" · Оставил: {Fore.LIGHTWHITE_EX}{deal.review.creator.username}")
-        logger.info(f" · Дата: {Fore.LIGHTWHITE_EX}{datetime.fromisoformat(deal.review.created_at).strftime('%d.%m.%Y %H:%M:%S')}")
+        logger.info(f"{Fore.YELLOW}New review By deal {deal.id}:")
+        logger.info(f" · Grade: {Fore.LIGHTYELLOW_EX}{'★' * deal.review.rating or 5} ({deal.review.rating or 5})")
+        logger.info(f" · Text: {Fore.LIGHTWHITE_EX}{deal.review.text}")
+        logger.info(f" · Left: {Fore.LIGHTWHITE_EX}{deal.review.creator.username}")
+        logger.info(f" · Date: {Fore.LIGHTWHITE_EX}{datetime.fromisoformat(deal.review.created_at).strftime('%d.%m.%Y %H:%M:%S')}")
         logger.info(f"{Fore.YELLOW}───────────────────────────────────────")
 
-    def log_deal_status_changed(self, deal: ItemDeal, status_frmtd: str = "Неизвестный"):
+    def log_deal_status_changed(self, deal: ItemDeal, status_frmtd: str = "Unknown"):
         logger.info(f"{Fore.WHITE}───────────────────────────────────────")
-        logger.info(f"{Fore.WHITE}Статус сделки {Fore.LIGHTWHITE_EX}{deal.id} {Fore.WHITE}изменился:")
-        logger.info(f" · Статус: {Fore.LIGHTWHITE_EX}{status_frmtd}")
-        logger.info(f" · Покупатель: {Fore.LIGHTWHITE_EX}{deal.user.username}")
-        logger.info(f" · Товар: {Fore.LIGHTWHITE_EX}{deal.item.name}")
-        logger.info(f" · Сумма: {Fore.LIGHTWHITE_EX}{deal.item.price}₽")
+        logger.info(f"{Fore.WHITE}Status deals {Fore.LIGHTWHITE_EX}{deal.id} {Fore.WHITE}changed:")
+        logger.info(f" · Status: {Fore.LIGHTWHITE_EX}{status_frmtd}")
+        logger.info(f" · Buyer: {Fore.LIGHTWHITE_EX}{deal.user.username}")
+        logger.info(f" · Product: {Fore.LIGHTWHITE_EX}{deal.item.name}")
+        logger.info(f" · Sum: {Fore.LIGHTWHITE_EX}{deal.item.price}₽")
         logger.info(f"{Fore.WHITE}───────────────────────────────────────")
 
     def log_new_problem(self, deal: ItemDeal):
         logger.info(f"{Fore.YELLOW}───────────────────────────────────────")
-        logger.info(f"{Fore.YELLOW}Новая жалоба в сделке {deal.id}:")
-        logger.info(f" · Оставил: {Fore.LIGHTWHITE_EX}{deal.user.username}")
-        logger.info(f" · Товар: {Fore.LIGHTWHITE_EX}{deal.item.name}")
-        logger.info(f" · Сумма: {Fore.LIGHTWHITE_EX}{deal.item.price}₽")
+        logger.info(f"{Fore.YELLOW}New complaint V deal {deal.id}:")
+        logger.info(f" · Left: {Fore.LIGHTWHITE_EX}{deal.user.username}")
+        logger.info(f" · Product: {Fore.LIGHTWHITE_EX}{deal.item.name}")
+        logger.info(f" · Sum: {Fore.LIGHTWHITE_EX}{deal.item.price}₽")
         logger.info(f"{Fore.YELLOW}───────────────────────────────────────")
 
 
@@ -642,7 +642,7 @@ class PlayerokBot:
                 asyncio.run_coroutine_threadsafe(
                     get_telegram_bot().log_event(
                         text=log_text(
-                            title=f'💬 Новое сообщение в <a href="https://playerok.com/chats/{event.chat.id}">чате</a>', 
+                            title=f'💬 New message V <a href="https://playerok.com/chats/{event.chat.id}">chat</a>', 
                             text=text.strip()
                         ),
                         kb=log_new_mess_kb(event.message.user.username)
@@ -657,10 +657,10 @@ class PlayerokBot:
             if event.message.user.id not in self.initialized_users:
                 self.initialized_users.append(event.message.user.id)
         
-            if str(event.message.text).lower() in ("!команды", "!commands"):
+            if str(event.message.text).lower() in ("!teams", "!commands"):
                 self.send_message(event.chat.id, self.msg("cmd_commands"))
             
-            elif str(event.message.text).lower() in ("!продавец", "!seller"):
+            elif str(event.message.text).lower() in ("!salesman", "!seller"):
                 asyncio.run_coroutine_threadsafe(
                     get_telegram_bot().call_seller(event.message.user.username, event.chat.id), 
                     get_telegram_bot_loop()
@@ -685,12 +685,12 @@ class PlayerokBot:
             asyncio.run_coroutine_threadsafe(
                 get_telegram_bot().log_event(
                     text=log_text(
-                        title=f'💬✨ Новый отзыв по <a href="https://playerok.com/deal/{event.deal.id}">сделке</a>', 
+                        title=f'💬✨ New review By <a href="https://playerok.com/deal/{event.deal.id}">deal</a>', 
                         text=(
-                            f"<b>Оценка:</b> {'⭐' * event.deal.review.rating}"
-                            f"\n<b>Оставил:</b> {event.deal.review.creator.username}"
-                            f"\n<b>Текст:</b> {event.deal.review.text}"
-                            f"\n<b>Дата:</b> {datetime.fromisoformat(event.deal.review.created_at).strftime('%d.%m.%Y %H:%M:%S')}"
+                            f"<b>Grade:</b> {'⭐' * event.deal.review.rating}"
+                            f"\n<b>Left:</b> {event.deal.review.creator.username}"
+                            f"\n<b>Text:</b> {event.deal.review.text}"
+                            f"\n<b>Date:</b> {datetime.fromisoformat(event.deal.review.created_at).strftime('%d.%m.%Y %H:%M:%S')}"
                         )
                     ),
                     kb=log_new_mess_kb(event.deal.user.username)
@@ -718,10 +718,10 @@ class PlayerokBot:
             asyncio.run_coroutine_threadsafe(
                 get_telegram_bot().log_event(
                     text=log_text(
-                        title=f'🤬 Новая жалоба в <a href="https://playerok.com/deal/{event.deal.id}">сделке</a>', 
+                        title=f'🤬 New complaint V <a href="https://playerok.com/deal/{event.deal.id}">deal</a>', 
                         text=(
-                            f"<b>Покупатель:</b> {event.deal.user.username}"
-                            f"\n<b>Предмет:</b> {event.deal.item.name}"
+                            f"<b>Buyer:</b> {event.deal.user.username}"
+                            f"\n<b>Item:</b> {event.deal.item.name}"
                         )
                     ),
                     kb=log_new_mess_kb(event.deal.user.username)
@@ -753,11 +753,11 @@ class PlayerokBot:
             asyncio.run_coroutine_threadsafe(
                 get_telegram_bot().log_event(
                     text=log_text(
-                        title=f'📋 Новая <a href="https://playerok.com/deal/{event.deal.id}">сделка</a>', 
+                        title=f'📋 New <a href="https://playerok.com/deal/{event.deal.id}">deal</a>', 
                         text=(
-                            f"<b>Покупатель:</b> {event.deal.user.username}"
-                            f"\n<b>Предмет:</b> {(event.deal.item.name or '-')}"
-                            f"\n<b>Сумма:</b> {event.deal.item.price or '?'}₽"
+                            f"<b>Buyer:</b> {event.deal.user.username}"
+                            f"\n<b>Item:</b> {(event.deal.item.name or '-')}"
+                            f"\n<b>Sum:</b> {event.deal.item.price or '?'}₽"
                         )
                     ),
                     kb=log_new_deal_kb(event.deal.user.username, event.deal.id)
@@ -798,9 +798,9 @@ class PlayerokBot:
                             mess = self.send_message(event.chat.id, good)
                             if mess:
                                 logger.info(
-                                    f"{Fore.YELLOW}Покупателю {Fore.LIGHTYELLOW_EX}{event.deal.user.username or '?'} "
-                                    f"{Fore.YELLOW}выдан товар {Fore.LIGHTYELLOW_EX}«{good}»{Fore.YELLOW}. "
-                                    f"Остаток: {Fore.LIGHTYELLOW_EX}{len(goods)-1}"
+                                    f"{Fore.YELLOW}To the buyer {Fore.LIGHTYELLOW_EX}{event.deal.user.username or '?'} "
+                                    f"{Fore.YELLOW}issued product {Fore.LIGHTYELLOW_EX}«{good}»{Fore.YELLOW}. "
+                                    f"Remainder: {Fore.LIGHTYELLOW_EX}{len(goods)-1}"
                                 )
                                 self.auto_deliveries[i]["goods"].pop(goods.index(good))
                                 sett.set("auto_deliveries", self.auto_deliveries)
@@ -810,8 +810,8 @@ class PlayerokBot:
                                 mess = self.send_message(event.chat.id, "\n".join(msg))
                                 if mess:
                                     logger.info(
-                                        f"{Fore.YELLOW}Покупателю {Fore.LIGHTYELLOW_EX}{event.deal.user.username or '?'} "
-                                        f"{Fore.YELLOW}отправлено сообщение авто-выдачи {Fore.LIGHTYELLOW_EX}«{msg}»"
+                                        f"{Fore.YELLOW}To the buyer {Fore.LIGHTYELLOW_EX}{event.deal.user.username or '?'} "
+                                        f"{Fore.YELLOW}sent message auto-issuance {Fore.LIGHTYELLOW_EX}«{msg}»"
                                     )
                         
                         break
@@ -847,7 +847,7 @@ class PlayerokBot:
             ):
                 self.account.update_deal(event.deal.id, ItemDealStatuses.SENT)
                 logger.info(
-                    f"{Fore.YELLOW}Сделка подтверждена автоматически "
+                    f"{Fore.YELLOW}Deal confirmed automatically "
                     f"{Fore.WHITE}(https://playerok.com/deal/{event.deal.id})"
                 )
 
@@ -883,17 +883,17 @@ class PlayerokBot:
         if event.deal.status and event.deal.id in self.cached_orders:
             self.cached_orders[event.deal.id]["status"] = event.deal.status.name
         
-        status_frmtd = "Неизвестный"
+        status_frmtd = "Unknown"
         if event.deal.status is ItemDealStatuses.PAID: 
-            status_frmtd = "Оплачен"
+            status_frmtd = "Paid"
         elif event.deal.status is ItemDealStatuses.PENDING: 
-            status_frmtd = "В ожидании отправки"
+            status_frmtd = "IN waiting sending"
         elif event.deal.status is ItemDealStatuses.SENT: 
-            status_frmtd = "Продавец подтвердил выполнение"
+            status_frmtd = "Salesman confirmed execution"
         elif event.deal.status is ItemDealStatuses.CONFIRMED: 
-            status_frmtd = "Покупатель подтвердил сделку"
+            status_frmtd = "Buyer confirmed deal"
         elif event.deal.status is ItemDealStatuses.ROLLED_BACK: 
-            status_frmtd = "Возврат"
+            status_frmtd = "Return"
 
         self.log_deal_status_changed(event.deal, status_frmtd)
         if (
@@ -903,8 +903,8 @@ class PlayerokBot:
             asyncio.run_coroutine_threadsafe(
                 get_telegram_bot().log_event(
                     log_text(
-                        title=f'🔄️📋 Статус <a href="https://playerok.com/deal/{event.deal.id}/">сделки</a> изменился', 
-                        text=f"<b>Новый статус:</b> {status_frmtd}"
+                        title=f'🔄️📋 Status <a href="https://playerok.com/deal/{event.deal.id}/">deals</a> changed', 
+                        text=f"<b>New status:</b> {status_frmtd}"
                     )
                 ), 
                 get_telegram_bot_loop()
@@ -942,23 +942,23 @@ class PlayerokBot:
 
     async def run_bot(self):
         logger.info("")
-        logger.info(f"{Fore.YELLOW}Playerok бот запущен и активен")
+        logger.info(f"{Fore.YELLOW}Playerok bot launched And active")
         logger.info("")
         
         logger.info(f"{Fore.YELLOW}───────────────────────────────────────")
-        logger.info(f"{Fore.YELLOW}Информация об аккаунте:")
+        logger.info(f"{Fore.YELLOW}Information about account:")
         logger.info(f" · ID: {Fore.LIGHTWHITE_EX}{self.account.id}")
-        logger.info(f" · Никнейм: {Fore.LIGHTWHITE_EX}{self.account.username}")
+        logger.info(f" · Nickname: {Fore.LIGHTWHITE_EX}{self.account.username}")
 
         profile = self.account.profile
         if profile.balance:
-            logger.info(f" · Баланс: {Fore.LIGHTWHITE_EX}{profile.balance.value}₽")
-            logger.info(f"   · Доступно: {Fore.LIGHTWHITE_EX}{profile.balance.available}₽")
-            logger.info(f"   · В ожидании: {Fore.LIGHTWHITE_EX}{profile.balance.pending_income}₽")
-            logger.info(f"   · Заморожено: {Fore.LIGHTWHITE_EX}{profile.balance.frozen}₽")
+            logger.info(f" · Balance: {Fore.LIGHTWHITE_EX}{profile.balance.value}₽")
+            logger.info(f"   · Available: {Fore.LIGHTWHITE_EX}{profile.balance.available}₽")
+            logger.info(f"   · IN waiting: {Fore.LIGHTWHITE_EX}{profile.balance.pending_income}₽")
+            logger.info(f"   · Frozen: {Fore.LIGHTWHITE_EX}{profile.balance.frozen}₽")
         
-        logger.info(f" · Активные продажи: {Fore.LIGHTWHITE_EX}{profile.stats.deals.outgoing.total - profile.stats.deals.outgoing.finished}")
-        logger.info(f" · Активные покупки: {Fore.LIGHTWHITE_EX}{profile.stats.deals.incoming.total - profile.stats.deals.incoming.finished}")
+        logger.info(f" · Active sales: {Fore.LIGHTWHITE_EX}{profile.stats.deals.outgoing.total - profile.stats.deals.outgoing.finished}")
+        logger.info(f" · Active purchases: {Fore.LIGHTWHITE_EX}{profile.stats.deals.incoming.total - profile.stats.deals.incoming.finished}")
         logger.info(f"{Fore.YELLOW}───────────────────────────────────────")
         
         proxy = self.config["playerok"]["api"]["proxy"]
@@ -977,10 +977,10 @@ class PlayerokBot:
 
             logger.info("")
             logger.info(f"{Fore.YELLOW}───────────────────────────────────────")
-            logger.info(f"{Fore.YELLOW}Информация о прокси:")
+            logger.info(f"{Fore.YELLOW}Information O proxy:")
             logger.info(f" · IP: {Fore.LIGHTWHITE_EX}{ip}:{port}")
-            logger.info(f" · Юзер: {Fore.LIGHTWHITE_EX}{user}")
-            logger.info(f" · Пароль: {Fore.LIGHTWHITE_EX}{password}")
+            logger.info(f" · User: {Fore.LIGHTWHITE_EX}{user}")
+            logger.info(f" · Password: {Fore.LIGHTWHITE_EX}{password}")
             logger.info(f"{Fore.YELLOW}───────────────────────────────────────")
             logger.info("")
 

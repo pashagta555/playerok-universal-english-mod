@@ -29,7 +29,7 @@ async def handler_waiting_for_message_content(message: types.Message, state: FSM
 
         if message.text:
             if len(message.text) <= 0:
-                raise Exception("❌ Слишком короткий текст")
+                raise Exception("❌ Too much short text")
             plbot.account.send_message(chat_id=chat.id, text=message.text)
             sent_msg += message.text
         
@@ -46,12 +46,12 @@ async def handler_waiting_for_message_content(message: types.Message, state: FSM
 
             plbot.account.send_message(chat_id=chat.id, photo_file_path=tmp_path)
             os.remove(tmp_path)
-            sent_msg += f"<b>Изображение</b>"
+            sent_msg += f"<b>Image</b>"
 
         await throw_float_message(
             state=state,
             message=message,
-            text=templ.do_action_text(f"✅ Пользователю <b>{username}</b> было отправлено сообщение: <blockquote>{sent_msg}</blockquote>"),
+            text=templ.do_action_text(f"✅ To the user <b>{username}</b> was sent message: <blockquote>{sent_msg}</blockquote>"),
             reply_markup=templ.destroy_kb()
         )
     except Exception as e:

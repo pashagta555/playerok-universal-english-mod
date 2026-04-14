@@ -4,6 +4,6 @@ ACCENT_COLOR = Fore.YELLOW
 PREFIX = f"{ACCENT_COLOR}forms {Fore.LIGHTBLACK_EX}·{Fore.WHITE}"
 VERSION = "1.0"
 NAME = "forms"
-DESCRIPTION = "Модуль-пример для бота Playerok Universal. Позволяет заполнять и смотреть свою анкету, используя команды !заполнить, !мояанкета. /questionary в Telegram боте для управления"
+DESCRIPTION = "Module-example For bot Playerok Universal. Allows fill And look my questionnaire, using teams !fill out, !my profile. /questionary V Telegram both For management"
 AUTHORS = "@alleexxeeyy"
 LINKS = "https://t.me/alleexxeeyy, https://t.me/alexeyproduction"

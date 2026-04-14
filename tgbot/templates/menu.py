@@ -8,15 +8,15 @@ from .. import callback_datas as calls
 
 def menu_text():
     txt = textwrap.dedent(f"""
-        <b>🏠 Главное меню</b>
+        <b>🏠 Main menu</b>
 
         <b>Playerok Universal</b> v{VERSION}
-        Бот-помощник для Playerok
+        Bot-assistant For Playerok
 
-        <b>🔗 Ссылки:</b>
-        ・ <b>@alleexxeeyy</b> — разработчик
-        ・ <b>@alexeyproduction</b> — канал с новостями
-        ・ <b>@alexey_production_bot</b> — бот для покупки плагинов
+        <b>🔗 Links:</b>
+        ・ <b>@alleexxeeyy</b> — developer
+        ・ <b>@alexeyproduction</b> — channel With news
+        ・ <b>@alexey_production_bot</b> — bot For purchases plugins
     """)
     return txt
 
@@ -24,22 +24,22 @@ def menu_text():
 def menu_kb():
     rows = [
         [
-        InlineKeyboardButton(text="⚙️ Настройки", callback_data=calls.SettingsNavigation(to="default").pack()), 
-        InlineKeyboardButton(text="👤 Профиль", callback_data=calls.MenuNavigation(to="profile").pack())
+        InlineKeyboardButton(text="⚙️ Settings", callback_data=calls.SettingsNavigation(to="default").pack()), 
+        InlineKeyboardButton(text="👤 Profile", callback_data=calls.MenuNavigation(to="profile").pack())
         ],
         [
-        InlineKeyboardButton(text="🚩 Ивенты", callback_data=calls.MenuNavigation(to="events").pack()),
-        InlineKeyboardButton(text="🗒️ Логи", callback_data=calls.MenuNavigation(to="logs").pack())
+        InlineKeyboardButton(text="🚩 Events", callback_data=calls.MenuNavigation(to="events").pack()),
+        InlineKeyboardButton(text="🗒️ Logs", callback_data=calls.MenuNavigation(to="logs").pack())
         ],
         [
-        InlineKeyboardButton(text="📊 Статистика", callback_data=calls.MenuNavigation(to="stats").pack()),
-        InlineKeyboardButton(text="🔌 Модули", callback_data=calls.ModulesPagination(page=0).pack())
+        InlineKeyboardButton(text="📊 Statistics", callback_data=calls.MenuNavigation(to="stats").pack()),
+        InlineKeyboardButton(text="🔌 Modules", callback_data=calls.ModulesPagination(page=0).pack())
         ],
-        [InlineKeyboardButton(text="📖 Инструкция", callback_data=calls.InstructionNavigation(to="default").pack())], 
+        [InlineKeyboardButton(text="📖 Instructions", callback_data=calls.InstructionNavigation(to="default").pack())], 
         [
-        InlineKeyboardButton(text="👨‍💻 Разработчик", url="https://t.me/alleexxeeyy"), 
-        InlineKeyboardButton(text="📢 Наш канал", url="https://t.me/alexeyproduction"), 
-        InlineKeyboardButton(text="🤖 Наш бот", url="https://t.me/alexey_production_bot")
+        InlineKeyboardButton(text="👨‍💻 Developer", url="https://t.me/alleexxeeyy"), 
+        InlineKeyboardButton(text="📢 Our channel", url="https://t.me/alexeyproduction"), 
+        InlineKeyboardButton(text="🤖 Our bot", url="https://t.me/alexey_production_bot")
         ]
     ]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)

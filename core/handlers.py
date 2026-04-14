@@ -31,9 +31,9 @@ _playerok_event_handlers: dict[EventTypes, list[callable]] = {
 
 def get_bot_event_handlers() -> dict[str, list[callable]]:
     """
-    Возвращает хендлеры ивентов бота.
+    Returns handlers events bot.
 
-    :return: Словарь с событиями и списками хендлеров.
+    :return: Dictionary With events And lists handlers.
     :rtype: `dict[str, list[callable]]`
     """
     return _bot_event_handlers
@@ -41,9 +41,9 @@ def get_bot_event_handlers() -> dict[str, list[callable]]:
 
 def set_bot_event_handlers(data: dict[str, list[callable]]):
     """
-    Устанавливает новые хендлеры ивентов бота.
+    Installs new handlers events bot.
 
-    :param data: Словарь с названиями событий и списками хендлеров.
+    :param data: Dictionary With names events And lists handlers.
     :type data: `dict[str, list[callable]]`
     """
     global _bot_event_handlers
@@ -52,15 +52,15 @@ def set_bot_event_handlers(data: dict[str, list[callable]]):
 
 def add_bot_event_handler(event: str, handler: callable, index: int | None = None):
     """
-    Добавляет новый хендлер в ивенты бота.
+    Adds new handler V events bot.
 
-    :param event: Название события, для которого добавляется хендлер.
+    :param event: Name events, For whom is added handler.
     :type event: `str`
 
-    :param handler: Вызываемый метод.
+    :param handler: Called method.
     :type handler: `callable`
 
-    :param index: Индекс в массиве хендлеров, _опционально_.
+    :param index: Index V array handlers, _optional_.
     :type index: `int` or `None`
     """
     global _bot_event_handlers
@@ -70,9 +70,9 @@ def add_bot_event_handler(event: str, handler: callable, index: int | None = Non
 
 def register_bot_event_handlers(handlers: dict[str, list[callable]]):
     """
-    Регистрирует хендлеры ивентов бота (добавляет переданные хендлеры, если их нету). 
+    Registers handlers events bot (adds transferred handlers, If their There is not). 
 
-    :param data: Словарь с названиями событий и списками хендлеров.
+    :param data: Dictionary With names events And lists handlers.
     :type data: `dict[str, list[callable]]`
     """
     global _bot_event_handlers
@@ -84,9 +84,9 @@ def register_bot_event_handlers(handlers: dict[str, list[callable]]):
 
 def remove_bot_event_handlers(handlers: dict[str, list[callable]]):
     """
-    Удаляет переданные хендлеры бота.
+    Deletes transferred handlers bot.
 
-    :param handlers: Словарь с событиями и списками хендлеров бота.
+    :param handlers: Dictionary With events And lists handlers bot.
     :type handlers: `dict[str, list[callable]]`
     """
     for event, funcs in handlers.items():
@@ -98,9 +98,9 @@ def remove_bot_event_handlers(handlers: dict[str, list[callable]]):
 
 def get_playerok_event_handlers() -> dict[EventTypes, list]:
     """
-    Возвращает хендлеры ивентов Playerok.
+    Returns handlers events Playerok.
 
-    :return: Словарь с событиями и списками хендлеров.
+    :return: Dictionary With events And lists handlers.
     :rtype: `dict[playerokapi.listener.events.EventTypes, list[callable]]`
     """
     return _playerok_event_handlers
@@ -108,9 +108,9 @@ def get_playerok_event_handlers() -> dict[EventTypes, list]:
 
 def set_playerok_event_handlers(data: dict[EventTypes, list[callable]]):
     """
-    Устанавливает новые хендлеры ивентов Playerok.
+    Installs new handlers events Playerok.
 
-    :param data: Словарь с событиями и списками хендлеров.
+    :param data: Dictionary With events And lists handlers.
     :type data: `dict[playerokapi.listener.events.EventTypes, list[callable]]`
     """
     global _playerok_event_handlers
@@ -119,15 +119,15 @@ def set_playerok_event_handlers(data: dict[EventTypes, list[callable]]):
 
 def add_playerok_event_handler(event: EventTypes, handler: callable, index: int | None = None):
     """
-    Добавляет новый хендлер в ивенты Playerok.
+    Adds new handler V events Playerok.
 
-    :param event: Событие, для которого добавляется хендлер.
+    :param event: Event, For whom is added handler.
     :type event: `playerokapi.listener.events.EventTypes`
 
-    :param handler: Вызываемый метод.
+    :param handler: Called method.
     :type handler: `callable`
 
-    :param index: Индекс в массиве хендлеров, _опционально_.
+    :param index: Index V array handlers, _optional_.
     :type index: `int` or `None`
     """
     global _playerok_event_handlers
@@ -137,9 +137,9 @@ def add_playerok_event_handler(event: EventTypes, handler: callable, index: int 
 
 def register_playerok_event_handlers(handlers: dict[EventTypes, list[callable]]):
     """
-    Регистрирует хендлеры ивентов Playerok (добавляет переданные хендлеры, если их нету). 
+    Registers handlers events Playerok (adds transferred handlers, If their There is not). 
 
-    :param data: Словарь с событиями и списками хендлеров.
+    :param data: Dictionary With events And lists handlers.
     :type data: `dict[playerokapi.listener.events.EventTypes, list[callable]]`
     """
     global _playerok_event_handlers
@@ -151,9 +151,9 @@ def register_playerok_event_handlers(handlers: dict[EventTypes, list[callable]])
 
 def remove_playerok_event_handlers(handlers: dict[EventTypes, list[callable]]):
     """
-    Удаляет переданные хендлеры Playerok.
+    Deletes transferred handlers Playerok.
 
-    :param handlers: Словарь с событиями и списками хендлеров Playerok.
+    :param handlers: Dictionary With events And lists handlers Playerok.
     :type handlers: `dict[playerokapi.listener.events.EventTypes, list[callable]]`
     """
     global _playerok_event_handlers
@@ -166,15 +166,15 @@ def remove_playerok_event_handlers(handlers: dict[EventTypes, list[callable]]):
 
 async def call_bot_event(event: str, args: list = [], func = None):
     """
-    Вызывает ивент бота.
+    Calls event bot.
 
-    :param event: Тип ивента.
+    :param event: Type event.
     :type event: `str`
 
-    :param args: Аргументы.
+    :param args: Arguments.
     :type args: `list`
     
-    :param func: Функция, для которой нужно вызвать ивент (если нужно вызвать только для одной определённой), _опционально_.
+    :param func: Function, For which need to call event (If need to call only For one certain), _optional_.
     :type func: `callable` or `None`
     """
     if not func: 
@@ -185,17 +185,17 @@ async def call_bot_event(event: str, args: list = [], func = None):
         try:
             await handler(*args)
         except Exception as e:
-            logger.error(f"{Fore.LIGHTRED_EX}Ошибка при обработке хендлера «{handler.__module__}.{handler.__qualname__}» для ивента бота «{event}»: {Fore.WHITE}{e}")
+            logger.error(f"{Fore.LIGHTRED_EX}Error at processing handler «{handler.__module__}.{handler.__qualname__}» For event bot «{event}»: {Fore.WHITE}{e}")
 
 
 async def call_playerok_event(event: EventTypes, args: list = []):
     """
-    Вызывает ивент бота.
+    Calls event bot.
 
-    :param event: Тип ивента.
+    :param event: Type event.
     :type event: `playerokapi.enums.EventTypes`
 
-    :param args: Аргументы.
+    :param args: Arguments.
     :type args: `list`
     """
     handlers = get_playerok_event_handlers().get(event, [])
@@ -203,4 +203,4 @@ async def call_playerok_event(event: EventTypes, args: list = []):
         try:
             await handler(*args)
         except Exception as e:
-            logger.error(f"{Fore.LIGHTRED_EX}Ошибка при обработке хендлера «{handler.__module__}.{handler.__qualname__}» для ивента Playerok «{event.name}»: {Fore.WHITE}{e}")
+            logger.error(f"{Fore.LIGHTRED_EX}Error at processing handler «{handler.__module__}.{handler.__qualname__}» For event Playerok «{event.name}»: {Fore.WHITE}{e}")
