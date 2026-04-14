@@ -19,7 +19,7 @@ def settings_complete_text():
     txt = textwrap.dedent(f"""
         <b>☑️ Auto-confirmation</b>
 
-        <b>☑️ Auto-confirmation transactions:</b> {enabled}
+        <b>☑️ Automatic transaction confirmation:</b> {enabled}
         <b>📦 Confirm deals:</b> {all}
 
         <b>➕ Included:</b> {included}
@@ -45,7 +45,7 @@ def settings_complete_kb():
     excluded = len(auto_complete_deals["excluded"])
     
     rows = [
-        [InlineKeyboardButton(text=f"☑️ Auto-confirmation transactions: {enabled}", callback_data="switch_auto_complete_deals_enabled")],
+        [InlineKeyboardButton(text=f"☑️ Automatic transaction confirmation: {enabled}", callback_data="switch_auto_complete_deals_enabled")],
         [InlineKeyboardButton(text=f"📦 Confirm deals: {all}", callback_data="switch_auto_complete_deals_all")],
         [
         InlineKeyboardButton(text=f"➕ Included: {included}", callback_data=calls.IncludedCompleteDealsPagination(page=0).pack()),

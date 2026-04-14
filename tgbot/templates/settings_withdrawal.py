@@ -26,9 +26,9 @@ def settings_withdrawal_text(card: UserBankCard = None, sbp_bank: SBPBankMember 
         details = "Not indicated"
     
     txt = textwrap.dedent(f"""
-        <b>💸 Auto-conclusion</b>
+        <b>💸 Auto-withdrawal</b>
 
-        <b>🔃 Auto-conclusion funds:</b> {enabled}
+        <b>🔃 Auto-withdrawal funds:</b> {enabled}
         <b>⏱️ Interval:</b> {interval} sec.
 
         <b>💳 Details:</b> {details}
@@ -58,7 +58,7 @@ def settings_withdrawal_kb(card: UserBankCard = None, sbp_bank: SBPBankMember = 
         details = "Not indicated"
 
     rows = [
-        [InlineKeyboardButton(text=f"🔃 Auto-conclusion funds: {enabled}", callback_data="switch_auto_withdrawal_enabled")],
+        [InlineKeyboardButton(text=f"🔃 Auto-withdrawal funds: {enabled}", callback_data="switch_auto_withdrawal_enabled")],
         [InlineKeyboardButton(text=f"⏱️ Interval: {interval} sec.", callback_data="enter_auto_withdrawal_interval")],
         [InlineKeyboardButton(text=f"💳 Details: {details}", callback_data=calls.BankCardsPagination(page=0).pack())],
         [InlineKeyboardButton(text="⬅️ Back", callback_data=calls.SettingsNavigation(to="default").pack())]
@@ -69,7 +69,7 @@ def settings_withdrawal_kb(card: UserBankCard = None, sbp_bank: SBPBankMember = 
 
 def settings_withdrawal_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>💸 Auto-conclusion</b>
+        <b>💸 Auto-withdrawal</b>
         \n{placeholder}
     """)
     return txt

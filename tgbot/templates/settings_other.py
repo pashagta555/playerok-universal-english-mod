@@ -19,8 +19,8 @@ def settings_other_text():
         <b>🔧 Other</b>
 
         <b>👀 Reading chat before sending messages:</b> {switch_read_chat_enabled}
-        <b>❗ Teams:</b> {custom_commands_enabled}
-        <b>🚀 Auto-issuance:</b> {auto_deliveries_enabled}
+        <b>❗ Commands:</b> {custom_commands_enabled}
+        <b>🚀 Auto-delivery:</b> {auto_deliveries_enabled}
         
         <b>©️ Water sign under messages:</b> {watermark_enabled}
         <b>✍️©️ Water sign:</b> {watermark_value}
@@ -39,8 +39,8 @@ def settings_other_kb():
     
     rows = [
         [InlineKeyboardButton(text=f"👀 Reading chat before sending messages: {switch_read_chat_enabled}", callback_data="switch_read_chat_enabled")],
-        [InlineKeyboardButton(text=f"❗ Teams: {custom_commands_enabled}", callback_data="switch_custom_commands_enabled")],
-        [InlineKeyboardButton(text=f"🚀 Auto-issuance: {auto_deliveries_enabled}", callback_data="switch_auto_deliveries_enabled")],
+        [InlineKeyboardButton(text=f"❗ Commands: {custom_commands_enabled}", callback_data="switch_custom_commands_enabled")],
+        [InlineKeyboardButton(text=f"🚀 Auto-delivery: {auto_deliveries_enabled}", callback_data="switch_auto_deliveries_enabled")],
         [InlineKeyboardButton(text=f"©️ Water sign under messages: {watermark_enabled}", callback_data="switch_watermark_enabled")],
         [InlineKeyboardButton(text=f"✍️©️ Water sign: {watermark_value}", callback_data="enter_watermark_value")],
         [InlineKeyboardButton(text="⬅️ Back", callback_data=calls.SettingsNavigation(to="default").pack())]

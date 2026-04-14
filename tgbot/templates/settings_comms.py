@@ -10,7 +10,7 @@ from .. import callback_datas as calls
 def settings_comms_text():
     custom_commands = sett.get("custom_commands")
     txt = textwrap.dedent(f"""
-        <b>❗ Teams</b>
+        <b>❗ Commands</b>
 
         Total <b>{len(custom_commands)}</b> teams:
     """)
@@ -59,7 +59,7 @@ def settings_comms_kb(page=0):
 
 def settings_comms_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>❗ Teams</b>
+        <b>❗ Commands</b>
         \n{placeholder}
     """)
     return txt

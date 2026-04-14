@@ -81,10 +81,10 @@ class TelegramBot:
             description = textwrap.dedent(f"""
                 🟢 Eternal online
                 ♻️ Auto-recovery goods
-                ⬆️ Auto-raising goods
-                💸 Auto-conclusion funds
-                🚀 Auto-issuance goods
-                ❗ Custom teams
+                ⬆️ Auto-bump goods
+                💸 Auto-withdrawal funds
+                🚀 Auto-delivery goods
+                ❗ Custom commands
                 💬 Call seller
                 👋 Welcome message
                 📊 Detailed statistics

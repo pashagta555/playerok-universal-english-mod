@@ -14,7 +14,7 @@ def settings_conn_text():
     requests_timeout = config["playerok"]["api"]["requests_timeout"] or "❌ Not given"
     
     txt = textwrap.dedent(f"""
-        <b>📶 Compound</b>
+        <b>📶 Connection</b>
 
         <b>🌐 Proxy For Playerok:</b> {pl_proxy}
         <b>🌐 Proxy For Telegram:</b> {tg_proxy}
@@ -50,7 +50,7 @@ def settings_conn_kb():
 
 def settings_conn_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>📶 Compound</b>
+        <b>📶 Connection</b>
         \n{placeholder}
     """)
     return txt

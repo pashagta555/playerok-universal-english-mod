@@ -58,7 +58,7 @@ def instruction_text():
 
 def instruction_kb():
     rows = [
-        [InlineKeyboardButton(text="⌨️ Teams", callback_data=calls.FORMS_InstructionNavigation(to="commands").pack())],
+        [InlineKeyboardButton(text="⌨️ Commands", callback_data=calls.FORMS_InstructionNavigation(to="commands").pack())],
         [InlineKeyboardButton(text="⬅️ Back", callback_data=calls.FORMS_MenuNavigation(to="default").pack())]
     ]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
@@ -66,7 +66,7 @@ def instruction_kb():
 
 def instruction_comms_text():
     txt = textwrap.dedent(f"""
-        📖 <b>Instructions {NAME}</b> → ⌨️ <b>Teams</b>
+        📖 <b>Instructions {NAME}</b> → ⌨️ <b>Commands</b>
 
         <code>!my profile</code> — displays data filled out questionnaires
         <code>!fill out</code> — starts process filling questionnaires

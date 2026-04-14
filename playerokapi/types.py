@@ -1589,7 +1589,7 @@ class MyItem:
     :param prev_fee_multiplier: Previous factor commissions.
     :type prev_fee_multiplier: `float`
 
-    :param seller_notified_about_fee_change: Notified whether salesman O shift commissions.
+    :param seller_notified_about_fee_change: Notified whether seller O shift commissions.
     :type seller_notified_about_fee_change: `bool`
 
     :param game: Profile games subject.
@@ -1683,7 +1683,7 @@ class MyItem:
         self.prev_fee_multiplier: float = prev_fee_multiplier
         """ Previous factor commissions. """
         self.seller_notified_about_fee_change: bool = seller_notified_about_fee_change
-        """ Notified whether salesman O shift commissions. """
+        """ Notified whether seller O shift commissions. """
         self.game: GameProfile = game
         """ Profile games subject. """
         self.seller_type: UserTypes = seller_type

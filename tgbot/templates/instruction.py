@@ -13,7 +13,7 @@ def instruction_text():
 
 def instruction_kb():
     rows = [
-        [InlineKeyboardButton(text="⌨️ Teams", callback_data=calls.InstructionNavigation(to="commands").pack())],
+        [InlineKeyboardButton(text="⌨️ Commands", callback_data=calls.InstructionNavigation(to="commands").pack())],
         [InlineKeyboardButton(text="⬅️ Back", callback_data=calls.MenuNavigation(to="default").pack())]
     ]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
@@ -22,10 +22,10 @@ def instruction_kb():
 
 def instruction_comms_text():
     txt = textwrap.dedent(f"""
-        <b>⌨️ Teams</b>
+        <b>⌨️ Commands</b>
                           
         ・ <code>!teams</code> — displays menu With accessible For buyer teams
-        ・ <code>!salesman</code> — notifies And causes seller V dialogue With buyer (writes to you V Telegram message With request O help)
+        ・ <code>!seller</code> — notifies And causes seller V dialogue With buyer (writes to you V Telegram message With request O help)
     """)
     return txt
 

@@ -109,7 +109,7 @@ class DealConfirmedEvent(BaseEvent):
 
 class DealRolledBackEvent(BaseEvent):
     """
-    Class events: salesman returned funds for deal.
+    Class events: seller returned funds for deal.
 
     :param deal: Object deals.
     :type deal: `PlayerokAPI.types.ItemDeal`

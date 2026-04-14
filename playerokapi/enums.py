@@ -27,7 +27,7 @@ class EventTypes(Enum):
     ITEM_PAID = 10
     """User paid item."""
     ITEM_SENT = 11
-    """Item sent (salesman confirmed execution deals)."""
+    """Item sent (seller confirmed execution deals)."""
 
 
 class ItemLogEvents(Enum):

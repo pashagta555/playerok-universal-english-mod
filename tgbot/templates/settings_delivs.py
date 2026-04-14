@@ -10,7 +10,7 @@ from .. import callback_datas as calls
 def settings_delivs_text():
     auto_deliveries = sett.get("auto_deliveries")
     txt = textwrap.dedent(f"""
-        <b>🚀 Auto-issuance</b>
+        <b>🚀 Auto-delivery</b>
 
         Total <b>{len(auto_deliveries)}</b> goods With auto-issuance:
     """)
@@ -70,7 +70,7 @@ def settings_delivs_kb(page=0):
 
 def settings_deliv_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>🚀 Auto-issuance</b>
+        <b>🚀 Auto-delivery</b>
         \n{placeholder}
     """)
     return txt

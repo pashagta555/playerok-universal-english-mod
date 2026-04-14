@@ -17,9 +17,9 @@ def settings_bump_text():
     auto_bump_items_excluded = len(auto_bump_items["excluded"])
     
     txt = textwrap.dedent(f"""
-        <b>⬆️ Auto-raising</b>
+        <b>⬆️ Auto-bump</b>
 
-        <b>⬆️ Auto-raising items:</b> {auto_bump_items_enabled}
+        <b>⬆️ Auto-bump items:</b> {auto_bump_items_enabled}
         <b>📦 lift:</b> {auto_bump_items_all}
         <b>⏲️ Interval raising:</b> {auto_bump_items_interval} sec.
 
@@ -46,7 +46,7 @@ def settings_bump_kb():
     auto_bump_items_excluded = len(auto_bump_items["excluded"])
     
     rows = [
-        [InlineKeyboardButton(text=f"⬆️ Auto-raising items: {auto_bump_items_enabled}", callback_data="switch_auto_bump_items_enabled")],
+        [InlineKeyboardButton(text=f"⬆️ Auto-bump items: {auto_bump_items_enabled}", callback_data="switch_auto_bump_items_enabled")],
         [InlineKeyboardButton(text=f"📦 lift: {auto_bump_items_all}", callback_data="switch_auto_bump_items_all")],
         [InlineKeyboardButton(text=f"⏲️ Interval raising: {auto_bump_items_interval} sec.", callback_data="enter_auto_bump_items_interval")],
         [
@@ -61,7 +61,7 @@ def settings_bump_kb():
 
 def settings_bump_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>⬆️ Auto-raising</b>
+        <b>⬆️ Auto-bump</b>
         \n{placeholder}
     """)
     return txt

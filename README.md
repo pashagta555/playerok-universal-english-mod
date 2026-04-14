@@ -1,7 +1,7 @@
 # Playerok Universal
-[![telegram](https://img.shields.io/badge/telegram-%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB-blue?style=for-the-badge&logo=telegram)](https://t.me/alexeyproduction)
-[![modules](https://img.shields.io/badge/%F0%9F%A7%A9%20%D0%BC%D0%BE%D0%B4%D1%83%D0%BB%D0%B8-%D0%B1%D0%BE%D1%82%D0%B0-green?style=for-the-badge)](https://t.me/alexey_production_bot)
-[![python](https://img.shields.io/badge/python-3.12.x-yellow?style=for-the-badge&logo=python&link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Ftelegram-%25D0%25BA%25D0%25B0%25D0%25BD%25D0%25B0%25D0%25BB-blue%3Fstyle%3Dfor-the-badge%26logo%3Dtelegram)](https://www.python.org/downloads/release/python-3119/)
+[![telegram](https://img.shields.io/badge/telegram-channel-blue?style=for-the-badge&logo=telegram)](https://t.me/alexeyproduction)
+[![modules](https://img.shields.io/badge/%F0%9F%A7%A9%20bot-modules-green?style=for-the-badge)](https://t.me/alexey_production_bot)
+[![python](https://img.shields.io/badge/python-3.12.x-yellow?style=for-the-badge&logo=python)](https://www.python.org/downloads/release/python-3119/)
 [![stars](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Falleexxeeyy%2Fplayerok-universal&query=%24.stargazers_count&style=for-the-badge&label=stars&color=43d433&logo=github)](https://github.com/alleexxeeyy/playerok-universal/stargazers)
 [![forks](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Falleexxeeyy%2Fplayerok-universal&query=%24.forks_count&style=for-the-badge&label=forks&color=%236c70e6&logo=github)](https://github.com/alleexxeeyy/playerok-universal/forks)
 
@@ -17,24 +17,24 @@ Modern bot-assistant For Playerok 🤖🟦
 
 ## 🔧 Functional
 ### 🤖💬 Telegram bot With complete management
-- Settings any parameter from config V a couple actions
-- View statistics bot And profile account
-- Control events bot
+- Configure any setting from the config in a few steps
+- View bot statistics and account profile
+- Bot event management
 
 ### ⚙️ Wide spectrum opportunities
-- System modules (plugins, pluggable To bot)
-- Eternal online on website
-- Auto-recovery items
-- Auto-raising items
-- Auto-issuance goods
-- Auto-conclusion funds
-- Auto-confirmation transactions
+- Module system (plugins connected to the bot)
+- Always online on the website
+- Auto-restore items
+- Auto-bump items
+- Auto-delivery goods
+- Auto-withdrawal funds
+- Automatic transaction confirmation
 - Welcome message
-- Custom teams
-- Custom auto-issuance
-- Team `!salesman` For call seller V chat
+- Custom commands
+- Custom auto-delivery
+- Team `!seller` For call seller V chat
 - Editing And inclusion/shutdown everyone messages
-- Notifications V TG O new messages, orders, reviews And T.d.
+- TG notifications for new messages, orders, reviews, etc.
 
 ### 🌐 More advanced
 - Connection To proxy HTTPS IPv4
@@ -85,7 +85,7 @@ You you can create mine module, leaning on on [formulaic](.templates/forms_modul
   | `EventTypes.DEAL_PROBLEM_RESOLVED` | Problem V deal resolved | `PlayerokBot`, `DealProblemResolvedEvent` |
   | `EventTypes.DEAL_STATUS_CHANGED` | Status deals changed | `PlayerokBot`, `DealStatusChangedEvent` |
   | `EventTypes.ITEM_PAID` | User paid item | `PlayerokBot`, `ItemPaidEvent` |
-  | `EventTypes.ITEM_SENT` | Item sent (salesman confirmed execution deals) | `PlayerokBot`, `ItemSentEvent` |
+  | `EventTypes.ITEM_SENT` | Item sent (seller confirmed execution deals) | `PlayerokBot`, `ItemSentEvent` |
 
 </details>
 

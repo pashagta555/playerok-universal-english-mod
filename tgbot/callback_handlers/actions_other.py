@@ -742,7 +742,7 @@ async def callback_add_new_auto_delivery(callback: CallbackQuery, state: FSMCont
         await throw_float_message(
             state=state,
             message=callback.message,
-            text=templ.settings_new_deliv_float_text(f"✅ <b>Auto-issuance</b> was successfully added"),
+            text=templ.settings_new_deliv_float_text(f"✅ <b>Auto-delivery</b> was successfully added"),
             reply_markup=templ.back_kb(calls.AutoDeliveriesPagination(page=last_page).pack())
         )
     except Exception as e:
@@ -813,7 +813,7 @@ async def callback_delete_auto_delivery(callback: CallbackQuery, state: FSMConte
         await throw_float_message(
             state=state,
             message=callback.message,
-            text=templ.settings_deliv_page_float_text("✅ <b>Auto-issuance</b> was deleted"),
+            text=templ.settings_deliv_page_float_text("✅ <b>Auto-delivery</b> was deleted"),
             reply_markup=templ.back_kb(calls.AutoDeliveriesPagination(page=last_page).pack())
         )
     except Exception as e:

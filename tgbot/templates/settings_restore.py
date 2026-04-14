@@ -19,7 +19,7 @@ def settings_restore_text():
     txt = textwrap.dedent(f"""
         <b>♻️ Auto-recovery</b>
 
-        <b>♻️ Auto-recovery items:</b>
+        <b>♻️ Auto-restore items:</b>
         <b>・ Sold:</b> {auto_restore_items_sold}
         <b>・ Expired:</b> {auto_restore_items_expired}
 

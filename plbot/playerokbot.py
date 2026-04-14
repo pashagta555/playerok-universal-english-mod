@@ -660,7 +660,7 @@ class PlayerokBot:
             if str(event.message.text).lower() in ("!teams", "!commands"):
                 self.send_message(event.chat.id, self.msg("cmd_commands"))
             
-            elif str(event.message.text).lower() in ("!salesman", "!seller"):
+            elif str(event.message.text).lower() in ("!seller", "!seller"):
                 asyncio.run_coroutine_threadsafe(
                     get_telegram_bot().call_seller(event.message.user.username, event.chat.id), 
                     get_telegram_bot_loop()

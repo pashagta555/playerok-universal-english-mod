@@ -102,7 +102,7 @@ MESSAGES = SettingsFile(
             "text": [
                 "👋 Hello, {username}, I bot-assistant 𝗣𝗹𝗮𝘆𝗲𝗿𝗼𝗸 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗮𝗹",
                 "",
-                "💡 If You want talk With seller, write team !salesman, to I invited his V this dialogue",
+                "💡 If You want talk With seller, write team !seller, to I invited his V this dialogue",
                 "",
                 "To to know All my teams, write !teams"
             ]
@@ -117,7 +117,7 @@ MESSAGES = SettingsFile(
             "enabled": True,
             "text": [
                 "🕹️ Basic teams:",
-                "・ !salesman — notify And call seller V this chat"
+                "・ !seller — notify And call seller V this chat"
             ]
         },
         "cmd_seller": {
@@ -131,7 +131,7 @@ MESSAGES = SettingsFile(
             "text": [
                 "📋 Thank you for purchase «{deal_item_name}»",
                 ""
-                "Seller Now Maybe Not be on place, to call his, use team !salesman."
+                "Seller Now Maybe Not be on place, to call his, use team !seller."
             ]
         },
         "deal_pending": {
