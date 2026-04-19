@@ -1,14 +1,174 @@
-Here is the translation of the given Python code to English:
+from aiogram import types ,Router ,F 
+from aiogram .fsm .context import FSMContext 
 
-The code defines three handlers for a Telegram bot using the aiogram library. The handlers are used to handle messages from users.
+from settings import Settings as sett 
 
-1. The first handler, `handler_waiting_for_new_included_complete_deal_keyphrases`, handles messages that contain keyphrases related to complete deals. It checks if the message contains any keyphrases and if so, it adds them to a list. Then, it updates the "auto_complete_deals" setting with the new keyphrases.
+from ..import templates as templ 
+from ..import callback_datas as calls 
+from ..import states 
+from ..helpful import throw_float_message 
 
-2. The second handler, `handler_waiting_for_new_included_complete_deals_keyphrases_file`, handles files that contain keyphrases related to complete deals. It reads the file content and extracts the keyphrases from each line. Then, it adds these keyphrases to a list and updates the "auto_complete_deals" setting with the new keyphrases.
 
-3. The third handler, `handler_waiting_for_new_excluded_complete_deal_keyphrases`, handles messages that contain keyphrases related to excluded complete deals. It checks if the message contains any keyphrases and if so, it adds them to a list. Then, it updates the "auto_complete_deals" setting with the new keyphrases.
+router =Router ()
 
-4. The fourth handler, `handler_waiting_for_new_excluded_complete_deals_keyphrases_file`, handles files that contain keyphrases related to excluded complete deals. It reads the file content and extracts the keyphrases from each line. Then, it adds these keyphrases to a list and updates the "auto_complete_deals" setting with the new keyphrases.
 
-In all handlers, if an error occurs during processing, it sends an error message to the user and then calls the `throw_float_message` function to send another message and reply markup.
+@router .message (states .CompleteDealsStates .waiting_for_new_included_complete_deal_keyphrases ,F .text )
+async def handler_waiting_for_new_included_complete_deal_keyphrases (message :types .Message ,state :FSMContext ):
+    try :
+        await state .set_state (None )
 
+        data =await state .get_data ()
+        last_page =data .get ("last_page",0 )
+
+        if len (message .text )<=0 :
+            raise Exception ("Too short a value")
+
+        keyphrases =[phrase .strip ()for phrase in message .text .split (",")if phrase .strip ()]
+
+        auto_complete_deals =sett .get ("auto_complete_deals")
+        auto_complete_deals ["included"].append (keyphrases )
+        sett .set ("auto_complete_deals",auto_complete_deals )
+
+        await throw_float_message (
+        state =state ,
+        message =message ,
+        text =templ .settings_new_complete_included_float_text (
+        "The subject has been successfully included in confirmation."
+        ),
+        reply_markup =templ .back_kb (calls .IncludedCompleteDealsPagination (page =last_page ).pack ())
+        )
+    except Exception as e :
+        await throw_float_message (
+        state =state ,
+        message =message ,
+        text =templ .settings_new_complete_included_float_text (e ),
+        reply_markup =templ .back_kb (calls .IncludedCompleteDealsPagination (page =last_page ).pack ())
+        )
+
+
+@router .message (
+states .CompleteDealsStates .waiting_for_new_included_complete_deals_keyphrases_file ,
+F .document .file_name .lower ().endswith ('.txt')
+)
+async def handler_waiting_for_new_included_complete_deals_keyphrases_file (message :types .Message ,state :FSMContext ):
+    try :
+        await state .set_state (None )
+
+        data =await state .get_data ()
+        last_page =data .get ("last_page",0 )
+
+        file =await message .bot .get_file (message .document .file_id )
+        downloaded_file =await message .bot .download_file (file .file_path )
+        file_content =downloaded_file .read ().decode ('utf-8')
+
+        keyphrases_list =[]
+        for line in file_content .splitlines ():
+            line =line .strip ()
+            if len (line )>0 :
+                keyphrases =[phrase .strip ()for phrase in line .split (",")if phrase .strip ()]
+                if len (keyphrases )>0 :
+                    keyphrases_list .append (keyphrases )
+
+        if len (keyphrases_list )<=0 :
+            raise Exception ("File does not contain valid key phrases")
+
+        auto_complete_deals =sett .get ("auto_complete_deals")
+        auto_complete_deals ["included"].extend (keyphrases_list )
+        sett .set ("auto_complete_deals",auto_complete_deals )
+
+        await throw_float_message (
+        state =state ,
+        message =message ,
+        text =templ .settings_new_complete_included_float_text (
+        f"✅ Успешно включено <b>{len (keyphrases_list )} предметов</b> из файла в подтверждение"
+        ),
+        reply_markup =templ .back_kb (calls .IncludedCompleteDealsPagination (page =last_page ).pack ())
+        )
+    except Exception as e :
+        await throw_float_message (
+        state =state ,
+        message =message ,
+        text =templ .settings_new_complete_included_float_text (e ),
+        reply_markup =templ .back_kb (calls .IncludedCompleteDealsPagination (page =last_page ).pack ())
+        )
+
+
+@router .message (states .CompleteDealsStates .waiting_for_new_excluded_complete_deal_keyphrases ,F .text )
+async def handler_waiting_for_new_excluded_complete_deal_keyphrases (message :types .Message ,state :FSMContext ):
+    try :
+        await state .set_state (None )
+
+        data =await state .get_data ()
+        last_page =data .get ("last_page",0 )
+
+        if len (message .text )<=0 :
+            raise Exception ("Too short a value ❌")
+
+        keyphrases =[phrase .strip ()for phrase in message .text .split (",")if phrase .strip ()]
+
+        auto_complete_deals =sett .get ("auto_complete_deals")
+        auto_complete_deals ["excluded"].append (keyphrases )
+        sett .set ("auto_complete_deals",auto_complete_deals )
+
+        await throw_float_message (
+        state =state ,
+        message =message ,
+        text =templ .settings_new_complete_excluded_float_text (
+        "The subject has been successfully added to exceptions for confirmation."
+        ),
+        reply_markup =templ .back_kb (calls .ExcludedCompleteDealsPagination (page =last_page ).pack ())
+        )
+    except Exception as e :
+        await throw_float_message (
+        state =state ,
+        message =message ,
+        text =templ .settings_new_complete_excluded_float_text (e ),
+        reply_markup =templ .back_kb (calls .ExcludedCompleteDealsPagination (page =last_page ).pack ())
+        )
+
+
+@router .message (
+states .CompleteDealsStates .waiting_for_new_excluded_complete_deals_keyphrases_file ,
+F .document .file_name .lower ().endswith ('.txt')
+)
+async def handler_waiting_for_new_excluded_complete_deals_keyphrases_file (message :types .Message ,state :FSMContext ):
+    try :
+        await state .set_state (None )
+
+        data =await state .get_data ()
+        last_page =data .get ("last_page",0 )
+
+        file =await message .bot .get_file (message .document .file_id )
+        downloaded_file =await message .bot .download_file (file .file_path )
+        file_content =downloaded_file .read ().decode ('utf-8')
+
+        keyphrases_list =[]
+        for line in file_content .splitlines ():
+            line =line .strip ()
+            if len (line )>0 :
+                keyphrases =[phrase .strip ()for phrase in line .split (",")if phrase .strip ()]
+                if len (keyphrases )>0 :
+                    keyphrases_list .append (keyphrases )
+
+        if len (keyphrases_list )<=0 :
+            raise Exception ("File does not contain valid key phrases")
+
+        auto_complete_deals =sett .get ("auto_complete_deals")
+        auto_complete_deals ["excluded"].extend (keyphrases_list )
+        sett .set ("auto_complete_deals",auto_complete_deals )
+
+        await throw_float_message (
+        state =state ,
+        message =message ,
+        text =templ .settings_new_complete_excluded_float_text (
+        f"✅ Успешно добавлено <b>{len (keyphrases_list )} предметов</b> из файла в исключения для подтверждения"
+        ),
+        reply_markup =templ .back_kb (calls .ExcludedCompleteDealsPagination (page =last_page ).pack ())
+        )
+    except Exception as e :
+        await throw_float_message (
+        state =state ,
+        message =message ,
+        text =templ .settings_new_complete_excluded_float_text (e ),
+        reply_markup =templ .back_kb (calls .ExcludedCompleteDealsPagination (page =last_page ).pack ())
+        )

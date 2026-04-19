@@ -1,41 +1,36 @@
-Here is the translation of the text to English, keeping the code unchanged:
+import textwrap 
+from aiogram .types import InlineKeyboardMarkup ,InlineKeyboardButton 
 
-```
-import textwrap
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from ..import callback_datas as calls 
 
-from .. import callback_datas as calls
-                
-        
-def instruction_text():
-    txt = textwrap.dedent(f"""
-        <b>📖 Instruction</b>
+
+def instruction_text ():
+    txt =textwrap .dedent (f"""
+        <b>📖 Инструкция</b>
     """)
-    return txt
+    return txt 
 
 
-def instruction_kb():
-    rows = [
-        [InlineKeyboardButton(text="⌨️ Commands", callback_data=calls.InstructionNavigation(to="commands").pack())],
-        [InlineKeyboardButton(text="⬅️ Back", callback_data=calls.MenuNavigation(to="default").pack())]
+def instruction_kb ():
+    rows =[
+    [InlineKeyboardButton (text ="Keyboard Commands",callback_data =calls .InstructionNavigation (to ="commands").pack ())],
+    [InlineKeyboardButton (text ="Backwards ⬅️",callback_data =calls .MenuNavigation (to ="default").pack ())]
     ]
-    kb = InlineKeyboardMarkup(inline_keyboard=rows)
-    return kb
+    kb =InlineKeyboardMarkup (inline_keyboard =rows )
+    return kb 
 
 
-def instruction_comms_text():
-    txt = textwrap.dedent(f"""
-        <b>⌨️ Commands</b>
+def instruction_comms_text ():
+    txt =textwrap .dedent (f"""
+        <b>⌨️ Команды</b>
                           
-        ・ <code>!commands</code> — displays a menu with available commands for the customer
-        ・ <code>!seller</code> — notifies and summons the seller to dialogue with the customer (sends you a Telegram message asking for help)
+        ・ <code>!команды</code> — отображает меню с доступными для покупателя командами
+        ・ <code>!продавец</code> — уведомляет и вызывает продавца в диалог с покупателем (пишет вам в Telegram сообщение с просьбой о помощи)
     """)
-    return txt
+    return txt 
 
 
-def instruction_comms_kb():
-    rows = [[InlineKeyboardButton(text="⬅️ Back", callback_data=calls.InstructionNavigation(to="default").pack())]]
-    kb = InlineKeyboardMarkup(inline_keyboard=rows)
-    return kb
-```
-
+def instruction_comms_kb ():
+    rows =[[InlineKeyboardButton (text ="Backwards ⬅️",callback_data =calls .InstructionNavigation (to ="default").pack ())]]
+    kb =InlineKeyboardMarkup (inline_keyboard =rows )
+    return kb 

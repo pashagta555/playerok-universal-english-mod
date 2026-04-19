@@ -1,34 +1,69 @@
-The provided code is in Python and appears to be related to Telegram bot development using the Aiogram library. The translation of this text into English is unnecessary because it already seems to be written in a language that uses Cyrillic script, which is likely Russian or Ukrainian.
+import textwrap 
+from aiogram .types import InlineKeyboardMarkup ,InlineKeyboardButton 
 
-However, I can translate the text to make it more understandable:
+from settings import Settings as sett 
 
-**settings_restore_text()**
+from ..import callback_datas as calls 
 
-This function generates a formatted string describing the settings for automatic item restoration. The string includes:
 
-* Title: ♻️ Авто-восстановление (Automatic Item Restoration)
-* Subsection 1: ♻️ Авто-восстановление предметов (Automatic Item Restoration Options)
-	+ Sold items: включено (enabled) or выключено (disabled), depending on the configuration
-	+ Expired items: включено (enabled) or выключено (disabled), depending on the configuration
-* Subsection 2: Восстанавливать (Restore Items)
-	+ All items or specific included/excluded items, depending on the configuration
-* Section 3: Notes
-	+ A brief description of what automatic item restoration does
+def settings_restore_text ():
+    config =sett .get ("config")
 
-**settings_restore_kb()**
+    auto_restore_items_sold ="Enabled"if config ["playerok"]["auto_restore_items"]["sold"]else "Disabled"
+    auto_restore_items_expired ="Enabled"if config ["playerok"]["auto_restore_items"]["expired"]else "❌ Disabled"
+    auto_restore_items_all ="All subjects"if config ["playerok"]["auto_restore_items"]["all"]else "Specified subjects"
+    auto_restore_items =sett .get ("auto_restore_items")
+    auto_restore_items_included =len (auto_restore_items ["included"])
+    auto_restore_items_excluded =len (auto_restore_items ["excluded"])
 
-This function generates an inline keyboard with buttons for adjusting settings related to automatic item restoration. The keyboard includes:
+    txt =textwrap .dedent (f"""
+        <b>♻️ Авто-восстановление</b>
 
-* Three rows:
-	1. Button to switch automatic restoration for sold items
-	2. Button to switch automatic restoration for expired items
-	3. Button to switch automatic restoration mode (all or specific included/excluded items)
-* Fourth row: Buttons to navigate between the first three rows and display the current state of the settings
+        <b>♻️ Авто-восстановление предметов:</b>
+        <b>・ Проданные:</b> {auto_restore_items_sold }
+        <b>・ Истёкшие:</b> {auto_restore_items_expired }
 
-**settings_restore_float_text()**
+        <b>📦 Восстанавливать:</b> {auto_restore_items_all }
 
-This function generates a formatted string with a placeholder for displaying additional information related to automatic item restoration. The string includes:
+        <b>➕ Включенные:</b> {auto_restore_items_included }
+        <b>➖ Исключенные:</b> {auto_restore_items_excluded }
 
-* Title: ♻️ Автор-восстановление (Automatic Item Restoration)
-* Placeholder text that will be replaced with actual content
+        <b>Что за авто-восстановление предметов?</b>
+        Эта функция позволит автоматически восстанавливать (заново выставлять) предмет, который только что купили или который истёк, чтобы он снова был на продаже. Предмет будет выставлен с тем же статусом приоритета, что и был раньше.
 
+        <b>Примечание:</b>
+        Если вы выберете "Все предметы", то будут восстанавливаться все товары, кроме тех, что указаны в исключениях. Если вы выберете "Указанные предметы", то будут восстанавливаться только те товары, которые вы добавите во включенные.
+    """)
+    return txt 
+
+
+def settings_restore_kb ():
+    config =sett .get ("config")
+
+    auto_restore_items_sold ="Enabled"if config ["playerok"]["auto_restore_items"]["sold"]else "Turned off"
+    auto_restore_items_expired ="Enabled"if config ["playerok"]["auto_restore_items"]["expired"]else "Disabled"
+    auto_restore_items_all ="All subjects"if config ["playerok"]["auto_restore_items"]["all"]else "Specified items"
+    auto_restore_items =sett .get ("auto_restore_items")
+    auto_restore_items_included =len (auto_restore_items ["included"])
+    auto_restore_items_excluded =len (auto_restore_items ["excluded"])
+
+    rows =[
+    [InlineKeyboardButton (text =f"🛒 Проданные: {auto_restore_items_sold }",callback_data ="switch_auto_restore_items_sold")],
+    [InlineKeyboardButton (text =f"⏰ Истёкшие: {auto_restore_items_expired }",callback_data ="switch_auto_restore_items_expired")],
+    [InlineKeyboardButton (text =f"📦 Восстанавливать: {auto_restore_items_all }",callback_data ="switch_auto_restore_items_all")],
+    [
+    InlineKeyboardButton (text =f"➕ Включенные: {auto_restore_items_included }",callback_data =calls .IncludedRestoreItemsPagination (page =0 ).pack ()),
+    InlineKeyboardButton (text =f"➖ Исключенные: {auto_restore_items_excluded }",callback_data =calls .ExcludedRestoreItemsPagination (page =0 ).pack ())
+    ],
+    [InlineKeyboardButton (text ="Backwards ⬅️",callback_data =calls .SettingsNavigation (to ="default").pack ())]
+    ]
+    kb =InlineKeyboardMarkup (inline_keyboard =rows )
+    return kb 
+
+
+def settings_restore_float_text (placeholder :str ):
+    txt =textwrap .dedent (f"""
+        <b>♻️ Автор-восстановление</b>
+        \n{placeholder }
+    """)
+    return txt 

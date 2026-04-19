@@ -1,25 +1,332 @@
-The text is already in English. It appears to be a Python code snippet that defines several classes and functions related to configuration files and settings management.
+import os 
+import json 
+import copy 
+import tempfile 
+from dataclasses import dataclass 
 
-Here's the breakdown:
 
-1. The `SettingsFile` class is defined using the `@dataclass` decorator from the `dataclasses` module. This class represents a settings file with attributes such as `name`, `path`, `need_restore`, and `default`.
-2. Three instances of the `SettingsFile` class are created: `CONFIG`, `MESSAGES`, and `CUSTOM_COMMANDS`. Each instance has its own set of default values.
-3. The `DATA` list is created to store all the settings files.
-4. Two functions are defined:
-	* `validate_config(config, default)`: checks if a given configuration dictionary matches the expected structure (i.e., it conforms to the standard template).
-	* `restore_config(config, default)`: restores missing parameters in a configuration dictionary by filling them with values from the standard template.
-5. The `get_json(path, default, need_restore=True)` function is defined to read and write JSON files:
-	+ It creates the file if it doesn't exist
-	+ Updates the file if new data is provided
-	+ Restores the file to its original state if needed (i.e., if `need_restore` is True)
-6. The `set_json(path, new)` function is defined to update a JSON file:
-	+ It writes the new data to a temporary file
-	+ Atomically replaces the existing file with the new one
+@dataclass 
+class SettingsFile :
+    name :str 
+    path :str 
+    need_restore :bool 
+    default :list |dict 
 
-The `Settings` class has two static methods:
 
-1. `get(name, data=DATA)`: retrieves the settings for a given name from the specified list of settings files.
-2. `set(name, new, data=DATA)`: updates the settings for a given name in the specified list of settings files.
+CONFIG =SettingsFile (
+name ="config",
+path ="bot_settings/config.json",
+need_restore =True ,
+default ={
+"playerok":{
+"api":{
+"token":"",
+"user_agent":"",
+"proxy":"",
+"requests_timeout":30 
+},
+"watermark":{
+"enabled":True ,
+"value":"©️ 𝗣𝗹𝗮𝘆𝗲𝗿𝗼𝗸 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗮𝗹"
+},
+"read_chat":{
+"enabled":True 
+},
+"first_message":{
+"enabled":True 
+},
+"custom_commands":{
+"enabled":True 
+},
+"auto_deliveries":{
+"enabled":True 
+},
+"auto_restore_items":{
+"sold":True ,
+"expired":False ,
+"all":True 
+},
+"auto_complete_deals":{
+"enabled":False ,
+"all":True 
+},
+"auto_bump_items":{
+"enabled":False ,
+"interval":3600 ,
+"all":False 
+},
+"auto_withdrawal":{
+"enabled":False ,
+"interval":86400 ,
+"credentials_type":"",
+"card_id":"",
+"sbp_bank_id":"",
+"sbp_phone_number":"",
+"usdt_address":""
+},
+"tg_logging":{
+"enabled":True ,
+"chat_id":"",
+"events":{
+"new_user_message":True ,
+"new_system_message":True ,
+"new_deal":True ,
+"new_review":True ,
+"new_problem":True ,
+"deal_status_changed":True ,
+}
+},
+},
+"telegram":{
+"api":{
+"token":"",
+"proxy":""
+},
+"bot":{
+"password":"",
+"signed_users":[]
+}
+},
+"logs":{
+"max_file_size":300 
+}
+}
+)
+MESSAGES =SettingsFile (
+name ="messages",
+path ="bot_settings/messages.json",
+need_restore =True ,
+default ={
+"first_message":{
+"enabled":True ,
+"text":[
+"Hello, {username}, I'm a Playearo Bot Helper 🤖",
+"",
+"If you want to talk to the seller, write the command !seller for me to invite him into this dialogue.",
+"",
+"To know all my commands, write !commands"
+]
+},
+"cmd_error":{
+"enabled":True ,
+"text":[
+"Invalid command entry error: {error}"
+]
+},
+"cmd_commands":{
+"enabled":True ,
+"text":[
+"Main Commands:",
+"• !seller - notify and invite the seller to this chat"
+]
+},
+"cmd_seller":{
+"enabled":True ,
+"text":[
+"Salesman was invited to this chat. Wait for him to connect to the dialogue..."
+]
+},
+"new_deal":{
+"enabled":False ,
+"text":[
+"Thank you for the purchase "{deal_item_name}"",
+""
+"Seller may not be present now to call him, use the command !seller."
+]
+},
+"deal_pending":{
+"enabled":False ,
+"text":[
+"Send necessary data to enable me to complete your order ⏰"
+]
+},
+"deal_sent":{
+"enabled":False ,
+"text":[
+"I confirmed the execution of your order! If you didn't receive the purchased product, write this in chat."
+]
+},
+"deal_confirmed":{
+"enabled":False ,
+"text":[
+"Thank you for a successful deal. I'd be happy if you left a review. Looking forward to seeing you in my store next time, good luck!"
+]
+},
+"deal_refunded":{
+"enabled":False ,
+"text":[
+"Order was returned. Hope this deal didn't cause you any inconvenience. Waiting for you at my store next time, good luck!"
+]
+},
+"new_review":{
+"enabled":False ,
+"text":[
+"Thank you for 5⭐ review! I hope you enjoyed the quality of work performed."
+]
+}
+}
+)
+CUSTOM_COMMANDS =SettingsFile (
+name ="custom_commands",
+path ="bot_settings/custom_commands.json",
+need_restore =False ,
+default ={}
+)
+AUTO_DELIVERIES =SettingsFile (
+name ="auto_deliveries",
+path ="bot_settings/auto_deliveries.json",
+need_restore =False ,
+default =[]
+)
+AUTO_RESTORE_ITEMS =SettingsFile (
+name ="auto_restore_items",
+path ="bot_settings/auto_restore_items.json",
+need_restore =False ,
+default ={
+"included":[],
+"excluded":[]
+}
+)
+AUTO_COMPLETE_DEALS =SettingsFile (
+name ="auto_complete_deals",
+path ="bot_settings/auto_complete_deals.json",
+need_restore =False ,
+default ={
+"included":[],
+"excluded":[]
+}
+)
+AUTO_BUMP_ITEMS =SettingsFile (
+name ="auto_bump_items",
+path ="bot_settings/auto_bump_items.json",
+need_restore =False ,
+default ={
+"included":[],
+"excluded":[]
+}
+)
+DATA =[CONFIG ,MESSAGES ,CUSTOM_COMMANDS ,AUTO_DELIVERIES ,AUTO_RESTORE_ITEMS ,AUTO_COMPLETE_DEALS ,AUTO_BUMP_ITEMS ]
 
-Note that this code does not contain any specific business logic or functionality related to the bot or its features. It appears to be a generic framework for managing configuration files and settings.
 
+def validate_config (config ,default ):
+    "Checks the structure of the config against the standard template.
+
+:param config: The current config.
+:type config: dict
+
+:param default: The standard config template.
+:type default: dict
+
+:return: True if the structure is valid, otherwise False.
+:rtype: bool"
+
+    for key ,value in default .items ():
+        if key not in config :
+            return False 
+        if type (config [key ])is not type (value ):
+            return False 
+        if isinstance (value ,dict )and isinstance (config [key ],dict ):
+            if not validate_config (config [key ],value ):
+                return False 
+    return True 
+
+
+def restore_config (config :dict ,default :dict ):
+    "Restores missing parameters in the config from a standard template.
+And removes parameters from the config that are not present in the standard template.
+
+:param config: Current config.
+:type config: dict
+
+:param default: Standard config template.
+:type default: dict
+
+:return: Restored config.
+:rtype: dict"
+    config =copy .deepcopy (config )
+
+    def check_default (config ,default ):
+        for key ,value in dict (default ).items ():
+            if key not in config :
+                config [key ]=value 
+            elif type (value )is not type (config [key ]):
+                config [key ]=value 
+            elif isinstance (value ,dict )and isinstance (config [key ],dict ):
+                check_default (config [key ],value )
+        return config 
+
+    config =check_default (config ,default )
+    return config 
+
+
+def get_json (path :str ,default :dict ,need_restore :bool =True )->dict :
+    "Gets data from the settings file. Creates a settings file if it doesn't exist. Adds new data if there is any.
+
+:param path: Path to the json file.
+:type path: `str`
+
+:param default: Default template for the file.
+:type default: `dict`
+
+:param need_restore: Is it necessary to check the integrity of the config?
+:type need_restore: `bool`"
+
+    folder_path =os .path .dirname (path )
+    if not os .path .exists (folder_path ):
+        os .makedirs (folder_path )
+
+    try :
+        with open (path ,'r',encoding ='utf-8')as f :
+            config =json .load (f )
+        if need_restore :
+            new_config =restore_config (config ,default )
+            if config !=new_config :
+                config =new_config 
+                with open (path ,'w',encoding ='utf-8')as f :
+                    json .dump (config ,f ,indent =4 ,ensure_ascii =False )
+    except :
+        config =default 
+        with open (path ,'w',encoding ='utf-8')as f :
+            json .dump (config ,f ,indent =4 ,ensure_ascii =False )
+    finally :
+        return config 
+
+
+def set_json (path :str ,new :dict ):
+    "Sets new data in the settings file.
+
+:param path: Path to a json file.
+:type path: str
+
+:param new: New data.
+:type new: dict"
+    dir_name =os .path .dirname (path )
+
+    with tempfile .NamedTemporaryFile (# atomic file recording
+    "w",
+    encoding ="utf-8",
+    dir =dir_name ,
+    delete =False 
+    )as tmp :
+        json .dump (new ,tmp ,ensure_ascii =False ,indent =4 )
+        tmp .flush ()
+        os .fsync (tmp .fileno ())
+
+    os .replace (tmp .name ,path )
+
+
+class Settings :
+
+    @staticmethod 
+    def get (name :str ,data :list [SettingsFile ]=DATA )->dict |list |None :
+        try :
+            file =[file for file in data if file .name ==name ][0 ]
+            return get_json (file .path ,file .default ,file .need_restore )
+        except :return None 
+
+    @staticmethod 
+    def set (name :str ,new :list |dict ,data :list [SettingsFile ]=DATA ):
+        try :
+            file =[file for file in data if file .name ==name ][0 ]
+            set_json (file .path ,new )
+        except :pass 

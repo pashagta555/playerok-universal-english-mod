@@ -1,2 +1,0 @@
-I'm happy to help! However, I don't see any text to translate. Could you please provide the text you'd like me to translate?
-

@@ -1,14 +1,73 @@
-The provided code is in Python and seems to be related to a Telegram bot using the aiogram library. It defines three functions: `settings_deliv_page_text`, `settings_deliv_page_kb`, and two identical `settings_deliv_page_float_text` functions.
+import textwrap 
+from aiogram .types import InlineKeyboardMarkup ,InlineKeyboardButton 
 
-Here's the translation:
+from settings import Settings as sett 
 
-**No changes were made to the code**
+from ..import callback_datas as calls 
 
-The code is already in English, so there's no need for translation. However, I can provide a brief explanation of what each function does:
 
-1. `settings_deliv_page_text(index: int)`: This function generates a text message for the settings delivery page. It takes an index as input and uses it to retrieve information about auto-delivery settings from a configuration file.
-2. `settings_deliv_page_kb(index: int, page: int = 0)`: This function creates an inline keyboard for the settings delivery page. It also takes an index and a page number as inputs and uses them to configure the keyboard's buttons.
-3. The two `settings_deliv_page_float_text(placeholder: str)` functions are identical and seem to be used to generate a floating text message with a placeholder.
+def settings_deliv_page_text (index :int ):
+    auto_deliveries =sett .get ("auto_deliveries")
+    deliv =auto_deliveries [index ]
 
-These functions appear to be part of a Telegram bot that allows users to manage auto-delivery settings, such as setting up delivery pieces or messages, and viewing the status of these settings.
+    piece =deliv .get ("piece")
+    piece_str ="Individually"if piece else "Message"
+    keyphrases ="</code>, <code>".join (deliv .get ("keyphrases"))or "Not assigned"
 
+    if piece :
+        total_goods =len (deliv .get ("goods",[]))
+        part =f"<b>📦 Товары:</b> {total_goods } шт."
+    else :
+        message ="\n".join (deliv .get ("message"))or "Not set"
+        part =f"<b>💬 Сообщение:</b> <blockquote>{message }</blockquote>"
+
+    txt =textwrap .dedent (f"""
+        <b>📄🚀 Страница авто-выдачи</b>
+
+        <b>⚡ Тип выдачи:</b> {piece_str }
+        <b>🔑 Ключевые фразы:</b> <code>{keyphrases }</code>
+        
+        {part }
+    """)
+    return txt 
+
+
+def settings_deliv_page_kb (index :int ,page :int =0 ):
+    auto_deliveries =sett .get ("auto_deliveries")
+    deliv =auto_deliveries [index ]
+
+    piece =deliv .get ("piece")
+    piece_str ="Individually"if piece else "Message"
+    keyphrases =", ".join (deliv .get ("keyphrases"))or "Not set"
+
+    total_goods =len (deliv .get ("goods",[]))
+    message ="\n".join (deliv .get ("message",[]))or "Not Set"
+
+    rows =[
+    [InlineKeyboardButton (text =f"⚡ Тип выдачи: {piece_str }",callback_data ="switch_auto_delivery_piece")],
+    [InlineKeyboardButton (text =f"🔑 Ключевые фразы: {keyphrases }",callback_data ="enter_auto_delivery_keyphrases")],
+    [
+    InlineKeyboardButton (text =f"💬 Сообщение: {message }",callback_data ="enter_auto_delivery_message")
+    if not piece else InlineKeyboardButton (text =f"📦 Товары: {total_goods } шт. | 👈 Нажми для редактирования",callback_data =calls .DelivGoodsPagination (page =0 ).pack ())
+    ],
+    [InlineKeyboardButton (text ="Delete",callback_data ="confirm_deleting_auto_delivery")],
+    [InlineKeyboardButton (text ="Backwards ⬅️",callback_data =calls .AutoDeliveriesPagination (page =page ).pack ())]
+    ]
+    kb =InlineKeyboardMarkup (inline_keyboard =rows )
+    return kb 
+
+
+def settings_deliv_page_float_text (placeholder :str ):
+    txt =textwrap .dedent (f"""
+        <b>📄🚀 Страница авто-выдачи</b>
+        \n{placeholder }
+    """)
+    return txt 
+
+
+def settings_deliv_page_float_text (placeholder :str ):
+    txt =textwrap .dedent (f"""
+        <b>📄🚀 Страница авто-выдачи</b>
+        \n{placeholder }
+    """)
+    return txt 

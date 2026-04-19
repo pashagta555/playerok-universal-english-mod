@@ -1,79 +1,72 @@
-I'll translate the text, keeping the code unchanged. Here is the translation:
+import math 
+import textwrap 
+from aiogram .types import InlineKeyboardMarkup ,InlineKeyboardButton 
 
-```
-import math
-import textwrap
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from settings import Settings as sett 
 
-from settings import Settings as sett
-
-from .. import callback_datas as calls
+from ..import callback_datas as calls 
 
 
-def settings_deliv_goods_text(index=0):
-    goods = sett.get("auto_deliveries")[index].get("goods", [])
-    txt = textwrap.dedent(f"""
-        <b>📦 Deliveries</b>
+def settings_deliv_goods_text (index =0 ):
+    goods =sett .get ("auto_deliveries")[index ].get ("goods",[])
+    txt =textwrap .dedent (f"""
+        <b>📦 Товары авто-выдачи</b>
 
-        Total of <b>{len(goods)}</b> goods:
+        Всего <b>{len (goods )}</b> товаров:
     """)
-    return txt
+    return txt 
 
 
-def settings_deliv_goods_kb(index=0, page=0):
-    goods = sett.get("auto_deliveries")[index].get("goods", [])
-    
-    rows = []
-    items_per_page = 7
-    total_pages = math.ceil(len(goods) / items_per_page)
-    total_pages = total_pages if total_pages > 0 else 1
+def settings_deliv_goods_kb (index =0 ,page =0 ):
+    goods =sett .get ("auto_deliveries")[index ].get ("goods",[])
 
-    if page < 0: page = 0
-    elif page >= total_pages: page = total_pages - 1
+    rows =[]
+    items_per_page =7 
+    total_pages =math .ceil (len (goods )/items_per_page )
+    total_pages =total_pages if total_pages >0 else 1 
 
-    start_offset = page * items_per_page
-    end_offset = start_offset + items_per_page
+    if page <0 :page =0 
+    elif page >=total_pages :page =total_pages -1 
 
-    for good in list(goods)[start_offset:end_offset]:
-        rows.append([
-            InlineKeyboardButton(text=str(good), callback_data="123"),
-            InlineKeyboardButton(text="🗑️", callback_data=calls.DeleteDelivGood(index=goods.index(good)).pack()),
+    start_offset =page *items_per_page 
+    end_offset =start_offset +items_per_page 
+
+    for good in list (goods )[start_offset :end_offset ]:
+        rows .append ([
+        InlineKeyboardButton (text =str (good ),callback_data ="123"),
+        InlineKeyboardButton (text ="🗑️",callback_data =calls .DeleteDelivGood (index =goods .index (good )).pack ()),
         ])
 
-    if total_pages > 1:
-        buttons_row = []
-        btn_back = InlineKeyboardButton(text="←", callback_data=calls.DelivGoodsPagination(page=page-1).pack()) if page > 0 else InlineKeyboardButton(text="🛑", callback_data="123")
-        buttons_row.append(btn_back)
+    if total_pages >1 :
+        buttons_row =[]
+        btn_back =InlineKeyboardButton (text ="←",callback_data =calls .DelivGoodsPagination (page =page -1 ).pack ())if page >0 else InlineKeyboardButton (text ="🛑",callback_data ="123")
+        buttons_row .append (btn_back )
 
-        btn_pages = InlineKeyboardButton(text=f"{page+1}/{total_pages}", callback_data="enter_auto_delivery_goods_page")
-        buttons_row.append(btn_pages)
+        btn_pages =InlineKeyboardButton (text =f"{page +1 }/{total_pages }",callback_data ="enter_auto_delivery_goods_page")
+        buttons_row .append (btn_pages )
 
-        btn_next = InlineKeyboardButton(text="→", callback_data=calls.DelivGoodsPagination(page=page+1).pack()) if page < total_pages - 1 else InlineKeyboardButton(text="🛑", callback_data="123")
-        buttons_row.append(btn_next)
-        rows.append(buttons_row)
+        btn_next =InlineKeyboardButton (text ="→",callback_data =calls .DelivGoodsPagination (page =page +1 ).pack ())if page <total_pages -1 else InlineKeyboardButton (text ="🛑",callback_data ="123")
+        buttons_row .append (btn_next )
+        rows .append (buttons_row )
 
-    rows.append([InlineKeyboardButton(text="➕ Add", callback_data="enter_auto_delivery_goods_add")])
-    rows.append([InlineKeyboardButton(text="⬅️ Back", callback_data=calls.AutoDeliveryPage(index=index).pack())])
+    rows .append ([InlineKeyboardButton (text ="Add",callback_data ="enter_auto_delivery_goods_add")])
+    rows .append ([InlineKeyboardButton (text ="Backwards ⬅️",callback_data =calls .AutoDeliveryPage (index =index ).pack ())])
 
-    kb = InlineKeyboardMarkup(inline_keyboard=rows)
-    return kb
+    kb =InlineKeyboardMarkup (inline_keyboard =rows )
+    return kb 
 
 
-def settings_deliv_goods_float_text(placeholder: str):
-    txt = textwrap.dedent(f"""
-        <b>📦 Deliveries</b>
-        \n{placeholder}
+def settings_deliv_goods_float_text (placeholder :str ):
+    txt =textwrap .dedent (f"""
+        <b>📦 Товары авто-выдачи</b>
+        \n{placeholder }
     """)
-    return txt
+    return txt 
 
 
-def settings_new_deliv_goods_float_text(placeholder: str):
-    txt = textwrap.dedent(f"""
-        <b>➕📦 Adding a new delivery item</b>
-        \n{placeholder}
+def settings_new_deliv_goods_float_text (placeholder :str ):
+    txt =textwrap .dedent (f"""
+        <b>➕📦 Добавление товара</b>
+        \n{placeholder }
     """)
-    return txt
-```
-
-Note that I translated the Russian text to English, and kept the code structure and syntax unchanged.
-
+    return txt 

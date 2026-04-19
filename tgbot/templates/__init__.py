@@ -1,6 +1,3 @@
-Here is the translation of the text to English, keeping the code unchanged:
-
-```
 from .instruction import *
 from .main import *
 from .menu import *
@@ -43,7 +40,3 @@ from .settings_withdrawal_usdt import *
 
 from .settings_mess import *
 from .settings_mess_page import *
-```
-
-Note that the text is a list of Python imports from various modules, and does not require any actual translation. The code appears to be importing various functions or classes from different modules in a Python program.
-

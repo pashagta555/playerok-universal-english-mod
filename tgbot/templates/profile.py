@@ -1,33 +1,55 @@
-I can translate the text for you. However, I will keep the code unchanged.
+import textwrap 
+from aiogram .types import InlineKeyboardMarkup ,InlineKeyboardButton 
+from datetime import datetime 
 
-The translated text is:
+from ..import callback_datas as calls 
 
-<b>👤 My Profile</b>
 
-<b>🆔 ID:</b> <code>{profile.id}</code>
-<b>👤 Nickname:</b> {profile.username}
-<b>📪 Email:</b> {profile.email}
-<b>💬 Reviews:</b> {profile.reviews_count} (<b>Ratings:</b> {profile.rating} ⭐)
+def profile_text ():
+    from plbot .playerokbot import get_playerok_bot 
 
-<b>💰 Balance:</b> {profile.balance.value if profile.balance else 0}₽
-<b>・ 👜 Available:</b> {profile.balance.available if profile.balance else 0}₽
-<b>・ ⌛ Pending Income:</b> {profile.balance.pending_income if profile.balance else 0}₽
-<b>・ ❄️ Frozen:</b> {profile.balance.frozen if profile.balance else 0}₽
+    plbot =get_playerok_bot ()
+    plbot .refresh_account ()
 
-<b>📦 Items:</b>
-<b>・ ➕ Active:</b> {profile.stats.items.total - profile.stats.items.finished}
-<b>・ ➖ Finished:</b> {profile.stats.items.finished}
-<b>・ ♾️ Total:</b> {profile.stats.items.total}
+    acc =plbot .account 
+    profile =acc .profile 
 
-<b>🛍️ Purchases:</b>
-<b>・ ➕ Active:</b> {profile.stats.deals.incoming.total - profile.stats.deals.incoming.finished}
-<b>・ ➖ Finished:</b> {profile.stats.deals.incoming.finished}
-<b>・ ♾️ Total:</b> {profile.stats.deals.incoming.total}
+    txt =textwrap .dedent (f"""
+        <b>👤 Мой профиль</b>
 
-<b>🛒 Sales:</b>
-<b>・ ➕ Active:</b> {profile.stats.deals.outgoing.total - profile.stats.deals.outgoing.finished}
-<b>・ ➖ Finished:</b> {profile.stats.deals.outgoing.finished}
-<b>・ ♾️ Total:</b> {profile.stats.deals.outgoing.total}
+        <b>🆔 ID:</b> <code>{profile .id }</code>
+        <b>👤 Никнейм:</b> {profile .username }
+        <b>📪 Email:</b> {profile .email }
+        <b>💬 Отзывы:</b> {profile .reviews_count } (<b>Рейтинг:</b> {profile .rating } ⭐)
+        
+        <b>💰 Баланс:</b> {profile .balance .value if profile .balance else 0 }₽
+        <b>・ 👜 Доступно:</b> {profile .balance .available if profile .balance else 0 }₽
+        <b>・ ⌛ В процессе:</b> {profile .balance .pending_income if profile .balance else 0 }₽
+        <b>・ ❄️ Заморожено:</b> {profile .balance .frozen if profile .balance else 0 }₽
+        
+        <b>📦 Предметы:</b>
+        <b>・ ➕ Активные:</b> {profile .stats .items .total -profile .stats .items .finished }
+        <b>・ ➖ Завершённые:</b> {profile .stats .items .finished }
+        <b>・ ♾️ Всего:</b> {profile .stats .items .total }
+        
+        <b>🛍️ Покупки:</b>
+        <b>・ ➕ Активные:</b> {profile .stats .deals .incoming .total -profile .stats .deals .incoming .finished }
+        <b>・ ➖ Завершённые:</b> {profile .stats .deals .incoming .finished }
+        <b>・ ♾️ Всего:</b> {profile .stats .deals .incoming .total }
 
-<b>📅 Registration Date:</b> {datetime.fromisoformat(profile.created_at.replace('Z', '+00:00')).strftime('%d.%m.%Y %H:%M:%S')}
+        <b>🛒 Продажи:</b>
+        <b>・ ➕ Активные:</b> {profile .stats .deals .outgoing .total -profile .stats .deals .outgoing .finished }
+        <b>・ ➖ Завершено:</b> {profile .stats .deals .outgoing .finished }
+        <b>・ ♾️ Всего:</b> {profile .stats .deals .outgoing .total }
+        
+        <b>📅 Дата регистрации:</b> {datetime .fromisoformat (profile .created_at .replace ('Z','+00:00')).strftime ('%d.%m.%Y %H:%M:%S')}
+    """)
+    return txt 
 
+
+def profile_kb ():
+    rows =[
+    [InlineKeyboardButton (text ="Backwards ⬅️",callback_data =calls .MenuNavigation (to ="default").pack ()),]
+    ]
+    kb =InlineKeyboardMarkup (inline_keyboard =rows )
+    return kb 

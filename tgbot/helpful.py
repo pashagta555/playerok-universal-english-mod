@@ -1,163 +1,160 @@
-I can translate the text to English. Here is the translation:
-
-from aiogram.fsm.context import FSMContext
-from aiogram.types import (
-    InlineKeyboardMarkup, 
-    Message, 
-    CallbackQuery, 
-    InputMediaPhoto, 
-    FSInputFile
+from aiogram .fsm .context import FSMContext 
+from aiogram .types import (
+InlineKeyboardMarkup ,
+Message ,
+CallbackQuery ,
+InputMediaPhoto ,
+FSInputFile 
 )
-from aiogram.exceptions import TelegramAPIError, TelegramBadRequest
+from aiogram .exceptions import TelegramAPIError ,TelegramBadRequest 
 
-from . import templates as templ
+from .import templates as templ 
 
 
-async def do_auth(message: Message, state: FSMContext) -> Message | None:
-    from . import states
+async def do_auth (message :Message ,state :FSMContext )->Message |None :
+    from .import states 
 
-    await state.set_state(states.SystemStates.waiting_for_password)
-    return await throw_float_message(
-        state=state,
-        message=message,
-        text=templ.sign_text(
-            '🔑 Enter the password specified in your bot configuration ↓'
-            '\n\n<span class="tg-spoiler">If you forgot, you can check it directly in the configuration file by path bot_settings/config.json, parameter password in Telegram.bot section</span>'
-        ),
-        reply_markup=templ.destroy_kb()
+    await state .set_state (states .SystemStates .waiting_for_password )
+    return await throw_float_message (
+    state =state ,
+    message =message ,
+    text =templ .sign_text (
+    'Enter the key-password specified by you in the bot's config down below 🔑'
+    'If you forgot it, you can look at it directly in the config by path bot_settings/config.json, parameter password in the Telegram.bot section'
+    ),
+    reply_markup =templ .destroy_kb ()
     )
 
 
-async def get_accent_message_id(state: FSMContext, message: Message, bot) -> int | None:
-    data = await state.get_data()
+async def get_accent_message_id (state :FSMContext ,message :Message ,bot )->int |None :
+    data =await state .get_data ()
 
-    if message.from_user and message.from_user.id != bot.id:
-        return data.get("accent_message_id")
+    if message .from_user and message .from_user .id !=bot .id :
+        return data .get ("accent_message_id")
 
-    return message.message_id
-
-
-def need_new_message(message: Message, bot, send: bool) -> bool:
-    if send:
-        return True
-    
-    if message.text and message.from_user.id != bot.id:
-        return message.text.startswith('/')
-
-    return False
+    return message .message_id 
 
 
-async def try_edit_message(bot, chat_id, message_id, text, photo, reply_markup, callback):
-    try:
-        if photo:
-            media = InputMediaPhoto(
-                media=FSInputFile(photo),
-                caption=text,
-                parse_mode="HTML"
+def need_new_message (message :Message ,bot ,send :bool )->bool :
+    if send :
+        return True 
+
+    if message .text and message .from_user .id !=bot .id :
+        return message .text .startswith ('/')
+
+    return False 
+
+
+async def try_edit_message (bot ,chat_id ,message_id ,text ,photo ,reply_markup ,callback ):
+    try :
+        if photo :
+            media =InputMediaPhoto (
+            media =FSInputFile (photo ),
+            caption =text ,
+            parse_mode ="HTML"
             )
-            return await bot.edit_message_media(
-                chat_id=chat_id,
-                message_id=message_id,
-                media=media,
-                reply_markup=reply_markup
+            return await bot .edit_message_media (
+            chat_id =chat_id ,
+            message_id =message_id ,
+            media =media ,
+            reply_markup =reply_markup 
             )
-        return await bot.edit_message_text(
-            chat_id=chat_id,
-            message_id=message_id,
-            text=text,
-            reply_markup=reply_markup,
-            parse_mode="HTML"
+        return await bot .edit_message_text (
+        chat_id =chat_id ,
+        message_id =message_id ,
+        text =text ,
+        reply_markup =reply_markup ,
+        parse_mode ="HTML"
         )
 
-    except TelegramAPIError as e:
-        msg = e.message.lower()
+    except TelegramAPIError as e :
+        msg =e .message .lower ()
 
-        if "message to edit not found" in msg:
-            return None
+        if "message to edit not found"in msg :
+            return None 
 
-        if "message is not modified" in msg:
-            if callback:
-                await bot.answer_callback_query(callback.id, cache_time=0)
+        if "message is not modified"in msg :
+            if callback :
+                await bot .answer_callback_query (callback .id ,cache_time =0 )
             return "not_modified"
 
-        if "query is too old" in msg:
+        if "query is too old"in msg :
             return "callback_expired"
 
-        raise
+        raise 
 
 
-async def send_new_message(bot, chat_id, text, photo, reply_markup):
-    if photo:
-        return await bot.send_photo(
-            chat_id=chat_id,
-            photo=FSInputFile(photo),
-            caption=text,
-            reply_markup=reply_markup,
-            parse_mode="HTML"
+async def send_new_message (bot ,chat_id ,text ,photo ,reply_markup ):
+    if photo :
+        return await bot .send_photo (
+        chat_id =chat_id ,
+        photo =FSInputFile (photo ),
+        caption =text ,
+        reply_markup =reply_markup ,
+        parse_mode ="HTML"
         )
-    return await bot.send_message(
-        chat_id=chat_id,
-        text=text,
-        reply_markup=reply_markup,
-        parse_mode="HTML"
+    return await bot .send_message (
+    chat_id =chat_id ,
+    text =text ,
+    reply_markup =reply_markup ,
+    parse_mode ="HTML"
     )
 
 
-async def throw_float_message(
-    state: FSMContext,
-    message: Message,
-    text: str = None,
-    reply_markup: InlineKeyboardMarkup = None,
-    callback: CallbackQuery = None,
-    photo: str = None,
-    send: bool = False
-) -> Message | None:
-    
-    if not text and not photo:
-        return None
+async def throw_float_message (
+state :FSMContext ,
+message :Message ,
+text :str =None ,
+reply_markup :InlineKeyboardMarkup =None ,
+callback :CallbackQuery =None ,
+photo :str =None ,
+send :bool =False 
+)->Message |None :
 
-    from .telegrambot import get_telegram_bot
-    bot = get_telegram_bot().bot
+    if not text and not photo :
+        return None 
 
-    accent_id = await get_accent_message_id(state, message, bot)
-    new_message_needed = need_new_message(message, bot, send)
+    from .telegrambot import get_telegram_bot 
+    bot =get_telegram_bot ().bot 
 
-    mess = None
+    accent_id =await get_accent_message_id (state ,message ,bot )
+    new_message_needed =need_new_message (message ,bot ,send )
 
-    if accent_id and not new_message_needed:
-        mess = await try_edit_message(
-            bot=bot,
-            chat_id=message.chat.id,
-            message_id=accent_id,
-            text=text,
-            photo=photo,
-            reply_markup=reply_markup,
-            callback=callback
+    mess =None 
+
+    if accent_id and not new_message_needed :
+        mess =await try_edit_message (
+        bot =bot ,
+        chat_id =message .chat .id ,
+        message_id =accent_id ,
+        text =text ,
+        photo =photo ,
+        reply_markup =reply_markup ,
+        callback =callback 
         )
 
-        if message.from_user.id != bot.id: 
-            try: 
-                await bot.delete_message(message.chat.id, message.message_id)
-            except TelegramBadRequest: 
-                pass
+        if message .from_user .id !=bot .id :
+            try :
+                await bot .delete_message (message .chat .id ,message .message_id )
+            except TelegramBadRequest :
+                pass 
 
-        if mess in ("not_modified", "callback_expired"):
-            return None
+        if mess in ("not_modified","callback_expired"):
+            return None 
 
-    if not mess:
-        mess = await send_new_message(
-            bot=bot,
-            chat_id=message.chat.id,
-            text=text,
-            photo=photo,
-            reply_markup=reply_markup
+    if not mess :
+        mess =await send_new_message (
+        bot =bot ,
+        chat_id =message .chat .id ,
+        text =text ,
+        photo =photo ,
+        reply_markup =reply_markup 
         )
 
-    if callback:
-        await bot.answer_callback_query(callback.id, cache_time=0)
+    if callback :
+        await bot .answer_callback_query (callback .id ,cache_time =0 )
 
-    if mess:
-        await state.update_data(accent_message_id=mess.message_id)
+    if mess :
+        await state .update_data (accent_message_id =mess .message_id )
 
-    return mess
-
+    return mess 

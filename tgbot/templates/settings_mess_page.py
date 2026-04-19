@@ -1,50 +1,45 @@
-Here is the translation of the provided Python code to English, keeping the code unchanged:
+import textwrap 
+from aiogram .types import InlineKeyboardMarkup ,InlineKeyboardButton 
 
-```Python
-import textwrap
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from settings import Settings as sett 
 
-from settings import Settings as sett
-
-from .. import callback_datas as calls
+from ..import callback_datas as calls 
 
 
-def settings_mess_page_text(message_id: int):
-    messages = sett.get("messages")
-    
-    enabled = "🟢 Enabled" if messages[message_id]["enabled"] else "🔴 Disabled"
-    message_text = "\n".join(messages[message_id]["text"]) or "❌ Not set"
-    
-    txt = textwrap.dedent(f"""
-        <b>💬 Message page</b>
+def settings_mess_page_text (message_id :int ):
+    messages =sett .get ("messages")
 
-        <b>🆔 Message ID:</b> {message_id}
-        <b>💡 Status:</b> {enabled}
-        <b>💬 Message text:</b> <blockquote>{message_text}</blockquote>
+    enabled ="Enabled"if messages [message_id ]["enabled"]else "Shut off"
+    message_text ="\n".join (messages [message_id ]["text"])or "❌ Not set"
+
+    txt =textwrap .dedent (f"""
+        <b>📄💬 Страница сообщения</b>
+
+        <b>🆔 ID сообщения:</b> {message_id }
+        <b>💡 Состояние:</b> {enabled }
+        <b>💬 Текст сообщения:</b> <blockquote>{message_text }</blockquote>
     """)
-    return txt
+    return txt 
 
 
-def settings_mess_page_kb(message_id: int, page: int = 0):
-    messages = sett.get("messages")
-    
-    enabled = "🟢 Enabled" if messages[message_id]["enabled"] else "🔴 Disabled"
-    message_text = "\n".join(messages[message_id]["text"]) or "❌ Not set"
-    
-    rows = [
-        [InlineKeyboardButton(text=f"💡 Status: {enabled}", callback_data="switch_message_enabled")],
-        [InlineKeyboardButton(text=f"💬 Message text: {message_text}", callback_data="enter_message_text")],
-        [InlineKeyboardButton(text="⬅️ Back", callback_data=calls.MessagesPagination(page=page).pack())]
+def settings_mess_page_kb (message_id :int ,page :int =0 ):
+    messages =sett .get ("messages")
+
+    enabled ="Enabled"if messages [message_id ]["enabled"]else "Disabled"
+    message_text ="\n".join (messages [message_id ]["text"])or "Not set"
+
+    rows =[
+    [InlineKeyboardButton (text =f"💡 Состояние: {enabled }",callback_data ="switch_message_enabled")],
+    [InlineKeyboardButton (text =f"💬 Текст сообщения: {message_text }",callback_data ="enter_message_text")],
+    [InlineKeyboardButton (text ="Backwards ⬅️",callback_data =calls .MessagesPagination (page =page ).pack ())]
     ]
-    kb = InlineKeyboardMarkup(inline_keyboard=rows)
-    return kb
+    kb =InlineKeyboardMarkup (inline_keyboard =rows )
+    return kb 
 
 
-def settings_mess_page_float_text(placeholder: str):
-    txt = textwrap.dedent(f"""
-        <b>💬 Message page</b>
-        \n{placeholder}
+def settings_mess_page_float_text (placeholder :str ):
+    txt =textwrap .dedent (f"""
+        <b>📄💬 Страница сообщения</b>
+        \n{placeholder }
     """)
-    return txt
-```
-
+    return txt 

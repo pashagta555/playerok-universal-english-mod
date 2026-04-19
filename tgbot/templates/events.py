@@ -1,8 +1,49 @@
-I will keep the code unchanged and only translate the English parts:
+from aiogram .types import InlineKeyboardMarkup ,InlineKeyboardButton 
+import textwrap 
+from datetime import datetime ,timedelta 
 
-1. No translation is needed because there are no English texts in this code.
+from data import Data as data 
+from settings import Settings as sett 
 
-However, here's what I assume the original text is about:
+from ..import callback_datas as calls 
 
-This is a part of a Telegram bot written using the Aiogram library. It appears to handle events related to automatic bumping of items and withdrawals of funds. The `events_text` function generates some descriptive text about these events, while the `events_kb` function creates an inline keyboard with buttons for interacting with these events.
 
+def events_text ():
+    config =sett .get ("config")
+    latest_events_times =data .get ("latest_events_times")
+
+    last_bump_items =(datetime .fromisoformat (latest_events_times ["auto_bump_items"]).strftime ("%d.%m.%Y %H:%M"))if latest_events_times .get ("auto_bump_items")else "It was not."
+    next_bump_items =((datetime .fromisoformat (latest_events_times ["auto_bump_items"])if latest_events_times .get ("auto_bump_items")else datetime .now ())+timedelta (seconds =config ["playerok"]["auto_bump_items"]["interval"])).strftime ("%d.%m.%Y %H:%M")
+    last_withdrawal =(datetime .fromisoformat (latest_events_times ["auto_withdrawal"]).strftime ("%d.%m.%Y %H:%M"))if latest_events_times .get ("auto_withdrawal")else "There was not"
+    next_withdrawal =((datetime .fromisoformat (latest_events_times ["auto_withdrawal"])if latest_events_times .get ("auto_withdrawal")else datetime .now ())+timedelta (seconds =config ["playerok"]["auto_withdrawal"]["interval"])).strftime ("%d.%m.%Y %H:%M")
+
+    txt =textwrap .dedent (f"""
+        <b>🚩 Ивенты</b>
+
+        <b>📆⬆️ Поднятие предметов:</b>
+        ・ <b>Последнее:</b> {last_bump_items }
+        ・ <b>Следующее:</b> {next_bump_items }
+
+        <b>📆💸 Вывод средств:</b>
+        ・ <b>Последнее:</b> {last_withdrawal }
+        ・ <b>Следующее:</b> {next_withdrawal }
+    """)
+    return txt 
+
+
+def events_kb ():
+    rows =[
+    [InlineKeyboardButton (text ="Lift objects",callback_data ="confirm_bump_items")],
+    [InlineKeyboardButton (text ="Withdraw funds",callback_data ="confirm_withdrawal")],
+    [InlineKeyboardButton (text ="Backwards ⬅️",callback_data =calls .MenuNavigation (to ="default").pack ())]
+    ]
+    kb =InlineKeyboardMarkup (inline_keyboard =rows )
+    return kb 
+
+
+def events_float_text (placeholder :str ):
+    txt =textwrap .dedent (f"""
+        <b>🚩 Ивенты</b>
+        \n{placeholder }
+    """)
+    return txt 

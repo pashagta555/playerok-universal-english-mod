@@ -1,24 +1,355 @@
-The provided code is written in Python and uses the aiogram library, which is a Telegram bot framework. The code defines several callback functions for handling various events in a settings menu of a Telegram bot.
+from aiogram import F ,Router 
+from aiogram .types import CallbackQuery 
+from aiogram .fsm .context import FSMContext 
 
-Here's a breakdown of what each function does:
+from core .modules import (
+get_module_by_uuid ,
+enable_module ,
+disable_module 
+)
+from settings import Settings as sett 
 
-1. `callback_switch_auto_restore_items_sold`: Toggles the "Auto Restore Items Sold" setting.
-2. `callback_switch_auto_restore_items_expired`: Toggles the "Auto Restore Items Expired" setting.
-3. `callback_switch_auto_restore_items_all`: Toggles the "Auto Restore All" setting.
-4. `callback_switch_auto_bump_items_enabled`: Toggles the "Auto Bump Items Enabled" setting.
-5. `callback_switch_auto_bump_items_all`: Toggles the "Auto Bump All" setting.
-6. `callback_switch_read_chat_enabled`: Toggles the "Read Chat Enabled" setting.
-7. `callback_switch_auto_complete_deals_enabled`: Toggles the "Auto Complete Deals Enabled" setting.
-8. `callback_switch_auto_complete_deals_all`: Toggles the "Auto Complete All" setting.
-9. `callback_switch_custom_commands_enabled`: Toggles the "Custom Commands Enabled" setting.
-10. `callback_switch_auto_deliveries_enabled`: Toggles the "Auto Deliveries Enabled" setting.
-11. `callback_switch_auto_delivery_piece`: Toggles the "Auto Delivery Piece" setting for a specific delivery index.
-12. `callback_switch_auto_withdrawal_enabled`: Toggles the "Auto Withdrawal Enabled" setting.
-13. `callback_switch_watermark_enabled`: Toggles the "Watermark Enabled" setting.
-14. `callback_switch_tg_logging_enabled`: Toggles the "Telegram Logging Enabled" setting.
-15. `callback_switch_tg_logging_event_new_user_message`, `callback_switch_tg_logging_event_new_system_message`, `callback_switch_tg_logging_event_new_deal`, `callback_switch_tg_logging_event_new_review`, and `callback_switch_tg_logging_event_new_problem`: Toggle the corresponding Telegram logging events.
-16. `callback_switch_message_enabled`: Toggles the "Message Enabled" setting for a specific message ID.
-17. `callback_switch_module_enabled`: Toggles the "Module Enabled" setting for a specific module UUID.
+from ..import templates as templ 
+from ..import callback_datas as calls 
+from ..import states as states 
+from ..helpful import throw_float_message 
+from ..callback_handlers .page import (
+callback_message_page ,
+callback_module_page ,
+callback_auto_delivery_page 
+)
+from .navigation import *
+from .pagination import *
 
-These functions all have the same basic structure: they take in a callback query, an FSMContext, and update the corresponding settings configuration accordingly. They then return to the previous page or screen using the `callback_settings_navigation` function.
 
+router =Router ()
+
+
+@router .callback_query (F .data =="switch_auto_restore_items_sold")
+async def callback_switch_auto_restore_items_sold (callback :CallbackQuery ,state :FSMContext ):
+    config =sett .get ("config")
+    config ["playerok"]["auto_restore_items"]["sold"]=not config ["playerok"]["auto_restore_items"]["sold"]
+    sett .set ("config",config )
+
+    return await callback_settings_navigation (
+    callback ,
+    calls .SettingsNavigation (to ="restore"),
+    state 
+    )
+
+
+@router .callback_query (F .data =="switch_auto_restore_items_expired")
+async def callback_switch_auto_restore_items_expired (callback :CallbackQuery ,state :FSMContext ):
+    config =sett .get ("config")
+    config ["playerok"]["auto_restore_items"]["expired"]=not config ["playerok"]["auto_restore_items"]["expired"]
+    sett .set ("config",config )
+
+    return await callback_settings_navigation (
+    callback ,
+    calls .SettingsNavigation (to ="restore"),
+    state 
+    )
+
+
+@router .callback_query (F .data =="switch_auto_restore_items_all")
+async def callback_switch_auto_restore_items_all (callback :CallbackQuery ,state :FSMContext ):
+    config =sett .get ("config")
+    config ["playerok"]["auto_restore_items"]["all"]=not config ["playerok"]["auto_restore_items"]["all"]
+    sett .set ("config",config )
+
+    return await callback_settings_navigation (
+    callback ,
+    calls .SettingsNavigation (to ="restore"),
+    state 
+    )
+
+
+@router .callback_query (F .data =="switch_auto_bump_items_enabled")
+async def callback_switch_auto_bump_items_enabled (callback :CallbackQuery ,state :FSMContext ):
+    config =sett .get ("config")
+    config ["playerok"]["auto_bump_items"]["enabled"]=not config ["playerok"]["auto_bump_items"]["enabled"]
+    sett .set ("config",config )
+
+    return await callback_settings_navigation (
+    callback ,
+    calls .SettingsNavigation (to ="bump"),
+    state 
+    )
+
+
+@router .callback_query (F .data =="switch_auto_bump_items_all")
+async def callback_switch_auto_bump_items_all (callback :CallbackQuery ,state :FSMContext ):
+    config =sett .get ("config")
+    config ["playerok"]["auto_bump_items"]["all"]=not config ["playerok"]["auto_bump_items"]["all"]
+    sett .set ("config",config )
+
+    return await callback_settings_navigation (
+    callback ,
+    calls .SettingsNavigation (to ="bump"),
+    state 
+    )
+
+
+@router .callback_query (F .data =="switch_read_chat_enabled")
+async def callback_switch_read_chat_enabled (callback :CallbackQuery ,state :FSMContext ):
+    config =sett .get ("config")
+    config ["playerok"]["read_chat"]["enabled"]=not config ["playerok"]["read_chat"]["enabled"]
+    sett .set ("config",config )
+
+    return await callback_settings_navigation (
+    callback ,
+    calls .SettingsNavigation (to ="other"),
+    state 
+    )
+
+
+@router .callback_query (F .data =="switch_auto_complete_deals_enabled")
+async def callback_switch_auto_complete_deals_enabled (callback :CallbackQuery ,state :FSMContext ):
+    config =sett .get ("config")
+    config ["playerok"]["auto_complete_deals"]["enabled"]=not config ["playerok"]["auto_complete_deals"]["enabled"]
+    sett .set ("config",config )
+
+    return await callback_settings_navigation (
+    callback ,
+    calls .SettingsNavigation (to ="complete"),
+    state 
+    )
+
+
+@router .callback_query (F .data =="switch_auto_complete_deals_all")
+async def callback_switch_auto_complete_deals_all (callback :CallbackQuery ,state :FSMContext ):
+    config =sett .get ("config")
+    config ["playerok"]["auto_complete_deals"]["all"]=not config ["playerok"]["auto_complete_deals"]["all"]
+    sett .set ("config",config )
+
+    return await callback_settings_navigation (
+    callback ,
+    calls .SettingsNavigation (to ="complete"),
+    state 
+    )
+
+
+@router .callback_query (F .data =="switch_custom_commands_enabled")
+async def callback_switch_custom_commands_enabled (callback :CallbackQuery ,state :FSMContext ):
+    config =sett .get ("config")
+    config ["playerok"]["custom_commands"]["enabled"]=not config ["playerok"]["custom_commands"]["enabled"]
+    sett .set ("config",config )
+
+    return await callback_settings_navigation (
+    callback ,
+    calls .SettingsNavigation (to ="other"),
+    state 
+    )
+
+
+@router .callback_query (F .data =="switch_auto_deliveries_enabled")
+async def callback_switch_auto_deliveries_enabled (callback :CallbackQuery ,state :FSMContext ):
+    config =sett .get ("config")
+    config ["playerok"]["auto_deliveries"]["enabled"]=not config ["playerok"]["auto_deliveries"]["enabled"]
+    sett .set ("config",config )
+
+    return await callback_settings_navigation (
+    callback ,
+    calls .SettingsNavigation (to ="other"),
+    state 
+    )
+
+
+@router .callback_query (F .data =="switch_auto_delivery_piece")
+async def callback_switch_auto_delivery_piece (callback :CallbackQuery ,state :FSMContext ):
+    data =await state .get_data ()
+    last_page =data .get ("last_page",0 )
+    index =data .get ("auto_delivery_index",0 )
+
+    auto_deliveries =sett .get ("auto_deliveries")
+    auto_deliveries [index ]["piece"]=not auto_deliveries [index ].get ("piece",False )
+    sett .set ("auto_deliveries",auto_deliveries )
+
+    return await callback_auto_delivery_page (
+    callback ,
+    calls .AutoDeliveryPage (index =index ),
+    state 
+    )
+
+
+@router .callback_query (F .data =="switch_auto_withdrawal_enabled")
+async def callback_switch_auto_withdrawal_enabled (callback :CallbackQuery ,state :FSMContext ):
+    config =sett .get ("config")
+    config ["playerok"]["auto_withdrawal"]["enabled"]=not config ["playerok"]["auto_withdrawal"]["enabled"]
+    sett .set ("config",config )
+
+    return await callback_settings_navigation (
+    callback ,
+    calls .SettingsNavigation (to ="withdrawal"),
+    state 
+    )
+
+
+@router .callback_query (F .data =="switch_watermark_enabled")
+async def callback_switch_watermark_enabled (callback :CallbackQuery ,state :FSMContext ):
+    config =sett .get ("config")
+    config ["playerok"]["watermark"]["enabled"]=not config ["playerok"]["watermark"]["enabled"]
+    sett .set ("config",config )
+
+    return await callback_settings_navigation (
+    callback ,
+    calls .SettingsNavigation (to ="other"),
+    state 
+    )
+
+
+@router .callback_query (F .data =="switch_tg_logging_enabled")
+async def callback_switch_tg_logging_enabled (callback :CallbackQuery ,state :FSMContext ):
+    config =sett .get ("config")
+    config ["playerok"]["tg_logging"]["enabled"]=not config ["playerok"]["tg_logging"]["enabled"]
+    sett .set ("config",config )
+
+    return await callback_settings_navigation (
+    callback ,
+    calls .SettingsNavigation (to ="logger"),
+    state 
+    )
+
+
+@router .callback_query (F .data =="switch_tg_logging_event_new_user_message")
+async def callback_switch_tg_logging_event_new_user_message (callback :CallbackQuery ,state :FSMContext ):
+    config =sett .get ("config")
+    config ["playerok"]["tg_logging"]["events"]["new_user_message"]=not config ["playerok"]["tg_logging"]["events"]["new_user_message"]
+    sett .set ("config",config )
+
+    return await callback_settings_navigation (
+    callback ,
+    calls .SettingsNavigation (to ="logger"),
+    state 
+    )
+
+
+@router .callback_query (F .data =="switch_tg_logging_event_new_system_message")
+async def callback_switch_tg_logging_event_new_system_message (callback :CallbackQuery ,state :FSMContext ):
+    config =sett .get ("config")
+    config ["playerok"]["tg_logging"]["events"]["new_system_message"]=not config ["playerok"]["tg_logging"]["events"]["new_system_message"]
+    sett .set ("config",config )
+
+    return await callback_settings_navigation (
+    callback ,
+    calls .SettingsNavigation (to ="logger"),
+    state 
+    )
+
+
+@router .callback_query (F .data =="switch_tg_logging_event_new_deal")
+async def callback_switch_tg_logging_event_new_deal (callback :CallbackQuery ,state :FSMContext ):
+    config =sett .get ("config")
+    config ["playerok"]["tg_logging"]["events"]["new_deal"]=not config ["playerok"]["tg_logging"]["events"]["new_deal"]
+    sett .set ("config",config )
+
+    return await callback_settings_navigation (
+    callback ,
+    calls .SettingsNavigation (to ="logger"),
+    state 
+    )
+
+
+@router .callback_query (F .data =="switch_tg_logging_event_new_review")
+async def callback_switch_tg_logging_event_new_review (callback :CallbackQuery ,state :FSMContext ):
+    config =sett .get ("config")
+    config ["playerok"]["tg_logging"]["events"]["new_review"]=not config ["playerok"]["tg_logging"]["events"]["new_review"]
+    sett .set ("config",config )
+
+    return await callback_settings_navigation (
+    callback ,
+    calls .SettingsNavigation (to ="logger"),
+    state 
+    )
+
+
+@router .callback_query (F .data =="switch_tg_logging_event_new_problem")
+async def callback_switch_tg_logging_event_new_problem (callback :CallbackQuery ,state :FSMContext ):
+    config =sett .get ("config")
+    config ["playerok"]["tg_logging"]["events"]["new_problem"]=not config ["playerok"]["tg_logging"]["events"]["new_problem"]
+    sett .set ("config",config )
+
+    return await callback_settings_navigation (
+    callback ,
+    calls .SettingsNavigation (to ="logger"),
+    state 
+    )
+
+
+@router .callback_query (F .data =="switch_tg_logging_event_deal_status_changed")
+async def callback_switch_tg_logging_event_deal_status_changed (callback :CallbackQuery ,state :FSMContext ):
+    config =sett .get ("config")
+    config ["playerok"]["tg_logging"]["events"]["deal_status_changed"]=not config ["playerok"]["tg_logging"]["events"]["deal_status_changed"]
+    sett .set ("config",config )
+
+    return await callback_settings_navigation (
+    callback ,
+    calls .SettingsNavigation (to ="logger"),
+    state 
+    )
+
+
+@router .callback_query (F .data =="switch_message_enabled")
+async def callback_switch_message_enabled (callback :CallbackQuery ,state :FSMContext ):
+    try :
+        data =await state .get_data ()
+        last_page =data .get ("last_page",0 )
+
+        message_id =data .get ("message_id")
+        if not message_id :
+            return await callback_messages_pagination (
+            callback ,
+            calls .MessagesPagination (page =last_page ),
+            state 
+            )
+
+        messages =sett .get ("messages")
+        messages [message_id ]["enabled"]=not messages [message_id ]["enabled"]
+        sett .set ("messages",messages )
+
+        return await callback_message_page (
+        callback ,
+        calls .MessagePage (message_id =message_id ),
+        state 
+        )
+    except Exception as e :
+        await throw_float_message (
+        state =state ,
+        message =callback .message ,
+        text =templ .settings_mess_float_text (e ),
+        reply_markup =templ .back_kb (calls .MessagesPagination (page =last_page ).pack ())
+        )
+
+
+@router .callback_query (F .data =="switch_module_enabled")
+async def callback_switch_module_enabled (callback :CallbackQuery ,state :FSMContext ):
+    try :
+        data =await state .get_data ()
+        last_page =data .get ("last_page",0 )
+
+        module_uuid =data .get ("module_uuid")
+        module =get_module_by_uuid (module_uuid )
+        if not all ((module_uuid ,module )):
+            return await callback_modules_pagination (
+            callback ,
+            calls .ModulesPagination (page =last_page ),
+            state 
+            )
+
+        if module .enabled :
+            await disable_module (module_uuid )
+        else :
+            await enable_module (module_uuid )
+
+        return await callback_module_page (
+        callback ,
+        calls .ModulePage (uuid =module_uuid ),
+        state 
+        )
+    except Exception as e :
+        await throw_float_message (
+        state =state ,
+        message =callback .message ,
+        text =templ .module_page_float_text (e ),
+        reply_markup =templ .back_kb (calls .ModulesPagination (page =last_page ).pack ())
+        )

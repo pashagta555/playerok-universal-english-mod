@@ -1,30 +1,132 @@
-The provided code is a part of an AIogram bot, a Python framework for building chatbots. It seems to be handling some custom command functionality. Here's the translation:
+from aiogram import types ,Router ,F 
+from aiogram .fsm .context import FSMContext 
 
-**Handler 1: Waiting for Custom Command Page**
+from settings import Settings as sett 
 
-This handler handles messages when the bot is waiting for a custom command page.
+from ..import templates as templ 
+from ..import states 
+from ..import callback_datas as calls 
+from ..helpful import throw_float_message 
 
-- If the message text contains only digits, it updates the state and sends a float message with settings-related text and a reply markup.
-- If the message text does not contain digits or an error occurs, it sets the state to None, gets the current data, and sends a float message with an error text and a back button.
 
-**Handler 2: Waiting for New Custom Command**
+router =Router ()
 
-This handler handles messages when the bot is waiting for a new custom command.
 
-- If the message text is empty or too long (less than 1 character or more than 32 characters), it raises an exception.
-- It updates the state, saves the new custom command, sets the state to waiting for an answer, and sends a float message with settings-related text and a reply markup.
+@router .message (states .CustomCommandsStates .waiting_for_page ,F .text )
+async def handler_waiting_for_custom_commands_page (message :types .Message ,state :FSMContext ):
+    try :
+        await state .set_state (None )
 
-**Handler 3: Waiting for New Custom Command Answer**
+        if not message .text .strip ().isdigit ():
+            raise Exception ("You must enter a numeric value")
 
-This handler handles messages when the bot is waiting for an answer to a new custom command.
+        await state .update_data (last_page =int (message .text .strip ())-1 )
 
-- If the message text is empty, it raises an exception.
-- It updates the state, saves the answer, sets the state to None, and sends a float message with settings-related text and a reply markup containing a confirmation button.
+        await throw_float_message (
+        state =state ,
+        message =message ,
+        text =templ .settings_comms_text (),
+        reply_markup =templ .settings_comms_kb (page =int (message .text )-1 )
+        )
+    except Exception as e :
+        data =await state .get_data ()
+        await throw_float_message (
+        state =state ,
+        message =message ,
+        text =templ .settings_comms_float_text (e ),
+        reply_markup =templ .back_kb (calls .CustomCommandsPagination (page =data .get ("last_page",0 )).pack ())
+        )
 
-**Handler 4: Waiting for Custom Command Answer**
 
-This handler handles messages when the bot is waiting for an answer to a custom command.
+@router .message (states .CustomCommandsStates .waiting_for_new_custom_command ,F .text )
+async def handler_waiting_for_new_custom_command (message :types .Message ,state :FSMContext ):
+    try :
+        await state .set_state (None )
 
-- If the message text is empty, it raises an exception.
-- It updates the state, saves the new custom commands, sets the state to None, and sends a float message with settings-related text and a reply markup containing a back button.
+        if len (message .text .strip ())<=0 or len (message .text .strip ())>=32 :
+            raise Exception ("Too short or too long command")
 
+        data =await state .get_data ()
+
+        await state .update_data (new_custom_command =message .text .strip ())
+        await state .set_state (states .CustomCommandsStates .waiting_for_new_custom_command_answer )
+
+        await throw_float_message (
+        state =state ,
+        message =message ,
+        text =templ .settings_new_comm_float_text (f"💬 Введите <b>ответ для команды</b> <code>{message .text .strip ()}</code>:"),
+        reply_markup =templ .back_kb (calls .CustomCommandsPagination (page =data .get ("last_page",0 )).pack ())
+        )
+    except Exception as e :
+        data =await state .get_data ()
+        await throw_float_message (
+        state =state ,
+        message =message ,
+        text =templ .settings_new_comm_float_text (e ),
+        reply_markup =templ .back_kb (calls .CustomCommandsPagination (page =data .get ("last_page",0 )).pack ())
+        )
+
+
+@router .message (states .CustomCommandsStates .waiting_for_new_custom_command_answer ,F .text )
+async def handler_waiting_for_new_custom_command_answer (message :types .Message ,state :FSMContext ):
+    try :
+        await state .set_state (None )
+
+        if len (message .text .strip ())<=0 :
+            raise Exception ("Too short an answer")
+
+        data =await state .get_data ()
+
+        await state .update_data (new_custom_command_answer =message .text .strip ())
+
+        cmd =data .get ("new_custom_command")
+        answr =message .text .strip ()
+
+        await throw_float_message (
+        state =state ,
+        message =message ,
+        text =templ .settings_new_comm_float_text (
+        f"✔️ Подтвердите <b>добавление новой команды:</b>"
+        f"\n<b>· Команда:</b> {cmd }"
+        f"\n<b>· Ответ:</b> <blockquote>{answr }</blockquote>"
+        ),
+        reply_markup =templ .confirm_kb (confirm_cb ="add_new_custom_command",cancel_cb =calls .CustomCommandsPagination (page =data .get ("last_page",0 )).pack ())
+        )
+    except Exception as e :
+        data =await state .get_data ()
+        await throw_float_message (
+        state =state ,
+        message =message ,
+        text =templ .settings_new_comm_float_text (e ),
+        reply_markup =templ .back_kb (calls .CustomCommandsPagination (page =data .get ("last_page",0 )).pack ())
+        )
+
+
+@router .message (states .CustomCommandsStates .waiting_for_custom_command_answer ,F .text )
+async def handler_waiting_for_custom_command_answer (message :types .Message ,state :FSMContext ):
+    try :
+        await state .set_state (None )
+
+        if len (message .text .strip ())<=0 :
+            raise Exception ("Too short of a text")
+
+        data =await state .get_data ()
+
+        custom_commands =sett .get ("custom_commands")
+        custom_commands [data ["custom_command"]]=message .text .strip ().split ('\n')
+        sett .set ("custom_commands",custom_commands )
+
+        await throw_float_message (
+        state =state ,
+        message =message ,
+        text =templ .settings_comm_page_float_text (f"✅ <b>Текст ответа</b> команды <code>{data ['custom_command']}</code> был успешно изменён на: <blockquote>{message .text .strip ()}</blockquote>"),
+        reply_markup =templ .back_kb (calls .CustomCommandPage (command =data ["custom_command"]).pack ())
+        )
+    except Exception as e :
+        data =await state .get_data ()
+        await throw_float_message (
+        state =state ,
+        message =message ,
+        text =templ .settings_comm_page_float_text (e ),
+        reply_markup =templ .back_kb (calls .CustomCommandPage (command =data ["custom_command"]).pack ())
+        )
