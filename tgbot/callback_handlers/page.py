@@ -18,7 +18,7 @@ async def callback_custom_command_page (callback :CallbackQuery ,callback_data :
     await state .update_data (custom_command =command )
 
     data =await state .get_data ()
-    last_page =data .get ("last_page",0 )
+    last_page =data .get ('last_page',0 )
 
     await throw_float_message (
     state =state ,
@@ -37,7 +37,7 @@ async def callback_auto_delivery_page (callback :CallbackQuery ,callback_data :c
     await state .update_data (auto_delivery_index =index )
 
     data =await state .get_data ()
-    last_page =data .get ("last_page",0 )
+    last_page =data .get ('last_page',0 )
 
     await throw_float_message (
     state =state ,
@@ -56,7 +56,7 @@ async def callback_message_page (callback :CallbackQuery ,callback_data :calls .
     await state .update_data (message_id =message_id )
 
     data =await state .get_data ()
-    last_page =data .get ("last_page",0 )
+    last_page =data .get ('last_page',0 )
 
     await throw_float_message (
     state =state ,
@@ -75,7 +75,7 @@ async def callback_module_page (callback :CallbackQuery ,callback_data :calls .M
     await state .update_data (module_uuid =module_uuid )
 
     data =await state .get_data ()
-    last_page =data .get ("last_page",0 )
+    last_page =data .get ('last_page',0 )
 
     await throw_float_message (
     state =state ,

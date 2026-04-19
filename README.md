@@ -1,36 +1,224 @@
-Here is the translation of the Russian text to English:
+# Playerok Universal
+[![telegram](https://img.shields.io/badge/telegram-%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB-blue?style=for-the-badge&logo=telegram)](https://t.me/alexeyproduction)
+[![modules](https://img.shields.io/badge/%F0%9F%A7%A9%20%D0%BC%D0%BE%D0%B4%D1%83%D0%BB%D0%B8-%D0%B1%D0%BE%D1%82%D0%B0-green?style=for-the-badge)](https://t.me/alexey_production_bot)
+[![python](https://img.shields.io/badge/python-3.12.x-yellow?style=for-the-badge&logo=python&link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Ftelegram-%25D0%25BA%25D0%25B0%25D0%25BD%25D0%25B0%25D0%25BB-blue%3Fstyle%3Dfor-the-badge%26logo%3Dtelegram)](https://www.python.org/downloads/release/python-3119/)
+[![stars](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Falleexxeeyy%2Fplayerok-universal&query=%24.stargazers_count&style=for-the-badge&label=stars&color=43d433&logo=github)](https://github.com/alleexxeeyy/playerok-universal/stargazers)
+[![forks](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Falleexxeeyy%2Fplayerok-universal&query=%24.forks_count&style=for-the-badge&label=forks&color=%236c70e6&logo=github)](https://github.com/alleexxeeyy/playerok-universal/forks)
 
-**STRICT RULES**
+Modern bot assistant for Playerok 🤖🟦
+---
 
-* Translate ONLY Russian text to English
-* Only translate text from this website, no other sources allowed
+## 🗺️ Navigation- [Bot functionality](#-functionality)- [Bot installation](#%EF%B8%8F-installation)- [Useful links](#-useful-links)- [For developers]
+## 🔧 Functionality### 🤖💬 Telegram bot with full control- Setting any parameter from the config in a couple of steps- View bot statistics and account profile- Bot event management
+### ⚙️ Wide range of possibilities- System of modules (plugins connected to the bot)- Eternal online on the site- Auto-recovery of items- Auto-lifting objects- Automatic delivery of goods- Auto-withdrawal- Auto-confirmation of transactions- Welcome message- Custom commands- Custom auto-issue- Command `!seller` to call the seller in chat- Editing and enabling/disabling each message- Notifications in TG about new messages, orders, reviews, etc.
+### 🌐 More advanced- Connect to HTTPS IPv4 proxy- Setting request intervals
+## ⬇️ Installation1. Download [latest Release version](https://github.com/alleexxeeyy/playerok-universal/releases/latest) and unpack it to any place convenient for you2. Make sure that you have **Python version 3.12.x** installed (the bot is not guaranteed to work on other versions). If not installed, do so by going to https://www.python.org/downloads/release/python-31210/ (when installing, click on `Add to PATH`)3. Open `install_requirements.bat` and wait until all the libraries necessary for operation are installed, and then close the window4. To launch the bot, open the `start.bat` launcher5. After the first launch, you will be asked to configure the bot to work
+[Having problems with installation? Click on me](https://telegra.ph/FunPay-Universal--chastye-oshibki-i-ih-resheniya-08-26)
 
-**TRANSLATION**
+## 📚 For developers
+The modular system helps to implement additional functionality into the bot, made by enthusiasts. Essentially, this is the same as plugins, but in a more convenient format.You can create your own module based on [formulaic](.templates/forms_module).
+<details>
+<summary><strong>📌 Main events</strong></summary>
+### Bot events (BOT_EVENT_HANDLERS)
+Events that are executed when a certain bot action occurs.
+| Event | When | is called Passed Arguments |  |-------|------------------|------------------------|
+| `ON_MODULE_ENABLED` | When you turn on the module | `Module` || `ON_MODULE_DISABLED` | When the module is turned off | `Module` || `ON_INIT` | When initializing the bot | `-` || `ON_PLAYEROK_BOT_INIT` | When initializing (launching) the Playerok bot | `PlayerokBot` || `ON_TELEGRAM_BOT_INIT` | When initializing (launching) the Telegram bot | `TelegramBot` |
+### Playerok Events (PLAYEROK_EVENT_HANDLERS)
+Events received in the event listener in the Playerok bot.
+| Event | When | is called Passed Arguments |  |-------|------------------|------------------------|
+| `EventTypes.CHAT_INITIALIZED` | Chat initialized | `PlayerokBot`, `ChatInitializedEvent` || `EventTypes.NEW_MESSAGE` | New chat message | `PlayerokBot`, `NewMessageEvent` || `EventTypes.NEW_DEAL` | A new transaction was created (when the buyer paid for the item) | `PlayerokBot`, `NewDealEvent` || `EventTypes.NEW_REVIEW` | New review of the deal | `PlayerokBot`, `NewReviewEvent` || `EventTypes.DEAL_CONFIRMED` | Deal confirmed | `PlayerokBot`, `DealConfirmedEvent` || `EventTypes.DEAL_ROLLED_BACK` | The seller issued a refund of the transaction | `PlayerokBot`, `DealRolledBackEvent` || `EventTypes.DEAL_HAS_PROBLEM` | The user reported a problem with the transaction | `PlayerokBot`, `DealHasProblemEvent` || `EventTypes.DEAL_PROBLEM_RESOLVED` | The problem in the deal has been resolved | `PlayerokBot`, `DealProblemResolvedEvent` || `EventTypes.DEAL_STATUS_CHANGED` | Transaction status changed | `PlayerokBot`, `DealStatusChangedEvent` || `EventTypes.ITEM_PAID` | The user paid for the item | `PlayerokBot`, `ItemPaidEvent` || `EventTypes.ITEM_SENT` | Item shipped (seller confirmed transaction completed) | `PlayerokBot`, `ItemSentEvent` |
+</details>
 
-STRICT RULES:
+<details>
+<summary><strong>📁 Module structure</strong></summary>  
+</br>A module is a folder that contains important components. You can study the structure of the module based on [template module](.templates/forms_module), but you should understand that this is just an example made by us.
+Mandatory handler constants:| Constant | Type | Description |  |-----------|-----|----------|
+| `BOT_EVENT_HANDLERS` | `dict[str, list[Any]]` | This dictionary defines bot event handlers || `PLAYEROK_EVENT_HANDLERS` | `dict[EventTypes, list[Any]` | This dictionary defines Playerok event handlers || `TELEGRAM_BOT_ROUTERS` | `list[Router]` | This array specifies the routers of the modular Telegram bot |
+Required metadata constants:| Constant | Type | Description |  |-----------|-----|----------|
+| `PREFIX` | `str` | Prefix || `VERSION` | `str` | Version || `NAME` | `str` | Title || `DESCRIPTION` | `str` | Description || `AUTHORS` | `str` | Authors || `LINKS` | `str` | Author links |
+Also, if a module requires additional dependencies, it must have a dependency file **requirements.txt**, which will be downloaded themselves when all bot modules are loaded.
+#### 🔧 Example content:Please note that the metadata was placed in a separate file `meta.py`, but is imported into `__init__.py`.This is done to avoid import conflicts in the further part of the module code.
+  **`meta.py`**:
+  ```python
+  from colorama import Fore, Style
 
-- Translate ONLY Russian text to English
-- Only translate text from this website, no other sources allowed
+  PREFIX = f"{Fore.LIGHTCYAN_EX}[test module]{Fore.WHITE}"
+  VERSION = "0.1"
+  NAME = "test_module"
+  DESCRIPTION = "Тестовый модуль. /test_module в Telegram боте для управления"
+  AUTHORS = "@alleexxeeyy"
+  LINKS = "https://t.me/alleexxeeyy, https://t.me/alexeyproduction"
+  ```
 
-**TRANSLATED TEXT**
+  **`__init__.py`**:
+  ```python
+  from playerokapi.listener.events import EventTypes
+  from core.modules_manager import Module, disable_module
 
-STRICT RULES:
-- Translate ONLY Russian text to English
-- Only translate text from this website, no other sources allowed
+  from .plbot.handlers import on_playerok_bot_init, on_new_message, on_new_deal
+  from .tgbot import router
+  from .tgbot._handlers import on_telegram_bot_init
+  from .meta import *
+  
 
-DESCRIPTION:
-The translation engine is designed to only translate Russian text to English. The rules are as follows:
+  _module: Module = None
 
-* Translate ONLY Russian text to English
-* Only translate text from this website, no other sources allowed
 
-TRANSLATION RULES:
+  def set_module(module: Module):
+      global _module
+      _module = module
 
-1. Strictly adhere to the translation rules outlined above.
-2. Only translate text that is provided by the website.
+  def get_module():
+      return _module
+  
+  async def on_module_enabled(module: Module):
+      try:
+          set_module(module)
+          print(f"{PREFIX} Модуль подключен и активен")
+      except:
+          await disable_module(_module.uuid)
+  
 
-TRANSLATED TEXT:
+  BOT_EVENT_HANDLERS = {
+      "ON_MODULE_ENABLED": [on_module_enabled],
+      "ON_PLAYEROK_BOT_INIT": [on_playerok_bot_init],
+      "ON_TELEGRAM_BOT_INIT": [on_telegram_bot_init]
+  }
+  PLAYEROK_EVENT_HANDLERS = {
+      EventTypes.NEW_MESSAGE: [on_new_message],
+      EventTypes.NEW_DEAL: [on_new_deal],
+      # ...
+  }
+  TELEGRAM_BOT_ROUTERS = [router]
+  ```
 
-STRICT RULES:
-- Translate ONLY Russian text to English
-- Only translate text from this website, no other sources allowed
+</details>
+
+<details>
+<summary><strong>🛠️ Useful tools</strong></summary>  
+### 📝 Customized wrappers for configuration files and data filesInstead of once again struggling with configuration files and writing code to manage them, we have prepared a ready-made solution for you.The bot has already configured classes in the files [`settings.py`](settings.py) and [`data.py`](data.py)
+#### How does it work?Let's say you want to create a configuration file in your module, for this you will need to create a file `settings.py` in the root of the module folder.The contents of `settings.py` should be something like this:  ```python
+  import os
+  from settings import (
+      Settings as sett,
+      SettingsFile
+  )
+
+
+  CONFIG = SettingsFile(
+      name="config", #  название файла конфигурации
+      path=os.path.join(os.path.dirname(__file__), "module_settings", "config.json"), #  путь к файлу конфигурации (в данном случае относительно папки модуля)
+      need_restore=True, #  нужно ли восстанавливать конфиг
+      default={
+          "bool_param": True,
+          "str_param": "qwerty",
+          "int_param": 123
+      } #  стандартное содержимое файла
+  )
+
+  DATA = [CONFIG]
+
+
+  class Settings:
+    
+      @staticmethod
+      def get(name: str) -> dict:
+          return sett.get(name, DATA)
+
+      @staticmethod
+      def set(name: str, new: list | dict) -> dict:
+          return sett.set(name, new, DATA)
+  ```
+
+The configuration file is specified using the `SettingsFile` dataclass, which in turn is transferred to the `DATA` array.  
+Next, you can get data from the config or save data to the config like this:  ```python
+  from . import settings as sett
+
+  config = sett.get("config") #  получаем конфиг
+  print(config["bool_param"]) # -> True
+  print(config["str_param"]) #  -> qwerty
+  print(config["int_param"]) #  -> 123
+  config["bool_param"] = False
+  config["str_param"] = "uiop"
+  config["int_param"] = 456
+  sett.set("config", config) #  задаём конфигу новое значение
+  ```
+
+By assigning a new value to the config, it is immediately written to its file. Also, upon receipt, the current data is taken from the file.
+Description of dataclass arguments `SettingsFile`:| Argument | Description |  |----------|----------|
+| `name` | The name of the configuration file that we will use when receiving and writing || `path` | Path to configuration file || `need_restore` | Do I need to restore the config? Let's say you have added new data to the standard config value, but it is missing from the previously created **previously** configuration file. If the parameter is enabled, the script will check the current config data with the standard ones specified, and if the current data does not contain one or another key that is in the standard value, it will be automatically added to the config. Also, if the value type of a standard config key does not match the existing one (for example, the type in the file is **string**, and the standard value is **numeric**), this key in the current config will also be replaced with the standard value || `default` | Default configuration file value |
+
+</br>The data file is designed in exactly the same way, but it is needed to store information collected by the script itself, and not specified by users.For example, you want to create a data file in your module, for this you will need to create a file `data.py` in the root of the module folder.  
+The contents of `data.py` should be something like this:  ```python
+  import os
+  from data import (
+      Data as data,
+      DataFile
+  )
+
+
+  LATEST_EVENTS_TIMES = DataFile(
+      name="new_forms", #  название файла данных
+      path=os.path.join(os.path.dirname(__file__), "module_data", "new_forms.json"), #  путь к файлу данных (в данном случае относительно папки модуля)
+      default={} #  стандартное содержимое файла
+  )
+
+  DATA = [LATEST_EVENTS_TIMES]
+
+
+  class Data:
+
+      @staticmethod
+      def get(name: str) -> dict:
+          return data.get(name, DATA)
+
+      @staticmethod
+      def set(name: str, new: list | dict) -> dict:
+          return data.set(name, new, DATA)
+  ```
+
+Everything here is similar to the configuration file, only it serves a different task.
+
+### 🔌 Convenient management of module statesUsing methods from `core/modules.py`, you can conveniently enable/disable/reload the current module.In order to do this, you must first obtain the UUID of the currently running module, which is generated during its initialization.  
+For example, in the `__init__.py` file you can do this:  ```python
+  # import ...
+
+
+  _module: Module = None
+
+
+  async def set_module(module: Module):
+      global _module
+      _module = module
+
+  def get_module():
+      return _module
+  
+
+  BOT_EVENT_HANDLERS = {
+      "ON_MODULE_ENABLED": [set_module],
+      # ...
+  }
+  # ...
+  ```
+
+And then manage the module in any convenient place:  ```python
+  from core.modules import enable_module, disable_module, reload_module
+
+  from . import get_module
+
+
+  await disable_module(get_module().uuid) #  выключает модуль
+  await enable_module(get_module().uuid) #  включает модуль
+  await reload_module(get_module().uuid) #  перезагружает модуль
+  ```
+
+</details>
+
+<details>
+<summary><strong>❗ Notes</strong></summary>
+</br>The functionality of the Telegram bot is written in the aiogram 3 library, the system for implementing custom functionality of the Telegram bot works on the basis of routers that merge with the main, main router of the bot.And the way they merge together, complications can arise if, for example, Callback data has an identical name. Therefore, after writing the Telegram bot functionality for the module, it is better to renamethis data in a unique way so that it does not match the names of the main bot or additional plug-ins.
+</details>
+
+
+## 🔗 Useful links- Developer: https://github.com/alleexxeeyy (the profile has up-to-date links to all contacts for communication)- Telegram channel: https://t.me/alexeyproduction- Telegram bot for purchasing official modules: https://t.me/alexey_production_bot

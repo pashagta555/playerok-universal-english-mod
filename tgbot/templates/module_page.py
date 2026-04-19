@@ -10,7 +10,7 @@ from ..import callback_datas as calls
 def module_page_text (module_uuid :UUID ):
     module :Module =get_module_by_uuid (module_uuid )
     if not module :
-        raise Exception ("Couldn't find the module")
+        raise Exception ('Could not find module')
 
     txt =textwrap .dedent (f"""
         <b>📄🔌 Страница модуля</b>
@@ -22,7 +22,7 @@ def module_page_text (module_uuid :UUID ):
         ・ Авторы: <b>{module .meta .authors }</b>
         ・ Ссылки: <b>{module .meta .links }</b>
 
-        🔌 <b>Состояние:</b> {'Enabled'if module .enabled else 'Disabled'}
+        🔌 <b>Состояние:</b> {'🟢 Included'if module .enabled else '🔴 Off'}
     """)
     return txt 
 
@@ -30,12 +30,12 @@ def module_page_text (module_uuid :UUID ):
 def module_page_kb (module_uuid :UUID ,page :int =0 ):
     module :Module =get_module_by_uuid (module_uuid )
     if not module :
-        raise Exception ("Could not find the module")
+        raise Exception ('Could not find module')
 
     rows =[
-    [InlineKeyboardButton (text ="Turn off the module 🔴"if module .enabled else "Enable module",callback_data ="switch_module_enabled")],
-    [InlineKeyboardButton (text ="Reload",callback_data ="reload_module")],
-    [InlineKeyboardButton (text ="Backwards",callback_data =calls .ModulesPagination (page =page ).pack ())]
+    [InlineKeyboardButton (text ='🔴 Turn off the module'if module .enabled else '🟢 Enable module',callback_data ='switch_module_enabled')],
+    [InlineKeyboardButton (text ='♻️ Reload',callback_data ='reload_module')],
+    [InlineKeyboardButton (text ='⬅️ Back',callback_data =calls .ModulesPagination (page =page ).pack ())]
     ]
     kb =InlineKeyboardMarkup (inline_keyboard =rows )
     return kb 

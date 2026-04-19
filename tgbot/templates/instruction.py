@@ -13,8 +13,8 @@ def instruction_text ():
 
 def instruction_kb ():
     rows =[
-    [InlineKeyboardButton (text ="Keyboard Commands",callback_data =calls .InstructionNavigation (to ="commands").pack ())],
-    [InlineKeyboardButton (text ="Backwards ⬅️",callback_data =calls .MenuNavigation (to ="default").pack ())]
+    [InlineKeyboardButton (text ='⌨️ Teams',callback_data =calls .InstructionNavigation (to ='commands').pack ())],
+    [InlineKeyboardButton (text ='⬅️ Back',callback_data =calls .MenuNavigation (to ='default').pack ())]
     ]
     kb =InlineKeyboardMarkup (inline_keyboard =rows )
     return kb 
@@ -31,6 +31,6 @@ def instruction_comms_text ():
 
 
 def instruction_comms_kb ():
-    rows =[[InlineKeyboardButton (text ="Backwards ⬅️",callback_data =calls .InstructionNavigation (to ="default").pack ())]]
+    rows =[[InlineKeyboardButton (text ='⬅️ Back',callback_data =calls .InstructionNavigation (to ='default').pack ())]]
     kb =InlineKeyboardMarkup (inline_keyboard =rows )
     return kb 

@@ -18,7 +18,7 @@ async def handler_waiting_for_auto_deliveries_page (message :types .Message ,sta
         await state .set_state (None )
 
         if not message .text .isdigit ():
-            raise Exception ("You must enter a numeric value")
+            raise Exception ('❌ You must enter a numeric value')
 
         page =int (message .text )-1 
         await state .update_data (last_page =page )
@@ -31,7 +31,7 @@ async def handler_waiting_for_auto_deliveries_page (message :types .Message ,sta
         )
     except Exception as e :
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
         await throw_float_message (
         state =state ,
         message =message ,
@@ -46,12 +46,12 @@ async def handler_waiting_for_new_auto_delivery_keyphrases (message :types .Mess
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
         if len (message .text )<=0 :
-            raise Exception ("Too short value")
+            raise Exception ('❌ Value too short')
 
-        keyphrases =[phrase .strip ()for phrase in message .text .split (",")]
+        keyphrases =[phrase .strip ()for phrase in message .text .split (',')]
 
         await state .update_data (new_auto_delivery_keyphrases =keyphrases )
         await state .set_state (states .AutoDeliveriesStates .waiting_for_auto_delivery_piece )
@@ -77,15 +77,15 @@ async def handler_waiting_for_new_auto_delivery_message (message :types .Message
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
         if len (message .text )<=0 :
-            raise Exception ("Too short value")
+            raise Exception ('❌ Value too short')
 
         await state .update_data (new_auto_delivery_message =message .text )
 
-        keyphrases =data .get ("new_auto_delivery_keyphrases")
-        phrases ="</code>, <code>".join (keyphrases )
+        keyphrases =data .get ('new_auto_delivery_keyphrases')
+        phrases ='</code>, <code>'.join (keyphrases )
         msg =message .text 
 
         await throw_float_message (
@@ -98,7 +98,7 @@ async def handler_waiting_for_new_auto_delivery_message (message :types .Message
         f"\n<b>· Сообщение:</b> {msg }"
         ),
         reply_markup =templ .confirm_kb (
-        confirm_cb ="add_new_auto_delivery",
+        confirm_cb ='add_new_auto_delivery',
         cancel_cb =calls .AutoDeliveriesPagination (page =last_page ).pack ()
         )
         )
@@ -117,32 +117,32 @@ async def handler_waiting_for_new_auto_delivery_goods (message :types .Message ,
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
         if message .text :
             if len (message .text .strip ())==0 :
-                raise Exception ("Too short value")
+                raise Exception ('❌ Value too short')
 
             goods =[g .strip ()for g in message .text .splitlines ()if g .strip ()]
         elif message .document :
             file =await message .bot .get_file (message .document .file_id )
             file_bytes =await message .bot .download_file (file .file_path )
-            content =file_bytes .read ().decode ("utf-8",errors ="ignore")
+            content =file_bytes .read ().decode ('utf-8',errors ='ignore')
 
             if len (content .strip ())==0 :
-                raise Exception ("File is empty")
+                raise Exception ('❌ File is empty')
 
             goods =[g .strip ()for g in content .splitlines ()if g .strip ()]
         else :
-            raise Exception ("Пожалуйста!")
+            raise Exception ('❌ Send text or file')
 
         if not goods :
-            raise Exception ("Failed to retrieve products")
+            raise Exception ('❌ Failed to retrieve products')
 
         await state .update_data (new_auto_delivery_goods =goods )
 
-        keyphrases =data .get ("new_auto_delivery_keyphrases")
-        phrases ="</code>, <code>".join (keyphrases )
+        keyphrases =data .get ('new_auto_delivery_keyphrases')
+        phrases ='</code>, <code>'.join (keyphrases )
 
         await throw_float_message (
         state =state ,
@@ -154,7 +154,7 @@ async def handler_waiting_for_new_auto_delivery_goods (message :types .Message ,
         f"\n<b>· Товары:</b> {len (goods )} шт."
         ),
         reply_markup =templ .confirm_kb (
-        confirm_cb ="add_new_auto_delivery",
+        confirm_cb ='add_new_auto_delivery',
         cancel_cb =calls .AutoDeliveriesPagination (page =last_page ).pack ()
         )
         )
@@ -173,17 +173,17 @@ async def handler_waiting_for_auto_delivery_keyphrases (message :types .Message 
         await state .set_state (None )
 
         data =await state .get_data ()
-        index =data .get ("auto_delivery_index")
+        index =data .get ('auto_delivery_index')
 
         if len (message .text )<=0 :
-            raise Exception ("Too short a value")
+            raise Exception ('❌ Value too short')
 
-        auto_deliveries =sett .get ("auto_deliveries")
-        keyphrases =[phrase .strip ()for phrase in message .text .split (",")]
-        auto_deliveries [index ]["keyphrases"]=keyphrases 
-        sett .set ("auto_deliveries",auto_deliveries )
+        auto_deliveries =sett .get ('auto_deliveries')
+        keyphrases =[phrase .strip ()for phrase in message .text .split (',')]
+        auto_deliveries [index ]['keyphrases']=keyphrases 
+        sett .set ('auto_deliveries',auto_deliveries )
 
-        keyphrases_str ="</code>, <code>".join (keyphrases )
+        keyphrases_str ='</code>, <code>'.join (keyphrases )
 
         await throw_float_message (
         state =state ,
@@ -206,14 +206,14 @@ async def handler_waiting_for_auto_delivery_message (message :types .Message ,st
         await state .set_state (None )
 
         data =await state .get_data ()
-        index =data .get ("auto_delivery_index")
+        index =data .get ('auto_delivery_index')
 
         if len (message .text )<=0 :
-            raise Exception ("Too short text")
+            raise Exception ('❌ Text is too short')
 
-        auto_deliveries =sett .get ("auto_deliveries")
-        auto_deliveries [index ]["message"]=message .text .splitlines ()
-        sett .set ("auto_deliveries",auto_deliveries )
+        auto_deliveries =sett .get ('auto_deliveries')
+        auto_deliveries [index ]['message']=message .text .splitlines ()
+        sett .set ('auto_deliveries',auto_deliveries )
 
         await throw_float_message (
         state =state ,
@@ -236,34 +236,32 @@ async def handler_waiting_for_auto_delivery_goods_add (message :types .Message ,
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
-        index =data .get ("auto_delivery_index")
+        last_page =data .get ('last_page',0 )
+        index =data .get ('auto_delivery_index')
 
         if message .text :
             if len (message .text .strip ())==0 :
-                raise Exception ("Too short value")
+                raise Exception ('❌ Value too short')
 
             goods =[g .strip ()for g in message .text .splitlines ()if g .strip ()]
         elif message .document :
             file =await message .bot .get_file (message .document .file_id )
             file_bytes =await message .bot .download_file (file .file_path )
-            content =file_bytes .read ().decode ("utf-8",errors ="ignore")
+            content =file_bytes .read ().decode ('utf-8',errors ='ignore')
 
             if len (content .strip ())==0 :
-                raise Exception ("File is empty")
+                raise Exception ('❌ File is empty')
 
             goods =[g .strip ()for g in content .splitlines ()if g .strip ()]
         else :
-            raise Exception ("translating... 
-
-Please send the text or file.")
+            raise Exception ('❌ Send text or file')
 
         if not goods :
-            raise Exception ("Failed to retrieve products")
+            raise Exception ('❌ Failed to retrieve products')
 
-        auto_deliveries =sett .get ("auto_deliveries")
-        auto_deliveries [index ]["goods"].extend (goods )
-        sett .set ("auto_deliveries",auto_deliveries )
+        auto_deliveries =sett .get ('auto_deliveries')
+        auto_deliveries [index ]['goods'].extend (goods )
+        sett .set ('auto_deliveries',auto_deliveries )
 
         await throw_float_message (
         state =state ,

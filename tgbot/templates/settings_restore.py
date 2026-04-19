@@ -7,14 +7,14 @@ from ..import callback_datas as calls
 
 
 def settings_restore_text ():
-    config =sett .get ("config")
+    config =sett .get ('config')
 
-    auto_restore_items_sold ="Enabled"if config ["playerok"]["auto_restore_items"]["sold"]else "Disabled"
-    auto_restore_items_expired ="Enabled"if config ["playerok"]["auto_restore_items"]["expired"]else "❌ Disabled"
-    auto_restore_items_all ="All subjects"if config ["playerok"]["auto_restore_items"]["all"]else "Specified subjects"
-    auto_restore_items =sett .get ("auto_restore_items")
-    auto_restore_items_included =len (auto_restore_items ["included"])
-    auto_restore_items_excluded =len (auto_restore_items ["excluded"])
+    auto_restore_items_sold ='🟢 Included'if config ['playerok']['auto_restore_items']['sold']else '🔴 Off'
+    auto_restore_items_expired ='🟢 Included'if config ['playerok']['auto_restore_items']['expired']else '🔴 Off'
+    auto_restore_items_all ='All items'if config ['playerok']['auto_restore_items']['all']else 'Specified items'
+    auto_restore_items =sett .get ('auto_restore_items')
+    auto_restore_items_included =len (auto_restore_items ['included'])
+    auto_restore_items_excluded =len (auto_restore_items ['excluded'])
 
     txt =textwrap .dedent (f"""
         <b>♻️ Авто-восстановление</b>
@@ -38,24 +38,24 @@ def settings_restore_text ():
 
 
 def settings_restore_kb ():
-    config =sett .get ("config")
+    config =sett .get ('config')
 
-    auto_restore_items_sold ="Enabled"if config ["playerok"]["auto_restore_items"]["sold"]else "Turned off"
-    auto_restore_items_expired ="Enabled"if config ["playerok"]["auto_restore_items"]["expired"]else "Disabled"
-    auto_restore_items_all ="All subjects"if config ["playerok"]["auto_restore_items"]["all"]else "Specified items"
-    auto_restore_items =sett .get ("auto_restore_items")
-    auto_restore_items_included =len (auto_restore_items ["included"])
-    auto_restore_items_excluded =len (auto_restore_items ["excluded"])
+    auto_restore_items_sold ='🟢 Included'if config ['playerok']['auto_restore_items']['sold']else '🔴 Off'
+    auto_restore_items_expired ='🟢 Included'if config ['playerok']['auto_restore_items']['expired']else '🔴 Off'
+    auto_restore_items_all ='All items'if config ['playerok']['auto_restore_items']['all']else 'Specified items'
+    auto_restore_items =sett .get ('auto_restore_items')
+    auto_restore_items_included =len (auto_restore_items ['included'])
+    auto_restore_items_excluded =len (auto_restore_items ['excluded'])
 
     rows =[
-    [InlineKeyboardButton (text =f"🛒 Проданные: {auto_restore_items_sold }",callback_data ="switch_auto_restore_items_sold")],
-    [InlineKeyboardButton (text =f"⏰ Истёкшие: {auto_restore_items_expired }",callback_data ="switch_auto_restore_items_expired")],
-    [InlineKeyboardButton (text =f"📦 Восстанавливать: {auto_restore_items_all }",callback_data ="switch_auto_restore_items_all")],
+    [InlineKeyboardButton (text =f"🛒 Проданные: {auto_restore_items_sold }",callback_data ='switch_auto_restore_items_sold')],
+    [InlineKeyboardButton (text =f"⏰ Истёкшие: {auto_restore_items_expired }",callback_data ='switch_auto_restore_items_expired')],
+    [InlineKeyboardButton (text =f"📦 Восстанавливать: {auto_restore_items_all }",callback_data ='switch_auto_restore_items_all')],
     [
     InlineKeyboardButton (text =f"➕ Включенные: {auto_restore_items_included }",callback_data =calls .IncludedRestoreItemsPagination (page =0 ).pack ()),
     InlineKeyboardButton (text =f"➖ Исключенные: {auto_restore_items_excluded }",callback_data =calls .ExcludedRestoreItemsPagination (page =0 ).pack ())
     ],
-    [InlineKeyboardButton (text ="Backwards ⬅️",callback_data =calls .SettingsNavigation (to ="default").pack ())]
+    [InlineKeyboardButton (text ='⬅️ Back',callback_data =calls .SettingsNavigation (to ='default').pack ())]
     ]
     kb =InlineKeyboardMarkup (inline_keyboard =rows )
     return kb 

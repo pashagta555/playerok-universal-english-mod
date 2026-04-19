@@ -8,7 +8,7 @@ from ..import callback_datas as calls
 
 
 def settings_delivs_text ():
-    auto_deliveries =sett .get ("auto_deliveries")
+    auto_deliveries =sett .get ('auto_deliveries')
     txt =textwrap .dedent (f"""
         <b>🚀 Авто-выдача</b>
 
@@ -18,7 +18,7 @@ def settings_delivs_text ():
 
 
 def settings_delivs_kb (page =0 ):
-    auto_deliveries :list =sett .get ("auto_deliveries")
+    auto_deliveries :list =sett .get ('auto_deliveries')
 
     rows =[]
     items_per_page =7 
@@ -32,17 +32,17 @@ def settings_delivs_kb (page =0 ):
     end_offset =start_offset +items_per_page 
 
     for deliv in list (auto_deliveries )[start_offset :end_offset ]:
-        piece =deliv .get ("piece")
-        sym ="📦"if piece else "💬"
-        keyphrases =", ".join (deliv .get ("keyphrases"))or "Not set"
-        keyphrases_frmtd =keyphrases [:32 ]+("..."if len (keyphrases )>32 else "")
+        piece =deliv .get ('piece')
+        sym ='📦'if piece else '💬'
+        keyphrases =', '.join (deliv .get ('keyphrases'))or '❌ Not specified'
+        keyphrases_frmtd =keyphrases [:32 ]+('...'if len (keyphrases )>32 else '')
 
         if piece :
-            goods =deliv .get ("goods",[])
+            goods =deliv .get ('goods',[])
             part =f"{len (goods )} товаров"
         else :
-            message =deliv .get ("message",[])
-            part ="\n".join (message )or "Not set"
+            message =deliv .get ('message',[])
+            part ='\n'.join (message )or '❌ Not specified'
 
         rows .append ([InlineKeyboardButton (
         text =f"{sym } {keyphrases_frmtd } → {part }",
@@ -51,18 +51,18 @@ def settings_delivs_kb (page =0 ):
 
     if total_pages >1 :
         buttons_row =[]
-        btn_back =InlineKeyboardButton (text ="←",callback_data =calls .AutoDeliveriesPagination (page =page -1 ).pack ())if page >0 else InlineKeyboardButton (text ="🛑",callback_data ="123")
+        btn_back =InlineKeyboardButton (text ='←',callback_data =calls .AutoDeliveriesPagination (page =page -1 ).pack ())if page >0 else InlineKeyboardButton (text ='🛑',callback_data ='123')
         buttons_row .append (btn_back )
 
-        btn_pages =InlineKeyboardButton (text =f"{page +1 }/{total_pages }",callback_data ="enter_auto_deliveries_page")
+        btn_pages =InlineKeyboardButton (text =f"{page +1 }/{total_pages }",callback_data ='enter_auto_deliveries_page')
         buttons_row .append (btn_pages )
 
-        btn_next =InlineKeyboardButton (text ="→",callback_data =calls .AutoDeliveriesPagination (page =page +1 ).pack ())if page <total_pages -1 else InlineKeyboardButton (text ="🛑",callback_data ="123")
+        btn_next =InlineKeyboardButton (text ='→',callback_data =calls .AutoDeliveriesPagination (page =page +1 ).pack ())if page <total_pages -1 else InlineKeyboardButton (text ='🛑',callback_data ='123')
         buttons_row .append (btn_next )
         rows .append (buttons_row )
 
-    rows .append ([InlineKeyboardButton (text ="Add",callback_data ="enter_new_auto_delivery_keyphrases")])
-    rows .append ([InlineKeyboardButton (text ="Backwards ⬅️",callback_data =calls .SettingsNavigation (to ="default").pack ())])
+    rows .append ([InlineKeyboardButton (text ='➕Add',callback_data ='enter_new_auto_delivery_keyphrases')])
+    rows .append ([InlineKeyboardButton (text ='⬅️ Back',callback_data =calls .SettingsNavigation (to ='default').pack ())])
 
     kb =InlineKeyboardMarkup (inline_keyboard =rows )
     return kb 
@@ -86,9 +86,9 @@ def settings_new_deliv_float_text (placeholder :str ):
 
 def settings_new_deliv_piece_kb (last_page =0 ):
     rows =[
-    [InlineKeyboardButton (text ="Several goods",callback_data =calls .SetNewDelivPiece (val =True ).pack ())],
-    [InlineKeyboardButton (text ="One message",callback_data =calls .SetNewDelivPiece (val =False ).pack ())],
-    [InlineKeyboardButton (text ="Backwards ⬅️",callback_data =calls .AutoDeliveriesPagination (page =last_page ).pack ())]
+    [InlineKeyboardButton (text ='📦 Several products',callback_data =calls .SetNewDelivPiece (val =True ).pack ())],
+    [InlineKeyboardButton (text ='💬 One message',callback_data =calls .SetNewDelivPiece (val =False ).pack ())],
+    [InlineKeyboardButton (text ='⬅️ Back',callback_data =calls .AutoDeliveriesPagination (page =last_page ).pack ())]
     ]
     kb =InlineKeyboardMarkup (inline_keyboard =rows )
     return kb 

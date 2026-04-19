@@ -7,14 +7,14 @@ from ..import callback_datas as calls
 
 
 def settings_complete_text ():
-    config =sett .get ("config")
+    config =sett .get ('config')
 
-    enabled ="Enabled"if config ["playerok"]["auto_complete_deals"]["enabled"]else "Disabled"
-    all ="All subjects"if config ["playerok"]["auto_complete_deals"]["all"]else "Specified items"
+    enabled ='🟢 Included'if config ['playerok']['auto_complete_deals']['enabled']else '🔴 Off'
+    all ='All items'if config ['playerok']['auto_complete_deals']['all']else 'Specified items'
 
-    auto_complete_deals =sett .get ("auto_complete_deals")
-    included =len (auto_complete_deals ["included"])
-    excluded =len (auto_complete_deals ["excluded"])
+    auto_complete_deals =sett .get ('auto_complete_deals')
+    included =len (auto_complete_deals ['included'])
+    excluded =len (auto_complete_deals ['excluded'])
 
     txt =textwrap .dedent (f"""
         <b>☑️ Авто-подтверждение</b>
@@ -35,23 +35,23 @@ def settings_complete_text ():
 
 
 def settings_complete_kb ():
-    config =sett .get ("config")
+    config =sett .get ('config')
 
-    enabled ="Enabled"if config ["playerok"]["auto_complete_deals"]["enabled"]else "Turned off"
-    all ="All subjects"if config ["playerok"]["auto_complete_deals"]["all"]else "Specified subjects"
+    enabled ='🟢 Included'if config ['playerok']['auto_complete_deals']['enabled']else '🔴 Off'
+    all ='All items'if config ['playerok']['auto_complete_deals']['all']else 'Specified items'
 
-    auto_complete_deals =sett .get ("auto_complete_deals")
-    included =len (auto_complete_deals ["included"])
-    excluded =len (auto_complete_deals ["excluded"])
+    auto_complete_deals =sett .get ('auto_complete_deals')
+    included =len (auto_complete_deals ['included'])
+    excluded =len (auto_complete_deals ['excluded'])
 
     rows =[
-    [InlineKeyboardButton (text =f"☑️ Авто-подтверждение сделок: {enabled }",callback_data ="switch_auto_complete_deals_enabled")],
-    [InlineKeyboardButton (text =f"📦 Подтверждать сделки: {all }",callback_data ="switch_auto_complete_deals_all")],
+    [InlineKeyboardButton (text =f"☑️ Авто-подтверждение сделок: {enabled }",callback_data ='switch_auto_complete_deals_enabled')],
+    [InlineKeyboardButton (text =f"📦 Подтверждать сделки: {all }",callback_data ='switch_auto_complete_deals_all')],
     [
     InlineKeyboardButton (text =f"➕ Включенные: {included }",callback_data =calls .IncludedCompleteDealsPagination (page =0 ).pack ()),
     InlineKeyboardButton (text =f"➖ Исключенные: {excluded }",callback_data =calls .ExcludedCompleteDealsPagination (page =0 ).pack ())
     ],
-    [InlineKeyboardButton (text ="Backward",callback_data =calls .SettingsNavigation (to ="default").pack ())]
+    [InlineKeyboardButton (text ='⬅️ Back',callback_data =calls .SettingsNavigation (to ='default').pack ())]
     ]
     kb =InlineKeyboardMarkup (inline_keyboard =rows )
     return kb 

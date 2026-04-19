@@ -77,7 +77,7 @@ def stats_text ():
 
 def stats_kb ():
     rows =[
-    [InlineKeyboardButton (text ="Backwards ⬅️",callback_data =calls .MenuNavigation (to ="default").pack ())]
+    [InlineKeyboardButton (text ='⬅️ Back',callback_data =calls .MenuNavigation (to ='default').pack ())]
     ]
     kb =InlineKeyboardMarkup (inline_keyboard =rows )
     return kb 

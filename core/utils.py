@@ -15,7 +15,7 @@ from threading import Thread
 from logging import getLogger 
 
 
-logger =getLogger ("universal.utils")
+logger =getLogger ('universal.utils')
 main_loop =None 
 
 
@@ -39,34 +39,34 @@ def restart (from_tg =False ):
     args =sys .argv .copy ()
 
     if from_tg :
-        args .append ("--from_tg")
+        args .append ('--from_tg')
 
-    logger .info ("Restarting the bot...")
+    logger .info ('Restarting the bot...')
     os .execv (python ,[python ]+args )
 
 
 def set_title (title :str ):
-    if sys .platform =="win32":
+    if sys .platform =='win32':
         ctypes .windll .kernel32 .SetConsoleTitleW (title )
-    elif sys .platform .startswith ("linux"):
+    elif sys .platform .startswith ('linux'):
         sys .stdout .write (f"\x1b]2;{title }\x07")
         sys .stdout .flush ()
-    elif sys .platform =="darwin":
+    elif sys .platform =='darwin':
         sys .stdout .write (f"\x1b]0;{title }\x07")
         sys .stdout .flush ()
 
 
-def setup_logger (log_file :str ="logs/latest.log"):
+def setup_logger (log_file :str ='logs/latest.log'):
     class ShortLevelFormatter (ColoredFormatter ):
         def format (self ,record ):
             record .shortLevel =record .levelname [0 ]
             return super ().format (record )
 
-    os .makedirs ("logs",exist_ok =True )
-    LOG_FORMAT ="%(light_black)s%(asctime)s · %(log_color)s%(shortLevel)s: %(reset)s%(white)s%(message)s"
+    os .makedirs ('logs',exist_ok =True )
+    LOG_FORMAT ='%(light_black)s%(asctime)s · %(log_color)s%(shortLevel)s: %(reset)s%(white)s%(message)s'
     formatter =ShortLevelFormatter (
     LOG_FORMAT ,
-    datefmt ="%d.%m.%Y %H:%M:%S",
+    datefmt ='%d.%m.%Y %H:%M:%S',
     reset =True ,
     log_colors ={
     'DEBUG':'light_blue',
@@ -80,18 +80,18 @@ def setup_logger (log_file :str ="logs/latest.log"):
     console_handler =logging .StreamHandler ()
     console_handler .setFormatter (formatter )
     console_handler .setLevel (logging .INFO )
-    file_handler =logging .FileHandler (log_file ,encoding ="utf-8")
+    file_handler =logging .FileHandler (log_file ,encoding ='utf-8')
     file_handler .setLevel (logging .DEBUG )
 
     class StripColorFormatter (logging .Formatter ):
-        ansi_escape =re .compile (r'\x1b\[[0-9;]*[A-Za-z]')
+        ansi_escape =re .compile ('\\x1b\\[[0-9;]*[A-Za-z]')
         def format (self ,record ):
             message =super ().format (record )
             return self .ansi_escape .sub ('',message )
 
     file_handler .setFormatter (StripColorFormatter (
-    "[%(asctime)s] %(levelname)-1s · %(name)-20s %(message)s",
-    datefmt ="%d.%m.%Y %H:%M:%S",
+    '[%(asctime)s] %(levelname)-1s · %(name)-20s %(message)s',
+    datefmt ='%d.%m.%Y %H:%M:%S',
     ))
 
     logger =logging .getLogger ()
@@ -106,10 +106,7 @@ def setup_logger (log_file :str ="logs/latest.log"):
 
 
 def is_package_installed (requirement_string :str )->bool :
-    "Checks if the library is installed.
-
-    :param requirement_string: String from a file of dependencies.
-    :type requirement_string: str"
+    'Checks if the library is installed.\n\n    :param requirement_string: Package string from the dependency file.\n    :type requirement_string: str'
 
     try :
         parts =shlex .split (requirement_string )
@@ -125,21 +122,18 @@ def is_package_installed (requirement_string :str )->bool :
 
 
 def install_requirements (requirements_path :str ):
-    "Installs dependencies from a file.
-
-:param requirements_path: Path to the file of dependencies.
-:type requirements_path: str"
+    'Installs dependencies from a file.\n\n    :param requirements_path: Path to the dependency file.\n    :type requirements_path: str'
 
     try :
         if not os .path .exists (requirements_path ):
             return 
 
-        with open (requirements_path ,"r",encoding ="utf-8")as f :
+        with open (requirements_path ,'r',encoding ='utf-8')as f :
             lines =f .readlines ()
 
         for line in lines :
             line =line .strip ()
-            if not line or line .startswith ("#")or line .startswith ("-"):
+            if not line or line .startswith ('#')or line .startswith ('-'):
                 continue 
 
             parts =shlex .split (line )
@@ -151,7 +145,7 @@ def install_requirements (requirements_path :str ):
 
             if not is_package_installed (pkg_name ):
                 subprocess .check_call ([
-                sys .executable ,"-m","pip","install","-r",requirements_path 
+                sys .executable ,'-m','pip','install','-r',requirements_path 
                 ])
                 return 
     except Exception as e :
@@ -164,12 +158,12 @@ def patch_requests ():
     def _request (self ,method ,url ,**kwargs ):# type: ignore
         for attempt in range (6 ):
             resp =_orig_request (self ,method ,url ,**kwargs )
-            text_head =(resp .text or "")[:1200 ]
+            text_head =(resp .text or '')[:1200 ]
             statuses ={
-            429 :"Too Many Requests",
-            500 :"Internal Server Error",
-            502 :"Bad Gateway",
-            503 :"Service Unavailable"
+            429 :'Too Many Requests',
+            500 :'Internal Server Error',
+            502 :'Bad Gateway',
+            503 :'Service Unavailable'
             }
 
             for st_code in statuses .keys ():
@@ -184,12 +178,12 @@ def patch_requests ():
                 else :
                     return resp 
 
-            retry_hdr =resp .headers .get ("Retry-After")
+            retry_hdr =resp .headers .get ('Retry-After')
             try :delay =float (retry_hdr )if retry_hdr else min (120.0 ,5.0 *(2 **attempt ))
             except :delay =min (120.0 ,5.0 *(2 **attempt ))
 
             logger .debug (f"{url } — {err }. Пробую отправить запрос снова через {delay } сек.")
-            delay +=random .uniform (0.2 ,0.8 )Small jitter
+            delay +=random .uniform (0.2 ,0.8 )# slight jitter
             time .sleep (delay )
         return resp 
 

@@ -12,12 +12,12 @@ from ..helpful import throw_float_message ,do_auth
 router =Router ()
 
 
-@router .message (Command ("start"))
+@router .message (Command ('start'))
 async def handler_start (message :types .Message ,state :FSMContext ):
     await state .set_state (None )
 
-    config =sett .get ("config")
-    if message .from_user .id not in config ["telegram"]["bot"]["signed_users"]:
+    config =sett .get ('config')
+    if message .from_user .id not in config ['telegram']['bot']['signed_users']:
         return await do_auth (message ,state )
 
     await throw_float_message (
@@ -28,18 +28,18 @@ async def handler_start (message :types .Message ,state :FSMContext ):
     )
 
 
-@router .message (Command ("restart"))
+@router .message (Command ('restart'))
 async def handler_restart (message :types .Message ,state :FSMContext ):
     await state .set_state (None )
 
-    config =sett .get ("config")
-    if message .from_user .id not in config ["telegram"]["bot"]["signed_users"]:
+    config =sett .get ('config')
+    if message .from_user .id not in config ['telegram']['bot']['signed_users']:
         return await do_auth (message ,state )
 
     await throw_float_message (
     state =state ,
     message =message ,
-    text ="Refreshing the bot, please wait...",
+    text ='🔄️ <b>Rebooting the bot</b>, wait...',
     reply_markup =templ .destroy_kb ()
     )
 

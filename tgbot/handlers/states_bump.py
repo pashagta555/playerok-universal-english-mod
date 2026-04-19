@@ -18,28 +18,28 @@ async def handler_waiting_for_bump_items_interval (message :types .Message ,stat
         await state .set_state (None )
 
         if not message .text .isdigit ():
-            raise Exception ("You must enter a numeric value")
+            raise Exception ('❌ You must enter a numeric value')
         if int (message .text )<=0 :
-            raise Exception ("Too low value")
+            raise Exception ('❌ Value too low')
 
         interval =int (message .text )
 
-        config =sett .get ("config")
-        config ["playerok"]["auto_bump_items"]["interval"]=interval 
-        sett .set ("config",config )
+        config =sett .get ('config')
+        config ['playerok']['auto_bump_items']['interval']=interval 
+        sett .set ('config',config )
 
         await throw_float_message (
         state =state ,
         message =message ,
         text =templ .settings_bump_float_text (f"✅ <b>Интервал поднятия предметов</b> был успешно изменён на <b>{interval }</b>"),
-        reply_markup =templ .back_kb (calls .SettingsNavigation (to ="bump").pack ())
+        reply_markup =templ .back_kb (calls .SettingsNavigation (to ='bump').pack ())
         )
     except Exception as e :
         await throw_float_message (
         state =state ,
         message =message ,
         text =templ .settings_bump_float_text (e ),
-        reply_markup =templ .back_kb (calls .SettingsNavigation (to ="bump").pack ())
+        reply_markup =templ .back_kb (calls .SettingsNavigation (to ='bump').pack ())
         )
 
 
@@ -49,16 +49,16 @@ async def handler_waiting_for_new_included_bump_item_keyphrases (message :types 
         await state .set_state (None )
 
         if len (message .text )<=0 :
-            raise Exception ("Too short a value ❌")
+            raise Exception ('❌ Value too short')
 
-        keyphrases =[phrase .strip ()for phrase in message .text .split (",")if phrase .strip ()]
+        keyphrases =[phrase .strip ()for phrase in message .text .split (',')if phrase .strip ()]
 
-        auto_bump_items =sett .get ("auto_bump_items")
-        auto_bump_items ["included"].append (keyphrases )
-        sett .set ("auto_bump_items",auto_bump_items )
+        auto_bump_items =sett .get ('auto_bump_items')
+        auto_bump_items ['included'].append (keyphrases )
+        sett .set ('auto_bump_items',auto_bump_items )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
         await throw_float_message (
         state =state ,
@@ -68,7 +68,7 @@ async def handler_waiting_for_new_included_bump_item_keyphrases (message :types 
         )
     except Exception as e :
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
         await throw_float_message (
         state =state ,
         message =message ,
@@ -93,19 +93,19 @@ async def handler_waiting_for_new_included_bump_items_keyphrases_file (message :
         for line in file_content .splitlines ():
             line =line .strip ()
             if len (line )>0 :
-                keyphrases =[phrase .strip ()for phrase in line .split (",")if phrase .strip ()]
+                keyphrases =[phrase .strip ()for phrase in line .split (',')if phrase .strip ()]
                 if len (keyphrases )>0 :
                     keyphrases_list .append (keyphrases )
 
         if len (keyphrases_list )<=0 :
-            raise Exception ("File does not contain valid key phrases")
+            raise Exception ('❌ The file does not contain valid keywords')
 
-        auto_bump_items =sett .get ("auto_bump_items")
-        auto_bump_items ["included"].extend (keyphrases_list )
-        sett .set ("auto_bump_items",auto_bump_items )
+        auto_bump_items =sett .get ('auto_bump_items')
+        auto_bump_items ['included'].extend (keyphrases_list )
+        sett .set ('auto_bump_items',auto_bump_items )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
         await throw_float_message (
         state =state ,
@@ -115,7 +115,7 @@ async def handler_waiting_for_new_included_bump_items_keyphrases_file (message :
         )
     except Exception as e :
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
         await throw_float_message (
         state =state ,
         message =message ,
@@ -130,16 +130,16 @@ async def handler_waiting_for_new_excluded_bump_item_keyphrases (message :types 
         await state .set_state (None )
 
         if len (message .text )<=0 :
-            raise Exception ("Too short a value")
+            raise Exception ('❌ Value too short')
 
-        keyphrases =[phrase .strip ()for phrase in message .text .split (",")if phrase .strip ()]
+        keyphrases =[phrase .strip ()for phrase in message .text .split (',')if phrase .strip ()]
 
-        auto_bump_items =sett .get ("auto_bump_items")
-        auto_bump_items ["excluded"].append (keyphrases )
-        sett .set ("auto_bump_items",auto_bump_items )
+        auto_bump_items =sett .get ('auto_bump_items')
+        auto_bump_items ['excluded'].append (keyphrases )
+        sett .set ('auto_bump_items',auto_bump_items )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
         await throw_float_message (
         state =state ,
@@ -149,7 +149,7 @@ async def handler_waiting_for_new_excluded_bump_item_keyphrases (message :types 
         )
     except Exception as e :
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
         await throw_float_message (
         state =state ,
         message =message ,
@@ -174,19 +174,19 @@ async def handler_waiting_for_new_excluded_bump_items_keyphrases_file (message :
         for line in file_content .splitlines ():
             line =line .strip ()
             if len (line )>0 :
-                keyphrases =[phrase .strip ()for phrase in line .split (",")if phrase .strip ()]
+                keyphrases =[phrase .strip ()for phrase in line .split (',')if phrase .strip ()]
                 if len (keyphrases )>0 :
                     keyphrases_list .append (keyphrases )
 
         if len (keyphrases_list )<=0 :
-            raise Exception ("File does not contain valid key phrases")
+            raise Exception ('❌ The file does not contain valid keywords')
 
-        auto_bump_items =sett .get ("auto_bump_items")
-        auto_bump_items ["excluded"].extend (keyphrases_list )
-        sett .set ("auto_bump_items",auto_bump_items )
+        auto_bump_items =sett .get ('auto_bump_items')
+        auto_bump_items ['excluded'].extend (keyphrases_list )
+        sett .set ('auto_bump_items',auto_bump_items )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
         await throw_float_message (
         state =state ,
@@ -196,7 +196,7 @@ async def handler_waiting_for_new_excluded_bump_items_keyphrases_file (message :
         )
     except Exception as e :
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
         await throw_float_message (
         state =state ,
         message =message ,

@@ -7,11 +7,11 @@ from ..import callback_datas as calls
 
 
 def settings_conn_text ():
-    config =sett .get ("config")
+    config =sett .get ('config')
 
-    pl_proxy =config ["playerok"]["api"]["proxy"]or "Not Set"
-    tg_proxy =config ["telegram"]["api"]["proxy"]or "Not Set"
-    requests_timeout =config ["playerok"]["api"]["requests_timeout"]or "Not assigned"
+    pl_proxy =config ['playerok']['api']['proxy']or '❌ Not specified'
+    tg_proxy =config ['telegram']['api']['proxy']or '❌ Not specified'
+    requests_timeout =config ['playerok']['api']['requests_timeout']or '❌ Not specified'
 
     txt =textwrap .dedent (f"""
         <b>📶 Соединение</b>
@@ -28,22 +28,22 @@ def settings_conn_text ():
 
 
 def settings_conn_kb ():
-    config =sett .get ("config")
+    config =sett .get ('config')
 
-    pl_proxy =config ["playerok"]["api"]["proxy"]or "❌ Not set"
-    tg_proxy =config ["telegram"]["api"]["proxy"]or "Not Set"
-    requests_timeout =config ["playerok"]["api"]["requests_timeout"]or "No task set"
+    pl_proxy =config ['playerok']['api']['proxy']or '❌ Not specified'
+    tg_proxy =config ['telegram']['api']['proxy']or '❌ Not specified'
+    requests_timeout =config ['playerok']['api']['requests_timeout']or '❌ Not specified'
 
     rows =[
-    [InlineKeyboardButton (text =f"🌐 Прокси для Playerok: {pl_proxy }",callback_data ="enter_pl_proxy")],
-    [InlineKeyboardButton (text =f"🌐 Прокси для Telegram: {tg_proxy }",callback_data ="enter_tg_proxy")],
-    [InlineKeyboardButton (text =f"🛜 Таймаут подключения к playerok.com: {requests_timeout }",callback_data ="enter_playerokapi_requests_timeout")],
-    [InlineKeyboardButton (text ="Backward ⬅️",callback_data =calls .SettingsNavigation (to ="default").pack ())]
+    [InlineKeyboardButton (text =f"🌐 Прокси для Playerok: {pl_proxy }",callback_data ='enter_pl_proxy')],
+    [InlineKeyboardButton (text =f"🌐 Прокси для Telegram: {tg_proxy }",callback_data ='enter_tg_proxy')],
+    [InlineKeyboardButton (text =f"🛜 Таймаут подключения к playerok.com: {requests_timeout }",callback_data ='enter_playerokapi_requests_timeout')],
+    [InlineKeyboardButton (text ='⬅️ Back',callback_data =calls .SettingsNavigation (to ='default').pack ())]
     ]
-    if config ["playerok"]["api"]["proxy"]:
-        rows [0 ].append (InlineKeyboardButton (text =f"❌ Убрать прокси",callback_data ="clean_pl_proxy"))
-    if config ["telegram"]["api"]["proxy"]:
-        rows [1 ].append (InlineKeyboardButton (text =f"❌ Убрать прокси",callback_data ="clean_tg_proxy"))
+    if config ['playerok']['api']['proxy']:
+        rows [0 ].append (InlineKeyboardButton (text =f"❌ Убрать прокси",callback_data ='clean_pl_proxy'))
+    if config ['telegram']['api']['proxy']:
+        rows [1 ].append (InlineKeyboardButton (text =f"❌ Убрать прокси",callback_data ='clean_tg_proxy'))
     kb =InlineKeyboardMarkup (inline_keyboard =rows )
     return kb 
 

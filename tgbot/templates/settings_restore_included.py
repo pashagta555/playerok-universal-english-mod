@@ -8,7 +8,7 @@ from ..import callback_datas as calls
 
 
 def settings_restore_included_text ():
-    included_restore_items =sett .get ("auto_restore_items").get ("included")
+    included_restore_items =sett .get ('auto_restore_items').get ('included')
     txt =textwrap .dedent (f"""
         <b>♻️➕ Включенные</b>
 
@@ -18,7 +18,7 @@ def settings_restore_included_text ():
 
 
 def settings_restore_included_kb (page =0 ):
-    included_restore_items :list [list ]=sett .get ("auto_restore_items").get ("included")
+    included_restore_items :list [list ]=sett .get ('auto_restore_items').get ('included')
 
     rows =[]
     items_per_page =7 
@@ -32,30 +32,30 @@ def settings_restore_included_kb (page =0 ):
     end_offset =start_offset +items_per_page 
 
     for keyphrases in list (included_restore_items )[start_offset :end_offset ]:
-        keyphrases_frmtd =", ".join (keyphrases )or "Not specified"
+        keyphrases_frmtd =', '.join (keyphrases )or '❌ Not specified'
         rows .append ([
-        InlineKeyboardButton (text =f"{keyphrases_frmtd }",callback_data ="123"),
+        InlineKeyboardButton (text =f"{keyphrases_frmtd }",callback_data ='123'),
         InlineKeyboardButton (text =f"🗑️",callback_data =calls .DeleteIncludedRestoreItem (index =included_restore_items .index (keyphrases )).pack ()),
         ])
 
     if total_pages >1 :
         buttons_row =[]
-        btn_back =InlineKeyboardButton (text ="←",callback_data =calls .IncludedRestoreItemsPagination (page =page -1 ).pack ())if page >0 else InlineKeyboardButton (text ="🛑",callback_data ="123")
+        btn_back =InlineKeyboardButton (text ='←',callback_data =calls .IncludedRestoreItemsPagination (page =page -1 ).pack ())if page >0 else InlineKeyboardButton (text ='🛑',callback_data ='123')
         buttons_row .append (btn_back )
 
-        btn_pages =InlineKeyboardButton (text =f"{page +1 }/{total_pages }",callback_data ="enter_messages_page")
+        btn_pages =InlineKeyboardButton (text =f"{page +1 }/{total_pages }",callback_data ='enter_messages_page')
         buttons_row .append (btn_pages )
 
-        btn_next =InlineKeyboardButton (text ="→",callback_data =calls .IncludedRestoreItemsPagination (page =page +1 ).pack ())if page <total_pages -1 else InlineKeyboardButton (text ="🛑",callback_data ="123")
+        btn_next =InlineKeyboardButton (text ='→',callback_data =calls .IncludedRestoreItemsPagination (page =page +1 ).pack ())if page <total_pages -1 else InlineKeyboardButton (text ='🛑',callback_data ='123')
         buttons_row .append (btn_next )
         rows .append (buttons_row )
 
     rows .append ([
-    InlineKeyboardButton (text ="Add",callback_data ="enter_new_included_restore_item_keyphrases"),
-    InlineKeyboardButton (text ="Add many",callback_data ="send_new_included_restore_items_keyphrases_file"),
+    InlineKeyboardButton (text ='➕Add',callback_data ='enter_new_included_restore_item_keyphrases'),
+    InlineKeyboardButton (text ='➕📄Add a lot',callback_data ='send_new_included_restore_items_keyphrases_file'),
     ])
     rows .append ([
-    InlineKeyboardButton (text ="Backward ⬅️",callback_data =calls .SettingsNavigation (to ="restore").pack ())
+    InlineKeyboardButton (text ='⬅️ Back',callback_data =calls .SettingsNavigation (to ='restore').pack ())
     ])
 
     kb =InlineKeyboardMarkup (inline_keyboard =rows )

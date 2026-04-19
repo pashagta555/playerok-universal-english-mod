@@ -11,39 +11,33 @@ class DataFile :
 
 
 INITIALIZED_USERS =DataFile (
-name ="initialized_users",
-path ="bot_data/initialized_users.json",
+name ='initialized_users',
+path ='bot_data/initialized_users.json',
 default =[]
 )
 SAVED_ITEMS =DataFile (
-name ="saved_items",
-path ="bot_data/saved_items.json",
+name ='saved_items',
+path ='bot_data/saved_items.json',
 default =[]
 )
 CACHED_ORDERS =DataFile (
-name ="cached_orders",
-path ="bot_data/cached_orders.json",
+name ='cached_orders',
+path ='bot_data/cached_orders.json',
 default ={}
 )
 LATEST_EVENTS_TIMES =DataFile (
-name ="latest_events_times",
-path ="bot_data/latest_events_times.json",
+name ='latest_events_times',
+path ='bot_data/latest_events_times.json',
 default ={
-"auto_bump_items":None ,
-"auto_withdrawal":None 
+'auto_bump_items':None ,
+'auto_withdrawal':None 
 }
 )
 DATA =[INITIALIZED_USERS ,SAVED_ITEMS ,CACHED_ORDERS ,LATEST_EVENTS_TIMES ]
 
 
 def get_json (path :str ,default :dict |list )->dict :
-    "Gets file content data. Creates a file data if it does not exist.
-
-:param path: Path to the JSON file.
-:type path: str
-
-:param default: Standard file structure.
-:type default: dict"
+    'Gets the contents of a data file.\n    Creates a data file if it does not exist.\n\n    :param path: Path to the json file.\n    :type path: `str`\n\n    :param default: Standard file structure.\n    :type default: `dict`'
 
     folder_path =os .path .dirname (path )
     if not os .path .exists (folder_path ):
@@ -60,13 +54,7 @@ def get_json (path :str ,default :dict |list )->dict :
 
 
 def set_json (path :str ,new :dict ):
-    "Sets new data in a data file.
-
-:param path: Path to the JSON file.
-:type path: `str`
-
-:param new: New data.
-:type new: `dict`"
+    'Installs new data into the data file.\n\n    :param path: Path to the json file.\n    :type path: `str`\n\n    :param new: New data.\n    :type new: `dict`'
 
     with open (path ,'w',encoding ='utf-8')as f :
         json .dump (new ,f ,indent =4 ,ensure_ascii =False )

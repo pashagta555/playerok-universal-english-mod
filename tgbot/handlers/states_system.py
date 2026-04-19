@@ -15,13 +15,13 @@ router =Router ()
 async def handler_waiting_for_password (message :types .Message ,state :FSMContext ):
     try :
         await state .set_state (None )
-        config =sett .get ("config")
+        config =sett .get ('config')
 
-        if message .text !=config ["telegram"]["bot"]["password"]:
-            raise Exception ("Invalid password key.")
+        if message .text !=config ['telegram']['bot']['password']:
+            raise Exception ('❌ Invalid key-password.')
 
-        config ["telegram"]["bot"]["signed_users"].append (message .from_user .id )
-        sett .set ("config",config )
+        config ['telegram']['bot']['signed_users'].append (message .from_user .id )
+        sett .set ('config',config )
 
         await throw_float_message (
         state =state ,

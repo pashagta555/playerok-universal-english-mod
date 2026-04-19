@@ -8,8 +8,8 @@ from ..import callback_datas as calls
 
 
 def logs_text ():
-    config =sett .get ("config")
-    max_file_size =config ["logs"]["max_file_size"]or "Not specified"
+    config =sett .get ('config')
+    max_file_size =config ['logs']['max_file_size']or '❌ Not specified'
 
     txt =textwrap .dedent (f"""
         <b>🗒️ Логи</b>
@@ -23,13 +23,13 @@ def logs_text ():
 
 
 def logs_kb ():
-    config =sett .get ("config")
-    max_file_size =config ["logs"]["max_file_size"]or "Not assigned"
+    config =sett .get ('config')
+    max_file_size =config ['logs']['max_file_size']or '❌ Not specified'
 
     rows =[
-    [InlineKeyboardButton (text =f"📄 Макс. размер файла: {max_file_size } MB",callback_data ="enter_logs_max_file_size")],
-    [InlineKeyboardButton (text =f"📔 Получить логи",callback_data ="select_logs_file_lines")],
-    [InlineKeyboardButton (text ="Backward ⬅️",callback_data =calls .MenuNavigation (to ="default").pack ())]
+    [InlineKeyboardButton (text =f"📄 Макс. размер файла: {max_file_size } MB",callback_data ='enter_logs_max_file_size')],
+    [InlineKeyboardButton (text =f"📔 Получить логи",callback_data ='select_logs_file_lines')],
+    [InlineKeyboardButton (text ='⬅️ Back',callback_data =calls .MenuNavigation (to ='default').pack ())]
     ]
     kb =InlineKeyboardMarkup (inline_keyboard =rows )
     return kb 
@@ -45,7 +45,7 @@ def logs_file_lines_kb ():
     InlineKeyboardButton (text =f"📕 Последние 1000 строк",callback_data =calls .SendLogsFile (lines =1000 ).pack ()),
     InlineKeyboardButton (text =f"📖 Весь файл",callback_data =calls .SendLogsFile (lines =-1 ).pack ())
     ],
-    [InlineKeyboardButton (text ="Backwards ⬅️",callback_data =calls .MenuNavigation (to ="logs").pack ())]
+    [InlineKeyboardButton (text ='⬅️ Back',callback_data =calls .MenuNavigation (to ='logs').pack ())]
     ]
     kb =InlineKeyboardMarkup (inline_keyboard =rows )
     return kb 

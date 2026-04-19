@@ -8,7 +8,7 @@ from ..import callback_datas as calls
 
 
 def settings_mess_text ():
-    messages =sett .get ("messages")
+    messages =sett .get ('messages')
     txt =textwrap .dedent (f"""
         <b>💬 Сообщения</b>
 
@@ -18,7 +18,7 @@ def settings_mess_text ():
 
 
 def settings_mess_kb (page =0 ):
-    messages =sett .get ("messages")
+    messages =sett .get ('messages')
 
     rows =[]
     items_per_page =8 
@@ -32,8 +32,8 @@ def settings_mess_kb (page =0 ):
     end_offset =start_offset +items_per_page 
 
     for mess_id ,info in list (messages .items ())[start_offset :end_offset ]:
-        enabled ="🟢"if info ["enabled"]else "🔴"
-        text_joined ="\n".join (info ["text"])
+        enabled ='🟢'if info ['enabled']else '🔴'
+        text_joined ='\n'.join (info ['text'])
         rows .append ([InlineKeyboardButton (
         text =f"{enabled } {mess_id } | {text_joined }",
         callback_data =calls .MessagePage (message_id =mess_id ).pack ())
@@ -41,18 +41,18 @@ def settings_mess_kb (page =0 ):
 
     if total_pages >1 :
         buttons_row =[]
-        btn_back =InlineKeyboardButton (text ="←",callback_data =calls .MessagesPagination (page =page -1 ).pack ())if page >0 else InlineKeyboardButton (text ="🛑",callback_data ="123")
+        btn_back =InlineKeyboardButton (text ='←',callback_data =calls .MessagesPagination (page =page -1 ).pack ())if page >0 else InlineKeyboardButton (text ='🛑',callback_data ='123')
         buttons_row .append (btn_back )
 
-        btn_pages =InlineKeyboardButton (text =f"{page +1 }/{total_pages }",callback_data ="enter_messages_page")
+        btn_pages =InlineKeyboardButton (text =f"{page +1 }/{total_pages }",callback_data ='enter_messages_page')
         buttons_row .append (btn_pages )
 
-        btn_next =InlineKeyboardButton (text ="→",callback_data =calls .MessagesPagination (page =page +1 ).pack ())if page <total_pages -1 else InlineKeyboardButton (text ="🛑",callback_data ="123")
+        btn_next =InlineKeyboardButton (text ='→',callback_data =calls .MessagesPagination (page =page +1 ).pack ())if page <total_pages -1 else InlineKeyboardButton (text ='🛑',callback_data ='123')
         buttons_row .append (btn_next )
         rows .append (buttons_row )
 
     rows .append ([
-    InlineKeyboardButton (text ="Backward",callback_data =calls .SettingsNavigation (to ="default").pack ())
+    InlineKeyboardButton (text ='⬅️ Back',callback_data =calls .SettingsNavigation (to ='default').pack ())
     ])
 
     kb =InlineKeyboardMarkup (inline_keyboard =rows )

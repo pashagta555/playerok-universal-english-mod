@@ -18,22 +18,22 @@ async def handler_waiting_for_new_included_complete_deal_keyphrases (message :ty
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
         if len (message .text )<=0 :
-            raise Exception ("Too short a value")
+            raise Exception ('❌ Value too short')
 
-        keyphrases =[phrase .strip ()for phrase in message .text .split (",")if phrase .strip ()]
+        keyphrases =[phrase .strip ()for phrase in message .text .split (',')if phrase .strip ()]
 
-        auto_complete_deals =sett .get ("auto_complete_deals")
-        auto_complete_deals ["included"].append (keyphrases )
-        sett .set ("auto_complete_deals",auto_complete_deals )
+        auto_complete_deals =sett .get ('auto_complete_deals')
+        auto_complete_deals ['included'].append (keyphrases )
+        sett .set ('auto_complete_deals',auto_complete_deals )
 
         await throw_float_message (
         state =state ,
         message =message ,
         text =templ .settings_new_complete_included_float_text (
-        "The subject has been successfully included in confirmation."
+        '✅ Item successfully included in confirmation'
         ),
         reply_markup =templ .back_kb (calls .IncludedCompleteDealsPagination (page =last_page ).pack ())
         )
@@ -55,7 +55,7 @@ async def handler_waiting_for_new_included_complete_deals_keyphrases_file (messa
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
         file =await message .bot .get_file (message .document .file_id )
         downloaded_file =await message .bot .download_file (file .file_path )
@@ -65,16 +65,16 @@ async def handler_waiting_for_new_included_complete_deals_keyphrases_file (messa
         for line in file_content .splitlines ():
             line =line .strip ()
             if len (line )>0 :
-                keyphrases =[phrase .strip ()for phrase in line .split (",")if phrase .strip ()]
+                keyphrases =[phrase .strip ()for phrase in line .split (',')if phrase .strip ()]
                 if len (keyphrases )>0 :
                     keyphrases_list .append (keyphrases )
 
         if len (keyphrases_list )<=0 :
-            raise Exception ("File does not contain valid key phrases")
+            raise Exception ('❌ The file does not contain valid keywords')
 
-        auto_complete_deals =sett .get ("auto_complete_deals")
-        auto_complete_deals ["included"].extend (keyphrases_list )
-        sett .set ("auto_complete_deals",auto_complete_deals )
+        auto_complete_deals =sett .get ('auto_complete_deals')
+        auto_complete_deals ['included'].extend (keyphrases_list )
+        sett .set ('auto_complete_deals',auto_complete_deals )
 
         await throw_float_message (
         state =state ,
@@ -99,22 +99,22 @@ async def handler_waiting_for_new_excluded_complete_deal_keyphrases (message :ty
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
         if len (message .text )<=0 :
-            raise Exception ("Too short a value ❌")
+            raise Exception ('❌ Value too short')
 
-        keyphrases =[phrase .strip ()for phrase in message .text .split (",")if phrase .strip ()]
+        keyphrases =[phrase .strip ()for phrase in message .text .split (',')if phrase .strip ()]
 
-        auto_complete_deals =sett .get ("auto_complete_deals")
-        auto_complete_deals ["excluded"].append (keyphrases )
-        sett .set ("auto_complete_deals",auto_complete_deals )
+        auto_complete_deals =sett .get ('auto_complete_deals')
+        auto_complete_deals ['excluded'].append (keyphrases )
+        sett .set ('auto_complete_deals',auto_complete_deals )
 
         await throw_float_message (
         state =state ,
         message =message ,
         text =templ .settings_new_complete_excluded_float_text (
-        "The subject has been successfully added to exceptions for confirmation."
+        '✅ The item has been successfully added to the exceptions for confirmation'
         ),
         reply_markup =templ .back_kb (calls .ExcludedCompleteDealsPagination (page =last_page ).pack ())
         )
@@ -136,7 +136,7 @@ async def handler_waiting_for_new_excluded_complete_deals_keyphrases_file (messa
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
         file =await message .bot .get_file (message .document .file_id )
         downloaded_file =await message .bot .download_file (file .file_path )
@@ -146,16 +146,16 @@ async def handler_waiting_for_new_excluded_complete_deals_keyphrases_file (messa
         for line in file_content .splitlines ():
             line =line .strip ()
             if len (line )>0 :
-                keyphrases =[phrase .strip ()for phrase in line .split (",")if phrase .strip ()]
+                keyphrases =[phrase .strip ()for phrase in line .split (',')if phrase .strip ()]
                 if len (keyphrases )>0 :
                     keyphrases_list .append (keyphrases )
 
         if len (keyphrases_list )<=0 :
-            raise Exception ("File does not contain valid key phrases")
+            raise Exception ('❌ The file does not contain valid keywords')
 
-        auto_complete_deals =sett .get ("auto_complete_deals")
-        auto_complete_deals ["excluded"].extend (keyphrases_list )
-        sett .set ("auto_complete_deals",auto_complete_deals )
+        auto_complete_deals =sett .get ('auto_complete_deals')
+        auto_complete_deals ['excluded'].extend (keyphrases_list )
+        sett .set ('auto_complete_deals',auto_complete_deals )
 
         await throw_float_message (
         state =state ,

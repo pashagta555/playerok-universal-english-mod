@@ -143,7 +143,7 @@ async def callback_deliv_goods_pagination (callback :CallbackQuery ,callback_dat
     await state .set_state (None )
 
     data =await state .get_data ()
-    index =data .get ("auto_delivery_index")
+    index =data .get ('auto_delivery_index')
 
     page =callback_data .page 
     await state .update_data (last_page =page )
@@ -197,7 +197,7 @@ async def callback_bank_cards_pagination (callback :CallbackQuery ,callback_data
     await state .update_data (last_page =page )
 
     data =await state .get_data ()
-    bank_cards =data .get ("bank_cards",[])
+    bank_cards =data .get ('bank_cards',[])
 
     await throw_float_message (
     state =state ,
@@ -216,7 +216,7 @@ async def callback_sbp_banks_pagination (callback :CallbackQuery ,callback_data 
     await state .update_data (last_page =page )
 
     data =await state .get_data ()
-    sbp_banks =data .get ("sbp_banks",[])
+    sbp_banks =data .get ('sbp_banks',[])
 
     await throw_float_message (
     state =state ,

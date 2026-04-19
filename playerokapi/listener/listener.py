@@ -27,14 +27,11 @@ from ..misc import QUERIES
 from .events import *
 
 
-logger =getLogger ("playerokapi.listener")
+logger =getLogger ('playerokapi.listener')
 
 
 class EventListener :
-    "Listener of events from Playerok.com.
-
-:param account: Object of the account.
-:type account: `playerokapi.account.Account`"
+    'Event listener from Playerok.com.\n\n    :param account: Account object.\n    :type account: `playerokapi.account.Account`'
 
     def __init__ (self ,account :Account ):
         self .account :Account =account 
@@ -55,8 +52,8 @@ class EventListener :
         self ._last_chats_check =0 
 
     def _parse_iso (self ,iso_dt :str ):
-        if iso_dt .endswith ("Z"):
-            iso_dt =iso_dt [:-1 ]+"+00:00"
+        if iso_dt .endswith ('Z'):
+            iso_dt =iso_dt [:-1 ]+'+00:00'
         return datetime .fromisoformat (iso_dt )
 
     def _get_actual_message (
@@ -118,7 +115,7 @@ class EventListener :
         if not message :
             return []
 
-        if message .text =="{{ITEM_PAID}}":
+        if message .text =='{{ITEM_PAID}}':
             actual_msg =self ._get_actual_message (message .id ,chat .id )or message 
             if actual_msg and actual_msg .deal :
                 deal_id =actual_msg .deal .id 
@@ -135,7 +132,7 @@ class EventListener :
                 ItemPaidEvent (actual_msg .deal ,chat )
                 ]
 
-        elif message .text =="{{ITEM_SENT}}":
+        elif message .text =='{{ITEM_SENT}}':
             actual_msg =self ._get_actual_message (message .id ,chat .id )or message 
             if actual_msg and actual_msg .deal :
             #status_date = self._parse_iso(actual_msg.created_at)
@@ -145,7 +142,7 @@ class EventListener :
                 DealStatusChangedEvent (actual_msg .deal ,chat )
                 ]
 
-        elif message .text =="{{DEAL_CONFIRMED}}":
+        elif message .text =='{{DEAL_CONFIRMED}}':
             actual_msg =self ._get_actual_message (message .id ,chat .id )or message 
             if actual_msg and actual_msg .deal :
             #status_date = self._parse_iso(actual_msg.created_at)
@@ -155,7 +152,7 @@ class EventListener :
                 DealStatusChangedEvent (actual_msg .deal ,chat ),
                 ]
 
-        elif message .text =="{{DEAL_ROLLED_BACK}}":
+        elif message .text =='{{DEAL_ROLLED_BACK}}':
             actual_msg =self ._get_actual_message (message .id ,chat .id )or message 
             if actual_msg and actual_msg .deal :
             #status_date = self._parse_iso(actual_msg.created_at)
@@ -165,7 +162,7 @@ class EventListener :
                 DealStatusChangedEvent (actual_msg .deal ,chat ),
                 ]
 
-        elif message .text =="{{DEAL_HAS_PROBLEM}}":
+        elif message .text =='{{DEAL_HAS_PROBLEM}}':
             actual_msg =self ._get_actual_message (message .id ,chat .id )or message 
             if actual_msg and actual_msg .deal :
             #status_date = self._parse_iso(actual_msg.created_at)
@@ -175,7 +172,7 @@ class EventListener :
                 DealStatusChangedEvent (actual_msg .deal ,chat ),
                 ]
 
-        elif message .text =="{{DEAL_PROBLEM_RESOLVED}}":
+        elif message .text =='{{DEAL_PROBLEM_RESOLVED}}':
             actual_msg =self ._get_actual_message (message .id ,chat .id )or message 
             if actual_msg and actual_msg .deal :
             #status_date = self._parse_iso(actual_msg.created_at)
@@ -189,78 +186,78 @@ class EventListener :
 
     def _send_connection_init (self ):
         self .ws .send (json .dumps ({
-        "type":"connection_init",
-        "payload":{
-        "x-gql-op":"ws-subscription",
-        "x-gql-path":"/chats/[id]",
-        "x-timezone-offset":-180 
+        'type':'connection_init',
+        'payload':{
+        'x-gql-op':'ws-subscription',
+        'x-gql-path':'/chats/[id]',
+        'x-timezone-offset':-180 
         }
         }))
 
     def _subscribe_chat_updated (self ):
         self .ws .send (json .dumps ({
-        "id":str (uuid .uuid4 ()),
-        "payload":{
-        "extensions":{},
-        "operationName":"chatUpdated",
-        "query":QUERIES .get ("chatUpdated"),
-        "variables":{
-        "filter":{
-        "userId":self .account .id 
+        'id':str (uuid .uuid4 ()),
+        'payload':{
+        'extensions':{},
+        'operationName':'chatUpdated',
+        'query':QUERIES .get ('chatUpdated'),
+        'variables':{
+        'filter':{
+        'userId':self .account .id 
         },
-        "showForbiddenImage":True 
+        'showForbiddenImage':True 
         }
         },
-        "type":"subscribe"
+        'type':'subscribe'
         }))
 
     def _subscribe_chat_marked_as_read (self ):
         self .ws .send (json .dumps ({
-        "id":str (uuid .uuid4 ()),
-        "payload":{
-        "extensions":{},
-        "operationName":"chatMarkedAsRead",
-        "query":QUERIES .get ("chatMarkedAsRead"),
-        "variables":{
-        "filter":{
-        "userId":self .account .id 
+        'id':str (uuid .uuid4 ()),
+        'payload':{
+        'extensions':{},
+        'operationName':'chatMarkedAsRead',
+        'query':QUERIES .get ('chatMarkedAsRead'),
+        'variables':{
+        'filter':{
+        'userId':self .account .id 
         },
-        "showForbiddenImage":True 
+        'showForbiddenImage':True 
         }
         },
-        "type":"subscribe"
+        'type':'subscribe'
         }))
 
     def _subscribe_user_updated (self ):
         self .ws .send (json .dumps ({
-        "id":str (uuid .uuid4 ()),
-        "payload":{
-        "extensions":{},
-        "operationName":"userUpdated",
-        "query":QUERIES .get ("userUpdated"),
-        "variables":{
-        "userId":self .account .id 
+        'id':str (uuid .uuid4 ()),
+        'payload':{
+        'extensions':{},
+        'operationName':'userUpdated',
+        'query':QUERIES .get ('userUpdated'),
+        'variables':{
+        'userId':self .account .id 
         }
         },
-        "type":"subscribe"
+        'type':'subscribe'
         }))
 
     def _subscribe_chat_message_created (self ,chat_id ):
         _uuid =str (uuid .uuid4 ())
         self .chat_subscriptions [_uuid ]=chat_id 
         self .ws .send (json .dumps ({
-        "id":_uuid ,
-        "payload":{
-        "extensions":{},
-        "operationName":"chatMessageCreated",
-        "query":QUERIES .get ("chatMessageCreated"),
-        "variables":{
-        "filter":{
-        "chatId":chat_id 
+        'id':_uuid ,
+        'payload':{
+        'extensions':{},
+        'operationName':'chatMessageCreated',
+        'query':QUERIES .get ('chatMessageCreated'),
+        'variables':{
+        'filter':{
+        'chatId':chat_id 
         }
         }
         },
-        "type":"subscribe"
+        'type':'subscribe'
         }))
 
     def _is_chat_subscribed (self ,chat_id ):
@@ -307,23 +304,23 @@ class EventListener :
 
             logger .debug (f"WS -> {msg_data }")
 
-            if msg_data ["type"]=="connection_ack":
+            if msg_data ['type']=='connection_ack':
                 self ._subscribe_chat_updated ()
                 self ._subscribe_user_updated ()
 
                 for chat_ in self .chats :
                     self ._subscribe_chat_message_created (chat_ .id )
             else :
-                payload_data =(msg_data .get ("payload")or {}).get ("data")or {}
+                payload_data =(msg_data .get ('payload')or {}).get ('data')or {}
 
-                if "userUpdated"in payload_data :
-                    unread_chats =payload_data ["userUpdated"].get ("unreadChatsCounter",0 )
+                if 'userUpdated'in payload_data :
+                    unread_chats =payload_data ['userUpdated'].get ('unreadChatsCounter',0 )
                     if unread_chats >0 :
                         self ._possible_new_chat .set ()
 
-                if "chatUpdated"in payload_data :
-                    _chat =chat (payload_data ["chatUpdated"])
-                    _message =chat_message (payload_data ["chatUpdated"]["lastMessage"])
+                if 'chatUpdated'in payload_data :
+                    _chat =chat (payload_data ['chatUpdated'])
+                    _message =chat_message (payload_data ['chatUpdated']['lastMessage'])
 
                     if not self ._is_chat_subscribed (_chat .id ):
                         self ._subscribe_chat_message_created (_chat .id )
@@ -334,11 +331,11 @@ class EventListener :
                         # yield event
                             self .q .put (event )
 
-                if "chatMessageCreated"in payload_data :
-                    chat_id =self .chat_subscriptions .get (msg_data ["id"])
+                if 'chatMessageCreated'in payload_data :
+                    chat_id =self .chat_subscriptions .get (msg_data ['id'])
                     try :_chat =[chat_ for chat_ in self .chats if chat_ .id ==chat_id ][0 ]
                     except :return 
-                    _message =chat_message (payload_data ["chatMessageCreated"])
+                    _message =chat_message (payload_data ['chatMessageCreated'])
 
                     events =self ._proccess_new_chat_message (_chat ,_message )
                     for event in events :
@@ -349,26 +346,26 @@ class EventListener :
 
     def listen_new_messages (self ):
         headers ={
-        "accept-encoding":"gzip, deflate, br, zstd",
-        "accept-language":"ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
-        "cache-control":"no-cache",
-        "connection":"Upgrade",
-        "origin":"https://playerok.com",
-        "pragma":"no-cache",
-        "sec-websocket-extensions":"permessage-deflate; client_max_window_bits",
-        "cookie":f"token={self .account .token }",
-        "user-agent":self .account .user_agent 
+        'accept-encoding':'gzip, deflate, br, zstd',
+        'accept-language':'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
+        'cache-control':'no-cache',
+        'connection':'Upgrade',
+        'origin':'https://playerok.com',
+        'pragma':'no-cache',
+        'sec-websocket-extensions':'permessage-deflate; client_max_window_bits',
+        'cookie':f"token={self .account .token }",
+        'user-agent':self .account .user_agent 
         }
 
         proxy_host ,proxy_port ,proxy_auth =None ,None ,None 
 
         if self .account .proxy :
-            if "@"in self .account .proxy :
-                proxy_host ,proxy_port =self .account .proxy .split ("@")[1 ].split (":")
-                proxy_username ,proxy_password =self .account .proxy .split ("@")[0 ].split (":")
+            if '@'in self .account .proxy :
+                proxy_host ,proxy_port =self .account .proxy .split ('@')[1 ].split (':')
+                proxy_username ,proxy_password =self .account .proxy .split ('@')[0 ].split (':')
                 proxy_auth =(proxy_username ,proxy_password )
             else :
-                proxy_host ,proxy_port =self .account .proxy .split (":")
+                proxy_host ,proxy_port =self .account .proxy .split (':')
 
                 # try:
                 #     ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
@@ -380,7 +377,7 @@ class EventListener :
                 # except:
                 #     ssl_context = None
 
-        try :self .chats =self .account .get_chats (count =24 ).chats Initialization of the first 24 channels
+        try :self .chats =self .account .get_chats (count =24 ).chats # initialize the first 24 chats
         except :self .chats =[]
 
         self ._process_chats_last_messages (self .chats )
@@ -391,12 +388,12 @@ class EventListener :
         while True :
             try :
                 self .ws =websocket .WebSocket (
-                sslopt ={"ca_certs":self .account ._tmp_cert_path }
+                sslopt ={'ca_certs':self .account ._tmp_cert_path }
                 )
                 self .ws .connect (
-                url ="wss://ws.playerok.com/graphql",
+                url ='wss://ws.playerok.com/graphql',
                 header =[f"{k }: {v }"for k ,v in headers .items ()],
-                subprotocols =["graphql-transport-ws"],
+                subprotocols =['graphql-transport-ws'],
                 http_proxy_host =proxy_host ,
                 http_proxy_port =proxy_port ,
                 http_proxy_auth =proxy_auth 
@@ -412,15 +409,15 @@ class EventListener :
 
     def _should_check_review_deal (self ,deal_id ,delay =30 ,max_tries =30 )->bool :
         now =time .time ()
-        info =self .review_deal_times .get (deal_id ,{"last":0 ,"tries":0 })
+        info =self .review_deal_times .get (deal_id ,{'last':0 ,'tries':0 })
 
-        last_time =info ["last"]
-        tries =info ["tries"]
+        last_time =info ['last']
+        tries =info ['tries']
 
         if now -last_time >delay :
             self .review_deal_times [deal_id ]={
-            "last":now ,
-            "tries":tries +1 
+            'last':now ,
+            'tries':tries +1 
             }
             return True 
         elif tries >=max_tries :
@@ -474,7 +471,7 @@ class EventListener :
                 for _ in range (3 ):
                     try :
                         if by_event :
-                            time .sleep (8 )# The player may not immediately display current chats
+                            time .sleep (8 )# the player may not immediately display current chats
 
                         chats =self .account .get_chats (count =5 ,type =ChatTypes .PM ).chats 
                         for chat in chats :
@@ -493,7 +490,7 @@ class EventListener :
                                 break 
 
                         if possible_chats :
-                            break If found chatrooms with potential new deals - stop cycle
+                            break # if chats with possible new transactions are found - stop the cycle
 
                         if not by_event :
                             time .sleep (8 )
@@ -503,9 +500,9 @@ class EventListener :
                 for chat in possible_chats :
                     last_msg =chat .last_message 
 
-                    New chat - looking at last_message first (quick way)
+                    # New chat - look at last_message first (fast way)
                     if (
-                    last_msg and last_msg .text =="{{ITEM_PAID}}"
+                    last_msg and last_msg .text =='{{ITEM_PAID}}'
                     and (now -self ._parse_iso (last_msg .created_at ).astimezone (timezone .utc )).total_seconds ()<=90 
                     ):
                         events =self ._proccess_new_chat_message (chat ,last_msg )
@@ -513,17 +510,17 @@ class EventListener :
                             yield event 
                         continue 
 
-                        slow path: last_message overwritten by a new message from the customer.
-                        We are requesting a history and searching for {{ITEM_PAID}} among the first messages.
+                        # slow path: last_message is interrupted by a new message from the buyer.
+                        # request history and look for {{ITEM_PAID}} among the first messages.
                     try :
                         time .sleep (1 )
                         messages =self .account .get_chat_messages (chat .id ,count =12 ).messages 
                         new_paid_msg =next (
                         (
                         msg for msg in messages 
-                        if msg .text =="{{ITEM_PAID}}"
+                        if msg .text =='{{ITEM_PAID}}'
                         and (now -self ._parse_iso (msg .created_at ).astimezone (timezone .utc )).total_seconds ()<=90 
-                        # ^ Check whether this deal was made recently
+                        # ^ check that this transaction was made recently
                         ),
                         None 
                         )
@@ -541,8 +538,8 @@ class EventListener :
 
             self ._last_chats_check =time .time ()
 
-    def listen_deal_statuses (self ):# listens for changes in the status of all active deals
-        while True :To Do: Refine, Check Again for Bugs
+    def listen_deal_statuses (self ):# listens for status changes in all active transactions
+        while True :# TODO: Improve, check again for bugs
             for chat_id ,deals in list (self .active_deals .items ()):
                 for _ in range (3 ):
                     try :

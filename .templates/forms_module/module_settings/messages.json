@@ -2,21 +2,21 @@
     "cmd_writein": {
         "enabled": true,
         "text": [
-            "✏️ Step 1. Enter surnames, name, middle names",
+            "✏️ Step 1. Enter last name, first name, patronymic",
             "",
             "💡 For example: Petrov Ivan Olegovich",
             "",
-            "Enter yours Full name:"
+            "Enter your full name:"
         ]
     },
     "entering_fullname_error": {
         "enabled": true,
         "text": [
-            "❌ Step 1. Error input Full name",
+            "❌ Step 1. Error entering full name",
             "",
-            "Make sure, What text corresponds format",
+            "Make sure the text matches the format"
             "",
-            "Enter Full name again:"
+            "Enter your full name again:"
         ]
     },
     "enter_age": {
@@ -26,35 +26,35 @@
             "",
             "💡 For example: 18",
             "",
-            "Enter mine age:"
+            "Enter your age:"
         ]
     },
     "entering_age_error": {
         "enabled": true,
         "text": [
-            "❌ Step 2. Error input age",
+            "❌ Step 2. Error entering age",
             "",
-            "Make sure, What You introduced numeric meaning",
+            "Make sure you entered a numeric value"
             "",
-            "Enter age again:"
+            "Enter your age again:"
         ]
     },
     "enter_hobby": {
         "enabled": true,
         "text": [
-            "✏️ Step 3. Enter hobby",
+            "✏️ Step 3. Entering a hobby",
             "",
             "💡 For example: Drawing",
             "",
-            "Enter yours hobby:"
+            "Enter your hobby:"
         ]
     },
     "entering_username_error": {
         "enabled": true,
         "text": [
-            "❌ Step 3. Error input hobby",
+            "❌ Step 3. Error entering hobby",
             "",
-            "Make sure, What text corresponds format",
+            "Make sure the text matches the format"
             "",
             "Enter hobby again:"
         ]
@@ -62,32 +62,32 @@
     "form_filled_out": {
         "enabled": true,
         "text": [
-            "✅ Questionnaire was filled!",
+            "✅ The form has been completed!",
             "",
-            "Yours data:",
+            "Your details:",
             "・ Full name: {fullname}",
-            "・ Age: {age}",
+            "・Age: {age}",
             "・ Hobby: {hobby}",
             "",
-            "💡 Use team !my profile, to view data again"
+            "💡 Use the command !myprofile to view the data again"
         ]
     },
     "cmd_myform": {
         "enabled": true,
         "text": [
-            "📝 Yours questionnaire",
+            "📝Your profile"
             "",
             "・ Full name: {fullname}",
-            "・ Age: {age}",
+            "・Age: {age}",
             "・ Hobby: {hobby}",
             "",
-            "💡 Use team !fill out, to fill out questionnaire again"
+            "💡 Use the !fill command to fill out the form again"
         ]
     },
     "cmd_myform_error": {
         "enabled": true,
         "text": [
-            "❌ At opening yours questionnaires happened error",
+            "❌ An error occurred while opening your profile,"
             "",
             "{reason}"
         ]

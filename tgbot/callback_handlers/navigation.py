@@ -18,15 +18,15 @@ async def callback_menu_navigation (callback :CallbackQuery ,callback_data :call
 
     to =callback_data .to 
 
-    if to =="default":
+    if to =='default':
         await throw_float_message (state ,callback .message ,templ .menu_text (),templ .menu_kb (),callback )
-    elif to =="stats":
+    elif to =='stats':
         await throw_float_message (state ,callback .message ,templ .stats_text (),templ .stats_kb (),callback )
-    elif to =="profile":
+    elif to =='profile':
         await throw_float_message (state ,callback .message ,templ .profile_text (),templ .profile_kb (),callback )
-    elif to =="events":
+    elif to =='events':
         await throw_float_message (state ,callback .message ,templ .events_text (),templ .events_kb (),callback )
-    elif to =="logs":
+    elif to =='logs':
         await throw_float_message (state ,callback .message ,templ .logs_text (),templ .logs_kb (),callback )
 
 
@@ -36,9 +36,9 @@ async def callback_instruction_navgiation (callback :CallbackQuery ,callback_dat
 
     to =callback_data .to 
 
-    if to =="default":
+    if to =='default':
         await throw_float_message (state ,callback .message ,templ .instruction_text (),templ .instruction_kb (),callback )
-    elif to =="commands":
+    elif to =='commands':
         await throw_float_message (state ,callback .message ,templ .instruction_comms_text (),templ .instruction_comms_kb (),callback )
 
 
@@ -48,24 +48,24 @@ async def callback_settings_navigation (callback :CallbackQuery ,callback_data :
 
     to =callback_data .to 
 
-    if to =="default":
+    if to =='default':
         await throw_float_message (state ,callback .message ,templ .settings_text (),templ .settings_kb (),callback )
-    elif to =="auth":
+    elif to =='auth':
         await throw_float_message (state ,callback .message ,templ .settings_auth_text (),templ .settings_auth_kb (),callback )
-    elif to =="conn":
+    elif to =='conn':
         await throw_float_message (state ,callback .message ,templ .settings_conn_text (),templ .settings_conn_kb (),callback )
-    elif to =="restore":
+    elif to =='restore':
         await throw_float_message (state ,callback .message ,templ .settings_restore_text (),templ .settings_restore_kb (),callback )
-    elif to =="complete":
+    elif to =='complete':
         await throw_float_message (state ,callback .message ,templ .settings_complete_text (),templ .settings_complete_kb (),callback )
-    elif to =="withdrawal":
+    elif to =='withdrawal':
         from plbot .playerokbot import get_playerok_bot 
         acc =get_playerok_bot ().account 
 
-        config =sett .get ("config")
-        credentials_type =config ["playerok"]["auto_withdrawal"]["credentials_type"]
-        card_id =config ["playerok"]["auto_withdrawal"]["card_id"]
-        sbp_bank_id =config ["playerok"]["auto_withdrawal"]["sbp_bank_id"]
+        config =sett .get ('config')
+        credentials_type =config ['playerok']['auto_withdrawal']['credentials_type']
+        card_id =config ['playerok']['auto_withdrawal']['card_id']
+        sbp_bank_id =config ['playerok']['auto_withdrawal']['sbp_bank_id']
 
         card =None 
         sbp_bank =None 
@@ -78,7 +78,7 @@ async def callback_settings_navigation (callback :CallbackQuery ,callback_data :
                 crsr =card_list .page_info .end_cursor 
 
             await state .update_data (bank_cards =card_list .bank_cards )
-            if credentials_type =="card":
+            if credentials_type =='card':
                 card =[card for card in card_list .bank_cards if card .id ==card_id ][0 ]
         except :
             pass 
@@ -86,15 +86,15 @@ async def callback_settings_navigation (callback :CallbackQuery ,callback_data :
         try :
             sbp_banks =acc .get_sbp_bank_members ()
             await state .update_data (sbp_banks =sbp_banks )
-            if credentials_type =="sbp":
+            if credentials_type =='sbp':
                 sbp_bank =[bank for bank in sbp_banks if bank .id ==sbp_bank_id ][0 ]
         except :
             pass 
 
         await throw_float_message (state ,callback .message ,templ .settings_withdrawal_text (card ,sbp_bank ),templ .settings_withdrawal_kb (card ,sbp_bank ),callback )
-    elif to =="bump":
+    elif to =='bump':
         await throw_float_message (state ,callback .message ,templ .settings_bump_text (),templ .settings_bump_kb (),callback )
-    elif to =="logger":
+    elif to =='logger':
         await throw_float_message (state ,callback .message ,templ .settings_logger_text (),templ .settings_logger_kb (),callback )
-    elif to =="other":
+    elif to =='other':
         await throw_float_message (state ,callback .message ,templ .settings_other_text (),templ .settings_other_kb (),callback )

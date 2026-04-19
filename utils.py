@@ -14,11 +14,11 @@ from settings import Settings as sett
 from data import Data as data 
 
 
-logger =getLogger ("universal")
+logger =getLogger ('universal')
 
 
 def is_token_valid (token :str )->bool :
-    if not re .match (r"^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$",token ):
+    if not re .match ('^[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+$',token ):
         return False 
     try :
         header ,payload ,signature =token .split ('.')
@@ -32,12 +32,12 @@ def is_token_valid (token :str )->bool :
 
 def is_pl_account_working ()->bool :
     try :
-        config =sett .get ("config")
+        config =sett .get ('config')
         Account (
-        token =config ["playerok"]["api"]["token"],
-        user_agent =config ["playerok"]["api"]["user_agent"],
-        requests_timeout =config ["playerok"]["api"]["requests_timeout"],
-        proxy =config ["playerok"]["api"]["proxy"]or None 
+        token =config ['playerok']['api']['token'],
+        user_agent =config ['playerok']['api']['user_agent'],
+        requests_timeout =config ['playerok']['api']['requests_timeout'],
+        proxy =config ['playerok']['api']['proxy']or None 
         ).get ()
         return True 
     except :
@@ -46,12 +46,12 @@ def is_pl_account_working ()->bool :
 
 def is_pl_account_banned ()->bool :
     try :
-        config =sett .get ("config")
+        config =sett .get ('config')
         acc =Account (
-        token =config ["playerok"]["api"]["token"],
-        user_agent =config ["playerok"]["api"]["user_agent"],
-        requests_timeout =config ["playerok"]["api"]["requests_timeout"],
-        proxy =config ["playerok"]["api"]["proxy"]or None 
+        token =config ['playerok']['api']['token'],
+        user_agent =config ['playerok']['api']['user_agent'],
+        requests_timeout =config ['playerok']['api']['requests_timeout'],
+        proxy =config ['playerok']['api']['proxy']or None 
         ).get ()
         return acc .profile .is_blocked 
     except :
@@ -66,7 +66,7 @@ def is_user_agent_valid (ua :str )->bool :
 
 
 def is_proxy_valid (proxy :str )->bool :
-    ip_pattern =r'(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)'
+    ip_pattern ='(?:25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]?\\d)'
     pattern_ip_port =re .compile (
     rf'^{ip_pattern }\.{ip_pattern }\.{ip_pattern }\.{ip_pattern }:(\d+)$'
     )
@@ -84,10 +84,10 @@ def is_proxy_valid (proxy :str )->bool :
     return False 
 
 
-def is_proxy_working (proxy :str ,test_url ="https://playerok.com",timeout =10 )->bool :
+def is_proxy_working (proxy :str ,test_url ='https://playerok.com',timeout =10 )->bool :
     proxies ={
-    "http":f"http://{proxy }",
-    "https":f"http://{proxy }"
+    'http':f"http://{proxy }",
+    'https':f"http://{proxy }"
     }
     try :
         response =requests .get (test_url ,proxies =proxies ,timeout =timeout )
@@ -97,20 +97,20 @@ def is_proxy_working (proxy :str ,test_url ="https://playerok.com",timeout =10 )
 
 
 def is_tg_token_valid (token :str )->bool :
-    pattern =r'^\d{7,12}:[A-Za-z0-9_-]{35}$'
+    pattern ='^\\d{7,12}:[A-Za-z0-9_-]{35}$'
     return bool (re .match (pattern ,token ))
 
 
 def is_tg_bot_exists ()->bool :
     try :
-        config =sett .get ("config")
-        token =config ["telegram"]["api"]["token"]
-        proxy =config ["telegram"]["api"]["proxy"]
+        config =sett .get ('config')
+        token =config ['telegram']['api']['token']
+        proxy =config ['telegram']['api']['proxy']
 
         if proxy :
             proxies ={
-            "http":f"http://{proxy }",
-            "https":f"http://{proxy }",
+            'http':f"http://{proxy }",
+            'https':f"http://{proxy }",
             }
         else :
             proxies =None 
@@ -122,7 +122,7 @@ def is_tg_bot_exists ()->bool :
         )
 
         data =response .json ()
-        return data .get ("ok",False )is True and data .get ("result",{}).get ("is_bot",False )is True 
+        return data .get ('ok',False )is True and data .get ('result',{}).get ('is_bot',False )is True 
     except Exception :
         return False 
 
@@ -131,10 +131,10 @@ def is_password_valid (password :str )->bool :
     if len (password )<6 or len (password )>64 :
         return False 
     common_passwords ={
-    "123456","1234567","12345678","123456789","password","qwerty",
-    "admin","123123","111111","abc123","letmein","welcome",
-    "monkey","login","root","pass","test","000000","user",
-    "qwerty123","iloveyou"
+    '123456','1234567','12345678','123456789','password','qwerty',
+    'admin','123123','111111','abc123','letmein','welcome',
+    'monkey','login','root','pass','test','000000','user',
+    'qwerty123','iloveyou'
     }
     if password .lower ()in common_passwords :
         return False 
@@ -142,10 +142,10 @@ def is_password_valid (password :str )->bool :
 
 
 def configure_config ():
-    config =sett .get ("config")
+    config =sett .get ('config')
 
-    while not config ["playerok"]["api"]["token"]:
-        while not config ["playerok"]["api"]["token"]:
+    while not config ['playerok']['api']['token']:
+        while not config ['playerok']['api']['token']:
             print (
             f"\n{Fore .WHITE }Введите {Fore .LIGHTBLUE_EX }токен {Fore .WHITE }вашего Playerok аккаунта. "
             f"Его можно узнать из Cookie-данных, воспользуйтесь расширением Cookie-Editor."
@@ -153,8 +153,8 @@ def configure_config ():
             )
             token =input (f"  {Fore .WHITE }↳ {Fore .LIGHTWHITE_EX }").strip ()
             if is_token_valid (token ):
-                config ["playerok"]["api"]["token"]=token 
-                sett .set ("config",config )
+                config ['playerok']['api']['token']=token 
+                sett .set ('config',config )
                 print (f"\n{Fore .GREEN }Токен успешно сохранён в конфиг.")
             else :
                 print (
@@ -162,7 +162,7 @@ def configure_config ():
                 f"Убедитесь, что он соответствует формату и попробуйте ещё раз."
                 )
 
-        while not config ["playerok"]["api"]["user_agent"]:
+        while not config ['playerok']['api']['user_agent']:
             print (
             f"\n{Fore .WHITE }Введите {Fore .LIGHTMAGENTA_EX }User Agent {Fore .WHITE }вашего браузера. "
             f"Его можно скопировать на сайте {Fore .LIGHTWHITE_EX }https://whatmyuseragent.com. "
@@ -174,8 +174,8 @@ def configure_config ():
                 print (f"\n{Fore .YELLOW }Вы пропустили ввод User Agent. Учтите, что в таком случае бот может работать нестабильно.")
                 break 
             if is_user_agent_valid (user_agent ):
-                config ["playerok"]["api"]["user_agent"]=user_agent 
-                sett .set ("config",config )
+                config ['playerok']['api']['user_agent']=user_agent 
+                sett .set ('config',config )
                 print (f"\n{Fore .GREEN }User Agent успешно сохранён в конфиг.")
             else :
                 print (
@@ -183,7 +183,7 @@ def configure_config ():
                 f"Убедитесь, что в нём нет русских символов и попробуйте ещё раз."
                 )
 
-        while not config ["playerok"]["api"]["proxy"]:
+        while not config ['playerok']['api']['proxy']:
             print (
             f"\n{Fore .WHITE }Введите {Fore .LIGHTBLUE_EX }IPv4 HTTP Прокси {Fore .WHITE }для Playerok аккаунта. "
             f"Формат: user:password@ip:port или ip:port, если он без авторизации. "
@@ -195,8 +195,8 @@ def configure_config ():
                 print (f"\n{Fore .WHITE }Вы пропустили ввод прокси.")
                 break 
             if is_proxy_valid (proxy ):
-                config ["playerok"]["api"]["proxy"]=proxy 
-                sett .set ("config",config )
+                config ['playerok']['api']['proxy']=proxy 
+                sett .set ('config',config )
                 print (f"\n{Fore .GREEN }Прокси успешно сохранён в конфиг.")
             else :
                 print (
@@ -204,16 +204,16 @@ def configure_config ():
                 f"Убедитесь, что он соответствует формату и попробуйте ещё раз."
                 )
 
-    while not config ["telegram"]["api"]["token"]:
-        while not config ["telegram"]["api"]["token"]:
+    while not config ['telegram']['api']['token']:
+        while not config ['telegram']['api']['token']:
             print (
             f"\n{Fore .WHITE }Введите {Fore .CYAN }токен вашего Telegram бота{Fore .WHITE }. Бота нужно создать у @BotFather."
             f"\n  {Fore .WHITE }· Пример: 7257913369:AAG2KjLL3-zvvfSQFSVhaTb4w7tR2iXsJXM"
             )
             token =input (f"  {Fore .WHITE }↳ {Fore .LIGHTWHITE_EX }").strip ()
             if is_tg_token_valid (token ):
-                config ["telegram"]["api"]["token"]=token 
-                sett .set ("config",config )
+                config ['telegram']['api']['token']=token 
+                sett .set ('config',config )
                 print (f"\n{Fore .GREEN }Токен Telegram бота успешно сохранён в конфиг.")
             else :
                 print (
@@ -221,7 +221,7 @@ def configure_config ():
                 f"Убедитесь, что он соответствует формату и попробуйте ещё раз."
                 )
 
-        while not config ["telegram"]["api"]["proxy"]:
+        while not config ['telegram']['api']['proxy']:
             print (
             f"\n{Fore .WHITE }Введите {Fore .LIGHTBLUE_EX }IPv4 HTTP Прокси {Fore .WHITE }для Telegram бота. "
             f"Формат: user:password@ip:port или ip:port, если он без авторизации. "
@@ -233,8 +233,8 @@ def configure_config ():
                 print (f"\n{Fore .WHITE }Вы пропустили ввод прокси.")
                 break 
             if is_proxy_valid (proxy ):
-                config ["telegram"]["api"]["proxy"]=proxy 
-                sett .set ("config",config )
+                config ['telegram']['api']['proxy']=proxy 
+                sett .set ('config',config )
                 print (f"\n{Fore .GREEN }Прокси успешно сохранён в конфиг.")
             else :
                 print (
@@ -242,7 +242,7 @@ def configure_config ():
                 f"Убедитесь, что он соответствует формату и попробуйте ещё раз."
                 )
 
-    while not config ["telegram"]["bot"]["password"]:
+    while not config ['telegram']['bot']['password']:
         print (
         f"\n{Fore .WHITE }Придумайте и введите {Fore .YELLOW }пароль для вашего Telegram бота{Fore .WHITE }. "
         f"Бот будет запрашивать этот пароль при каждой новой попытке взаимодействия чужого пользователя с вашим Telegram ботом."
@@ -250,23 +250,23 @@ def configure_config ():
         )
         password =input (f"  {Fore .WHITE }↳ {Fore .LIGHTWHITE_EX }").strip ()
         if is_password_valid (password ):
-            config ["telegram"]["bot"]["password"]=password 
-            sett .set ("config",config )
+            config ['telegram']['bot']['password']=password 
+            sett .set ('config',config )
             print (f"\n{Fore .GREEN }Пароль успешно сохранён в конфиг.")
         else :
             print (f"\n{Fore .LIGHTRED_EX }Ваш пароль не подходит. Убедитесь, что он соответствует формату и не является лёгким и попробуйте ещё раз.")
 
-    if config ["playerok"]["api"]["proxy"]and not is_proxy_working (config ["playerok"]["api"]["proxy"]):
+    if config ['playerok']['api']['proxy']and not is_proxy_working (config ['playerok']['api']['proxy']):
         print (
         f"\n{Fore .LIGHTRED_EX }Похоже, что прокси для Playerok аккаунта не работает. "
         f"Пожалуйста, проверьте его и введите снова."
         )
-        config ["playerok"]["api"]["token"]=""
-        config ["playerok"]["api"]["user_agent"]=""
-        config ["playerok"]["api"]["proxy"]=""
-        sett .set ("config",config )
+        config ['playerok']['api']['token']=''
+        config ['playerok']['api']['user_agent']=''
+        config ['playerok']['api']['proxy']=''
+        sett .set ('config',config )
         return configure_config ()
-    elif config ["playerok"]["api"]["proxy"]:
+    elif config ['playerok']['api']['proxy']:
         logger .info (f"{Fore .LIGHTYELLOW_EX }Playerok прокси успешно работает.")
 
     if not is_pl_account_working ():
@@ -274,10 +274,10 @@ def configure_config ():
         f"\n{Fore .LIGHTRED_EX }Не удалось подключиться к вашему Playerok аккаунту. "
         f"Пожалуйста, убедитесь, что у вас указан верный токен и введите его снова."
         )
-        config ["playerok"]["api"]["token"]=""
-        config ["playerok"]["api"]["user_agent"]=""
-        config ["playerok"]["api"]["proxy"]=""
-        sett .set ("config",config )
+        config ['playerok']['api']['token']=''
+        config ['playerok']['api']['user_agent']=''
+        config ['playerok']['api']['proxy']=''
+        sett .set ('config',config )
         return configure_config ()
     else :
         logger .info (f"{Fore .LIGHTYELLOW_EX }Playerok аккаунт успешно авторизован.")
@@ -287,25 +287,25 @@ def configure_config ():
         f"{Fore .LIGHTRED_EX }\nВаш Playerok аккаунт забанен! "
         f"Увы, я не могу запустить бота на заблокированном аккаунте..."
         )
-        config ["playerok"]["api"]["token"]=""
-        config ["playerok"]["api"]["user_agent"]=""
-        config ["playerok"]["api"]["proxy"]=""
-        sett .set ("config",config )
+        config ['playerok']['api']['token']=''
+        config ['playerok']['api']['user_agent']=''
+        config ['playerok']['api']['proxy']=''
+        sett .set ('config',config )
         return configure_config ()
 
-    if config ["telegram"]["api"]["proxy"]and not is_proxy_working (
-    config ["telegram"]["api"]["proxy"],
-    "https://api.telegram.org/"
+    if config ['telegram']['api']['proxy']and not is_proxy_working (
+    config ['telegram']['api']['proxy'],
+    'https://api.telegram.org/'
     ):
         print (
         f"{Fore .LIGHTRED_EX }\nПохоже, что прокси для Telegram бота не работает. "
         f"Пожалуйста, проверьте его и введите снова."
         )
-        config ["telegram"]["api"]["token"]=""
-        config ["telegram"]["api"]["proxy"]=""
-        sett .set ("config",config )
+        config ['telegram']['api']['token']=''
+        config ['telegram']['api']['proxy']=''
+        sett .set ('config',config )
         return configure_config ()
-    elif config ["telegram"]["api"]["proxy"]:
+    elif config ['telegram']['api']['proxy']:
         logger .info (f"{Fore .LIGHTYELLOW_EX }Telegram прокси успешно работает.")
 
     if not is_tg_bot_exists ():
@@ -313,83 +313,83 @@ def configure_config ():
         f"{Fore .LIGHTRED_EX }\nНе удалось подключиться к вашему Telegram боту. "
         f"Если вы находитесь на территории России, вам нужно подключить прокси к Telegram боту или использовать VPN, в виду блокировок со стороны РКН."
         )
-        config ["telegram"]["api"]["token"]=""
-        config ["telegram"]["api"]["proxy"]=""
-        sett .set ("config",config )
+        config ['telegram']['api']['token']=''
+        config ['telegram']['api']['proxy']=''
+        sett .set ('config',config )
         return configure_config ()
     else :
         logger .info (f"{Fore .LIGHTYELLOW_EX }Telegram бот успешно работает.")
 
 
 def get_stats ():
-    cached_orders =data .get ("cached_orders")
+    cached_orders =data .get ('cached_orders')
 
-    now =datetime .now (pytz .timezone ("Europe/Moscow"))
+    now =datetime .now (pytz .timezone ('Europe/Moscow'))
     day_ago =now -timedelta (days =1 )
     week_ago =now -timedelta (days =7 )
     month_ago =now -timedelta (days =30 )
 
-    day_orders =[o for o in cached_orders .values ()if datetime .fromisoformat (o ["date"])>=day_ago ]
-    week_orders =[o for o in cached_orders .values ()if datetime .fromisoformat (o ["date"])>=week_ago ]
-    month_orders =[o for o in cached_orders .values ()if datetime .fromisoformat (o ["date"])>=month_ago ]
+    day_orders =[o for o in cached_orders .values ()if datetime .fromisoformat (o ['date'])>=day_ago ]
+    week_orders =[o for o in cached_orders .values ()if datetime .fromisoformat (o ['date'])>=week_ago ]
+    month_orders =[o for o in cached_orders .values ()if datetime .fromisoformat (o ['date'])>=month_ago ]
     all_orders =list (cached_orders .values ())
 
-    day_active =[o for o in day_orders if not o ["status"].startswith ("CONFIRMED")and not o ["status"].startswith ("ROLLED_BACK")]
-    week_active =[o for o in week_orders if not o ["status"].startswith ("CONFIRMED")and not o ["status"].startswith ("ROLLED_BACK")]
-    month_active =[o for o in month_orders if not o ["status"].startswith ("CONFIRMED")and not o ["status"].startswith ("ROLLED_BACK")]
-    all_active =[o for o in all_orders if not o ["status"].startswith ("CONFIRMED")and not o ["status"].startswith ("ROLLED_BACK")]
+    day_active =[o for o in day_orders if not o ['status'].startswith ('CONFIRMED')and not o ['status'].startswith ('ROLLED_BACK')]
+    week_active =[o for o in week_orders if not o ['status'].startswith ('CONFIRMED')and not o ['status'].startswith ('ROLLED_BACK')]
+    month_active =[o for o in month_orders if not o ['status'].startswith ('CONFIRMED')and not o ['status'].startswith ('ROLLED_BACK')]
+    all_active =[o for o in all_orders if not o ['status'].startswith ('CONFIRMED')and not o ['status'].startswith ('ROLLED_BACK')]
 
-    day_completed =[o for o in day_orders if o ["status"].startswith ("CONFIRMED")]
-    week_completed =[o for o in week_orders if o ["status"].startswith ("CONFIRMED")]
-    month_completed =[o for o in month_orders if o ["status"].startswith ("CONFIRMED")]
-    all_completed =[o for o in all_orders if o ["status"].startswith ("CONFIRMED")]
+    day_completed =[o for o in day_orders if o ['status'].startswith ('CONFIRMED')]
+    week_completed =[o for o in week_orders if o ['status'].startswith ('CONFIRMED')]
+    month_completed =[o for o in month_orders if o ['status'].startswith ('CONFIRMED')]
+    all_completed =[o for o in all_orders if o ['status'].startswith ('CONFIRMED')]
 
-    day_refunded =[o for o in day_orders if o ["status"].startswith ("ROLLED_BACK")]
-    week_refunded =[o for o in week_orders if o ["status"].startswith ("ROLLED_BACK")]
-    month_refunded =[o for o in month_orders if o ["status"].startswith ("ROLLED_BACK")]
-    all_refunded =[o for o in all_orders if o ["status"].startswith ("ROLLED_BACK")]
+    day_refunded =[o for o in day_orders if o ['status'].startswith ('ROLLED_BACK')]
+    week_refunded =[o for o in week_orders if o ['status'].startswith ('ROLLED_BACK')]
+    month_refunded =[o for o in month_orders if o ['status'].startswith ('ROLLED_BACK')]
+    all_refunded =[o for o in all_orders if o ['status'].startswith ('ROLLED_BACK')]
 
-    day_profit =round (sum (o ["price"]for o in day_orders if o ["status"].startswith ("CONFIRMED")),2 )
-    week_profit =round (sum (o ["price"]for o in week_orders if o ["status"].startswith ("CONFIRMED")),2 )
-    month_profit =round (sum (o ["price"]for o in month_orders if o ["status"].startswith ("CONFIRMED")),2 )
-    all_profit =round (sum (o ["price"]for o in all_orders if o ["status"].startswith ("CONFIRMED")),2 )
+    day_profit =round (sum (o ['price']for o in day_orders if o ['status'].startswith ('CONFIRMED')),2 )
+    week_profit =round (sum (o ['price']for o in week_orders if o ['status'].startswith ('CONFIRMED')),2 )
+    month_profit =round (sum (o ['price']for o in month_orders if o ['status'].startswith ('CONFIRMED')),2 )
+    all_profit =round (sum (o ['price']for o in all_orders if o ['status'].startswith ('CONFIRMED')),2 )
 
-    day_best =Counter (o ["item_name"]for o in day_orders ).most_common (1 )[0 ][0 ]if day_orders else "-"
-    week_best =Counter (o ["item_name"]for o in week_orders ).most_common (1 )[0 ][0 ]if day_orders else "-"
-    month_best =Counter (o ["item_name"]for o in month_orders ).most_common (1 )[0 ][0 ]if day_orders else "-"
-    all_best =Counter (o ["item_name"]for o in all_orders ).most_common (1 )[0 ][0 ]if day_orders else "-"
+    day_best =Counter (o ['item_name']for o in day_orders ).most_common (1 )[0 ][0 ]if day_orders else '-'
+    week_best =Counter (o ['item_name']for o in week_orders ).most_common (1 )[0 ][0 ]if day_orders else '-'
+    month_best =Counter (o ['item_name']for o in month_orders ).most_common (1 )[0 ][0 ]if day_orders else '-'
+    all_best =Counter (o ['item_name']for o in all_orders ).most_common (1 )[0 ][0 ]if day_orders else '-'
 
     return {
-    "day":{
-    "orders":len (day_orders ),
-    "active":len (day_active ),
-    "completed":len (day_completed ),
-    "refunded":len (day_refunded ),
-    "profit":day_profit ,
-    "best":day_best 
+    'day':{
+    'orders':len (day_orders ),
+    'active':len (day_active ),
+    'completed':len (day_completed ),
+    'refunded':len (day_refunded ),
+    'profit':day_profit ,
+    'best':day_best 
     },
-    "week":{
-    "orders":len (week_orders ),
-    "active":len (week_active ),
-    "completed":len (week_completed ),
-    "refunded":len (week_refunded ),
-    "profit":week_profit ,
-    "best":week_best 
+    'week':{
+    'orders':len (week_orders ),
+    'active':len (week_active ),
+    'completed':len (week_completed ),
+    'refunded':len (week_refunded ),
+    'profit':week_profit ,
+    'best':week_best 
     },
-    "month":{
-    "orders":len (month_orders ),
-    "active":len (month_active ),
-    "completed":len (month_completed ),
-    "refunded":len (month_refunded ),
-    "profit":month_profit ,
-    "best":month_best 
+    'month':{
+    'orders':len (month_orders ),
+    'active':len (month_active ),
+    'completed':len (month_completed ),
+    'refunded':len (month_refunded ),
+    'profit':month_profit ,
+    'best':month_best 
     },
-    "all":{
-    "orders":len (all_orders ),
-    "active":len (all_active ),
-    "completed":len (all_completed ),
-    "refunded":len (all_refunded ),
-    "profit":all_profit ,
-    "best":all_best 
+    'all':{
+    'orders':len (all_orders ),
+    'active':len (all_active ),
+    'completed':len (all_completed ),
+    'refunded':len (all_refunded ),
+    'profit':all_profit ,
+    'best':all_best 
     }
     }

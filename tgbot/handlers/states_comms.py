@@ -18,7 +18,7 @@ async def handler_waiting_for_custom_commands_page (message :types .Message ,sta
         await state .set_state (None )
 
         if not message .text .strip ().isdigit ():
-            raise Exception ("You must enter a numeric value")
+            raise Exception ('❌ You must enter a numeric value')
 
         await state .update_data (last_page =int (message .text .strip ())-1 )
 
@@ -34,7 +34,7 @@ async def handler_waiting_for_custom_commands_page (message :types .Message ,sta
         state =state ,
         message =message ,
         text =templ .settings_comms_float_text (e ),
-        reply_markup =templ .back_kb (calls .CustomCommandsPagination (page =data .get ("last_page",0 )).pack ())
+        reply_markup =templ .back_kb (calls .CustomCommandsPagination (page =data .get ('last_page',0 )).pack ())
         )
 
 
@@ -44,7 +44,7 @@ async def handler_waiting_for_new_custom_command (message :types .Message ,state
         await state .set_state (None )
 
         if len (message .text .strip ())<=0 or len (message .text .strip ())>=32 :
-            raise Exception ("Too short or too long command")
+            raise Exception ('❌ Command too short or long')
 
         data =await state .get_data ()
 
@@ -55,7 +55,7 @@ async def handler_waiting_for_new_custom_command (message :types .Message ,state
         state =state ,
         message =message ,
         text =templ .settings_new_comm_float_text (f"💬 Введите <b>ответ для команды</b> <code>{message .text .strip ()}</code>:"),
-        reply_markup =templ .back_kb (calls .CustomCommandsPagination (page =data .get ("last_page",0 )).pack ())
+        reply_markup =templ .back_kb (calls .CustomCommandsPagination (page =data .get ('last_page',0 )).pack ())
         )
     except Exception as e :
         data =await state .get_data ()
@@ -63,7 +63,7 @@ async def handler_waiting_for_new_custom_command (message :types .Message ,state
         state =state ,
         message =message ,
         text =templ .settings_new_comm_float_text (e ),
-        reply_markup =templ .back_kb (calls .CustomCommandsPagination (page =data .get ("last_page",0 )).pack ())
+        reply_markup =templ .back_kb (calls .CustomCommandsPagination (page =data .get ('last_page',0 )).pack ())
         )
 
 
@@ -73,13 +73,13 @@ async def handler_waiting_for_new_custom_command_answer (message :types .Message
         await state .set_state (None )
 
         if len (message .text .strip ())<=0 :
-            raise Exception ("Too short an answer")
+            raise Exception ('❌ Too short answer')
 
         data =await state .get_data ()
 
         await state .update_data (new_custom_command_answer =message .text .strip ())
 
-        cmd =data .get ("new_custom_command")
+        cmd =data .get ('new_custom_command')
         answr =message .text .strip ()
 
         await throw_float_message (
@@ -90,7 +90,7 @@ async def handler_waiting_for_new_custom_command_answer (message :types .Message
         f"\n<b>· Команда:</b> {cmd }"
         f"\n<b>· Ответ:</b> <blockquote>{answr }</blockquote>"
         ),
-        reply_markup =templ .confirm_kb (confirm_cb ="add_new_custom_command",cancel_cb =calls .CustomCommandsPagination (page =data .get ("last_page",0 )).pack ())
+        reply_markup =templ .confirm_kb (confirm_cb ='add_new_custom_command',cancel_cb =calls .CustomCommandsPagination (page =data .get ('last_page',0 )).pack ())
         )
     except Exception as e :
         data =await state .get_data ()
@@ -98,7 +98,7 @@ async def handler_waiting_for_new_custom_command_answer (message :types .Message
         state =state ,
         message =message ,
         text =templ .settings_new_comm_float_text (e ),
-        reply_markup =templ .back_kb (calls .CustomCommandsPagination (page =data .get ("last_page",0 )).pack ())
+        reply_markup =templ .back_kb (calls .CustomCommandsPagination (page =data .get ('last_page',0 )).pack ())
         )
 
 
@@ -108,19 +108,19 @@ async def handler_waiting_for_custom_command_answer (message :types .Message ,st
         await state .set_state (None )
 
         if len (message .text .strip ())<=0 :
-            raise Exception ("Too short of a text")
+            raise Exception ('❌ Text is too short')
 
         data =await state .get_data ()
 
-        custom_commands =sett .get ("custom_commands")
-        custom_commands [data ["custom_command"]]=message .text .strip ().split ('\n')
-        sett .set ("custom_commands",custom_commands )
+        custom_commands =sett .get ('custom_commands')
+        custom_commands [data ['custom_command']]=message .text .strip ().split ('\n')
+        sett .set ('custom_commands',custom_commands )
 
         await throw_float_message (
         state =state ,
         message =message ,
         text =templ .settings_comm_page_float_text (f"✅ <b>Текст ответа</b> команды <code>{data ['custom_command']}</code> был успешно изменён на: <blockquote>{message .text .strip ()}</blockquote>"),
-        reply_markup =templ .back_kb (calls .CustomCommandPage (command =data ["custom_command"]).pack ())
+        reply_markup =templ .back_kb (calls .CustomCommandPage (command =data ['custom_command']).pack ())
         )
     except Exception as e :
         data =await state .get_data ()
@@ -128,5 +128,5 @@ async def handler_waiting_for_custom_command_answer (message :types .Message ,st
         state =state ,
         message =message ,
         text =templ .settings_comm_page_float_text (e ),
-        reply_markup =templ .back_kb (calls .CustomCommandPage (command =data ["custom_command"]).pack ())
+        reply_markup =templ .back_kb (calls .CustomCommandPage (command =data ['custom_command']).pack ())
         )

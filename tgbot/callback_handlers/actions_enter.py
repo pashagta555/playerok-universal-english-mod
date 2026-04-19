@@ -15,12 +15,12 @@ from .pagination import *
 router =Router ()
 
 
-@router .callback_query (F .data =="enter_token")
+@router .callback_query (F .data =='enter_token')
 async def callback_enter_token (callback :CallbackQuery ,state :FSMContext ):
     await state .set_state (states .SettingsStates .waiting_for_token )
 
-    config =sett .get ("config")
-    golden_key =config ["playerok"]["api"]["token"]or "Not assigned"
+    config =sett .get ('config')
+    golden_key =config ['playerok']['api']['token']or '❌ Not specified'
 
     await throw_float_message (
     state =state ,
@@ -29,16 +29,16 @@ async def callback_enter_token (callback :CallbackQuery ,state :FSMContext ):
     f"🔐 Введите новый <b>токен</b> вашего аккаунта:"
     f"\n・ Текущее: <code>{golden_key }</code>"
     ),
-    reply_markup =templ .back_kb (calls .SettingsNavigation (to ="auth").pack ())
+    reply_markup =templ .back_kb (calls .SettingsNavigation (to ='auth').pack ())
     )
 
 
-@router .callback_query (F .data =="enter_user_agent")
+@router .callback_query (F .data =='enter_user_agent')
 async def callback_enter_user_agent (callback :CallbackQuery ,state :FSMContext ):
     await state .set_state (states .SettingsStates .waiting_for_user_agent )
 
-    config =sett .get ("config")
-    user_agent =config ["playerok"]["api"]["user_agent"]or "Not Set"
+    config =sett .get ('config')
+    user_agent =config ['playerok']['api']['user_agent']or '❌ Not specified'
 
     await throw_float_message (
     state =state ,
@@ -47,16 +47,16 @@ async def callback_enter_user_agent (callback :CallbackQuery ,state :FSMContext 
     f"🎩 Введите новый <b>User Agent</b> вашего браузера:"
     f"\n・ Текущее: <code>{user_agent }</code>"
     ),
-    reply_markup =templ .back_kb (calls .SettingsNavigation (to ="auth").pack ())
+    reply_markup =templ .back_kb (calls .SettingsNavigation (to ='auth').pack ())
     )
 
 
-@router .callback_query (F .data =="enter_pl_proxy")
+@router .callback_query (F .data =='enter_pl_proxy')
 async def callback_enter_pl_proxy (callback :CallbackQuery ,state :FSMContext ):
     await state .set_state (states .SettingsStates .waiting_for_pl_proxy )
 
-    config =sett .get ("config")
-    proxy =config ["playerok"]["api"]["proxy"]or "Not Set"
+    config =sett .get ('config')
+    proxy =config ['playerok']['api']['proxy']or '❌ Not specified'
 
     await throw_float_message (
     state =state ,
@@ -65,16 +65,16 @@ async def callback_enter_pl_proxy (callback :CallbackQuery ,state :FSMContext ):
     f"🌐 Введите новый <b>прокси для FunPay</b> (формат: user:pass@ip:port или ip:port):"
     f"\n・ Текущий: <code>{proxy }</code>"
     ),
-    reply_markup =templ .back_kb (calls .SettingsNavigation (to ="conn").pack ())
+    reply_markup =templ .back_kb (calls .SettingsNavigation (to ='conn').pack ())
     )
 
 
-@router .callback_query (F .data =="enter_tg_proxy")
+@router .callback_query (F .data =='enter_tg_proxy')
 async def callback_enter_tg_proxy (callback :CallbackQuery ,state :FSMContext ):
     await state .set_state (states .SettingsStates .waiting_for_tg_proxy )
 
-    config =sett .get ("config")
-    proxy =config ["telegram"]["api"]["proxy"]or "Not specified"
+    config =sett .get ('config')
+    proxy =config ['telegram']['api']['proxy']or '❌ Not specified'
 
     await throw_float_message (
     state =state ,
@@ -83,16 +83,16 @@ async def callback_enter_tg_proxy (callback :CallbackQuery ,state :FSMContext ):
     f"🌐 Введите новый <b>прокси для Telegram</b> (формат: user:pass@ip:port или ip:port):"
     f"\n・ Текущий: <code>{proxy }</code>"
     ),
-    reply_markup =templ .back_kb (calls .SettingsNavigation (to ="conn").pack ())
+    reply_markup =templ .back_kb (calls .SettingsNavigation (to ='conn').pack ())
     )
 
 
-@router .callback_query (F .data =="enter_requests_timeout")
+@router .callback_query (F .data =='enter_requests_timeout')
 async def callback_enter_requests_timeout (callback :CallbackQuery ,state :FSMContext ):
     await state .set_state (states .SettingsStates .waiting_for_requests_timeout )
 
-    config =sett .get ("config")
-    requests_timeout =config ["playerok"]["api"]["requests_timeout"]or "Not set"
+    config =sett .get ('config')
+    requests_timeout =config ['playerok']['api']['requests_timeout']or '❌ Not specified'
 
     await throw_float_message (
     state =state ,
@@ -101,16 +101,16 @@ async def callback_enter_requests_timeout (callback :CallbackQuery ,state :FSMCo
     f"🛜 Введите новый <b>таймаут подключения</b> (в секундах):"
     f"\n・ Текущее: <code>{requests_timeout }</code>"
     ),
-    reply_markup =templ .back_kb (calls .SettingsNavigation (to ="conn").pack ())
+    reply_markup =templ .back_kb (calls .SettingsNavigation (to ='conn').pack ())
     )
 
 
-@router .callback_query (F .data =="enter_watermark_value")
+@router .callback_query (F .data =='enter_watermark_value')
 async def callback_enter_watermark_value (callback :CallbackQuery ,state :FSMContext ):
     await state .set_state (states .SettingsStates .waiting_for_watermark_value )
 
-    config =sett .get ("config")
-    watermark_value =config ["playerok"]["watermark"]["value"]or "Not specified"
+    config =sett .get ('config')
+    watermark_value =config ['playerok']['watermark']['value']or '❌ Not specified'
 
     await throw_float_message (
     state =state ,
@@ -119,14 +119,14 @@ async def callback_enter_watermark_value (callback :CallbackQuery ,state :FSMCon
     f"✍️©️ Введите новый <b>водяной знак</b> под сообщениями:"
     f"\n・ Текущее: <code>{watermark_value }</code>"
     ),
-    reply_markup =templ .back_kb (calls .SettingsNavigation (to ="other").pack ())
+    reply_markup =templ .back_kb (calls .SettingsNavigation (to ='other').pack ())
     )
 
 
-@router .callback_query (F .data =="enter_new_included_restore_item_keyphrases")
+@router .callback_query (F .data =='enter_new_included_restore_item_keyphrases')
 async def callback_enter_new_included_restore_item_keyphrases (callback :CallbackQuery ,state :FSMContext ):
     data =await state .get_data ()
-    last_page =data .get ("last_page",0 )
+    last_page =data .get ('last_page',0 )
 
     await state .set_state (states .RestoreItemsStates .waiting_for_new_included_restore_item_keyphrases )
     await throw_float_message (
@@ -140,10 +140,10 @@ async def callback_enter_new_included_restore_item_keyphrases (callback :Callbac
     )
 
 
-@router .callback_query (F .data =="enter_new_excluded_restore_item_keyphrases")
+@router .callback_query (F .data =='enter_new_excluded_restore_item_keyphrases')
 async def callback_enter_new_excluded_restore_item_keyphrases (callback :CallbackQuery ,state :FSMContext ):
     data =await state .get_data ()
-    last_page =data .get ("last_page",0 )
+    last_page =data .get ('last_page',0 )
 
     await state .set_state (states .RestoreItemsStates .waiting_for_new_excluded_restore_item_keyphrases )
     await throw_float_message (
@@ -157,10 +157,10 @@ async def callback_enter_new_excluded_restore_item_keyphrases (callback :Callbac
     )
 
 
-@router .callback_query (F .data =="enter_new_included_complete_deal_keyphrases")
+@router .callback_query (F .data =='enter_new_included_complete_deal_keyphrases')
 async def callback_enter_new_included_complete_deal_keyphrases (callback :CallbackQuery ,state :FSMContext ):
     data =await state .get_data ()
-    last_page =data .get ("last_page",0 )
+    last_page =data .get ('last_page',0 )
 
     await state .set_state (states .CompleteDealsStates .waiting_for_new_included_complete_deal_keyphrases )
     await throw_float_message (
@@ -174,10 +174,10 @@ async def callback_enter_new_included_complete_deal_keyphrases (callback :Callba
     )
 
 
-@router .callback_query (F .data =="enter_new_excluded_complete_dealm_keyphrases")
+@router .callback_query (F .data =='enter_new_excluded_complete_dealm_keyphrases')
 async def callback_enter_new_excluded_complete_deal_keyphrases (callback :CallbackQuery ,state :FSMContext ):
     data =await state .get_data ()
-    last_page =data .get ("last_page",0 )
+    last_page =data .get ('last_page',0 )
 
     await state .set_state (states .CompleteDealsStates .waiting_for_new_excluded_complete_deal_keyphrases )
     await throw_float_message (
@@ -191,13 +191,13 @@ async def callback_enter_new_excluded_complete_deal_keyphrases (callback :Callba
     )
 
 
-@router .callback_query (F .data =="enter_auto_bump_items_interval")
+@router .callback_query (F .data =='enter_auto_bump_items_interval')
 async def callback_enter_auto_bump_items_interval (callback :CallbackQuery ,state :FSMContext ):
     try :
         await state .set_state (states .BumpItemsStates .waiting_for_bump_items_interval )
 
-        config =sett .get ("config")
-        interval =config ["playerok"]["auto_bump_items"]["interval"]
+        config =sett .get ('config')
+        interval =config ['playerok']['auto_bump_items']['interval']
 
         await throw_float_message (
         state =state ,
@@ -206,17 +206,17 @@ async def callback_enter_auto_bump_items_interval (callback :CallbackQuery ,stat
         f"⏲️ Введите <b>интервал поднятия предметов</b>:"
         f"\n・ Текущее: <code>{interval }</code> сек."
         ),
-        reply_markup =templ .back_kb (calls .SettingsNavigation (to ="bump").pack ())
+        reply_markup =templ .back_kb (calls .SettingsNavigation (to ='bump').pack ())
         )
     except :
         import traceback 
         traceback .print_exc ()
 
 
-@router .callback_query (F .data =="enter_new_included_bump_item_keyphrases")
+@router .callback_query (F .data =='enter_new_included_bump_item_keyphrases')
 async def callback_enter_new_included_bump_item_keyphrases (callback :CallbackQuery ,state :FSMContext ):
     data =await state .get_data ()
-    last_page =data .get ("last_page",0 )
+    last_page =data .get ('last_page',0 )
 
     await state .set_state (states .BumpItemsStates .waiting_for_new_included_bump_item_keyphrases )
     await throw_float_message (
@@ -230,10 +230,10 @@ async def callback_enter_new_included_bump_item_keyphrases (callback :CallbackQu
     )
 
 
-@router .callback_query (F .data =="enter_new_excluded_bump_item_keyphrases")
+@router .callback_query (F .data =='enter_new_excluded_bump_item_keyphrases')
 async def callback_enter_new_excluded_bump_item_keyphrases (callback :CallbackQuery ,state :FSMContext ):
     data =await state .get_data ()
-    last_page =data .get ("last_page",0 )
+    last_page =data .get ('last_page',0 )
 
     await state .set_state (states .BumpItemsStates .waiting_for_new_excluded_bump_item_keyphrases )
     await throw_float_message (
@@ -247,10 +247,10 @@ async def callback_enter_new_excluded_bump_item_keyphrases (callback :CallbackQu
     )
 
 
-@router .callback_query (F .data =="enter_custom_commands_page")
+@router .callback_query (F .data =='enter_custom_commands_page')
 async def callback_enter_custom_commands_page (callback :CallbackQuery ,state :FSMContext ):
     data =await state .get_data ()
-    last_page =data .get ("last_page",0 )
+    last_page =data .get ('last_page',0 )
 
     await state .set_state (states .CustomCommandsStates .waiting_for_page )
     await throw_float_message (
@@ -261,10 +261,10 @@ async def callback_enter_custom_commands_page (callback :CallbackQuery ,state :F
     )
 
 
-@router .callback_query (F .data =="enter_new_custom_command")
+@router .callback_query (F .data =='enter_new_custom_command')
 async def callback_enter_new_custom_command (callback :CallbackQuery ,state :FSMContext ):
     data =await state .get_data ()
-    last_page =data .get ("last_page",0 )
+    last_page =data .get ('last_page',0 )
 
     await state .set_state (states .CustomCommandsStates .waiting_for_new_custom_command )
     await throw_float_message (
@@ -275,15 +275,15 @@ async def callback_enter_new_custom_command (callback :CallbackQuery ,state :FSM
     )
 
 
-@router .callback_query (F .data =="enter_custom_command_answer")
+@router .callback_query (F .data =='enter_custom_command_answer')
 async def callback_enter_custom_command_answer (callback :CallbackQuery ,state :FSMContext ):
     try :
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
-        command =data .get ("custom_command")
+        command =data .get ('custom_command')
         if not command :
             return await callback_custom_commands_pagination (
             callback ,
@@ -292,8 +292,8 @@ async def callback_enter_custom_command_answer (callback :CallbackQuery ,state :
             )
 
         await state .set_state (states .CustomCommandsStates .waiting_for_custom_command_answer )
-        custom_commands =sett .get ("custom_commands")
-        custom_command_answer ="\n".join (custom_commands [command ])or "Not set"
+        custom_commands =sett .get ('custom_commands')
+        custom_command_answer ='\n'.join (custom_commands [command ])or '❌ Not specified'
 
         await throw_float_message (
         state =state ,
@@ -313,10 +313,10 @@ async def callback_enter_custom_command_answer (callback :CallbackQuery ,state :
         )
 
 
-@router .callback_query (F .data =="enter_auto_deliveries_page")
+@router .callback_query (F .data =='enter_auto_deliveries_page')
 async def callback_enter_auto_deliveries_page (callback :CallbackQuery ,state :FSMContext ):
     data =await state .get_data ()
-    last_page =data .get ("last_page",0 )
+    last_page =data .get ('last_page',0 )
 
     await state .set_state (states .AutoDeliveriesStates .waiting_for_page )
     await throw_float_message (
@@ -327,10 +327,10 @@ async def callback_enter_auto_deliveries_page (callback :CallbackQuery ,state :F
     )
 
 
-@router .callback_query (F .data =="enter_new_auto_delivery_keyphrases")
+@router .callback_query (F .data =='enter_new_auto_delivery_keyphrases')
 async def callback_enter_new_auto_delivery_keyphrases (callback :CallbackQuery ,state :FSMContext ):
     data =await state .get_data ()
-    last_page =data .get ("last_page",0 )
+    last_page =data .get ('last_page',0 )
 
     await state .set_state (states .AutoDeliveriesStates .waiting_for_new_auto_delivery_keyphrases )
     await throw_float_message (
@@ -344,13 +344,13 @@ async def callback_enter_new_auto_delivery_keyphrases (callback :CallbackQuery ,
     )
 
 
-@router .callback_query (F .data =="enter_auto_delivery_keyphrases")
+@router .callback_query (F .data =='enter_auto_delivery_keyphrases')
 async def callback_enter_auto_delivery_keyphrases (callback :CallbackQuery ,state :FSMContext ):
     try :
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
-        index =data .get ("auto_delivery_index")
+        index =data .get ('auto_delivery_index')
         if index is None :
             return await callback_auto_deliveries_pagination (
             callback ,
@@ -359,8 +359,8 @@ async def callback_enter_auto_delivery_keyphrases (callback :CallbackQuery ,stat
             )
 
         await state .set_state (states .AutoDeliveriesStates .waiting_for_auto_delivery_keyphrases )
-        auto_deliveries =sett .get ("auto_deliveries")
-        auto_delivery_message ="</code>, <code>".join (auto_deliveries [index ]["keyphrases"])or "Not set"
+        auto_deliveries =sett .get ('auto_deliveries')
+        auto_delivery_message ='</code>, <code>'.join (auto_deliveries [index ]['keyphrases'])or '❌ Not specified'
 
         await throw_float_message (
         state =state ,
@@ -380,13 +380,13 @@ async def callback_enter_auto_delivery_keyphrases (callback :CallbackQuery ,stat
         )
 
 
-@router .callback_query (F .data =="enter_auto_delivery_message")
+@router .callback_query (F .data =='enter_auto_delivery_message')
 async def callback_enter_auto_delivery_message (callback :CallbackQuery ,state :FSMContext ):
     try :
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
-        index =data .get ("auto_delivery_index")
+        index =data .get ('auto_delivery_index')
         if index is None :
             return await callback_auto_deliveries_pagination (
             callback ,
@@ -395,8 +395,8 @@ async def callback_enter_auto_delivery_message (callback :CallbackQuery ,state :
             )
 
         await state .set_state (states .AutoDeliveriesStates .waiting_for_auto_delivery_message )
-        auto_deliveries =sett .get ("auto_deliveries")
-        auto_delivery_message ="\n".join (auto_deliveries [index ]["message"])or "Not assigned"
+        auto_deliveries =sett .get ('auto_deliveries')
+        auto_delivery_message ='\n'.join (auto_deliveries [index ]['message'])or '❌ Not specified'
 
         await throw_float_message (
         state =state ,
@@ -416,13 +416,13 @@ async def callback_enter_auto_delivery_message (callback :CallbackQuery ,state :
         )
 
 
-@router .callback_query (F .data =="enter_auto_delivery_goods_add")
+@router .callback_query (F .data =='enter_auto_delivery_goods_add')
 async def callback_enter_auto_delivery_goods_add (callback :CallbackQuery ,state :FSMContext ):
     try :
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
-        index =data .get ("auto_delivery_index")
+        index =data .get ('auto_delivery_index')
         if index is None :
             return await callback_auto_deliveries_pagination (
             callback ,
@@ -448,12 +448,12 @@ async def callback_enter_auto_delivery_goods_add (callback :CallbackQuery ,state
         )
 
 
-@router .callback_query (F .data =="enter_auto_withdrawal_interval")
+@router .callback_query (F .data =='enter_auto_withdrawal_interval')
 async def callback_enter_auto_withdrawal_interval (callback :CallbackQuery ,state :FSMContext ):
     await state .set_state (None )
 
-    config =sett .get ("config")
-    interval =config ["playerok"]["auto_withdrawal"]["interval"]
+    config =sett .get ('config')
+    interval =config ['playerok']['auto_withdrawal']['interval']
 
     await state .set_state (states .SettingsStates .waiting_for_auto_withdrawal_interval )
     await throw_float_message (
@@ -463,11 +463,11 @@ async def callback_enter_auto_withdrawal_interval (callback :CallbackQuery ,stat
     f"⏱️ Введите новый <b>интервал вывода средств</b> (в секундах):"
     f"\n・ Текущее: <code>{interval }</code> сек."
     ),
-    reply_markup =templ .back_kb (calls .SettingsNavigation (to ="withdrawal").pack ())
+    reply_markup =templ .back_kb (calls .SettingsNavigation (to ='withdrawal').pack ())
     )
 
 
-@router .callback_query (F .data =="enter_usdt_address")
+@router .callback_query (F .data =='enter_usdt_address')
 async def callback_enter_usdt_address (callback :CallbackQuery ,state :FSMContext ):
     await state .set_state (None )
 
@@ -478,14 +478,14 @@ async def callback_enter_usdt_address (callback :CallbackQuery ,state :FSMContex
     text =templ .settings_withdrawal_usdt_float_text (
     f"💲 Введите <b>адрес кошелька</b> USDT (TRC20):"
     ),
-    reply_markup =templ .back_kb (calls .SettingsNavigation (to ="withdrawal").pack ())
+    reply_markup =templ .back_kb (calls .SettingsNavigation (to ='withdrawal').pack ())
     )
 
 
-@router .callback_query (F .data =="enter_messages_page")
+@router .callback_query (F .data =='enter_messages_page')
 async def callback_enter_messages_page (callback :CallbackQuery ,state :FSMContext ):
     data =await state .get_data ()
-    last_page =data .get ("last_page",0 )
+    last_page =data .get ('last_page',0 )
 
     await state .set_state (states .MessagesStates .waiting_for_page )
     await throw_float_message (
@@ -496,13 +496,13 @@ async def callback_enter_messages_page (callback :CallbackQuery ,state :FSMConte
     )
 
 
-@router .callback_query (F .data =="enter_message_text")
+@router .callback_query (F .data =='enter_message_text')
 async def callback_enter_message_text (callback :CallbackQuery ,state :FSMContext ):
     try :
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
-        message_id =data .get ("message_id")
+        message_id =data .get ('message_id')
         if not message_id :
             return await callback_messages_pagination (
             callback ,
@@ -511,8 +511,8 @@ async def callback_enter_message_text (callback :CallbackQuery ,state :FSMContex
             )
 
         await state .set_state (states .MessagesStates .waiting_for_message_text )
-        messages =sett .get ("messages")
-        mess_text ="\n".join (messages [message_id ]["text"])or "Not Set"
+        messages =sett .get ('messages')
+        mess_text ='\n'.join (messages [message_id ]['text'])or '❌ Not specified'
 
         await throw_float_message (
         state =state ,
@@ -532,12 +532,12 @@ async def callback_enter_message_text (callback :CallbackQuery ,state :FSMContex
         )
 
 
-@router .callback_query (F .data =="enter_tg_logging_chat_id")
+@router .callback_query (F .data =='enter_tg_logging_chat_id')
 async def callback_enter_tg_logging_chat_id (callback :CallbackQuery ,state :FSMContext ):
     await state .set_state (states .SettingsStates .waiting_for_tg_logging_chat_id )
 
-    config =sett .get ("config")
-    tg_logging_chat_id =config ["playerok"]["tg_logging"]["chat_id"]or "Your chat with the bot"
+    config =sett .get ('config')
+    tg_logging_chat_id =config ['playerok']['tg_logging']['chat_id']or '✔️ Your chat with a bot'
 
     await throw_float_message (
     state =state ,
@@ -546,16 +546,16 @@ async def callback_enter_tg_logging_chat_id (callback :CallbackQuery ,state :FSM
     f"💬 Введите новый <b>ID чата для логов</b> (вы можете указать как цифровой ID, так и юзернейм чата):"
     f"\n・ Текущее: <code>{tg_logging_chat_id }</code>"
     ),
-    reply_markup =templ .back_kb (calls .SettingsNavigation (to ="logger").pack ())
+    reply_markup =templ .back_kb (calls .SettingsNavigation (to ='logger').pack ())
     )
 
 
-@router .callback_query (F .data =="enter_logs_max_file_size")
+@router .callback_query (F .data =='enter_logs_max_file_size')
 async def callback_enter_logs_max_file_size (callback :CallbackQuery ,state :FSMContext ):
     await state .set_state (states .SettingsStates .waiting_for_logs_max_file_size )
 
-    config =sett .get ("config")
-    max_file_size =config ["logs"]["max_file_size"]or "Not specified"
+    config =sett .get ('config')
+    max_file_size =config ['logs']['max_file_size']or '❌ Not specified'
 
     await throw_float_message (
     state =state ,
@@ -564,5 +564,5 @@ async def callback_enter_logs_max_file_size (callback :CallbackQuery ,state :FSM
     f"📄 Введите новый <b>максимальный размер файла логов</b> (в мегабайтах):"
     f"\n・ Текущее: <b>{max_file_size } MB</b>"
     ),
-    reply_markup =templ .back_kb (calls .MenuNavigation (to ="logs").pack ())
+    reply_markup =templ .back_kb (calls .MenuNavigation (to ='logs').pack ())
     )

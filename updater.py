@@ -11,8 +11,8 @@ from __init__ import VERSION ,SKIP_UPDATES
 from core .utils import restart 
 
 
-REPO ="pashagta555/playerok-universal-english-mod"
-logger =getLogger ("universal.updater")
+REPO ='pashagta555/playerok-universal-english-mod'
+logger =getLogger ('universal.updater')
 
 
 def get_releases ():
@@ -27,7 +27,7 @@ def get_latest_release (releases ):
     latest =None 
     latest_rel =None 
     for rel in releases :
-        tag_name =rel ["tag_name"]
+        tag_name =rel ['tag_name']
         if latest is None :
             latest =Version (tag_name )
             latest_rel =rel 
@@ -46,7 +46,7 @@ def download_update (release_info :dict )->bytes :
 
 
 def install_update (release_info :dict ,content :bytes )->bool :
-    temp_dir =".temp_update"
+    temp_dir ='.temp_update'
     try :
         with zipfile .ZipFile (io .BytesIO (content ),'r')as zip_ref :
             zip_ref .extractall (temp_dir )
@@ -56,7 +56,7 @@ def install_update (release_info :dict ,content :bytes )->bool :
                     archive_root =os .path .join (temp_dir ,item )
                     break 
             if not archive_root :
-                raise Exception ("There is no root folder in the archive!")
+                raise Exception ('There is no root folder in the archive!')
             for root ,_ ,files in os .walk (archive_root ):
                 for file in files :
                     src =os .path .join (root ,file )
@@ -73,15 +73,15 @@ def check_for_updates ():
     try :
         releases =get_releases ()
         latest_release =get_latest_release (releases )
-        versions =[release ["tag_name"]for release in releases ]
+        versions =[release ['tag_name']for release in releases ]
 
         if VERSION not in versions :
             logger .info (f"Вашей версии {Fore .LIGHTWHITE_EX }{VERSION } {Fore .WHITE }нету в релизах репозитория. Последняя версия: {Fore .LIGHTWHITE_EX }{latest_release ['tag_name']}")
             return 
-        elif Version (VERSION )==Version (latest_release ["tag_name"]):
+        elif Version (VERSION )==Version (latest_release ['tag_name']):
             logger .info (f"У вас установлена последняя версия: {Fore .LIGHTWHITE_EX }{VERSION }")
             return 
-        elif Version (VERSION )<Version (latest_release ["tag_name"]):
+        elif Version (VERSION )<Version (latest_release ['tag_name']):
             logger .info (f"{Fore .YELLOW }Доступна новая версия: {Fore .LIGHTWHITE_EX }{latest_release ['tag_name']}")
             if SKIP_UPDATES :
                 logger .info (

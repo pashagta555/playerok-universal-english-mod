@@ -7,8 +7,8 @@ from ..import callback_datas as calls
 
 
 def settings_comm_page_text (command :str ):
-    custom_commands =sett .get ("custom_commands")
-    command_text ="\n".join (custom_commands [command ])or "Not set"
+    custom_commands =sett .get ('custom_commands')
+    command_text ='\n'.join (custom_commands [command ])or '❌ Not specified'
 
     txt =textwrap .dedent (f"""
         <b>📄❗ Страница команды</b>
@@ -20,13 +20,13 @@ def settings_comm_page_text (command :str ):
 
 
 def settings_comm_page_kb (command :str ,page :int =0 ):
-    custom_commands =sett .get ("custom_commands")
-    command_text ="\n".join (custom_commands [command ])or "Not Set"
+    custom_commands =sett .get ('custom_commands')
+    command_text ='\n'.join (custom_commands [command ])or '❌ Not specified'
 
     rows =[
-    [InlineKeyboardButton (text =f"💬 Ответ: {command_text }",callback_data ="enter_custom_command_answer")],
-    [InlineKeyboardButton (text ="Delete",callback_data ="confirm_deleting_custom_command")],
-    [InlineKeyboardButton (text ="Backwards ⬅️",callback_data =calls .CustomCommandsPagination (page =page ).pack ())]
+    [InlineKeyboardButton (text =f"💬 Ответ: {command_text }",callback_data ='enter_custom_command_answer')],
+    [InlineKeyboardButton (text ='🗑️ Delete',callback_data ='confirm_deleting_custom_command')],
+    [InlineKeyboardButton (text ='⬅️ Back',callback_data =calls .CustomCommandsPagination (page =page ).pack ())]
     ]
     kb =InlineKeyboardMarkup (inline_keyboard =rows )
     return kb 

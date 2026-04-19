@@ -18,16 +18,16 @@ async def handler_waiting_for_new_included_restore_item_keyphrases (message :typ
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
         if len (message .text )<=0 :
-            raise Exception ("Too short value")
+            raise Exception ('❌ Value too short')
 
-        keyphrases =[phrase .strip ()for phrase in message .text .split (",")if phrase .strip ()]
+        keyphrases =[phrase .strip ()for phrase in message .text .split (',')if phrase .strip ()]
 
-        auto_restore_items =sett .get ("auto_restore_items")
-        auto_restore_items ["included"].append (keyphrases )
-        sett .set ("auto_restore_items",auto_restore_items )
+        auto_restore_items =sett .get ('auto_restore_items')
+        auto_restore_items ['included'].append (keyphrases )
+        sett .set ('auto_restore_items',auto_restore_items )
 
         await throw_float_message (
         state =state ,
@@ -53,7 +53,7 @@ async def handler_waiting_for_new_included_restore_items_keyphrases_file (messag
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
         file =await message .bot .get_file (message .document .file_id )
         downloaded_file =await message .bot .download_file (file .file_path )
@@ -63,16 +63,16 @@ async def handler_waiting_for_new_included_restore_items_keyphrases_file (messag
         for line in file_content .splitlines ():
             line =line .strip ()
             if len (line )>0 :
-                keyphrases =[phrase .strip ()for phrase in line .split (",")if phrase .strip ()]
+                keyphrases =[phrase .strip ()for phrase in line .split (',')if phrase .strip ()]
                 if len (keyphrases )>0 :
                     keyphrases_list .append (keyphrases )
 
         if len (keyphrases_list )<=0 :
-            raise Exception ("File does not contain valid key phrases.")
+            raise Exception ('❌ The file does not contain valid keywords')
 
-        auto_restore_items =sett .get ("auto_restore_items")
-        auto_restore_items ["included"].extend (keyphrases_list )
-        sett .set ("auto_restore_items",auto_restore_items )
+        auto_restore_items =sett .get ('auto_restore_items')
+        auto_restore_items ['included'].extend (keyphrases_list )
+        sett .set ('auto_restore_items',auto_restore_items )
 
         await throw_float_message (
         state =state ,
@@ -95,16 +95,16 @@ async def handler_waiting_for_new_excluded_restore_item_keyphrases (message :typ
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
         if len (message .text )<=0 :
-            raise Exception ("Too short value")
+            raise Exception ('❌ Value too short')
 
-        keyphrases =[phrase .strip ()for phrase in message .text .split (",")if phrase .strip ()]
+        keyphrases =[phrase .strip ()for phrase in message .text .split (',')if phrase .strip ()]
 
-        auto_restore_items =sett .get ("auto_restore_items")
-        auto_restore_items ["excluded"].append (keyphrases )
-        sett .set ("auto_restore_items",auto_restore_items )
+        auto_restore_items =sett .get ('auto_restore_items')
+        auto_restore_items ['excluded'].append (keyphrases )
+        sett .set ('auto_restore_items',auto_restore_items )
 
         await throw_float_message (
         state =state ,
@@ -130,7 +130,7 @@ async def handler_waiting_for_new_excluded_restore_items_keyphrases_file (messag
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
         file =await message .bot .get_file (message .document .file_id )
         downloaded_file =await message .bot .download_file (file .file_path )
@@ -140,16 +140,16 @@ async def handler_waiting_for_new_excluded_restore_items_keyphrases_file (messag
         for line in file_content .splitlines ():
             line =line .strip ()
             if len (line )>0 :
-                keyphrases =[phrase .strip ()for phrase in line .split (",")if phrase .strip ()]
+                keyphrases =[phrase .strip ()for phrase in line .split (',')if phrase .strip ()]
                 if len (keyphrases )>0 :
                     keyphrases_list .append (keyphrases )
 
         if len (keyphrases_list )<=0 :
-            raise Exception ("File does not contain valid key phrases")
+            raise Exception ('❌ The file does not contain valid keywords')
 
-        auto_restore_items =sett .get ("auto_restore_items")
-        auto_restore_items ["excluded"].extend (keyphrases_list )
-        sett .set ("auto_restore_items",auto_restore_items )
+        auto_restore_items =sett .get ('auto_restore_items')
+        auto_restore_items ['excluded'].extend (keyphrases_list )
+        sett .set ('auto_restore_items',auto_restore_items )
 
         await throw_float_message (
         state =state ,

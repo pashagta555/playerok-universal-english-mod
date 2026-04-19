@@ -16,21 +16,21 @@ router =Router ()
 async def handler_waiting_for_message_content (message :types .Message ,state :FSMContext ):
     try :
         await state .set_state (None )
-        await throw_float_message (state ,message ,"⌛")
+        await throw_float_message (state ,message ,'⌛')
 
         data =await state .get_data ()
-        username =data .get ("username")
+        username =data .get ('username')
 
         from plbot .playerokbot import get_playerok_bot 
         plbot =get_playerok_bot ()
         chat =plbot .get_chat_by_username (username )
 
-        sent_msg =""
+        sent_msg =''
 
-        text =""
+        text =''
         if message .text :
             if len (message .text .strip ())<=0 :
-                raise Exception ("Too short text")
+                raise Exception ('❌ Text is too short')
 
             text =message .text 
             sent_msg +=message .text .strip ()
@@ -42,13 +42,13 @@ async def handler_waiting_for_message_content (message :types .Message ,state :F
             if message .media_group_id :
                 await asyncio .sleep (1 )
                 data =await state .get_data ()
-                photos_messages =data .get ("album_messages",[])+[message ]
+                photos_messages =data .get ('album_messages',[])+[message ]
                 await state .update_data (album_messages =photos_messages )
 
             for msg in photos_messages :
                 photo =msg .photo [-1 ]
 
-                with NamedTemporaryFile (delete =False ,suffix =".jpg")as tmp :
+                with NamedTemporaryFile (delete =False ,suffix ='.jpg')as tmp :
                     await message .bot .download (photo ,destination =tmp .name )
                     photo_paths .append (tmp .name )
 

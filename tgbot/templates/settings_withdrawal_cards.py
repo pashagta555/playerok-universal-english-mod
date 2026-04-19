@@ -37,23 +37,23 @@ def settings_withdrawal_cards_kb (bank_cards :list [UserBankCard ],page =0 ):
 
     if total_pages >1 :
         buttons_row =[]
-        btn_back =InlineKeyboardButton (text ="←",callback_data =calls .BankCardsPagination (page =page -1 ).pack ())if page >0 else InlineKeyboardButton (text ="🛑",callback_data ="123")
+        btn_back =InlineKeyboardButton (text ='←',callback_data =calls .BankCardsPagination (page =page -1 ).pack ())if page >0 else InlineKeyboardButton (text ='🛑',callback_data ='123')
         buttons_row .append (btn_back )
 
-        btn_pages =InlineKeyboardButton (text =f"{page +1 }/{total_pages }",callback_data ="enter_bank_cards_page")
+        btn_pages =InlineKeyboardButton (text =f"{page +1 }/{total_pages }",callback_data ='enter_bank_cards_page')
         buttons_row .append (btn_pages )
 
-        btn_next =InlineKeyboardButton (text ="→",callback_data =calls .BankCardsPagination (page =page +1 ).pack ())if page <total_pages -1 else InlineKeyboardButton (text ="🛑",callback_data ="123")
+        btn_next =InlineKeyboardButton (text ='→',callback_data =calls .BankCardsPagination (page =page +1 ).pack ())if page <total_pages -1 else InlineKeyboardButton (text ='🛑',callback_data ='123')
         buttons_row .append (btn_next )
         rows .append (buttons_row )
 
     rows .append ([
-    InlineKeyboardButton (text ="· Credit Cards RU ·",callback_data ="123"),
-    InlineKeyboardButton (text ="SBP Banks",callback_data =calls .SbpBanksPagination (page =0 ).pack ()),
-    InlineKeyboardButton (text ="💲 USDT (TRC20)",callback_data ="enter_usdt_address")
+    InlineKeyboardButton (text ='· 💳 Cards RU ·',callback_data ='123'),
+    InlineKeyboardButton (text ='📱 SBP banks',callback_data =calls .SbpBanksPagination (page =0 ).pack ()),
+    InlineKeyboardButton (text ='💲 USDT (TRC20)',callback_data ='enter_usdt_address')
     ])
     rows .append ([
-    InlineKeyboardButton (text ="Backwards ⬅️",callback_data =calls .SettingsNavigation (to ="withdrawal").pack ()),
+    InlineKeyboardButton (text ='⬅️ Back',callback_data =calls .SettingsNavigation (to ='withdrawal').pack ()),
     ])
 
     kb =InlineKeyboardMarkup (inline_keyboard =rows )

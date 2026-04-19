@@ -19,8 +19,8 @@ async def do_auth (message :Message ,state :FSMContext )->Message |None :
     state =state ,
     message =message ,
     text =templ .sign_text (
-    'Enter the key-password specified by you in the bot's config down below 🔑'
-    'If you forgot it, you can look at it directly in the config by path bot_settings/config.json, parameter password in the Telegram.bot section'
+    '🔑 Enter the password key you specified in the bot config ↓'
+    '<span class="tg-spoiler">If you forgot, you can view it directly in the config along the path bot_settings/config.json, password parameter in the telegram.bot section</span>'
     ),
     reply_markup =templ .destroy_kb ()
     )
@@ -30,7 +30,7 @@ async def get_accent_message_id (state :FSMContext ,message :Message ,bot )->int
     data =await state .get_data ()
 
     if message .from_user and message .from_user .id !=bot .id :
-        return data .get ("accent_message_id")
+        return data .get ('accent_message_id')
 
     return message .message_id 
 
@@ -51,7 +51,7 @@ async def try_edit_message (bot ,chat_id ,message_id ,text ,photo ,reply_markup 
             media =InputMediaPhoto (
             media =FSInputFile (photo ),
             caption =text ,
-            parse_mode ="HTML"
+            parse_mode ='HTML'
             )
             return await bot .edit_message_media (
             chat_id =chat_id ,
@@ -64,22 +64,22 @@ async def try_edit_message (bot ,chat_id ,message_id ,text ,photo ,reply_markup 
         message_id =message_id ,
         text =text ,
         reply_markup =reply_markup ,
-        parse_mode ="HTML"
+        parse_mode ='HTML'
         )
 
     except TelegramAPIError as e :
         msg =e .message .lower ()
 
-        if "message to edit not found"in msg :
+        if 'message to edit not found'in msg :
             return None 
 
-        if "message is not modified"in msg :
+        if 'message is not modified'in msg :
             if callback :
                 await bot .answer_callback_query (callback .id ,cache_time =0 )
-            return "not_modified"
+            return 'not_modified'
 
-        if "query is too old"in msg :
-            return "callback_expired"
+        if 'query is too old'in msg :
+            return 'callback_expired'
 
         raise 
 
@@ -91,13 +91,13 @@ async def send_new_message (bot ,chat_id ,text ,photo ,reply_markup ):
         photo =FSInputFile (photo ),
         caption =text ,
         reply_markup =reply_markup ,
-        parse_mode ="HTML"
+        parse_mode ='HTML'
         )
     return await bot .send_message (
     chat_id =chat_id ,
     text =text ,
     reply_markup =reply_markup ,
-    parse_mode ="HTML"
+    parse_mode ='HTML'
     )
 
 
@@ -139,7 +139,7 @@ send :bool =False
             except TelegramBadRequest :
                 pass 
 
-        if mess in ("not_modified","callback_expired"):
+        if mess in ('not_modified','callback_expired'):
             return None 
 
     if not mess :

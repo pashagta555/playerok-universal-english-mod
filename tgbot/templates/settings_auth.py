@@ -7,10 +7,10 @@ from ..import callback_datas as calls
 
 
 def settings_auth_text ():
-    config =sett .get ("config")
+    config =sett .get ('config')
 
-    token =config ["playerok"]["api"]["token"][:5 ]+("*"*10 )or "Not set"
-    user_agent =config ["playerok"]["api"]["user_agent"]or "Not specified"
+    token =config ['playerok']['api']['token'][:5 ]+('*'*10 )or '❌ Not specified'
+    user_agent =config ['playerok']['api']['user_agent']or '❌ Not specified'
 
     txt =textwrap .dedent (f"""
         <b>🔑 Авторизация</b>
@@ -22,15 +22,15 @@ def settings_auth_text ():
 
 
 def settings_auth_kb ():
-    config =sett .get ("config")
+    config =sett .get ('config')
 
-    token =config ["playerok"]["api"]["token"][:5 ]+("*"*10 )or "Not set"
-    user_agent =config ["playerok"]["api"]["user_agent"]or "❌ Not set"
+    token =config ['playerok']['api']['token'][:5 ]+('*'*10 )or '❌ Not specified'
+    user_agent =config ['playerok']['api']['user_agent']or '❌ Not specified'
 
     rows =[
-    [InlineKeyboardButton (text =f"🔐 Токен: {token }",callback_data ="enter_token")],
-    [InlineKeyboardButton (text =f"🎩 User Agent: {user_agent }",callback_data ="enter_user_agent")],
-    [InlineKeyboardButton (text ="Backwards ⬅️",callback_data =calls .SettingsNavigation (to ="default").pack ())]
+    [InlineKeyboardButton (text =f"🔐 Токен: {token }",callback_data ='enter_token')],
+    [InlineKeyboardButton (text =f"🎩 User Agent: {user_agent }",callback_data ='enter_user_agent')],
+    [InlineKeyboardButton (text ='⬅️ Back',callback_data =calls .SettingsNavigation (to ='default').pack ())]
     ]
     kb =InlineKeyboardMarkup (inline_keyboard =rows )
     return kb 

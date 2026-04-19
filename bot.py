@@ -24,7 +24,7 @@ from updater import check_for_updates
 from utils import configure_config 
 
 
-logger =getLogger ("universal")
+logger =getLogger ('universal')
 
 try :
     main_loop =asyncio .get_running_loop ()
@@ -39,14 +39,14 @@ init_main_loop (main_loop )
 async def clear_logs_task ():
     from settings import Settings as sett 
 
-    path ="logs/latest.log"
+    path ='logs/latest.log'
     while True :
         if os .path .exists (path ):
             file_size_bytes =os .path .getsize (path )
             file_size_mb =file_size_bytes /(1024 *1024 )
 
-            config =sett .get ("config")
-            if file_size_mb >config ["logs"]["max_file_size"]:
+            config =sett .get ('config')
+            if file_size_mb >config ['logs']['max_file_size']:
                 with open (path ,'w'):
                     pass 
         await asyncio .sleep (30 )
@@ -62,11 +62,11 @@ async def start_playerok_bot ():
     await PlayerokBot ().run_bot ()
 
 
-if __name__ =="__main__":
+if __name__ =='__main__':
     try :
-        from_tg ="--from_tg"in sys .argv 
+        from_tg ='--from_tg'in sys .argv 
 
-        install_requirements ("requirements.txt")# installation of missing dependencies if any
+        install_requirements ('requirements.txt')# install missing dependencies, if any
         patch_requests ()
         setup_logger ()
 
@@ -93,7 +93,7 @@ if __name__ =="__main__":
         main_loop .run_until_complete (start_playerok_bot ())
         main_loop .create_task (clear_logs_task ())
 
-        asyncio .run (call_bot_event ("ON_INIT"))
+        asyncio .run (call_bot_event ('ON_INIT'))
 
         main_loop .run_forever ()
     except Exception as e :

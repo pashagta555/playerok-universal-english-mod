@@ -2,10 +2,7 @@ import requests
 
 
 class CloudflareDetectedException (Exception ):
-    "Error detection of Cloudflare protection when sending a request.
-
-:param response: Response object.
-:type response: requests.Response"
+    'Cloudflare protection detection error when sending request.\n\n    :param response: The response object.\n    :type response: `requests.Response`'
 
     def __init__ (self ,response :requests .Response ):
         self .response =response 
@@ -22,10 +19,7 @@ class CloudflareDetectedException (Exception ):
 
 
 class RequestFailedError (Exception ):
-    "Exception that is raised if the response code is not equal to 200.
-
-    :param response: Object of response.
-    :type response: requests.Response"
+    'The exception that is thrown if the response code is not 200.\n\n    :param response: The response object.\n    :type response: `requests.Response`'
 
     def __init__ (self ,response :requests .Response ):
         self .response =response 
@@ -42,16 +36,13 @@ class RequestFailedError (Exception ):
 
 
 class RequestPlayerokError (Exception ):
-    "Exception that is raised if an error query occurred on the side of Playerok.
-
-:param response: Object of answer.
-:type response: requests.Response"
+    'An exception that is thrown if there is a request error on the Playerok side.\n\n    :param response: The response object.\n    :type response: `requests.Response`'
 
     def __init__ (self ,response :requests .Response ):
         self .response =response 
         self .json =response .json ()
-        self .error_code =self .json ["errors"][0 ]["extensions"]["code"]
-        self .error_message =self .json ["errors"][0 ]["message"]
+        self .error_code =self .json ['errors'][0 ]['extensions']['code']
+        self .error_message =self .json ['errors'][0 ]['message']
 
     def __str__ (self ):
         msg =(
@@ -63,13 +54,7 @@ class RequestPlayerokError (Exception ):
 
 
 class RequestSendingError (Exception ):
-    "Exception that is raised if it's impossible to send a request after several attempts.
-
-:param url: URL of the request.
-:type url: str
-
-:param error: Error text.
-:type error: str"
+    'The exception that is thrown if the request fails to be sent after several attempts.\n\n    :param url: Request URL.\n    :type url: `str`\n\n    :param error: Error text.\n    :type error: `str`'
 
     def __init__ (self ,url :str ,error :str ):
         self .url =url 
@@ -84,7 +69,7 @@ class RequestSendingError (Exception ):
 
 
 class UnauthorizedError (Exception ):
-    "Exception that is triggered if it's impossible to authenticate in a Playerok account."
+    'An exception that is raised if logging into the Playerok account failed.'
 
     def __str__ (self ):
-        return "Couldn't connect to the Playerok account. Did you specify an incorrect token?"
+        return 'Failed to connect to Playerok account. Maybe you specified the wrong token?'

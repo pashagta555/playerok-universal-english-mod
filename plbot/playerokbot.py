@@ -43,39 +43,39 @@ log_new_deal_kb
 )
 
 
-logger =getLogger ("universal.playerok")
+logger =getLogger ('universal.playerok')
 
 
 def get_playerok_bot ()->PlayerokBot |None :
-    if hasattr (PlayerokBot ,"instance"):
-        return getattr (PlayerokBot ,"instance")
+    if hasattr (PlayerokBot ,'instance'):
+        return getattr (PlayerokBot ,'instance')
 
 
 class PlayerokBot :
     def __new__ (cls ,*args ,**kwargs )->PlayerokBot :
-        if not hasattr (cls ,"instance"):
+        if not hasattr (cls ,'instance'):
             cls .instance =super (PlayerokBot ,cls ).__new__ (cls )
-        return getattr (cls ,"instance")
+        return getattr (cls ,'instance')
 
     def __init__ (self ):
-        self .config =sett .get ("config")
-        self .messages =sett .get ("messages")
-        self .custom_commands =sett .get ("custom_commands")
-        self .auto_deliveries =sett .get ("auto_deliveries")
-        self .auto_restore_items =sett .get ("auto_restore_items")
-        self .auto_complete_deals =sett .get ("auto_complete_deals")
-        self .auto_bump_items =sett .get ("auto_bump_items")
+        self .config =sett .get ('config')
+        self .messages =sett .get ('messages')
+        self .custom_commands =sett .get ('custom_commands')
+        self .auto_deliveries =sett .get ('auto_deliveries')
+        self .auto_restore_items =sett .get ('auto_restore_items')
+        self .auto_complete_deals =sett .get ('auto_complete_deals')
+        self .auto_bump_items =sett .get ('auto_bump_items')
 
-        self .initialized_users =data .get ("initialized_users")
-        self .saved_items =data .get ("saved_items")
-        self .cached_orders =data .get ("cached_orders")
-        self .latest_events_times =data .get ("latest_events_times")
+        self .initialized_users =data .get ('initialized_users')
+        self .saved_items =data .get ('saved_items')
+        self .cached_orders =data .get ('cached_orders')
+        self .latest_events_times =data .get ('latest_events_times')
 
         self .account =self .playerok_account =Account (
-        token =self .config ["playerok"]["api"]["token"],
-        user_agent =self .config ["playerok"]["api"]["user_agent"],
-        proxy =self .config ["playerok"]["api"]["proxy"]or None ,
-        requests_timeout =self .config ["playerok"]["api"]["requests_timeout"]
+        token =self .config ['playerok']['api']['token'],
+        user_agent =self .config ['playerok']['api']['user_agent'],
+        proxy =self .config ['playerok']['api']['proxy']or None ,
+        requests_timeout =self .config ['playerok']['api']['requests_timeout']
         ).get ()
 
         self .__saved_chats :dict [str ,Chat ]={}
@@ -89,9 +89,9 @@ class PlayerokBot :
     def get_chat_by_username (self ,username :str )->Chat :
         if username in self .__saved_chats :
             return self .__saved_chats [username ]
-        if username .lower ()=="support":
+        if username .lower ()=='support':
             chat =self .account .get_chat (self .account .support_chat_id )
-        elif username .lower ()=="notifications":
+        elif username .lower ()=='notifications':
             chat =self .account .get_chat (self .account .system_chat_id )
         else :
             chat =self .account .get_chat_by_username (username )
@@ -109,29 +109,29 @@ class PlayerokBot :
         try :
             user =self .account .get_user (self .account .id )
             if user .is_blocked :
-                logger .critical ("")
+                logger .critical ('')
                 logger .critical (f"{Fore .LIGHTRED_EX }Ваш Playerok аккаунт был заблокирован! К сожалению, я не могу продолжать работу на заблокированном аккаунте...")
                 logger .critical (f"Напишите в тех. поддержку Playerok, чтобы узнать причину бана и как можно быстрее решить эту проблему.")
-                logger .critical ("")
+                logger .critical ('')
                 shutdown ()
         except Exception as e :
             logger .error (f"{Fore .LIGHTRED_EX }Ошибка при проверке на блокировку: {Fore .WHITE }{e }")
 
-    def msg (self ,message_name :str ,messages_config_name :str ="messages",
+    def msg (self ,message_name :str ,messages_config_name :str ='messages',
     messages_data :dict =DATA ,**kwargs )->str |None :
         class SafeDict (dict ):
             def __missing__ (self ,key ):
-                return "{"+key +"}"
+                return '{'+key +'}'
 
         messages =sett .get (messages_config_name ,messages_data )or {}
         mess =messages .get (message_name ,{})
-        if not mess .get ("enabled"):
+        if not mess .get ('enabled'):
             return None 
-        message_lines :list [str ]=mess .get ("text",[])
+        message_lines :list [str ]=mess .get ('text',[])
         if not message_lines :
             return f"Сообщение {message_name } пустое"
         try :
-            msg ="\n".join ([line .format_map (SafeDict (**kwargs ))for line in message_lines ])
+            msg ='\n'.join ([line .format_map (SafeDict (**kwargs ))for line in message_lines ])
             return msg 
         except :
             pass 
@@ -152,16 +152,16 @@ class PlayerokBot :
 
     def send_message (self ,chat_id :str ,text :str |None =None ,photo_file_paths :list [str ]=[],
     mark_chat_as_read :bool =None ,exclude_watermark :bool =False ,max_attempts :int =3 )->ChatMessage |None :
-        "Custom method for sending a message in the Playerok chat. Attempts to send within N attempts; if failed, outputs an error in the console."
+        'Custom method for sending messages to Playerok chat.\n        Tries to send in N attempts, if it fails, it generates an error in the console.'
 
         if not any ((text ,photo_file_paths )):
             return 
 
         for _ in range (max_attempts ):
             try :
-                read_chat_enabled =self .config ["playerok"]["read_chat"]["enabled"]
-                watermark_enabled =self .config ["playerok"]["watermark"]["enabled"]
-                watermark =self .config ["playerok"]["watermark"]["value"]
+                read_chat_enabled =self .config ['playerok']['read_chat']['enabled']
+                watermark_enabled =self .config ['playerok']['watermark']['enabled']
+                watermark =self .config ['playerok']['watermark']['value']
 
                 if text and watermark_enabled and watermark and not exclude_watermark :
                     text +=f"\n{watermark }"
@@ -179,9 +179,9 @@ class PlayerokBot :
                 err =e 
                 break 
         else :
-            err ="Failed to send message"
+            err ='Failed to send message'
 
-        msg =""
+        msg =''
         if text :
             msg +=text .replace ('\n',' ').strip ()
         if photo_file_paths :
@@ -194,55 +194,55 @@ class PlayerokBot :
 
     def _serealize_item (self ,item :ItemProfile )->dict :
         return {
-        "id":item .id ,
-        "slug":item .slug ,
-        "priority":item .priority .name if item .priority else None ,
-        "status":item .status .name if item .status else None ,
-        "name":item .name ,
-        "price":item .price ,
-        "raw_price":item .raw_price ,
-        "seller_type":item .seller_type .name if item .seller_type else None ,
-        "attachment":{
-        "id":item .attachment .id ,
-        "url":item .attachment .url ,
-        "filename":item .attachment .filename ,
-        "mime":item .attachment .mime ,
+        'id':item .id ,
+        'slug':item .slug ,
+        'priority':item .priority .name if item .priority else None ,
+        'status':item .status .name if item .status else None ,
+        'name':item .name ,
+        'price':item .price ,
+        'raw_price':item .raw_price ,
+        'seller_type':item .seller_type .name if item .seller_type else None ,
+        'attachment':{
+        'id':item .attachment .id ,
+        'url':item .attachment .url ,
+        'filename':item .attachment .filename ,
+        'mime':item .attachment .mime ,
         },
-        "user":{
-        "id":item .user .id ,
-        "username":item .user .username ,
-        "role":item .user .role .name if item .user .role else None ,
-        "avatar_url":item .user .avatar_url ,
-        "is_online":item .user .is_online ,
-        "is_blocked":item .user .is_blocked ,
-        "rating":item .user .rating ,
-        "reviews_count":item .user .reviews_count ,
-        "support_chat_id":item .user .support_chat_id ,
-        "system_chat_id":item .user .system_chat_id ,
-        "created_at":item .user .created_at 
+        'user':{
+        'id':item .user .id ,
+        'username':item .user .username ,
+        'role':item .user .role .name if item .user .role else None ,
+        'avatar_url':item .user .avatar_url ,
+        'is_online':item .user .is_online ,
+        'is_blocked':item .user .is_blocked ,
+        'rating':item .user .rating ,
+        'reviews_count':item .user .reviews_count ,
+        'support_chat_id':item .user .support_chat_id ,
+        'system_chat_id':item .user .system_chat_id ,
+        'created_at':item .user .created_at 
         },
-        "approval_date":item .approval_date ,
-        "priority_position":item .priority_position ,
-        "views_counter":item .views_counter ,
-        "fee_multiplier":item .fee_multiplier ,
-        "created_at":item .created_at 
+        'approval_date':item .approval_date ,
+        'priority_position':item .priority_position ,
+        'views_counter':item .views_counter ,
+        'fee_multiplier':item .fee_multiplier ,
+        'created_at':item .created_at 
         }
 
     def _deserealize_item (self ,item_data :dict )->ItemProfile :
         item_data =copy .deepcopy (item_data )
-        user_data =item_data .pop ("user")
-        user_data ["role"]=UserTypes .__members__ .get (user_data ["role"])if user_data ["role"]else None 
+        user_data =item_data .pop ('user')
+        user_data ['role']=UserTypes .__members__ .get (user_data ['role'])if user_data ['role']else None 
         user =UserProfile (**user_data )
         user .__account =self .account 
-        item_data ["user"]=user 
+        item_data ['user']=user 
 
-        attachment_data =item_data .pop ("attachment")
+        attachment_data =item_data .pop ('attachment')
         attachment =FileObject (**attachment_data )
-        item_data ["attachment"]=attachment 
+        item_data ['attachment']=attachment 
 
-        item_data ["priority"]=PriorityTypes .__members__ .get (item_data ["priority"])if item_data ["priority"]else None 
-        item_data ["status"]=ItemStatuses .__members__ .get (item_data ["status"])if item_data ["status"]else None 
-        item_data ["seller_type"]=UserTypes .__members__ .get (item_data ["seller_type"])if item_data ["seller_type"]else None 
+        item_data ['priority']=PriorityTypes .__members__ .get (item_data ['priority'])if item_data ['priority']else None 
+        item_data ['status']=ItemStatuses .__members__ .get (item_data ['status'])if item_data ['status']else None 
+        item_data ['seller_type']=UserTypes .__members__ .get (item_data ['seller_type'])if item_data ['seller_type']else None 
 
         item =ItemProfile (**item_data )
         return item 
@@ -254,7 +254,7 @@ class PlayerokBot :
     category_id :str |None =None ,
     statuses :list [ItemStatuses ]|None =None 
     )->list [ItemProfile ]:
-        "Gets all account items and saves them. Takes from saved items that could not be obtained."
+        'Receives all account items and stores them.\n        Takes items from saved items that could not be obtained'
 
         my_items :list [ItemProfile ]=[]
         svd_items :list [dict ]=[]
@@ -301,7 +301,7 @@ class PlayerokBot :
 
     def bump_item (self ,item :ItemProfile |MyItem ):
         try :
-            name_frmtd =item .name [:32 ]+("..."if len (item .name )>32 else "")
+            name_frmtd =item .name [:32 ]+('...'if len (item .name )>32 else '')
 
             included =any (
             any (
@@ -309,7 +309,7 @@ class PlayerokBot :
             or item .name .lower ()==phrase .lower ()
             for phrase in included_item 
             )
-            for included_item in self .auto_bump_items ["included"]
+            for included_item in self .auto_bump_items ['included']
             )
             excluded =any (
             any (
@@ -317,14 +317,14 @@ class PlayerokBot :
             or item .name .lower ()==phrase .lower ()
             for phrase in excluded_item 
             )
-            for excluded_item in self .auto_bump_items ["excluded"]
+            for excluded_item in self .auto_bump_items ['excluded']
             )
 
             if (
-            self .config ["playerok"]["auto_bump_items"]["all"]
+            self .config ['playerok']['auto_bump_items']['all']
             and not excluded 
             )or (
-            not self .config ["playerok"]["auto_bump_items"]["all"]
+            not self .config ['playerok']['auto_bump_items']['all']
             and included 
             ):
                 if not isinstance (item ,MyItem ):
@@ -336,7 +336,7 @@ class PlayerokBot :
 
                 prem_status =next ((st for st in statuses if st .type ==PriorityTypes .PREMIUM or st .price >0 ),None )
                 if not prem_status :
-                    raise Exception ("Premium status not found")
+                    raise Exception ('PREMIUM status not found')
 
                 time .sleep (1 )
                 self .account .increase_item_priority_status (item .id ,prem_status .id )
@@ -350,8 +350,8 @@ class PlayerokBot :
 
     def bump_items (self ):
         try :
-            self .latest_events_times ["auto_bump_items"]=datetime .now ().isoformat ()
-            data .set ("latest_events_times",self .latest_events_times )
+            self .latest_events_times ['auto_bump_items']=datetime .now ().isoformat ()
+            data .set ('latest_events_times',self .latest_events_times )
 
             items =self .get_my_items (statuses =[ItemStatuses .APPROVED ])
             up_items =[it for it in items if it .priority !=PriorityTypes .DEFAULT ]
@@ -363,7 +363,7 @@ class PlayerokBot :
 
     def restore_item (self ,item :Item |MyItem |ItemProfile ):
         try :
-            name_frmtd =item .name [:32 ]+("..."if len (item .name )>32 else "")
+            name_frmtd =item .name [:32 ]+('...'if len (item .name )>32 else '')
 
             included =any (
             any (
@@ -371,7 +371,7 @@ class PlayerokBot :
             or item .name .lower ()==phrase .lower ()
             for phrase in included_item 
             )
-            for included_item in self .auto_restore_items ["included"]
+            for included_item in self .auto_restore_items ['included']
             )
             excluded =any (
             any (
@@ -379,14 +379,14 @@ class PlayerokBot :
             or item .name .lower ()==phrase .lower ()
             for phrase in excluded_item 
             )
-            for excluded_item in self .auto_restore_items ["excluded"]
+            for excluded_item in self .auto_restore_items ['excluded']
             )
 
             if (
-            self .config ["playerok"]["auto_restore_items"]["all"]
+            self .config ['playerok']['auto_restore_items']['all']
             and not excluded 
             )or (
-            not self .config ["playerok"]["auto_restore_items"]["all"]
+            not self .config ['playerok']['auto_restore_items']['all']
             and included 
             ):
                 if not isinstance (item ,MyItem ):
@@ -428,23 +428,23 @@ class PlayerokBot :
 
     def request_withdrawal (self )->bool :
         try :
-            self .latest_events_times ["auto_withdrawal"]=datetime .now ().isoformat ()
-            data .set ("latest_events_times",self .latest_events_times )
+            self .latest_events_times ['auto_withdrawal']=datetime .now ().isoformat ()
+            data .set ('latest_events_times',self .latest_events_times )
 
             balance =0 
             self .account =self .account .get ()
             balance =self .account .profile .balance .withdrawable 
             if balance <=500 :
-                raise Exception ("Too small balance. Transaction should be for the amount of at least 500₽")
+                raise Exception ('Balance too small. The transaction must be in the amount of 500₽')
 
-            if self .config ["playerok"]["auto_withdrawal"]["credentials_type"]=="card":
+            if self .config ['playerok']['auto_withdrawal']['credentials_type']=='card':
                 provider =TransactionProviderIds .BANK_CARD_RU 
-                account =self .config ["playerok"]["auto_withdrawal"]["card_id"]
+                account =self .config ['playerok']['auto_withdrawal']['card_id']
                 sbp_bank_member_id =None 
-            elif self .config ["playerok"]["auto_withdrawal"]["credentials_type"]=="sbp":
+            elif self .config ['playerok']['auto_withdrawal']['credentials_type']=='sbp':
                 provider =TransactionProviderIds .SBP 
-                account =self .config ["playerok"]["auto_withdrawal"]["sbp_phone_number"]
-                sbp_bank_member_id =self .config ["playerok"]["auto_withdrawal"]["sbp_bank_id"]
+                account =self .config ['playerok']['auto_withdrawal']['sbp_phone_number']
+                sbp_bank_member_id =self .config ['playerok']['auto_withdrawal']['sbp_bank_id']
 
             self .account .request_withdrawal (
             provider =provider ,
@@ -474,12 +474,12 @@ class PlayerokBot :
 
         max_width =shutil .get_terminal_size ((80 ,20 )).columns -40 
         longest_line_len =0 
-        text =""
+        text =''
 
         if message .text is not None :text =message .text 
         elif message .file is not None :text =f"{Fore .LIGHTMAGENTA_EX }Изображение {Fore .WHITE }({message .file .url })"
 
-        for raw_line in text .split ("\n"):
+        for raw_line in text .split ('\n'):
             if not raw_line .strip ():
                 logger .info (f"{ACCENT_COLOR }│")
                 continue 
@@ -509,7 +509,7 @@ class PlayerokBot :
         logger .info (f" · Дата: {Fore .LIGHTWHITE_EX }{datetime .fromisoformat (deal .review .created_at ).strftime ('%d.%m.%Y %H:%M:%S')}")
         logger .info (f"{Fore .YELLOW }───────────────────────────────────────")
 
-    def log_deal_status_changed (self ,deal :ItemDeal ,status_frmtd :str ="Unknown"):
+    def log_deal_status_changed (self ,deal :ItemDeal ,status_frmtd :str ='Unknown'):
         logger .info (f"{Fore .WHITE }───────────────────────────────────────")
         logger .info (f"{Fore .WHITE }Статус сделки {Fore .LIGHTWHITE_EX }{deal .id } {Fore .WHITE }изменился:")
         logger .info (f" · Статус: {Fore .LIGHTWHITE_EX }{status_frmtd }")
@@ -530,32 +530,32 @@ class PlayerokBot :
     async def _on_playerok_bot_init (self ):
         def endless_loop ():
             while True :
-                balance =self .account .profile .balance .value if self .account .profile .balance is not None else "?"
+                balance =self .account .profile .balance .value if self .account .profile .balance is not None else '?'
                 set_title (f"Playerok Universal v{VERSION } | {self .account .username }: {balance }₽")
 
-                if sett .get ("config")!=self .config :
-                    self .config =sett .get ("config")
-                if sett .get ("messages")!=self .messages :
-                    self .messages =sett .get ("messages")
-                if sett .get ("custom_commands")!=self .custom_commands :
-                    self .custom_commands =sett .get ("custom_commands")
-                if sett .get ("auto_deliveries")!=self .auto_deliveries :
-                    self .auto_deliveries =sett .get ("auto_deliveries")
-                if sett .get ("auto_restore_items")!=self .auto_restore_items :
-                    self .auto_restore_items =sett .get ("auto_restore_items")
-                if sett .get ("auto_complete_deals")!=self .auto_complete_deals :
-                    self .auto_complete_deals =sett .get ("auto_complete_deals")
-                if sett .get ("auto_bump_items")!=self .auto_bump_items :
-                    self .auto_bump_items =sett .get ("auto_bump_items")
+                if sett .get ('config')!=self .config :
+                    self .config =sett .get ('config')
+                if sett .get ('messages')!=self .messages :
+                    self .messages =sett .get ('messages')
+                if sett .get ('custom_commands')!=self .custom_commands :
+                    self .custom_commands =sett .get ('custom_commands')
+                if sett .get ('auto_deliveries')!=self .auto_deliveries :
+                    self .auto_deliveries =sett .get ('auto_deliveries')
+                if sett .get ('auto_restore_items')!=self .auto_restore_items :
+                    self .auto_restore_items =sett .get ('auto_restore_items')
+                if sett .get ('auto_complete_deals')!=self .auto_complete_deals :
+                    self .auto_complete_deals =sett .get ('auto_complete_deals')
+                if sett .get ('auto_bump_items')!=self .auto_bump_items :
+                    self .auto_bump_items =sett .get ('auto_bump_items')
 
-                if data .get ("initialized_users")!=self .initialized_users :
-                    data .set ("initialized_users",self .initialized_users )
-                if data .get ("saved_items")!=self .saved_items :
-                    data .set ("saved_items",self .saved_items )
-                if data .get ("cached_orders")!=self .cached_orders :
-                    data .set ("cached_orders",self .cached_orders )
-                if data .get ("latest_events_times")!=self .latest_events_times :
-                    data .set ("latest_events_times",self .latest_events_times )
+                if data .get ('initialized_users')!=self .initialized_users :
+                    data .set ('initialized_users',self .initialized_users )
+                if data .get ('saved_items')!=self .saved_items :
+                    data .set ('saved_items',self .saved_items )
+                if data .get ('cached_orders')!=self .cached_orders :
+                    data .set ('cached_orders',self .cached_orders )
+                if data .get ('latest_events_times')!=self .latest_events_times :
+                    data .set ('latest_events_times',self .latest_events_times )
 
                 time .sleep (3 )
 
@@ -571,17 +571,17 @@ class PlayerokBot :
 
         def restore_expired_items_loop ():
             while True :
-                if self .config ["playerok"]["auto_restore_items"]["expired"]:
+                if self .config ['playerok']['auto_restore_items']['expired']:
                     self .restore_expired_items ()
                 time .sleep (45 )
 
         def bump_items_loop ():
             while True :
                 if (
-                self .config ["playerok"]["auto_bump_items"]["enabled"]
+                self .config ['playerok']['auto_bump_items']['enabled']
                 and self ._do_call_event (
-                self .latest_events_times ["auto_bump_items"],
-                self .config ["playerok"]["auto_bump_items"]["interval"]
+                self .latest_events_times ['auto_bump_items'],
+                self .config ['playerok']['auto_bump_items']['interval']
                 )
                 ):
                     self .bump_items ()
@@ -590,10 +590,10 @@ class PlayerokBot :
         def withdrawal_loop ():
             while True :
                 if (
-                self .config ["playerok"]["auto_withdrawal"]["enabled"]
+                self .config ['playerok']['auto_withdrawal']['enabled']
                 and self ._do_call_event (
-                self .latest_events_times ["auto_withdrawal"],
-                self .config ["playerok"]["auto_withdrawal"]["interval"]
+                self .latest_events_times ['auto_withdrawal'],
+                self .config ['playerok']['auto_withdrawal']['interval']
                 )
                 ):
                     self .request_withdrawal ()
@@ -617,24 +617,24 @@ class PlayerokBot :
 
         is_support_chat =event .chat .id in (self .account .system_chat_id ,self .account .support_chat_id )
         if (
-        self .config ["playerok"]["tg_logging"]["enabled"]
-        and (self .config ["playerok"]["tg_logging"]["events"]["new_user_message"]
-        or self .config ["playerok"]["tg_logging"]["events"]["new_system_message"])
+        self .config ['playerok']['tg_logging']['enabled']
+        and (self .config ['playerok']['tg_logging']['events']['new_user_message']
+        or self .config ['playerok']['tg_logging']['events']['new_system_message'])
         ):
             do =False 
             if (
-            self .config ["playerok"]["tg_logging"]["events"]["new_user_message"]
+            self .config ['playerok']['tg_logging']['events']['new_user_message']
             and not is_support_chat 
             )or (
-            self .config ["playerok"]["tg_logging"]["events"]["new_system_message"]
+            self .config ['playerok']['tg_logging']['events']['new_system_message']
             and is_support_chat 
             ):
                 do =True 
 
             if do :
                 text =f"<b>{event .message .user .username }:</b> "
-                text +=event .message .text or ""
-                text +=f'<b><a href="{event .message .file .url }">{event .message .file .filename }</a></b>'if event .message .file else ""
+                text +=event .message .text or ''
+                text +=f'<b><a href="{event .message .file .url }">{event .message .file .filename }</a></b>'if event .message .file else ''
                 asyncio .run_coroutine_threadsafe (
                 get_telegram_bot ().log_event (
                 text =log_text (
@@ -653,19 +653,19 @@ class PlayerokBot :
             if event .message .user .id not in self .initialized_users :
                 self .initialized_users .append (event .message .user .id )
 
-            if str (event .message .text ).lower ()in ("Commands","!commands"):
-                self .send_message (event .chat .id ,self .msg ("cmd_commands"))
+            if str (event .message .text ).lower ()in ('!teams','!commands'):
+                self .send_message (event .chat .id ,self .msg ('cmd_commands'))
 
-            elif str (event .message .text ).lower ()in ("seller","!seller"):
+            elif str (event .message .text ).lower ()in ('!seller','!seller'):
                 asyncio .run_coroutine_threadsafe (
                 get_telegram_bot ().call_seller (event .message .user .username ,event .chat .id ),
                 get_telegram_bot_loop ()
                 )
-                self .send_message (event .chat .id ,self .msg ("cmd_seller"))
+                self .send_message (event .chat .id ,self .msg ('cmd_seller'))
 
-            elif self .config ["playerok"]["custom_commands"]["enabled"]:
+            elif self .config ['playerok']['custom_commands']['enabled']:
                 if event .message .text .lower ()in [key .lower ()for key in self .custom_commands .keys ()]:
-                    msg ="\n".join (self .custom_commands [event .message .text ])
+                    msg ='\n'.join (self .custom_commands [event .message .text ])
                     self .send_message (event .chat .id ,msg )
 
     async def _on_new_review (self ,event :NewReviewEvent ):
@@ -675,8 +675,8 @@ class PlayerokBot :
         self .log_new_review (event .deal )
 
         if (
-        self .config ["playerok"]["tg_logging"]["enabled"]
-        and self .config ["playerok"]["tg_logging"]["events"]["new_review"]
+        self .config ['playerok']['tg_logging']['enabled']
+        and self .config ['playerok']['tg_logging']['events']['new_review']
         ):
             asyncio .run_coroutine_threadsafe (
             get_telegram_bot ().log_event (
@@ -695,7 +695,7 @@ class PlayerokBot :
             )
 
         self .send_message (event .chat .id ,self .msg (
-        "new_review",
+        'new_review',
         deal_id =event .deal .id ,
         deal_item_name =event .deal .item .name ,
         deal_item_price =event .deal .item .price ,
@@ -708,8 +708,8 @@ class PlayerokBot :
 
         self .log_new_problem (event .deal )
         if (
-        self .config ["playerok"]["tg_logging"]["enabled"]
-        and self .config ["playerok"]["tg_logging"]["events"]["new_problem"]
+        self .config ['playerok']['tg_logging']['enabled']
+        and self .config ['playerok']['tg_logging']['events']['new_problem']
         ):
             asyncio .run_coroutine_threadsafe (
             get_telegram_bot ().log_event (
@@ -733,18 +733,18 @@ class PlayerokBot :
         except :pass 
 
         self .cached_orders [event .deal .id ]={
-        "id":event .deal .id ,
-        "price":event .deal .item .price ,
-        "status":event .deal .status .name ,
-        "date":datetime .now (pytz .timezone ("Europe/Moscow")).isoformat (),
-        "item_id":event .deal .item .id ,
-        "item_name":event .deal .item .name 
+        'id':event .deal .id ,
+        'price':event .deal .item .price ,
+        'status':event .deal .status .name ,
+        'date':datetime .now (pytz .timezone ('Europe/Moscow')).isoformat (),
+        'item_id':event .deal .item .id ,
+        'item_name':event .deal .item .name 
         }
 
         self .log_new_deal (event .deal )
         if (
-        self .config ["playerok"]["tg_logging"]["enabled"]
-        and self .config ["playerok"]["tg_logging"]["events"]["new_deal"]
+        self .config ['playerok']['tg_logging']['enabled']
+        and self .config ['playerok']['tg_logging']['events']['new_deal']
         ):
             asyncio .run_coroutine_threadsafe (
             get_telegram_bot ().log_event (
@@ -762,8 +762,8 @@ class PlayerokBot :
             )
 
         self .send_message (event .chat .id ,self .msg (
-        "new_deal",
-        deal_item_name =(event .deal .item .name or "-"),
+        'new_deal',
+        deal_item_name =(event .deal .item .name or '-'),
         deal_item_price =event .deal .item .price 
         ))
 
@@ -773,21 +773,21 @@ class PlayerokBot :
         and not is_support_chat 
         ):
             self .send_message (event .chat .id ,self .msg (
-            "first_message",
+            'first_message',
             username =event .deal .user .username 
             ))
             self .initialized_users .append (event .deal .user .id )
 
-        if self .config ["playerok"]["auto_deliveries"]["enabled"]:
+        if self .config ['playerok']['auto_deliveries']['enabled']:
             for i ,auto_delivery in enumerate (list (self .auto_deliveries )):
-                for phrase in auto_delivery ["keyphrases"]:
+                for phrase in auto_delivery ['keyphrases']:
                     if (
-                    phrase .lower ()in (event .deal .item .name or "").lower ()
-                    or (event .deal .item .name or "").lower ()==phrase .lower ()
+                    phrase .lower ()in (event .deal .item .name or '').lower ()
+                    or (event .deal .item .name or '').lower ()==phrase .lower ()
                     ):
-                        piece =auto_delivery .get ("piece",False )
+                        piece =auto_delivery .get ('piece',False )
                         if piece :
-                            goods =auto_delivery .get ("goods",[])
+                            goods =auto_delivery .get ('goods',[])
                             try :good =goods [0 ]
                             except :break 
 
@@ -798,12 +798,12 @@ class PlayerokBot :
                                 f"{Fore .YELLOW }выдан товар {Fore .LIGHTYELLOW_EX }«{good }»{Fore .YELLOW }. "
                                 f"Остаток: {Fore .LIGHTYELLOW_EX }{len (goods )-1 }"
                                 )
-                                self .auto_deliveries [i ]["goods"].pop (goods .index (good ))
-                                sett .set ("auto_deliveries",self .auto_deliveries )
+                                self .auto_deliveries [i ]['goods'].pop (goods .index (good ))
+                                sett .set ('auto_deliveries',self .auto_deliveries )
                         else :
-                            msg =auto_delivery .get ("message","")
+                            msg =auto_delivery .get ('message','')
                             if msg :
-                                mess =self .send_message (event .chat .id ,"\n".join (msg ))
+                                mess =self .send_message (event .chat .id ,'\n'.join (msg ))
                                 if mess :
                                     logger .info (
                                     f"{Fore .YELLOW }Покупателю {Fore .LIGHTYELLOW_EX }{event .deal .user .username or '?'} "
@@ -812,7 +812,7 @@ class PlayerokBot :
 
                         break 
 
-        if self .config ["playerok"]["auto_complete_deals"]["enabled"]:
+        if self .config ['playerok']['auto_complete_deals']['enabled']:
             if not event .deal .item .name :
                 try :event .deal .item =self .account .get_item (event .deal .item .id )
                 except :return 
@@ -823,7 +823,7 @@ class PlayerokBot :
             or event .deal .item .name .lower ()==phrase .lower ()
             for phrase in included_item 
             )
-            for included_item in self .auto_complete_deals ["included"]
+            for included_item in self .auto_complete_deals ['included']
             )
             excluded =any (
             any (
@@ -831,14 +831,14 @@ class PlayerokBot :
             or event .deal .item .name .lower ()==phrase .lower ()
             for phrase in excluded_item 
             )
-            for excluded_item in self .auto_complete_deals ["excluded"]
+            for excluded_item in self .auto_complete_deals ['excluded']
             )
 
             if (
-            self .config ["playerok"]["auto_complete_deals"]["all"]
+            self .config ['playerok']['auto_complete_deals']['all']
             and not excluded 
             )or (
-            not self .config ["playerok"]["auto_complete_deals"]["all"]
+            not self .config ['playerok']['auto_complete_deals']['all']
             and included 
             ):
                 self .account .update_deal (event .deal .id ,ItemDealStatuses .SENT )
@@ -851,7 +851,7 @@ class PlayerokBot :
         if event .deal .user .id ==self .account .id :
             return 
 
-        if self .config ["playerok"]["auto_restore_items"]["sold"]:
+        if self .config ['playerok']['auto_restore_items']['sold']:
             if not event .deal .item .name :
                 event .deal .item =self .account .get_item (event .deal .item .id )
                 time .sleep (1 )
@@ -877,24 +877,24 @@ class PlayerokBot :
             return 
 
         if event .deal .status and event .deal .id in self .cached_orders :
-            self .cached_orders [event .deal .id ]["status"]=event .deal .status .name 
+            self .cached_orders [event .deal .id ]['status']=event .deal .status .name 
 
-        status_frmtd ="Unknown"
+        status_frmtd ='Unknown'
         if event .deal .status is ItemDealStatuses .PAID :
-            status_frmtd ="Paid"
+            status_frmtd ='Paid'
         elif event .deal .status is ItemDealStatuses .PENDING :
-            status_frmtd ="Waiting for shipment"
+            status_frmtd ='Waiting for shipment'
         elif event .deal .status is ItemDealStatuses .SENT :
-            status_frmtd ="Seller confirmed execution"
+            status_frmtd ='The seller confirmed fulfillment'
         elif event .deal .status is ItemDealStatuses .CONFIRMED :
-            status_frmtd ="Customer confirmed the deal"
+            status_frmtd ='The buyer confirmed the deal'
         elif event .deal .status is ItemDealStatuses .ROLLED_BACK :
-            status_frmtd ="Return"
+            status_frmtd ='Return'
 
         self .log_deal_status_changed (event .deal ,status_frmtd )
         if (
-        self .config ["playerok"]["tg_logging"]["enabled"]
-        and self .config ["playerok"]["tg_logging"]["events"]["deal_status_changed"]
+        self .config ['playerok']['tg_logging']['enabled']
+        and self .config ['playerok']['tg_logging']['events']['deal_status_changed']
         ):
             asyncio .run_coroutine_threadsafe (
             get_telegram_bot ().log_event (
@@ -908,28 +908,28 @@ class PlayerokBot :
 
         if event .deal .status is ItemDealStatuses .PENDING :
             self .send_message (event .chat .id ,self .msg (
-            "deal_pending",
+            'deal_pending',
             deal_id =event .deal .id ,
             deal_item_name =event .deal .item .name ,
             deal_item_price =event .deal .item .price 
             ))
         elif event .deal .status is ItemDealStatuses .SENT :
             self .send_message (event .chat .id ,self .msg (
-            "deal_sent",
+            'deal_sent',
             deal_id =event .deal .id ,
             deal_item_name =event .deal .item .name ,
             deal_item_price =event .deal .item .price 
             ))
         elif event .deal .status is ItemDealStatuses .CONFIRMED :
             self .send_message (event .chat .id ,self .msg (
-            "deal_confirmed",
+            'deal_confirmed',
             deal_id =event .deal .id ,
             deal_item_name =event .deal .item .name ,
             deal_item_price =event .deal .item .price 
             ))
         elif event .deal .status is ItemDealStatuses .ROLLED_BACK :
             self .send_message (event .chat .id ,self .msg (
-            "deal_refunded",
+            'deal_refunded',
             deal_id =event .deal .id ,
             deal_item_name =event .deal .item .name ,
             deal_item_price =event .deal .item .price 
@@ -937,9 +937,9 @@ class PlayerokBot :
 
 
     async def run_bot (self ):
-        logger .info ("")
+        logger .info ('')
         logger .info (f"{Fore .YELLOW }Playerok бот запущен и активен")
-        logger .info ("")
+        logger .info ('')
 
         logger .info (f"{Fore .YELLOW }───────────────────────────────────────")
         logger .info (f"{Fore .YELLOW }Информация об аккаунте:")
@@ -957,30 +957,30 @@ class PlayerokBot :
         logger .info (f" · Активные покупки: {Fore .LIGHTWHITE_EX }{profile .stats .deals .incoming .total -profile .stats .deals .incoming .finished }")
         logger .info (f"{Fore .YELLOW }───────────────────────────────────────")
 
-        proxy =self .config ["playerok"]["api"]["proxy"]
+        proxy =self .config ['playerok']['api']['proxy']
         if proxy :
-            if "@"in proxy :
-                user ,password =proxy .split ("@")[0 ].split (":")
-                ip ,port =proxy .split ("@")[1 ].split (":")
+            if '@'in proxy :
+                user ,password =proxy .split ('@')[0 ].split (':')
+                ip ,port =proxy .split ('@')[1 ].split (':')
             else :
                 user ,password =None ,None 
-                ip ,port =proxy .split (":")
+                ip ,port =proxy .split (':')
 
-            ip =".".join ([("*"*len (nums ))if i >=3 else nums for i ,nums in enumerate (ip .split ("."),start =1 )])
+            ip ='.'.join ([('*'*len (nums ))if i >=3 else nums for i ,nums in enumerate (ip .split ('.'),start =1 )])
             port =f"{port [:3 ]}**"
-            user =f"{user [:3 ]}*****"if user else "-"
-            password =f"{password [:3 ]}*****"if password else "-"
+            user =f"{user [:3 ]}*****"if user else '-'
+            password =f"{password [:3 ]}*****"if password else '-'
 
-            logger .info ("")
+            logger .info ('')
             logger .info (f"{Fore .YELLOW }───────────────────────────────────────")
             logger .info (f"{Fore .YELLOW }Информация о прокси:")
             logger .info (f" · IP: {Fore .LIGHTWHITE_EX }{ip }:{port }")
             logger .info (f" · Юзер: {Fore .LIGHTWHITE_EX }{user }")
             logger .info (f" · Пароль: {Fore .LIGHTWHITE_EX }{password }")
             logger .info (f"{Fore .YELLOW }───────────────────────────────────────")
-            logger .info ("")
+            logger .info ('')
 
-        add_bot_event_handler ("ON_PLAYEROK_BOT_INIT",PlayerokBot ._on_playerok_bot_init ,0 )
+        add_bot_event_handler ('ON_PLAYEROK_BOT_INIT',PlayerokBot ._on_playerok_bot_init ,0 )
         add_playerok_event_handler (EventTypes .NEW_MESSAGE ,PlayerokBot ._on_new_message ,0 )
         add_playerok_event_handler (EventTypes .NEW_REVIEW ,PlayerokBot ._on_new_review ,0 )
         add_playerok_event_handler (EventTypes .DEAL_HAS_PROBLEM ,PlayerokBot ._on_new_problem ,0 )
@@ -994,4 +994,4 @@ class PlayerokBot :
                 await call_playerok_event (event .type ,[self ,event ])
 
         run_async_in_thread (listener_loop )
-        await call_bot_event ("ON_PLAYEROK_BOT_INIT",[self ])
+        await call_bot_event ('ON_PLAYEROK_BOT_INIT',[self ])

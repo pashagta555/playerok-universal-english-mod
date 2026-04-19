@@ -2,325 +2,325 @@ from enum import Enum
 
 
 class EventTypes (Enum ):
-    "Types of Events."
+    'Event types.'
 
     CHAT_INITIALIZED =0 
-    "Chat initialized."
+    'Chat has been initialized.'
     NEW_MESSAGE =1 
-    "New message in chat."
+    'New message in chat.'
     NEW_DEAL =2 
-    "A new deal has been created (when the buyer paid for the product)."
+    'A new transaction was created (when the buyer paid for the goods).'
     NEW_REVIEW =3 
-    "New customer review."
+    'New review from a buyer.'
     DEAL_CONFIRMED =4 
-    "The deal is confirmed (the buyer confirmed receipt of the item)."
+    'The transaction is confirmed (the buyer has confirmed receipt of the item).'
     DEAL_CONFIRMED_AUTOMATICALLY =5 
-    "The deal is confirmed automatically (if the buyer does not exit for a long time)."
+    'The transaction is confirmed automatically (if the buyer does not contact for a long time).'
     DEAL_ROLLED_BACK =6 
-    "The seller has processed the return."
+    'The seller issued a refund of the transaction.'
     DEAL_HAS_PROBLEM =7 
-    "User reported an issue with the deal."
+    'A user reported a problem with the transaction.'
     DEAL_PROBLEM_RESOLVED =8 
-    "The problem in the deal is solved."
+    'The problem in the transaction has been resolved.'
     DEAL_STATUS_CHANGED =9 
-    "The deal status has been changed."
+    'The transaction status has been changed.'
     ITEM_PAID =10 
-    "The user paid for the item."
+    'The user paid for the item.'
     ITEM_SENT =11 
-    "The item has been sent (the seller confirmed the transaction)."
+    'The item has been shipped (the seller has confirmed the completion of the transaction).'
 
 
 class ItemLogEvents (Enum ):
-    "Events of the item's logs."
+    'Item log events.'
 
     PAID =0 
-    "The seller confirmed the transaction."
+    'The seller confirmed the completion of the transaction.'
     SENT =1 
-    "Transaction item has been sent."
+    'The transaction item has been sent.'
     DEAL_CONFIRMED =2 
-    "The deal is confirmed."
+    'The deal is confirmed.'
     DEAL_ROLLED_BACK =3 
-    "The deal is returned."
+    'The transaction has been returned.'
     PROBLEM_REPORTED =4 
-    "A complaint has been filed (a problem has been created)."
+    'A complaint has been sent (a problem has been created).'
     PROBLEM_RESOLVED =5 
-    "The problem is solved."
+    'Problem solved.'
 
 
 class TransactionOperations (Enum ):
-    "Operations Transactions."
+    'Transaction operations.'
 
     DEPOSIT =0 
-    "Replenishment."
+    'Replenishment.'
     BUY =1 
-    "Payment of goods."
+    'Payment for goods.'
     SELL =2 
-    "Sale of goods."
+    'Sale of goods.'
     ITEM_DEFAULT_PRIORITY =3 
-    "Payment for free priority."
+    'Pay for free priority.'
     ITEM_PREMIUM_PRIORITY =4 
-    "Payment of premium priority."
+    'Premium priority payment.'
     WITHDRAW =5 
-    "Payment."
+    'Pay.'
     MANUAL_BALANCE_INCREASE =6 
-    "Posting to account balance."
+    'Credit to account balance.'
     MANUAL_BALANCE_DECREASE =7 
-    "Cancellation of account balance."
+    'Write-off from account balance.'
     REFERRAL_BONUS =8 
-    "Invitation to a friend (referral)."
+    'Invite a friend (referral).'
     STEAM_DEPOSIT =9 
-    "Payment of Steam refill."
+    'Payment for Steam replenishment.'
 
 
 class TransactionDirections (Enum ):
-    "Operations transactions."
+    'Transaction operations.'
 
     IN =0 
-    "Assessment."
+    'Accrual.'
     OUT =1 
-    "Cancellation."
+    'Magazine.'
 
 
 class TransactionStatuses (Enum ):
-    "Transaction statuses."
+    'Transaction statuses.'
 
     PENDING =0 
-    "In anticipation (transaction is paid for, but money has not yet been credited to the account)."
+    'Pending (the transaction has been paid, but the money for it has not yet been credited to the balance).'
     PROCESSING =1 
-    "In frost."
+    'In the freezer.'
     CONFIRMED =2 
-    "Transaction deal is confirmed."
+    'The transaction transaction is confirmed.'
     ROLLED_BACK =3 
-    "Return of transaction deal."
+    'Return on transaction transaction.'
     FAILED =4 
-    "Transaction error."
+    'Transaction error.'
 
 
 class TransactionPaymentMethodIds (Enum ):
-    "Methods of Transaction Identification."
+    'ID of transaction methods.'
 
     MIR =0 
-    "With the help of bank cards MIR."
+    'Using MIR bank cards.'
     VISA_MASTERCARD =1 
-    "With the help of bank cards VISA/Mastercard."
+    'Using VISA/Mastercard bank cards.'
     ERIP =2 
-    "Using ERP."
+    'With the help of ERIP.'
 
 
 class TransactionProviderDirections (Enum ):
-    "Transaction provider directions."
+    'Transaction Provider Directions.'
 
     IN =0 
-    "Replenishment."
+    'Replenishment.'
     OUT =1 
-    "Output."
+    'Conclusion.'
 
 
 class TransactionProviderIds (Enum ):
-    "ID providers of transaction."
+    'Transaction providers ID.'
 
     LOCAL =0 
-    "With the help of account balance."
+    'Using your account balance.'
     SBP =1 
-    "With the help of SBP."
+    'Using SBP.'
     BANK_CARD_RU =2 
-    "With the help of Russia's bank card."
+    'Using a Russian bank card.'
     BANK_CARD_BY =3 
-    "With the help of Belarusian bank card."
+    'Using a Belarusian bank card.'
     BANK_CARD =4 
-    "With foreign bank card."
+    'Using a foreign bank card.'
     YMONEY =5 
-    "Using Yandex Money."
+    'With the help of YuMoney.'
     USDT =6 
-    "Cryptocurrency USDT (TRC20)."
+    'Cryptocurrency USDT (TRC20).'
     PENDING_INCOME =7 
-    "Replenishment from frozen funds."
+    'Replenishment from frozen funds.'
 
 
 class BankCardTypes (Enum ):
-    "Types of Bank Cards."
+    'Types of bank cards.'
 
     MIR =0 
-    "Banking card MIR."
+    'Bank card MIR.'
     VISA =1 
-    "Banking card Visa."
+    'VISA bank card.'
     MASTERCARD =2 
-    "Banking card Mastercard."
+    'Mastercard bank card.'
 
 
 class ItemDealStatuses (Enum ):
-    "Deal Status."
+    'Transaction status.'
 
     PAID =0 
-    "Deal paid."
+    'The deal has been paid.'
     PENDING =1 
-    "Deal awaiting shipment of goods."
+    'Transaction pending shipment of goods.'
     SENT =2 
-    "The seller confirmed the deal completion."
+    'The seller confirmed the completion of the transaction.'
     CONFIRMED =3 
-    "The deal is confirmed."
+    'The deal is confirmed.'
     CONFIRMED_AUTOMATICALLY =4 
-    "Deal confirmed automatically."
+    'The transaction is confirmed automatically.'
     ROLLED_BACK =5 
-    "The deal is returned."
+    'The transaction has been returned.'
 
 
 class ItemDealDirections (Enum ):
-    "Directions of the deal."
+    'Transaction directions.'
 
     IN =0 
-    "Purchase."
+    'Purchase.'
     OUT =1 
-    "Sale."
+    'Sale.'
 
 
 class GameTypes (Enum ):
-    "Types of games."
+    'Types of games.'
 
     GAME =0 
-    "Game."
+    'A game.'
     APPLICATION =1 
-    "Application."
+    'Application.'
 
 
 class UserTypes (Enum ):
-    "Types of Users."
+    'User types.'
 
     USER =0 
-    "Average user."
+    'Regular user.'
     MODERATOR =1 
-    "Moderator."
+    'Moderator.'
     BOT =2 
-    "Bot."
+    'Bot.'
 
 
 class ChatTypes (Enum ):
-    "Types of chats."
+    'Types of chats.'
 
     PM =0 
-    "Private chat (dialog with the user)."
+    'Private chat (dialogue with the user).'
     NOTIFICATIONS =1 
-    "Notifications chat."
+    'Chat notifications.'
     SUPPORT =2 
-    "Support Chat."
+    'Support chat.'
 
 
 class ChatStatuses (Enum ):
-    "Chat statuses."
+    'Chat statuses.'
 
     NEW =0 
-    "New chat (there is not a single read message in it)."
+    'New chat (there is not a single read message in it).'
     FINISHED =1 
-    "Chat is available, in it you can now write."
+    'The chat is available, you can now chat in it.'
 
 
 class ChatMessageButtonTypes (Enum ):
-    "Types of message buttons."
+    'Types of message buttons.'
 
     # TODO: Finish all types of message buttons
     REDIRECT =0 
-    "Redirects to the link."
+    'Redirects to a link.'
     LOTTERY =1 
-    "Redirects to a raffle/action."
+    'Redirects to a draw/promotion.'
 
 
 class ItemStatuses (Enum ):
-    "Item statuses."
+    'Item statuses.'
 
     PENDING_APPROVAL =0 
-    "Awaits adoption (under moderation check)."
+    'Awaiting acceptance (under moderation review).'
     PENDING_MODERATION =1 
-    "Awaits verification of changes by moderation."
+    'Awaiting review of changes by moderation.'
     APPROVED =2 
-    "Active (moderated)."
+    'Active (accepted by moderation).'
     DECLINED =3 
-    "Rejected."
+    'Rejected.'
     BLOCKED =4 
-    "Locked."
+    'Locked.'
     EXPIRED =5 
-    "Expiring."
+    'Wanted.'
     SOLD =6 
-    "Sold."
+    'Sold.'
     DRAFT =7 
-    "Draft (if the item is not put up for sale)."
+    'Draft (if the item is not for sale).'
 
 
 class ReviewStatuses (Enum ):
-    "Review statuses."
+    'Review statuses.'
 
     APPROVED =0 
-    "Active."
+    'Active.'
     DELETED =1 
-    "Remote."
+    'Remote.'
 
 
 class SortDirections (Enum ):
-    "Types of sorting."
+    'Types of sorting.'
 
     DESC =0 
-    "By decreasing."
+    'Descending.'
     ASC =1 
-    "In ascending order."
+    'Ascending.'
 
 
 class PriorityTypes (Enum ):
-    "Types of Priorities."
+    'Types of priorities.'
 
     DEFAULT =0 
-    "Standard priority."
+    'Standard priority.'
     PREMIUM =1 
-    "Premium priority."
+    'Premium priority.'
 
 
 class GameCategoryAgreementIconTypes (Enum ):
-    "Types of icons of agreement for a customer in a specific category."
+    'Types of buyer agreement icons in a specific category.'
 
-    To Do: Finish all types of icon agreements.
+    # TODO: Complete all types of agreement icons
     RESTRICTION =0 
-    "Limitation."
+    'Limitation.'
     CONFIRMATION =0 
-    "Confirmation."
+    'Confirmation.'
 
 
 class GameCategoryOptionTypes (Enum ):
-    "Types of category options."
+    'Category option types.'
 
-    # TODO: Finish all types of options for category
+    # TODO: Complete all types of category options
     SELECTOR =0 
-    "Choice type."
+    'Type selection.'
     SWITCH =1 
-    "Switcher."
+    'Switch.'
 
 
 class GameCategoryDataFieldTypes (Enum ):
-    "Types of fields with data category game."
+    'Types of game category data fields.'
 
     ITEM_DATA =0 
-    "Data subjects."
+    'Item data.'
     OBTAINING_DATA =1 
-    "Received data (after purchasing the item)."
+    'Data received (after purchasing an item).'
 
 
 class GameCategoryDataFieldInputTypes (Enum ):
-    "Types of input fields with data categories for a game."
+    'Types of input fields with game category data.'
 
-    To Do: Finish all types of input date fields
+    # TODO: Complete all types of input data fields
     INPUT =0 
-    "Entered value (entered by the customer when ordering an item)."
+    'Entered value (entered by the buyer when checking out the item).'
 
 
 class GameCategoryAutoConfirmPeriods (Enum ):
-    "Periods of automatic deal confirmation in the game category."
+    'Periods of automatic confirmation of transactions in the game category.'
 
-    # TODO: Complete all auto-authentication periods
+    # TODO: Complete all auto-confirmation periods
     SEVEN_DEYS =0 
-    "Seven days."
+    'Seven days.'
 
 
 class GameCategoryInstructionTypes (Enum ):
-    "Types of instructions in category."
+    'Types of category instructions.'
 
     FOR_SELLER =0 
-    "For the seller."
+    'For the seller.'
     FOR_BUYER =1 
-    "For the buyer."
+    'For the buyer.'

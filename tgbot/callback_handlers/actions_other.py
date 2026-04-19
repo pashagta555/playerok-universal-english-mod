@@ -21,7 +21,7 @@ from .page import callback_module_page
 router =Router ()
 
 
-@router .callback_query (F .data =="destroy")
+@router .callback_query (F .data =='destroy')
 async def callback_back (callback :CallbackQuery ):
     await callback .message .delete ()
 
@@ -32,7 +32,7 @@ async def callback_delete_included_restore_item (callback :CallbackQuery ,callba
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
         index =callback_data .index 
         if index is None :
@@ -42,9 +42,9 @@ async def callback_delete_included_restore_item (callback :CallbackQuery ,callba
             state 
             )
 
-        auto_restore_items =sett .get ("auto_restore_items")
-        auto_restore_items ["included"].pop (index )
-        sett .set ("auto_restore_items",auto_restore_items )
+        auto_restore_items =sett .get ('auto_restore_items')
+        auto_restore_items ['included'].pop (index )
+        sett .set ('auto_restore_items',auto_restore_items )
 
         return await callback_included_restore_items_pagination (
         callback ,
@@ -66,7 +66,7 @@ async def callback_delete_excluded_restore_item (callback :CallbackQuery ,callba
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
         index =callback_data .index 
         if index is None :
@@ -76,9 +76,9 @@ async def callback_delete_excluded_restore_item (callback :CallbackQuery ,callba
             state 
             )
 
-        auto_restore_items =sett .get ("auto_restore_items")
-        auto_restore_items ["excluded"].pop (index )
-        sett .set ("auto_restore_items",auto_restore_items )
+        auto_restore_items =sett .get ('auto_restore_items')
+        auto_restore_items ['excluded'].pop (index )
+        sett .set ('auto_restore_items',auto_restore_items )
 
         return await callback_excluded_restore_items_pagination (
         callback ,
@@ -100,7 +100,7 @@ async def callback_delete_included_complete_deal (callback :CallbackQuery ,callb
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
         index =callback_data .index 
         if index is None :
@@ -110,9 +110,9 @@ async def callback_delete_included_complete_deal (callback :CallbackQuery ,callb
             state 
             )
 
-        auto_complete_deals =sett .get ("auto_complete_deals")
-        auto_complete_deals ["included"].pop (index )
-        sett .set ("auto_complete_deals",auto_complete_deals )
+        auto_complete_deals =sett .get ('auto_complete_deals')
+        auto_complete_deals ['included'].pop (index )
+        sett .set ('auto_complete_deals',auto_complete_deals )
 
         return await callback_included_complete_deals_pagination (
         callback ,
@@ -134,7 +134,7 @@ async def callback_delete_excluded_complete_deal (callback :CallbackQuery ,callb
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
         index =callback_data .index 
         if index is None :
@@ -144,9 +144,9 @@ async def callback_delete_excluded_complete_deal (callback :CallbackQuery ,callb
             state 
             )
 
-        auto_complete_deals =sett .get ("auto_complete_deals")
-        auto_complete_deals ["excluded"].pop (index )
-        sett .set ("auto_complete_deals",auto_complete_deals )
+        auto_complete_deals =sett .get ('auto_complete_deals')
+        auto_complete_deals ['excluded'].pop (index )
+        sett .set ('auto_complete_deals',auto_complete_deals )
 
         return await callback_excluded_complete_deals_pagination (
         callback ,
@@ -168,7 +168,7 @@ async def callback_delete_included_bump_item (callback :CallbackQuery ,callback_
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
         index =callback_data .index 
         if index is None :
@@ -178,9 +178,9 @@ async def callback_delete_included_bump_item (callback :CallbackQuery ,callback_
             state 
             )
 
-        auto_bump_items =sett .get ("auto_bump_items")
-        auto_bump_items ["included"].pop (index )
-        sett .set ("auto_bump_items",auto_bump_items )
+        auto_bump_items =sett .get ('auto_bump_items')
+        auto_bump_items ['included'].pop (index )
+        sett .set ('auto_bump_items',auto_bump_items )
 
         return await callback_included_bump_items_pagination (
         callback ,
@@ -202,7 +202,7 @@ async def callback_delete_excluded_bump_item (callback :CallbackQuery ,callback_
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
         index =callback_data .index 
         if index is None :
@@ -212,9 +212,9 @@ async def callback_delete_excluded_bump_item (callback :CallbackQuery ,callback_
             state 
             )
 
-        auto_bump_items =sett .get ("auto_bump_items")
-        auto_bump_items ["excluded"].pop (index )
-        sett .set ("auto_bump_items",auto_bump_items )
+        auto_bump_items =sett .get ('auto_bump_items')
+        auto_bump_items ['excluded'].pop (index )
+        sett .set ('auto_bump_items',auto_bump_items )
 
         return await callback_excluded_bump_items_pagination (
         callback ,
@@ -239,7 +239,7 @@ async def callback_remember_username (callback :CallbackQuery ,callback_data :ca
 
     await state .update_data (username =username )
 
-    if do =="send_mess":
+    if do =='send_mess':
         await state .set_state (states .ActionsStates .waiting_for_message_content )
         await throw_float_message (
         state =state ,
@@ -260,21 +260,21 @@ async def callback_remember_deal_id (callback :CallbackQuery ,callback_data :cal
 
     await state .update_data (deal_id =deal_id )
 
-    if do =="refund":
+    if do =='refund':
         await throw_float_message (
         state =state ,
         message =callback .message ,
         text =templ .do_action_text (f'📦✔️ Подтвердите <b>возврат</b> <a href="https://playerok.com/deal/{deal_id }">сделки</a>:'),
-        reply_markup =templ .confirm_kb (confirm_cb ="refund_deal",cancel_cb ="destroy"),
+        reply_markup =templ .confirm_kb (confirm_cb ='refund_deal',cancel_cb ='destroy'),
         callback =callback ,
         send =True 
         )
-    if do =="complete":
+    if do =='complete':
         await throw_float_message (
         state =state ,
         message =callback .message ,
         text =templ .do_action_text (f'☑️✔️ Подтвердите <b>выполнение</b> <a href="https://playerok.com/deal/{deal_id }">сделки</a>:'),
-        reply_markup =templ .confirm_kb (confirm_cb ="complete_deal",cancel_cb ="destroy"),
+        reply_markup =templ .confirm_kb (confirm_cb ='complete_deal',cancel_cb ='destroy'),
         callback =callback ,
         send =True 
         )
@@ -285,14 +285,14 @@ async def callback_select_bank_card (callback :CallbackQuery ,callback_data :cal
     await state .set_state (None )
     card_id =callback_data .id 
 
-    config =sett .get ("config")
-    config ["playerok"]["auto_withdrawal"]["credentials_type"]="card"
-    config ["playerok"]["auto_withdrawal"]["card_id"]=card_id 
-    sett .set ("config",config )
+    config =sett .get ('config')
+    config ['playerok']['auto_withdrawal']['credentials_type']='card'
+    config ['playerok']['auto_withdrawal']['card_id']=card_id 
+    sett .set ('config',config )
 
     return await callback_settings_navigation (
     callback ,
-    calls .SettingsNavigation (to ="withdrawal"),
+    calls .SettingsNavigation (to ='withdrawal'),
     state 
     )
 
@@ -308,7 +308,7 @@ async def callback_select_sbp_bank (callback :CallbackQuery ,callback_data :call
     state =state ,
     message =callback .message ,
     text =templ .settings_withdrawal_sbp_float_text (f"📲 Введите <b>номер телефона</b>, на который нужно будет совершать вывод:"),
-    reply_markup =templ .back_kb (calls .SettingsNavigation (to ="withdrawal").pack ())
+    reply_markup =templ .back_kb (calls .SettingsNavigation (to ='withdrawal').pack ())
     )
 
 
@@ -317,7 +317,7 @@ async def callback_set_new_deliv_piece (callback :CallbackQuery ,callback_data :
     await state .set_state (None )
 
     data =await state .get_data ()
-    last_page =data .get ("last_page",0 )
+    last_page =data .get ('last_page',0 )
 
     value =callback_data .val 
     await state .update_data (new_auto_delivery_piece =value )
@@ -346,7 +346,7 @@ async def callback_set_new_deliv_piece (callback :CallbackQuery ,callback_data :
         )
 
 
-@router .callback_query (F .data =="refund_deal")
+@router .callback_query (F .data =='refund_deal')
 async def callback_refund_deal (callback :CallbackQuery ,state :FSMContext ):
     await state .set_state (None )
 
@@ -354,7 +354,7 @@ async def callback_refund_deal (callback :CallbackQuery ,state :FSMContext ):
     plbot =get_playerok_bot ()
 
     data =await state .get_data ()
-    deal_id =data .get ("deal_id")
+    deal_id =data .get ('deal_id')
 
     plbot .playerok_account .update_deal (deal_id ,ItemDealStatuses .ROLLED_BACK )
     await throw_float_message (
@@ -365,7 +365,7 @@ async def callback_refund_deal (callback :CallbackQuery ,state :FSMContext ):
     )
 
 
-@router .callback_query (F .data =="complete_deal")
+@router .callback_query (F .data =='complete_deal')
 async def callback_complete_deal (callback :CallbackQuery ,state :FSMContext ):
     await state .set_state (None )
 
@@ -373,7 +373,7 @@ async def callback_complete_deal (callback :CallbackQuery ,state :FSMContext ):
 
     plbot =get_playerok_bot ()
     data =await state .get_data ()
-    deal_id =data .get ("deal_id")
+    deal_id =data .get ('deal_id')
 
     plbot .playerok_account .update_deal (deal_id ,ItemDealStatuses .SENT )
     await throw_float_message (
@@ -384,7 +384,7 @@ async def callback_complete_deal (callback :CallbackQuery ,state :FSMContext ):
     )
 
 
-@router .callback_query (F .data =="bump_items")
+@router .callback_query (F .data =='bump_items')
 async def callback_bump_items (callback :CallbackQuery ,state :FSMContext ):
     try :
         await state .set_state (None )
@@ -393,7 +393,7 @@ async def callback_bump_items (callback :CallbackQuery ,state :FSMContext ):
         state =state ,
         message =callback .message ,
         text =templ .events_float_text (f"⬆️ Идёт <b>поднятие предметов</b>, ожидайте (см. консоль)..."),
-        reply_markup =templ .back_kb (calls .MenuNavigation (to ="events").pack ())
+        reply_markup =templ .back_kb (calls .MenuNavigation (to ='events').pack ())
         )
 
         from plbot .playerokbot import get_playerok_bot 
@@ -403,18 +403,18 @@ async def callback_bump_items (callback :CallbackQuery ,state :FSMContext ):
         state =state ,
         message =callback .message ,
         text =templ .events_float_text (f"⬆️✅ <b>Предметы</b> были успешно подняты"),
-        reply_markup =templ .back_kb (calls .MenuNavigation (to ="events").pack ())
+        reply_markup =templ .back_kb (calls .MenuNavigation (to ='events').pack ())
         )
     except Exception as e :
         await throw_float_message (
         state =state ,
         message =callback .message ,
         text =templ .events_float_text (e ),
-        reply_markup =templ .back_kb (calls .MenuNavigation (to ="events").pack ())
+        reply_markup =templ .back_kb (calls .MenuNavigation (to ='events').pack ())
         )
 
 
-@router .callback_query (F .data =="request_withdrawal")
+@router .callback_query (F .data =='request_withdrawal')
 async def callback_request_withdrawal (callback :CallbackQuery ,state :FSMContext ):
     try :
         await state .set_state (None )
@@ -423,7 +423,7 @@ async def callback_request_withdrawal (callback :CallbackQuery ,state :FSMContex
         state =state ,
         message =callback .message ,
         text =templ .events_float_text (f"💸 Создаю <b>транзакцию на вывод средств</b>, ожидайте (см. консоль)..."),
-        reply_markup =templ .back_kb (calls .MenuNavigation (to ="events").pack ())
+        reply_markup =templ .back_kb (calls .MenuNavigation (to ='events').pack ())
         )
 
         from plbot .playerokbot import get_playerok_bot 
@@ -434,182 +434,182 @@ async def callback_request_withdrawal (callback :CallbackQuery ,state :FSMContex
             state =state ,
             message =callback .message ,
             text =templ .events_float_text (f"✅ <b>Транзакция на вывод средств</b> была успешно создана"),
-            reply_markup =templ .back_kb (calls .MenuNavigation (to ="events").pack ())
+            reply_markup =templ .back_kb (calls .MenuNavigation (to ='events').pack ())
             )
         else :
             await throw_float_message (
             state =state ,
             message =callback .message ,
             text =templ .events_float_text (f"❌ Не удалось создать <b>транзакцию на вывод средств</b> (см. консоль на наличие ошибок)"),
-            reply_markup =templ .back_kb (calls .MenuNavigation (to ="events").pack ())
+            reply_markup =templ .back_kb (calls .MenuNavigation (to ='events').pack ())
             )
     except Exception as e :
         await throw_float_message (
         state =state ,
         message =callback .message ,
         text =templ .events_float_text (e ),
-        reply_markup =templ .back_kb (calls .MenuNavigation (to ="events").pack ())
+        reply_markup =templ .back_kb (calls .MenuNavigation (to ='events').pack ())
         )
 
 
-@router .callback_query (F .data =="clean_fp_proxy")
+@router .callback_query (F .data =='clean_fp_proxy')
 async def callback_clean_fp_proxy (callback :CallbackQuery ,state :FSMContext ):
     await state .set_state (None )
 
-    config =sett .get ("config")
-    config ["playerok"]["api"]["proxy"]=""
-    sett .set ("config",config )
+    config =sett .get ('config')
+    config ['playerok']['api']['proxy']=''
+    sett .set ('config',config )
 
     return await callback_settings_navigation (
     callback ,
-    calls .SettingsNavigation (to ="conn"),
+    calls .SettingsNavigation (to ='conn'),
     state 
     )
 
 
-@router .callback_query (F .data =="clean_tg_proxy")
+@router .callback_query (F .data =='clean_tg_proxy')
 async def callback_clean_tg_proxy (callback :CallbackQuery ,state :FSMContext ):
     await state .set_state (None )
 
-    config =sett .get ("config")
-    config ["telegram"]["api"]["proxy"]=""
-    sett .set ("config",config )
+    config =sett .get ('config')
+    config ['telegram']['api']['proxy']=''
+    sett .set ('config',config )
 
     return await callback_settings_navigation (
     callback ,
-    calls .SettingsNavigation (to ="conn"),
+    calls .SettingsNavigation (to ='conn'),
     state 
     )
 
 
-@router .callback_query (F .data =="clean_tg_logging_chat_id")
+@router .callback_query (F .data =='clean_tg_logging_chat_id')
 async def callback_clean_tg_logging_chat_id (callback :CallbackQuery ,state :FSMContext ):
     await state .set_state (None )
 
-    config =sett .get ("config")
-    config ["playerok"]["tg_logging"]["chat_id"]=""
-    sett .set ("config",config )
+    config =sett .get ('config')
+    config ['playerok']['tg_logging']['chat_id']=''
+    sett .set ('config',config )
 
     return await callback_settings_navigation (
     callback ,
-    calls .SettingsNavigation (to ="logger"),
+    calls .SettingsNavigation (to ='logger'),
     state 
     )
 
 
-@router .callback_query (F .data =="send_new_included_restore_items_keyphrases_file")
+@router .callback_query (F .data =='send_new_included_restore_items_keyphrases_file')
 async def callback_send_new_included_restore_items_keyphrases_file (callback :CallbackQuery ,state :FSMContext ):
     data =await state .get_data ()
-    last_page =data .get ("last_page",0 )
+    last_page =data .get ('last_page',0 )
 
     await state .set_state (states .RestoreItemsStates .waiting_for_new_included_restore_items_keyphrases_file )
     await throw_float_message (
     state =state ,
     message =callback .message ,
     text =templ .settings_new_restore_included_float_text (
-    "Send a <b>.txt</b> file with <b>key phrases</b>, one record per line"
-    "for each product specified through commas, for example, "samp account with all data""
+    '📄 Send a <b>.txt</b> file with <b>key phrases</b>, one entry per line'
+    '(for each product they are indicated separated by commas, for example, “samp account, with all data”)'
     ),
     reply_markup =templ .back_kb (calls .IncludedRestoreItemsPagination (page =last_page ).pack ())
     )
 
 
-@router .callback_query (F .data =="send_new_excluded_restore_items_keyphrases_file")
+@router .callback_query (F .data =='send_new_excluded_restore_items_keyphrases_file')
 async def callback_send_new_excluded_restore_items_keyphrases_file (callback :CallbackQuery ,state :FSMContext ):
     data =await state .get_data ()
-    last_page =data .get ("last_page",0 )
+    last_page =data .get ('last_page',0 )
 
     await state .set_state (states .RestoreItemsStates .waiting_for_new_excluded_restore_items_keyphrases_file )
     await throw_float_message (
     state =state ,
     message =callback .message ,
     text =templ .settings_new_restore_excluded_float_text (
-    "Send a .txt file with key phrases, one record per line"
-    "for each product indicated through commas, for example, "samp account with all data""
+    '📄 Send a <b>.txt</b> file with <b>key phrases</b>, one entry per line'
+    '(for each product they are indicated separated by commas, for example, “samp account, with all data”)'
     ),
     reply_markup =templ .back_kb (calls .ExcludedRestoreItemsPagination (page =last_page ).pack ())
     )
 
 
-@router .callback_query (F .data =="send_new_included_complete_deals_keyphrases_file")
+@router .callback_query (F .data =='send_new_included_complete_deals_keyphrases_file')
 async def callback_send_new_included_complete_deals_keyphrases_file (callback :CallbackQuery ,state :FSMContext ):
     data =await state .get_data ()
-    last_page =data .get ("last_page",0 )
+    last_page =data .get ('last_page',0 )
 
     await state .set_state (states .CompleteDealsStates .waiting_for_new_included_complete_deals_keyphrases_file )
     await throw_float_message (
     state =state ,
     message =callback .message ,
     text =templ .settings_new_complete_included_float_text (
-    "Send a <b>.txt</b> file with <b>key phrases</b>, one entry per line"
-    "for each product specify through commas for example "samp account with all data""
+    '📄 Send a <b>.txt</b> file with <b>key phrases</b>, one entry per line'
+    '(for each product they are indicated separated by commas, for example, “samp account, with all data”)'
     ),
     reply_markup =templ .back_kb (calls .IncludedCompleteDealsPagination (page =last_page ).pack ())
     )
 
 
-@router .callback_query (F .data =="send_new_excluded_complete_deals_keyphrases_file")
+@router .callback_query (F .data =='send_new_excluded_complete_deals_keyphrases_file')
 async def callback_send_new_excluded_complete_deals_keyphrases_file (callback :CallbackQuery ,state :FSMContext ):
     data =await state .get_data ()
-    last_page =data .get ("last_page",0 )
+    last_page =data .get ('last_page',0 )
 
     await state .set_state (states .CompleteDealsStates .waiting_for_new_excluded_complete_deals_keyphrases_file )
     await throw_float_message (
     state =state ,
     message =callback .message ,
     text =templ .settings_new_complete_excluded_float_text (
-    "Send a <b>.txt</b> file with <b>key phrases</b>, one record per line"
-    "for each product specify through commas for example "samp account with all data""
+    '📄 Send a <b>.txt</b> file with <b>key phrases</b>, one entry per line'
+    '(for each product they are indicated separated by commas, for example, “samp account, with all data”)'
     ),
     reply_markup =templ .back_kb (calls .ExcludedCompleteDealsPagination (page =last_page ).pack ())
     )
 
 
-@router .callback_query (F .data =="send_new_included_bump_items_keyphrases_file")
+@router .callback_query (F .data =='send_new_included_bump_items_keyphrases_file')
 async def callback_send_new_included_bump_items_keyphrases_file (callback :CallbackQuery ,state :FSMContext ):
     data =await state .get_data ()
-    last_page =data .get ("last_page",0 )
+    last_page =data .get ('last_page',0 )
 
     await state .set_state (states .BumpItemsStates .waiting_for_new_included_bump_items_keyphrases_file )
     await throw_float_message (
     state =state ,
     message =callback .message ,
     text =templ .settings_new_bump_included_float_text (
-    "Send a <b>.txt</b> file with <b>key phrases</b>, one per line"
-    "for each product specify through commas for example "samp account with all data""
+    '📄 Send a <b>.txt</b> file with <b>key phrases</b>, one entry per line'
+    '(for each product they are indicated separated by commas, for example, “samp account, with all data”)'
     ),
     reply_markup =templ .back_kb (calls .IncludedBumpItemsPagination (page =last_page ).pack ())
     )
 
 
-@router .callback_query (F .data =="send_new_excluded_bump_items_keyphrases_file")
+@router .callback_query (F .data =='send_new_excluded_bump_items_keyphrases_file')
 async def callback_send_new_excluded_bump_items_keyphrases_file (callback :CallbackQuery ,state :FSMContext ):
     data =await state .get_data ()
-    last_page =data .get ("last_page",0 )
+    last_page =data .get ('last_page',0 )
 
     await state .set_state (states .BumpItemsStates .waiting_for_new_excluded_bump_items_keyphrases_file )
     await throw_float_message (
     state =state ,
     message =callback .message ,
     text =templ .settings_new_bump_excluded_float_text (
-    "Send a <b>.txt</b> file with <b>key phrases</b>, one record per line"
-    "for each product specified with commas for example "samp account with all data""
+    '📄 Send a <b>.txt</b> file with <b>key phrases</b>, one entry per line'
+    '(for each product they are indicated separated by commas, for example, “samp account, with all data”)'
     ),
     reply_markup =templ .back_kb (calls .ExcludedBumpItemsPagination (page =last_page ).pack ())
     )
 
 
-@router .callback_query (F .data =="add_new_custom_command")
+@router .callback_query (F .data =='add_new_custom_command')
 async def callback_add_new_custom_command (callback :CallbackQuery ,state :FSMContext ):
     try :
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
-        custom_commands =sett .get ("custom_commands")
-        command =data .get ("new_custom_command")
-        answer =data .get ("new_custom_command_answer")
+        custom_commands =sett .get ('custom_commands')
+        command =data .get ('new_custom_command')
+        answer =data .get ('new_custom_command_answer')
 
         if not all ((command ,answer )):
             return await callback_custom_commands_pagination (
@@ -619,7 +619,7 @@ async def callback_add_new_custom_command (callback :CallbackQuery ,state :FSMCo
             )
 
         custom_commands [command ]=answer .splitlines ()
-        sett .set ("custom_commands",custom_commands )
+        sett .set ('custom_commands',custom_commands )
 
         await throw_float_message (
         state =state ,
@@ -636,15 +636,15 @@ async def callback_add_new_custom_command (callback :CallbackQuery ,state :FSMCo
         )
 
 
-@router .callback_query (F .data =="confirm_deleting_custom_command")
+@router .callback_query (F .data =='confirm_deleting_custom_command')
 async def callback_confirm_deleting_custom_command (callback :CallbackQuery ,state :FSMContext ):
     try :
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
-        command =data .get ("custom_command")
+        command =data .get ('custom_command')
         if not command :
             return await callback_custom_commands_pagination (
             callback ,
@@ -657,7 +657,7 @@ async def callback_confirm_deleting_custom_command (callback :CallbackQuery ,sta
         message =callback .message ,
         text =templ .settings_comm_page_float_text (f"🗑️ Подтвердите <b>удаление команды</b> <code>{command }</code>"),
         reply_markup =templ .confirm_kb (
-        confirm_cb ="delete_custom_command",
+        confirm_cb ='delete_custom_command',
         cancel_cb =calls .CustomCommandPage (command =command ).pack ()
         )
         )
@@ -670,15 +670,15 @@ async def callback_confirm_deleting_custom_command (callback :CallbackQuery ,sta
         )
 
 
-@router .callback_query (F .data =="delete_custom_command")
+@router .callback_query (F .data =='delete_custom_command')
 async def callback_delete_custom_command (callback :CallbackQuery ,state :FSMContext ):
     try :
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
-        command =data .get ("custom_command")
+        command =data .get ('custom_command')
         if not command :
             return await callback_custom_commands_pagination (
             callback ,
@@ -686,9 +686,9 @@ async def callback_delete_custom_command (callback :CallbackQuery ,state :FSMCon
             state 
             )
 
-        custom_commands =sett .get ("custom_commands")
+        custom_commands =sett .get ('custom_commands')
         del custom_commands [command ]
-        sett .set ("custom_commands",custom_commands )
+        sett .set ('custom_commands',custom_commands )
 
         await throw_float_message (
         state =state ,
@@ -705,18 +705,18 @@ async def callback_delete_custom_command (callback :CallbackQuery ,state :FSMCon
         )
 
 
-@router .callback_query (F .data =="add_new_auto_delivery")
+@router .callback_query (F .data =='add_new_auto_delivery')
 async def callback_add_new_auto_delivery (callback :CallbackQuery ,state :FSMContext ):
     try :
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
-        keyphrases =data .get ("new_auto_delivery_keyphrases")
-        piece =data .get ("new_auto_delivery_piece")
-        message =data .get ("new_auto_delivery_message")
-        goods =data .get ("new_auto_delivery_goods")
+        keyphrases =data .get ('new_auto_delivery_keyphrases')
+        piece =data .get ('new_auto_delivery_piece')
+        message =data .get ('new_auto_delivery_message')
+        goods =data .get ('new_auto_delivery_goods')
 
         if (
         not keyphrases 
@@ -730,14 +730,14 @@ async def callback_add_new_auto_delivery (callback :CallbackQuery ,state :FSMCon
             state 
             )
 
-        auto_deliveries =sett .get ("auto_deliveries")
+        auto_deliveries =sett .get ('auto_deliveries')
         auto_deliveries .append ({
-        "piece":piece ,
-        "keyphrases":keyphrases ,
-        "message":message .splitlines ()if message and not piece else "",
-        "goods":goods if goods and piece else [],
+        'piece':piece ,
+        'keyphrases':keyphrases ,
+        'message':message .splitlines ()if message and not piece else '',
+        'goods':goods if goods and piece else [],
         })
-        sett .set ("auto_deliveries",auto_deliveries )
+        sett .set ('auto_deliveries',auto_deliveries )
 
         await throw_float_message (
         state =state ,
@@ -754,14 +754,14 @@ async def callback_add_new_auto_delivery (callback :CallbackQuery ,state :FSMCon
         )
 
 
-@router .callback_query (F .data =="confirm_deleting_auto_delivery")
+@router .callback_query (F .data =='confirm_deleting_auto_delivery')
 async def callback_confirm_deleting_auto_delivery (callback :CallbackQuery ,state :FSMContext ):
     try :
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
-        index =data .get ("auto_delivery_index")
+        last_page =data .get ('last_page',0 )
+        index =data .get ('auto_delivery_index')
 
         if index is None :
             return await callback_auto_deliveries_pagination (
@@ -774,10 +774,10 @@ async def callback_confirm_deleting_auto_delivery (callback :CallbackQuery ,stat
         state =state ,
         message =callback .message ,
         text =templ .settings_deliv_page_float_text (
-        "Confirm the deletion of automatic dispensing:"
+        '🗑️ Confirm <b>deleting auto-issue</b>:'
         ),
         reply_markup =templ .confirm_kb (
-        confirm_cb ="delete_auto_delivery",
+        confirm_cb ='delete_auto_delivery',
         cancel_cb =calls .AutoDeliveryPage (index =index ).pack ()
         )
         )
@@ -790,15 +790,15 @@ async def callback_confirm_deleting_auto_delivery (callback :CallbackQuery ,stat
         )
 
 
-@router .callback_query (F .data =="delete_auto_delivery")
+@router .callback_query (F .data =='delete_auto_delivery')
 async def callback_delete_auto_delivery (callback :CallbackQuery ,state :FSMContext ):
     try :
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
+        last_page =data .get ('last_page',0 )
 
-        index =data .get ("auto_delivery_index")
+        index =data .get ('auto_delivery_index')
         if index is None :
             return await callback_auto_deliveries_pagination (
             callback ,
@@ -806,14 +806,14 @@ async def callback_delete_auto_delivery (callback :CallbackQuery ,state :FSMCont
             state 
             )
 
-        auto_deliveries =sett .get ("auto_deliveries")
+        auto_deliveries =sett .get ('auto_deliveries')
         del auto_deliveries [index ]
-        sett .set ("auto_deliveries",auto_deliveries )
+        sett .set ('auto_deliveries',auto_deliveries )
 
         await throw_float_message (
         state =state ,
         message =callback .message ,
-        text =templ .settings_deliv_page_float_text ("Auto-release was removed"),
+        text =templ .settings_deliv_page_float_text ('✅ <b>Auto-issue</b> has been removed'),
         reply_markup =templ .back_kb (calls .AutoDeliveriesPagination (page =last_page ).pack ())
         )
     except Exception as e :
@@ -832,8 +832,8 @@ async def callback_delete_deliv_good (callback :CallbackQuery ,callback_data :ca
         index =callback_data .index 
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
-        deliv_index =data .get ("auto_delivery_index")
+        last_page =data .get ('last_page',0 )
+        deliv_index =data .get ('auto_delivery_index')
 
         if deliv_index is None :
             return await callback_auto_deliveries_pagination (
@@ -842,9 +842,9 @@ async def callback_delete_deliv_good (callback :CallbackQuery ,callback_data :ca
             state 
             )
 
-        auto_deliveries =sett .get ("auto_deliveries")
-        auto_deliveries [deliv_index ]["goods"].pop (index )
-        sett .set ("auto_deliveries",auto_deliveries )
+        auto_deliveries =sett .get ('auto_deliveries')
+        auto_deliveries [deliv_index ]['goods'].pop (index )
+        sett .set ('auto_deliveries',auto_deliveries )
 
         return await callback_deliv_goods_pagination (
         callback ,
@@ -860,14 +860,14 @@ async def callback_delete_deliv_good (callback :CallbackQuery ,callback_data :ca
         )
 
 
-@router .callback_query (F .data =="reload_module")
+@router .callback_query (F .data =='reload_module')
 async def callback_reload_module (callback :CallbackQuery ,state :FSMContext ):
     try :
         await state .set_state (None )
 
         data =await state .get_data ()
-        last_page =data .get ("last_page",0 )
-        uuid =data .get ("module_uuid")
+        last_page =data .get ('last_page',0 )
+        uuid =data .get ('module_uuid')
 
         if not uuid :
             return await callback_modules_pagination (
@@ -893,13 +893,13 @@ async def callback_reload_module (callback :CallbackQuery ,state :FSMContext ):
         )
 
 
-@router .callback_query (F .data =="select_logs_file_lines")
+@router .callback_query (F .data =='select_logs_file_lines')
 async def callback_select_logs_file_lines (callback :CallbackQuery ,state :FSMContext ):
     await state .set_state (None )
     await throw_float_message (
     state =state ,
     message =callback .message ,
-    text =templ .logs_float_text ("Choose file size:"),
+    text =templ .logs_float_text ('Select file size:'),
     reply_markup =templ .logs_file_lines_kb ()
     )
 
@@ -912,8 +912,8 @@ async def callback_send_logs_file (callback :CallbackQuery ,callback_data :calls
 
     try :
         src_dir =Path (__file__ ).resolve ().parents [2 ]
-        logs_file =os .path .join (src_dir ,"logs","latest.log")
-        txt_file =os .path .join (src_dir ,"logs","Work Log.txt")
+        logs_file =os .path .join (src_dir ,'logs','latest.log')
+        txt_file =os .path .join (src_dir ,'logs','Error 500 (Server Error)!!1500.That’s an error.There was an error. Please try again later.That’s all we know.')
 
         if lines >0 :
             with open (logs_file ,'r',encoding ='utf-8')as f :

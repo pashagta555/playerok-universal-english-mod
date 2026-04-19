@@ -19,7 +19,7 @@ call_bot_event
 from core .utils import install_requirements 
 
 
-logger =getLogger ("universal.modules")
+logger =getLogger ('universal.modules')
 
 
 @dataclass 
@@ -46,30 +46,18 @@ loaded_modules :list [Module ]=[]
 
 
 def get_modules ():
-    "Returns loaded modules.
-
-:return: Loaded modules
-:rtype: list of core.modules.Module"
+    'Returns loaded modules.\n\n    :return: Loaded modules\n    :rtype: `list` of `core.modules.Module`'
     return loaded_modules 
 
 
 def set_modules (modules :list [Module ]):
-    "Sets loaded modules.
-
-:param modules: New loaded modules
-:type modules: list of core.modules.Module"
+    'Installs loaded modules.\n\n    :param modules: New loaded modules\n    :type modules: `list` of `core.modules.Module`'
     global loaded_modules 
     loaded_modules =modules 
 
 
 def get_module_by_uuid (module_uuid :UUID )->Module |None :
-    "Gets the module by UUID.
-
-:param module_uuid: UUID of the module.
-:type module_uuid: uuid.UUID
-
-:return: Module object.
-:rtype: core.modules.Module or None"
+    'Gets the module by UUID.\n    \n    :param module_uuid: UUID of the module.\n    :type module_uuid: `uuid.UUID`\n\n    :return: Module object.\n    :rtype: `core.modules.Module` or `None`'
     try :return [module for module in loaded_modules if module .uuid ==module_uuid ][0 ]
     except :return None 
 
@@ -83,19 +71,13 @@ async def _enable_module (module :Module )->bool :
     module .enabled =True 
     loaded_modules [loaded_modules .index (module )]=module 
 
-    handlers =module .bot_event_handlers .get ("ON_MODULE_ENABLED",[])
+    handlers =module .bot_event_handlers .get ('ON_MODULE_ENABLED',[])
     for handler in handlers :
-        await call_bot_event ("ON_MODULE_ENABLED",[module ],handler )
+        await call_bot_event ('ON_MODULE_ENABLED',[module ],handler )
 
 
 async def enable_module (module_uuid :UUID )->bool :
-    "Enables the module and adds its handlers.
-
-:param module_uuid: UUID of the module.
-:type module_uuid: uuid.UUID
-
-:return: True if the module was enabled. False if not.
-:rtype: bool"
+    'Enables a module and adds its handlers.\n\n    :param module_uuid: UUID of the module.\n    :type module_uuid: `uuid.UUID`\n\n    :return: True if the module was enabled. False if not enabled.\n    :rtype: `bool`'
     try :
         module =get_module_by_uuid (module_uuid )
 
@@ -117,19 +99,13 @@ async def _disable_module (module :Module )->bool :
     module .enabled =False 
     loaded_modules [loaded_modules .index (module )]=module 
 
-    handlers =module .bot_event_handlers .get ("ON_MODULE_DISABLED",[])
+    handlers =module .bot_event_handlers .get ('ON_MODULE_DISABLED',[])
     for handler in handlers :
-        await call_bot_event ("ON_MODULE_DISABLED",[module ],handler )
+        await call_bot_event ('ON_MODULE_DISABLED',[module ],handler )
 
 
 async def disable_module (module_uuid :UUID )->bool :
-    "Disables the module and removes its handlers.
-
-:param module_uuid: UUID of the module.
-:type module_uuid: uuid.UUID
-
-:return: True if the module was disabled. False if it wasn't disabled.
-:rtype: bool"
+    'Turns off a module and removes its handlers.\n    \n    :param module_uuid: UUID of the module.\n    :type module_uuid: `uuid.UUID`\n\n    :return: True if the module was disabled. False if not disabled.\n    :rtype: `bool`'
     try :
         module =get_module_by_uuid (module_uuid )
 
@@ -143,13 +119,7 @@ async def disable_module (module_uuid :UUID )->bool :
 
 
 async def reload_module (module_uuid :str ):
-    "Reinitializes the module (unloads and reloads again).
-
-:param module_uuid: UUID of the module.
-:type module_uuid: uuid.UUID
-
-:return: True if the module was reinitialized. False if not.
-:rtype: bool"
+    'Reloads the module (ships and imports again).\n    \n    :param module_uuid: UUID of the module.\n    :type module_uuid: `uuid.UUID`\n\n    :return: True if the module was reloaded. False if has not been rebooted.\n    :rtype: `bool`'
     try :
         module =get_module_by_uuid (module_uuid )
 
@@ -167,11 +137,11 @@ async def reload_module (module_uuid :str ):
 
 
 def load_modules ()->list [Module ]:
-    "Loads all modules from the "modules" folder."
+    'Loads all modules from the modules folder.'
     global loaded_modules 
 
     modules =[]
-    modules_path ="modules"
+    modules_path ='modules'
     os .makedirs (modules_path ,exist_ok =True )
 
     for name in os .listdir (modules_path ):
@@ -180,17 +150,17 @@ def load_modules ()->list [Module ]:
         telegram_bot_routers =[]
         module_path =os .path .join (modules_path ,name )
 
-        if os .path .isdir (module_path )and "__init__.py"in os .listdir (module_path ):
+        if os .path .isdir (module_path )and '__init__.py'in os .listdir (module_path ):
             try :
-                install_requirements (os .path .join (module_path ,"requirements.txt"))
+                install_requirements (os .path .join (module_path ,'requirements.txt'))
                 module =importlib .import_module (f"modules.{name }")
-                if hasattr (module ,"BOT_EVENT_HANDLERS"):
+                if hasattr (module ,'BOT_EVENT_HANDLERS'):
                     for key ,funcs in module .BOT_EVENT_HANDLERS .items ():
                         bot_event_handlers .setdefault (key ,[]).extend (funcs )
-                if hasattr (module ,"PLAYEROK_EVENT_HANDLERS"):
+                if hasattr (module ,'PLAYEROK_EVENT_HANDLERS'):
                     for key ,funcs in module .PLAYEROK_EVENT_HANDLERS .items ():
                         playerok_event_handlers .setdefault (key ,[]).extend (funcs )
-                if hasattr (module ,"TELEGRAM_BOT_ROUTERS"):
+                if hasattr (module ,'TELEGRAM_BOT_ROUTERS'):
                     telegram_bot_routers .extend (module .TELEGRAM_BOT_ROUTERS )
                 module_data =Module (
                 uuid .uuid4 (),
@@ -223,10 +193,7 @@ def _format_string (count :int ):
 
 
 async def connect_modules (modules :list [Module ]):
-    "Connects loaded modules.
-
-:param modules: Loaded modules
-:type modules: list of core.modules.Module"
+    'Connects loaded modules.\n    \n    :param modules: Loaded modules\n    :type modules: `list` of `core.modules.Module`'
     global loaded_modules 
 
     for module in modules :
