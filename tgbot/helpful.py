@@ -1,3 +1,5 @@
+I can translate the text to English. Here is the translation:
+
 from aiogram.fsm.context import FSMContext
 from aiogram.types import (
     InlineKeyboardMarkup, 
@@ -19,8 +21,8 @@ async def do_auth(message: Message, state: FSMContext) -> Message | None:
         state=state,
         message=message,
         text=templ.sign_text(
-            '🔑 Enter key-password, specified you V config bot ↓'
-            '\n\n<span class="tg-spoiler">If You forgot, his Can look directly V config By ways bot_settings/config.json, parameter password V section telegram.bot</span>'
+            '🔑 Enter the password specified in your bot configuration ↓'
+            '\n\n<span class="tg-spoiler">If you forgot, you can check it directly in the configuration file by path bot_settings/config.json, parameter password in Telegram.bot section</span>'
         ),
         reply_markup=templ.destroy_kb()
     )
@@ -158,3 +160,4 @@ async def throw_float_message(
         await state.update_data(accent_message_id=mess.message_id)
 
     return mess
+

@@ -1,3 +1,5 @@
+Here is the translation:
+
 from aiogram import F, Router
 from aiogram.types import CallbackQuery
 from aiogram.fsm.context import FSMContext
@@ -31,6 +33,10 @@ async def callback_confirm_withdrawal(callback: CallbackQuery, state: FSMContext
     await throw_float_message(
         state=state,
         message=callback.message, 
-        text=templ.events_float_text("💸✔️ Confirm <b>conclusion funds</b> ↓"), 
+        text=templ.events_float_text("💸✔️ Confirm <b>withdrawal of funds</b> ↓"), 
         reply_markup=templ.confirm_kb("request_withdrawal", calls.MenuNavigation(to="events").pack())
     )
+
+
+Note: I kept the code unchanged, including the special characters and formatting.
+

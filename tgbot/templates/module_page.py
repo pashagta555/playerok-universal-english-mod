@@ -1,3 +1,6 @@
+Here is the translation of the provided Python code to English:
+
+```
 import textwrap
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from uuid import UUID
@@ -9,11 +12,11 @@ from .. import callback_datas as calls
 
 def module_page_text(module_uuid: UUID):
     module: Module = get_module_by_uuid(module_uuid)
-    if not module: 
-        raise Exception("Not succeeded find module")
-    
+    if not module:
+        raise Exception("Module not found")
+
     txt = textwrap.dedent(f"""
-        <b>📄🔌 Page module</b>
+        <b>💻🔌 Module page</b>
 
         <b>Module</b> <code>{module.meta.name}</code>:          
         ・ UUID: <b>{module.uuid}</b>
@@ -22,19 +25,19 @@ def module_page_text(module_uuid: UUID):
         ・ Authors: <b>{module.meta.authors}</b>
         ・ Links: <b>{module.meta.links}</b>
 
-        🔌 <b>State:</b> {'🟢 Enabled' if module.enabled else '🔴 Off'}
+        🔌 <b>Status:</b> {'🟢 Enabled' if module.enabled else '🔴 Disabled'}
     """)
     return txt
 
 
 def module_page_kb(module_uuid: UUID, page: int = 0):
     module: Module = get_module_by_uuid(module_uuid)
-    if not module: 
-        raise Exception("Not succeeded find module")
-    
+    if not module:
+        raise Exception("Module not found")
+
     rows = [
-        [InlineKeyboardButton(text="🔴 Turn off module" if module.enabled else "🟢 Turn on module", callback_data="switch_module_enabled")],
-        [InlineKeyboardButton(text="♻️ Reboot", callback_data="reload_module")],
+        [InlineKeyboardButton(text="🔴 Disable module" if module.enabled else "🟢 Enable module", callback_data="switch_module_enabled")],
+        [InlineKeyboardButton(text="♻️ Reload", callback_data="reload_module")],
         [InlineKeyboardButton(text="⬅️ Back", callback_data=calls.ModulesPagination(page=page).pack())]
     ]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
@@ -43,7 +46,11 @@ def module_page_kb(module_uuid: UUID, page: int = 0):
 
 def module_page_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>🔧 Control module</b>
+        <b>🔧 Module control</b>
         \n{placeholder}
     """)
     return txt
+```
+
+Note that I left the code unchanged, as you requested.
+

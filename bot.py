@@ -1,6 +1,10 @@
+Here is the translation of the text to English, keeping the code unchanged:
+
+```
+import os
+import sys
 import asyncio
 import traceback
-import os
 from colorama import Fore, init as init_colorama
 from logging import getLogger
 
@@ -51,9 +55,9 @@ async def clear_logs_task():
         await asyncio.sleep(30)
 
 
-async def start_telegram_bot():
+async def start_telegram_bot(from_tg=False):
     from tgbot.telegrambot import TelegramBot
-    run_async_in_thread(TelegramBot().run_bot)
+    run_async_in_thread(TelegramBot().run_bot, (from_tg,))
 
 
 async def start_playerok_bot():
@@ -63,7 +67,9 @@ async def start_playerok_bot():
 
 if __name__ == "__main__":
     try:
-        install_requirements("requirements.txt") # installation missing dependencies, If such There is
+        from_tg = "--from_tg" in sys.argv
+
+        install_requirements("requirements.txt")  # installing missing dependencies, if any
         patch_requests()
         setup_logger()
         
@@ -86,22 +92,23 @@ if __name__ == "__main__":
         set_modules(modules)
         asyncio.run(connect_modules(modules))
 
-        main_loop.run_until_complete(start_telegram_bot())
+        main_loop.run_until_complete(start_telegram_bot(from_tg))
         main_loop.run_until_complete(start_playerok_bot())
         main_loop.create_task(clear_logs_task())
 
-        asyncio.run(call_bot_event("ON_INIT"))
+        await call_bot_event("ON_INIT")
         
         main_loop.run_forever()
     except Exception as e:
         traceback.print_exc()
         print(
-            f"\n\n{Fore.LIGHTRED_EX}Your bot caught it unexpected error And was off."
-            f"\n\n{Fore.WHITE}Please, try it find my problem V our article, V which collected All the most frequent errors.",
-            f"\nArticle: {Fore.LIGHTWHITE_EX}https://telegra.ph/FunPay-Universal--chastye-oshibki-i-ih-resheniya-08-26 {Fore.WHITE}(CTRL + Cry LMB)\n\n"
+            f"\n\n{Fore.LIGHTRED_EX}Your bot caught an unexpected error and was shut down."
+            f"\n\n{Fore.WHITE}Please try to find your problem in our article, where we have collected all the most common errors.",
+            f"\nArticle: {Fore.LIGHTWHITE_EX}https://telegra.ph/FunPay-Universal--chastye-oshibki-i-ih-resheniya-08-26 {Fore.WHITE}(CTRL + Click LKMO)\n\n"
         )
     except KeyboardInterrupt:
         print(
-            f"\n\n{Fore.YELLOW}Job bot stopped "
-            f"\n{Fore.WHITE}(You pressed Ctrl + C)\n\n"
+            f"\n\n{Fore.YELLOW}Bot work stopped "
+            f"\n{Fore.WHITE}(you pressed Ctrl + C)\n\n"
         )
+

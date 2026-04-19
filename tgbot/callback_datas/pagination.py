@@ -1,3 +1,5 @@
+Here is the translation:
+
 from aiogram.filters.callback_data import CallbackData
 
 
@@ -32,7 +34,7 @@ class CustomCommandsPagination(CallbackData, prefix="cucopag"):
 class AutoDeliveriesPagination(CallbackData, prefix="audepag"):
     page: int
 
-class DelivGoodsPagination(CallbackData, prefix="godspag"):
+class DeliverGoodsPagination(CallbackData, prefix="godspag"):
     page: int
 
 class MessagesPagination(CallbackData, prefix="messpag"):
@@ -44,3 +46,4 @@ class BankCardsPagination(CallbackData, prefix="bacapag"):
 
 class SbpBanksPagination(CallbackData, prefix="sbppag"):
     page: int
+

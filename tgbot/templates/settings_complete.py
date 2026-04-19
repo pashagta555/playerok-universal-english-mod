@@ -1,3 +1,6 @@
+Here is the translation of the given code to English:
+
+```
 import textwrap
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -9,8 +12,8 @@ from .. import callback_datas as calls
 def settings_complete_text():
     config = sett.get("config")
     
-    enabled = "🟢 Included" if config["playerok"]["auto_complete_deals"]["enabled"] else "🔴 Off"
-    all = "Everyone items" if config["playerok"]["auto_complete_deals"]["all"] else "Specified items"
+    enabled = "🟢 Enabled" if config["playerok"]["auto_complete_deals"]["enabled"] else "🔴 Disabled"
+    all = "All items" if config["playerok"]["auto_complete_deals"]["all"] else "Specific items"
     
     auto_complete_deals = sett.get("auto_complete_deals")
     included = len(auto_complete_deals["included"])
@@ -19,17 +22,17 @@ def settings_complete_text():
     txt = textwrap.dedent(f"""
         <b>☑️ Auto-confirmation</b>
 
-        <b>☑️ Automatic transaction confirmation:</b> {enabled}
+        <b>☑️ Auto-confirmation of deals:</b> {enabled}
         <b>📦 Confirm deals:</b> {all}
 
         <b>➕ Included:</b> {included}
         <b>➖ Excluded:</b> {excluded}
 
-        <b>What for auto-confirmation transactions?</b>
-        Bot will automatically confirm execution only What formalized transactions.
+        <b>What is auto-confirmation of deals?</b>
+        The bot will automatically confirm the completion of just completed deals.
 
         <b>Note:</b>
-        If You choose "Everyone items", That will be confirmed deals everyone items, except those, What indicated V exceptions. If You choose "Specified items", That will be confirmed deals only those goods, which You add in included.
+        If you select "All items", all deals for all items, except those in exceptions, will be confirmed. If you select "Specific items", only deals for the specific items you add to included will be confirmed.
     """)
     return txt
 
@@ -37,19 +40,19 @@ def settings_complete_text():
 def settings_complete_kb():
     config = sett.get("config")
     
-    enabled = "🟢 Included" if config["playerok"]["auto_complete_deals"]["enabled"] else "🔴 Off"
-    all = "Everyone items" if config["playerok"]["auto_complete_deals"]["all"] else "Specified items"
+    enabled = "🟢 Enabled" if config["playerok"]["auto_complete_deals"]["enabled"] else "🔴 Disabled"
+    all = "All items" if config["playerok"]["auto_complete_deals"]["all"] else "Specific items"
     
     auto_complete_deals = sett.get("auto_complete_deals")
     included = len(auto_complete_deals["included"])
     excluded = len(auto_complete_deals["excluded"])
     
     rows = [
-        [InlineKeyboardButton(text=f"☑️ Automatic transaction confirmation: {enabled}", callback_data="switch_auto_complete_deals_enabled")],
+        [InlineKeyboardButton(text=f"☑️ Auto-confirmation of deals: {enabled}", callback_data="switch_auto_complete_deals_enabled")],
         [InlineKeyboardButton(text=f"📦 Confirm deals: {all}", callback_data="switch_auto_complete_deals_all")],
         [
-        InlineKeyboardButton(text=f"➕ Included: {included}", callback_data=calls.IncludedCompleteDealsPagination(page=0).pack()),
-        InlineKeyboardButton(text=f"➖ Excluded: {excluded}", callback_data=calls.ExcludedCompleteDealsPagination(page=0).pack())
+            InlineKeyboardButton(text=f"➕ Included: {included}", callback_data=calls.IncludedCompleteDealsPagination(page=0).pack()),
+            InlineKeyboardButton(text=f"➖ Excluded: {excluded}", callback_data=calls.ExcludedCompleteDealsPagination(page=0).pack())
         ],
         [InlineKeyboardButton(text="⬅️ Back", callback_data=calls.SettingsNavigation(to="default").pack())]
     ]
@@ -63,3 +66,7 @@ def settings_complete_float_text(placeholder: str):
         \n{placeholder}
     """)
     return txt
+```
+
+Note that I kept the code unchanged, just translating the Russian text to English.
+

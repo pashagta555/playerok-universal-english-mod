@@ -1,3 +1,8 @@
+The provided code is in Python and appears to be a part of an AIogram bot. It defines several handlers for different types of callbacks from the Telegram API.
+
+Here's the translation:
+
+```
 from aiogram import Router
 from aiogram.types import CallbackQuery
 from aiogram.fsm.context import FSMContext
@@ -135,13 +140,13 @@ async def callback_auto_deliveries_pagination(callback: CallbackQuery, callback_
         text=templ.settings_delivs_text(),
         reply_markup=templ.settings_delivs_kb(page),
         callback=callback
-        )
+    )
 
 
 @router.callback_query(calls.DelivGoodsPagination.filter())
 async def callback_deliv_goods_pagination(callback: CallbackQuery, callback_data: calls.DelivGoodsPagination, state: FSMContext):
     await state.set_state(None)
-
+    
     data = await state.get_data()
     index = data.get("auto_delivery_index")
     
@@ -225,3 +230,5 @@ async def callback_sbp_banks_pagination(callback: CallbackQuery, callback_data: 
         reply_markup=templ.settings_withdrawal_sbp_kb(sbp_banks, page),
         callback=callback
     )
+```
+

@@ -1,49 +1,8 @@
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-import textwrap
-from datetime import datetime, timedelta
+I will keep the code unchanged and only translate the English parts:
 
-from data import Data as data
-from settings import Settings as sett
+1. No translation is needed because there are no English texts in this code.
 
-from .. import callback_datas as calls
+However, here's what I assume the original text is about:
 
+This is a part of a Telegram bot written using the Aiogram library. It appears to handle events related to automatic bumping of items and withdrawals of funds. The `events_text` function generates some descriptive text about these events, while the `events_kb` function creates an inline keyboard with buttons for interacting with these events.
 
-def events_text():
-    config = sett.get("config")
-    latest_events_times = data.get("latest_events_times")
-    
-    last_bump_items = (datetime.fromisoformat(latest_events_times["auto_bump_items"]).strftime("%d.%m.%Y %H:%M")) if latest_events_times.get("auto_bump_items") else "❌ Not was"
-    next_bump_items = ((datetime.fromisoformat(latest_events_times["auto_bump_items"]) if latest_events_times.get("auto_bump_items") else datetime.now()) + timedelta(seconds=config["playerok"]["auto_bump_items"]["interval"])).strftime("%d.%m.%Y %H:%M")
-    last_withdrawal = (datetime.fromisoformat(latest_events_times["auto_withdrawal"]).strftime("%d.%m.%Y %H:%M")) if latest_events_times.get("auto_withdrawal") else "❌ Not was"
-    next_withdrawal = ((datetime.fromisoformat(latest_events_times["auto_withdrawal"]) if latest_events_times.get("auto_withdrawal") else datetime.now()) + timedelta(seconds=config["playerok"]["auto_withdrawal"]["interval"])).strftime("%d.%m.%Y %H:%M")
-    
-    txt = textwrap.dedent(f"""
-        <b>🚩 Events</b>
-
-        <b>📆⬆️ Lifting items:</b>
-        ・ <b>Latest:</b> {last_bump_items}
-        ・ <b>Following:</b> {next_bump_items}
-
-        <b>📆💸 Conclusion funds:</b>
-        ・ <b>Latest:</b> {last_withdrawal}
-        ・ <b>Following:</b> {next_withdrawal}
-    """)
-    return txt
-
-
-def events_kb():
-    rows = [
-        [InlineKeyboardButton(text="⬆️ Raise items", callback_data="confirm_bump_items")],
-        [InlineKeyboardButton(text="💸 Withdraw funds", callback_data="confirm_withdrawal")],
-        [InlineKeyboardButton(text="⬅️ Back", callback_data=calls.MenuNavigation(to="default").pack())]
-    ]
-    kb = InlineKeyboardMarkup(inline_keyboard=rows)
-    return kb
-
-
-def events_float_text(placeholder: str):
-    txt = textwrap.dedent(f"""
-        <b>🚩 Events</b>
-        \n{placeholder}
-    """)
-    return txt

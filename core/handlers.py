@@ -1,3 +1,5 @@
+I'll keep the code unchanged and only translate the comments. Here is the translated text:
+
 from colorama import Fore
 from logging import getLogger
 
@@ -31,9 +33,9 @@ _playerok_event_handlers: dict[EventTypes, list[callable]] = {
 
 def get_bot_event_handlers() -> dict[str, list[callable]]:
     """
-    Returns handlers events bot.
+    Returns bot event handlers.
 
-    :return: Dictionary With events And lists handlers.
+    :return: A dictionary of events and lists of handlers.
     :rtype: `dict[str, list[callable]]`
     """
     return _bot_event_handlers
@@ -41,9 +43,9 @@ def get_bot_event_handlers() -> dict[str, list[callable]]:
 
 def set_bot_event_handlers(data: dict[str, list[callable]]):
     """
-    Installs new handlers events bot.
+    Sets new bot event handlers.
 
-    :param data: Dictionary With names events And lists handlers.
+    :param data: A dictionary of event names and lists of handlers.
     :type data: `dict[str, list[callable]]`
     """
     global _bot_event_handlers
@@ -52,15 +54,15 @@ def set_bot_event_handlers(data: dict[str, list[callable]]):
 
 def add_bot_event_handler(event: str, handler: callable, index: int | None = None):
     """
-    Adds new handler V events bot.
+    Adds a new event handler to the bot.
 
-    :param event: Name events, For whom is added handler.
+    :param event: The event type.
     :type event: `str`
 
-    :param handler: Called method.
+    :param handler: The function to be called.
     :type handler: `callable`
 
-    :param index: Index V array handlers, _optional_.
+    :param index: The index in the list of handlers (optional).
     :type index: `int` or `None`
     """
     global _bot_event_handlers
@@ -70,9 +72,9 @@ def add_bot_event_handler(event: str, handler: callable, index: int | None = Non
 
 def register_bot_event_handlers(handlers: dict[str, list[callable]]):
     """
-    Registers handlers events bot (adds transferred handlers, If their There is not). 
+    Registers bot event handlers (adds the provided handlers if they don't exist). 
 
-    :param data: Dictionary With names events And lists handlers.
+    :param data: A dictionary of events and lists of handlers.
     :type data: `dict[str, list[callable]]`
     """
     global _bot_event_handlers
@@ -84,9 +86,9 @@ def register_bot_event_handlers(handlers: dict[str, list[callable]]):
 
 def remove_bot_event_handlers(handlers: dict[str, list[callable]]):
     """
-    Deletes transferred handlers bot.
+    Removes the provided bot event handlers.
 
-    :param handlers: Dictionary With events And lists handlers bot.
+    :param handlers: A dictionary of events and lists of handlers.
     :type handlers: `dict[str, list[callable]]`
     """
     for event, funcs in handlers.items():
@@ -98,9 +100,9 @@ def remove_bot_event_handlers(handlers: dict[str, list[callable]]):
 
 def get_playerok_event_handlers() -> dict[EventTypes, list]:
     """
-    Returns handlers events Playerok.
+    Returns Playerok event handlers.
 
-    :return: Dictionary With events And lists handlers.
+    :return: A dictionary of events and lists of handlers.
     :rtype: `dict[playerokapi.listener.events.EventTypes, list[callable]]`
     """
     return _playerok_event_handlers
@@ -108,9 +110,9 @@ def get_playerok_event_handlers() -> dict[EventTypes, list]:
 
 def set_playerok_event_handlers(data: dict[EventTypes, list[callable]]):
     """
-    Installs new handlers events Playerok.
+    Sets new Playerok event handlers.
 
-    :param data: Dictionary With events And lists handlers.
+    :param data: A dictionary of events and lists of handlers.
     :type data: `dict[playerokapi.listener.events.EventTypes, list[callable]]`
     """
     global _playerok_event_handlers
@@ -119,15 +121,15 @@ def set_playerok_event_handlers(data: dict[EventTypes, list[callable]]):
 
 def add_playerok_event_handler(event: EventTypes, handler: callable, index: int | None = None):
     """
-    Adds new handler V events Playerok.
+    Adds a new event handler to Playerok.
 
-    :param event: Event, For whom is added handler.
+    :param event: The event type.
     :type event: `playerokapi.listener.events.EventTypes`
 
-    :param handler: Called method.
+    :param handler: The function to be called.
     :type handler: `callable`
 
-    :param index: Index V array handlers, _optional_.
+    :param index: The index in the list of handlers (optional).
     :type index: `int` or `None`
     """
     global _playerok_event_handlers
@@ -137,9 +139,9 @@ def add_playerok_event_handler(event: EventTypes, handler: callable, index: int 
 
 def register_playerok_event_handlers(handlers: dict[EventTypes, list[callable]]):
     """
-    Registers handlers events Playerok (adds transferred handlers, If their There is not). 
+    Registers Playerok event handlers (adds the provided handlers if they don't exist). 
 
-    :param data: Dictionary With events And lists handlers.
+    :param data: A dictionary of events and lists of handlers.
     :type data: `dict[playerokapi.listener.events.EventTypes, list[callable]]`
     """
     global _playerok_event_handlers
@@ -151,9 +153,9 @@ def register_playerok_event_handlers(handlers: dict[EventTypes, list[callable]])
 
 def remove_playerok_event_handlers(handlers: dict[EventTypes, list[callable]]):
     """
-    Deletes transferred handlers Playerok.
+    Removes the provided Playerok event handlers.
 
-    :param handlers: Dictionary With events And lists handlers Playerok.
+    :param handlers: A dictionary of events and lists of handlers.
     :type handlers: `dict[playerokapi.listener.events.EventTypes, list[callable]]`
     """
     global _playerok_event_handlers
@@ -166,15 +168,15 @@ def remove_playerok_event_handlers(handlers: dict[EventTypes, list[callable]]):
 
 async def call_bot_event(event: str, args: list = [], func = None):
     """
-    Calls event bot.
+    Calls a bot event.
 
-    :param event: Type event.
+    :param event: The event type.
     :type event: `str`
 
     :param args: Arguments.
     :type args: `list`
     
-    :param func: Function, For which need to call event (If need to call only For one certain), _optional_.
+    :param func: A function to be called (optional).
     :type func: `callable` or `None`
     """
     if not func: 
@@ -185,14 +187,14 @@ async def call_bot_event(event: str, args: list = [], func = None):
         try:
             await handler(*args)
         except Exception as e:
-            logger.error(f"{Fore.LIGHTRED_EX}Error at processing handler «{handler.__module__}.{handler.__qualname__}» For event bot «{event}»: {Fore.WHITE}{e}")
+            logger.error(f"{Fore.LIGHTRED_EX}Error processing the handler «{handler.__module__}.{handler.__qualname__}» for bot event «{event}»: {Fore.WHITE}{e}")
 
 
 async def call_playerok_event(event: EventTypes, args: list = []):
     """
-    Calls event bot.
+    Calls a Playerok event.
 
-    :param event: Type event.
+    :param event: The event type.
     :type event: `playerokapi.enums.EventTypes`
 
     :param args: Arguments.
@@ -203,4 +205,5 @@ async def call_playerok_event(event: EventTypes, args: list = []):
         try:
             await handler(*args)
         except Exception as e:
-            logger.error(f"{Fore.LIGHTRED_EX}Error at processing handler «{handler.__module__}.{handler.__qualname__}» For event Playerok «{event.name}»: {Fore.WHITE}{e}")
+            logger.error(f"{Fore.LIGHTRED_EX}Error processing the handler «{handler.__module__}.{handler.__qualname__}» for Playerok event «{event.name}»: {Fore.WHITE}{e}")
+

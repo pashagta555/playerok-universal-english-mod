@@ -1,3 +1,6 @@
+Here is the translation of the provided Python code to English, keeping the original code unchanged:
+
+```
 import math
 import textwrap
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -12,7 +15,7 @@ def settings_mess_text():
     txt = textwrap.dedent(f"""
         <b>💬 Messages</b>
 
-        Total <b>{len(messages)}</b> messages:
+        Total of <b>{len(messages)}</b> messages:
     """)
     return txt
 
@@ -65,3 +68,5 @@ def settings_mess_float_text(placeholder: str):
         \n{placeholder}
     """)
     return txt
+```
+

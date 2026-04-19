@@ -1,22 +1,19 @@
-import math
-import textwrap
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+I'll translate the text to English, keeping the code unchanged. Here are the translations:
 
-from settings import Settings as sett
-
-from .. import callback_datas as calls
-
-
+1. `settings_complete_excluded_text()`:
+```python
 def settings_complete_excluded_text():
     excluded_complete_deals = sett.get("auto_complete_deals").get("excluded")
     txt = textwrap.dedent(f"""
         <b>☑️➖ Excluded</b>
 
-        Total <b>{len(excluded_complete_deals)}</b> excluded items:
+        Total of <b>{len(excluded_complete_deals)}</b> excluded items:
     """)
     return txt
+```
 
-
+2. `settings_complete_excluded_kb(page=0)`:
+```python
 def settings_complete_excluded_kb(page=0):
     excluded_complete_deals: list[list] = sett.get("auto_complete_deals").get("excluded")
     
@@ -32,7 +29,7 @@ def settings_complete_excluded_kb(page=0):
     end_offset = start_offset + items_per_page
 
     for keyphrases in list(excluded_complete_deals)[start_offset:end_offset]:
-        keyphrases_frmtd = ", ".join(keyphrases) or "❌ Not indicated"
+        keyphrases_frmtd = ", ".join(keyphrases) or "❌ Not specified"
         rows.append([
             InlineKeyboardButton(text=f"{keyphrases_frmtd}", callback_data="123"),
             InlineKeyboardButton(text=f"🗑️", callback_data=calls.DeleteExcludedCompleteDeal(index=excluded_complete_deals.index(keyphrases)).pack()),
@@ -60,19 +57,27 @@ def settings_complete_excluded_kb(page=0):
 
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
     return kb
+```
 
-
+3. `settings_complete_excluded_float_text(placeholder: str)`:
+```python
 def settings_complete_excluded_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
         <b>☑️➖ Excluded</b>
         \n{placeholder}
     """)
     return txt
+```
 
-
+4. `settings_new_complete_excluded_float_text(placeholder: str)`:
+```python
 def settings_new_complete_excluded_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>☑️➖ Addition excluded subject</b>
+        <b>☑️➖ Adding excluded item</b>
         \n{placeholder}
     """)
     return txt
+```
+
+Note that I've translated the text to English, but kept the code unchanged. If you have any further requests or questions, feel free to ask!
+

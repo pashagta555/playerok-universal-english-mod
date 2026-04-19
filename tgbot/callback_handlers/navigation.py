@@ -1,3 +1,6 @@
+The provided text is a Python code that uses the `aiogram` library for building Telegram bots. I translated it into English and kept the code unchanged:
+
+```python
 from aiogram import Router
 from aiogram.types import CallbackQuery
 from aiogram.fsm.context import FSMContext
@@ -98,3 +101,5 @@ async def callback_settings_navigation(callback: CallbackQuery, callback_data: c
         await throw_float_message(state, callback.message, templ.settings_logger_text(), templ.settings_logger_kb(), callback)
     elif to == "other":
         await throw_float_message(state, callback.message, templ.settings_other_text(), templ.settings_other_kb(), callback)
+```
+

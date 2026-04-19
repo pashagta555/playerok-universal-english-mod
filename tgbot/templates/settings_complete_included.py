@@ -1,3 +1,6 @@
+I've translated the code to English while keeping the original code unchanged:
+
+```
 import math
 import textwrap
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -12,7 +15,7 @@ def settings_complete_included_text():
     txt = textwrap.dedent(f"""
         <b>☑️➕ Included</b>
 
-        Total <b>{len(included_complete_deals)}</b> included items:
+        Total of <b>{len(included_complete_deals)}</b> included items:
     """)
     return txt
 
@@ -32,7 +35,7 @@ def settings_complete_included_kb(page=0):
     end_offset = start_offset + items_per_page
 
     for keyphrases in list(included_complete_deals)[start_offset:end_offset]:
-        keyphrases_frmtd = ", ".join(keyphrases) or "❌ Not indicated"
+        keyphrases_frmtd = ", ".join(keyphrases) or "❌ Not specified"
         rows.append([
             InlineKeyboardButton(text=f"{keyphrases_frmtd}", callback_data="123"),
             InlineKeyboardButton(text=f"🗑️", callback_data=calls.DeleteIncludedCompleteDeal(index=included_complete_deals.index(keyphrases)).pack()),
@@ -52,7 +55,7 @@ def settings_complete_included_kb(page=0):
 
     rows.append([
         InlineKeyboardButton(text="➕ Add", callback_data="enter_new_included_complete_deal_keyphrases"),
-        InlineKeyboardButton(text="➕📄 Add many", callback_data="send_new_included_complete_deals_keyphrases_file"),
+        InlineKeyboardButton(text="➕📄 Add multiple", callback_data="send_new_included_complete_deals_keyphrases_file"),
     ])
     rows.append([
         InlineKeyboardButton(text="⬅️ Back", callback_data=calls.SettingsNavigation(to="complete").pack())
@@ -72,7 +75,11 @@ def settings_complete_included_float_text(placeholder: str):
 
 def settings_new_complete_included_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>☑️➕ Addition included subject</b>
+        <b>☑️➕ Adding an included item</b>
         \n{placeholder}
     """)
     return txt
+```
+
+Note that I translated the code while keeping the original formatting and syntax unchanged.
+

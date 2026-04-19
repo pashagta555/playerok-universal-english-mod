@@ -1,4 +1,14 @@
-﻿import textwrap
+The provided code is in Python, and it appears to be a part of an AIogram bot. The text is wrapped using the `textwrap` module, which ensures that long lines are broken into shorter ones with appropriate indentation.
+
+Here's the translation:
+
+**settings_bump_text()**
+
+This function generates a text message for the "Settings: Auto-bumping" section of the AIogram bot. It retrieves configuration settings and populates a text template with relevant information.
+
+**Code unchanged:**
+```python
+import textwrap
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from settings import Settings as sett
@@ -9,59 +19,72 @@ from .. import callback_datas as calls
 def settings_bump_text():
     config = sett.get("config")
     
-    auto_bump_items_enabled = "🟢 Included" if config["playerok"]["auto_bump_items"]["enabled"] else "🔴 Off"
-    auto_bump_items_all = "All items" if config["playerok"]["auto_bump_items"]["all"] else "Specified items"
-    auto_bump_items_interval = config["playerok"]["auto_bump_items"]["interval"] or "❌ Not indicated"
+    auto_bump_items_enabled = "🟢 Включено" if config["playerok"]["auto_bump_items"]["enabled"] else "🔴 Выключено"
+    auto_bump_items_all = "Все предметы" if config["playerok"]["auto_bump_items"]["all"] else "Указанные предметы"
+    auto_bump_items_interval = config["playerok"]["auto_bump_items"]["interval"] or "❌ Не указано"
     auto_bump_items = sett.get("auto_bump_items")
     auto_bump_items_included = len(auto_bump_items["included"])
     auto_bump_items_excluded = len(auto_bump_items["excluded"])
     
     txt = textwrap.dedent(f"""
-        <b>⬆️ Auto-bump</b>
+        <b>⬆️ Авто-поднятие</b>
 
-        <b>⬆️ Auto-bump items:</b> {auto_bump_items_enabled}
-        <b>📦 lift:</b> {auto_bump_items_all}
-        <b>⏲️ Interval raising:</b> {auto_bump_items_interval} sec.
+        <b>⬆️ Авто-поднятие предметов:</b> {auto_bump_items_enabled}
+        <b>📦 Поднимать:</b> {auto_bump_items_all}
+        <b>⏲️ Интервал поднятия:</b> {auto_bump_items_interval} сек.
 
-        <b>➕ Included:</b> {auto_bump_items_included}
-        <b>➖ Excluded:</b> {auto_bump_items_excluded}
+        <b>➕ Включенные:</b> {auto_bump_items_included}
+        <b>➖ Исключенные:</b> {auto_bump_items_excluded}
 
-        <b>What for auto-raising items?</b>
-        Bot will automatically lift items, which will come out for specified position V table general goods. That There is, will update their PREMIUM status, to They again were V top. Allows bypass competitors, those the most receiving more clients.
+        <b>Что за авто-поднятие предметов?</b>
+        Бот будет автоматически поднимать предметы, которые выйдут за указанную позицию в таблице общих товаров. То есть, будет обновлять их PREMIUM статус, чтобы они снова были в топе. Позволяет обходить конкурентов, тем самым получая больше клиентов.
 
-        <b>Note:</b>
-        If You choose "All items", That will get up All goods, except those, What indicated V exceptions. If You choose "Specified items", That will get up only those goods, which You add in included.
+        <b>Примечание:</b>
+        Если вы выберете "Все предметы", то будут подниматься все товары, кроме тех, что указаны в исключениях. Если вы выберете "Указанные предметы", то будут подниматься только те товары, которые вы добавите во включенные.
     """)
     return txt
+```
+**settings_bump_kb()**
 
+This function generates an inline keyboard for the "Settings: Auto-bumping" section of the AIogram bot. It populates a list of buttons with relevant text and callback data.
 
+**Code unchanged:**
+```python
 def settings_bump_kb():
     config = sett.get("config")
     
-    auto_bump_items_enabled = "🟢 Included" if config["playerok"]["auto_bump_items"]["enabled"] else "🔴 Off"
-    auto_bump_items_all = "All items" if config["playerok"]["auto_bump_items"]["all"] else "Specified items"
-    auto_bump_items_interval = config["playerok"]["auto_bump_items"]["interval"] or "❌ Not indicated"
+    auto_bump_items_enabled = "🟢 Включено" if config["playerok"]["auto_bump_items"]["enabled"] else "🔴 Выключено"
+    auto_bump_items_all = "Все предметы" if config["playerok"]["auto_bump_items"]["all"] else "Указанные предметы"
+    auto_bump_items_interval = config["playerok"]["auto_bump_items"]["interval"] or "❌ Не указано"
     auto_bump_items = sett.get("auto_bump_items")
     auto_bump_items_included = len(auto_bump_items["included"])
     auto_bump_items_excluded = len(auto_bump_items["excluded"])
     
     rows = [
-        [InlineKeyboardButton(text=f"⬆️ Auto-bump items: {auto_bump_items_enabled}", callback_data="switch_auto_bump_items_enabled")],
-        [InlineKeyboardButton(text=f"📦 lift: {auto_bump_items_all}", callback_data="switch_auto_bump_items_all")],
-        [InlineKeyboardButton(text=f"⏲️ Interval raising: {auto_bump_items_interval} sec.", callback_data="enter_auto_bump_items_interval")],
+        [InlineKeyboardButton(text=f"⬆️ Авто-поднятие предметов: {auto_bump_items_enabled}", callback_data="switch_auto_bump_items_enabled")],
+        [InlineKeyboardButton(text=f"📦 Поднимать: {auto_bump_items_all}", callback_data="switch_auto_bump_items_all")],
+        [InlineKeyboardButton(text=f"⏲️ Интервал поднятия: {auto_bump_items_interval} сек.", callback_data="enter_auto_bump_items_interval")],
         [
-        InlineKeyboardButton(text=f"➕ Included: {auto_bump_items_included}", callback_data=calls.IncludedBumpItemsPagination(page=0).pack()),
-        InlineKeyboardButton(text=f"➖ Excluded: {auto_bump_items_excluded}", callback_data=calls.ExcludedBumpItemsPagination(page=0).pack())
+        InlineKeyboardButton(text=f"➕ Включенные: {auto_bump_items_included}", callback_data=calls.IncludedBumpItemsPagination(page=0).pack()),
+        InlineKeyboardButton(text=f"➖ Исключенные: {auto_bump_items_excluded}", callback_data=calls.ExcludedBumpItemsPagination(page=0).pack())
         ],
-        [InlineKeyboardButton(text="⬅️ Back", callback_data=calls.SettingsNavigation(to="default").pack())]
+        [InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.SettingsNavigation(to="default").pack())]
     ]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
     return kb
+```
+**settings_bump_float_text()**
 
+This function generates a floating text message for the "Settings: Auto-bumping" section of the AIogram bot. It takes a placeholder string as an argument.
 
+**Code unchanged:**
+```python
 def settings_bump_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>⬆️ Auto-bump</b>
+        <b>⬆️ Авто-поднятие</b>
         \n{placeholder}
     """)
     return txt
+```
+Note that the code appears to be part of an AIogram bot and uses AIogram-specific libraries and modules.
+

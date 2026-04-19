@@ -1,3 +1,8 @@
+I'll translate the text to English while keeping the code unchanged:
+
+Here is the translation:
+
+```
 import math
 import textwrap
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -12,7 +17,7 @@ def settings_restore_excluded_text():
     txt = textwrap.dedent(f"""
         <b>♻️➖ Excluded</b>
 
-        Total <b>{len(excluded_restore_items)}</b> excluded items:
+        Total of <b>{len(excluded_restore_items)}</b> excluded items:
     """)
     return txt
 
@@ -32,7 +37,7 @@ def settings_restore_excluded_kb(page=0):
     end_offset = start_offset + items_per_page
 
     for keyphrases in list(excluded_restore_items)[start_offset:end_offset]:
-        keyphrases_frmtd = ", ".join(keyphrases) or "❌ Not indicated"
+        keyphrases_frmtd = ", ".join(keyphrases) or "❌ Not specified"
         rows.append([
             InlineKeyboardButton(text=f"{keyphrases_frmtd}", callback_data="123"),
             InlineKeyboardButton(text=f"🗑️", callback_data=calls.DeleteExcludedRestoreItem(index=excluded_restore_items.index(keyphrases)).pack()),
@@ -72,7 +77,9 @@ def settings_restore_excluded_float_text(placeholder: str):
 
 def settings_new_restore_excluded_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>♻️➖ Addition excluded subject</b>
+        <b>♻️➖ Adding excluded item</b>
         \n{placeholder}
     """)
     return txt
+```
+

@@ -1,3 +1,6 @@
+Here is the translation of the code into English:
+
+```
 from aiogram import Router
 from aiogram.types import CallbackQuery
 from aiogram.fsm.context import FSMContext
@@ -84,3 +87,9 @@ async def callback_module_page(callback: CallbackQuery, callback_data: calls.Mod
         reply_markup=templ.module_page_kb(module_uuid, last_page),
         callback=callback
     )
+```
+
+This code defines four functions for handling different types of callback queries in an AIogram bot. The functions are decorated with the `@router.callback_query()` decorator and filter out specific types of callback queries using the `filter()` method.
+
+Each function takes three arguments: `callback`, which is a `CallbackQuery` object representing the incoming callback query; `callback_data`, which contains data related to the callback query; and `state`, which is an instance of `FSMContext` that allows you to store and retrieve data associated with the conversation state.
+

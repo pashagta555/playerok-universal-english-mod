@@ -1,3 +1,6 @@
+Here is the translation of the text to English, keeping the code unchanged:
+
+```
 from aiogram import types, Router, F
 from aiogram.fsm.context import FSMContext
 
@@ -13,12 +16,12 @@ router = Router()
 
 @router.message(states.SystemStates.waiting_for_password, F.text)
 async def handler_waiting_for_password(message: types.Message, state: FSMContext):
-    try: 
+    try:
         await state.set_state(None)
         config = sett.get("config")
         
         if message.text != config["telegram"]["bot"]["password"]:
-            raise Exception("❌ Incorrect key-password.")
+            raise Exception("❌ Invalid password key.")
         
         config["telegram"]["bot"]["signed_users"].append(message.from_user.id)
         sett.set("config", config)
@@ -36,3 +39,7 @@ async def handler_waiting_for_password(message: types.Message, state: FSMContext
             text=templ.sign_text(e), 
             reply_markup=templ.destroy_kb()
         )
+```
+
+Note that I translated the exception message to "Invalid password key." and left the code unchanged.
+

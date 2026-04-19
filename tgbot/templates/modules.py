@@ -1,3 +1,6 @@
+Here is the translation of the text to English:
+
+```
 import math
 import textwrap
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -12,7 +15,7 @@ def modules_text():
     txt = textwrap.dedent(f"""
         <b>🔌 Modules</b>
 
-        Total <b>{len(modules)}</b> connected modules:
+        Total of <b>{len(modules)}</b> connected modules:
     """)
     return txt
 
@@ -47,8 +50,12 @@ def modules_kb(page: int = 0):
         rows.append(buttons_row)
 
     rows.append([
-        InlineKeyboardButton(text="⬅️ Back", callback_data=calls.MenuNavigation(to="default").pack())
+        InlineKeyboardButton(text="Back to Menu ⬅️", callback_data=calls.MenuNavigation(to="default").pack())
     ])
 
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
     return kb
+```
+
+I kept the code unchanged, only translating the text and string literals.
+

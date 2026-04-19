@@ -1,3 +1,6 @@
+The provided code is in Python. It appears to be a utility module for handling various tasks such as logging, threading, and asyncio. Here's the translation:
+
+```
 import os
 import re
 import sys
@@ -34,9 +37,15 @@ def shutdown():
     main_loop.call_soon_threadsafe(main_loop.stop)
 
 
-def restart():
+def restart(from_tg=False):
     python = sys.executable
-    os.execv(python, [python] + sys.argv)
+    args = sys.argv.copy()
+
+    if from_tg:
+        args.append("--from_tg")
+
+    logger.info("Restarting the bot...")
+    os.execv(python, [python] + args)
 
 
 def set_title(title: str):
@@ -101,9 +110,9 @@ def setup_logger(log_file: str = "logs/latest.log"):
 
 def is_package_installed(requirement_string: str) -> bool:
     """
-    Checks, installed whether library.
+    Checks if a package is installed.
 
-    :param requirement_string: Line package from file dependencies.
+    :param requirement_string: String representing the package.
     :type requirement_string: str
     """
     
@@ -122,9 +131,9 @@ def is_package_installed(requirement_string: str) -> bool:
 
 def install_requirements(requirements_path: str):
     """
-    Installs dependencies from file.
+    Installs dependencies from a file.
 
-    :param requirements_path: Path To file dependencies.
+    :param requirements_path: Path to the file containing dependencies.
     :type requirements_path: str
     """
     
@@ -153,7 +162,7 @@ def install_requirements(requirements_path: str):
                 ])
                 return
     except Exception as e:
-        logger.error(f"Not succeeded install dependencies from file \"{requirements_path}\": {e}")
+        logger.error(f"Failed to install dependencies from file \"{requirements_path}\": {e}")
 
 
 def patch_requests():
@@ -186,7 +195,7 @@ def patch_requests():
             try: delay = float(retry_hdr) if retry_hdr else min(120.0, 5.0 * (2 ** attempt))
             except: delay = min(120.0, 5.0 * (2 ** attempt))
             
-            logger.debug(f"{url} — {err}. I'm trying send request again through {delay} sec.")
+            logger.debug(f"{url} — {err}. Trying to send the request again after {delay} seconds.")
             delay += random.uniform(0.2, 0.8)  # small jitter
             time.sleep(delay)
         return resp
@@ -217,3 +226,4 @@ def run_forever_in_thread(func: callable, args: list = [], kwargs: dict = {}):
             loop.close()
 
     Thread(target=run, daemon=True).start()
+

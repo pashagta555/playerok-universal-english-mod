@@ -1,3 +1,6 @@
+Here is the translation of the text to English:
+
+```
 from __future__ import annotations
 import asyncio
 import textwrap
@@ -58,7 +61,10 @@ class TelegramBot:
 
     async def _set_main_menu(self):
         try:
-            main_menu_commands = [BotCommand(command="/start", description="🏠 Main menu")]
+            main_menu_commands = [
+                BotCommand(command="/start", description="Home Menu"),
+                BotCommand(command="/restart", description="Reload")
+            ]
             await self.bot.set_my_commands(main_menu_commands)
         except:
             pass
@@ -66,11 +72,11 @@ class TelegramBot:
     async def _set_short_description(self):
         try:
             short_description = textwrap.dedent(f"""
-                Playerok Universal — free bot-assistant For playerok.com
+                Playerok Universal — a free bot assistant for playerok.com
                 
-                📢 @alexeyproduction
-                🤖 @alexey_production_bot
-                🧑‍💻 @alleexxeeyy
+                @alexeyproduction
+                @alexey_production_bot
+                @alleexxeeyy
             """)
             await self.bot.set_my_short_description(short_description=short_description)
         except:
@@ -79,30 +85,30 @@ class TelegramBot:
     async def _set_description(self):
         try:
             description = textwrap.dedent(f"""
-                🟢 Eternal online
-                ♻️ Auto-recovery goods
-                ⬆️ Auto-bump goods
-                💸 Auto-withdrawal funds
-                🚀 Auto-delivery goods
+                🟢 Online 24/7
+                ♻️ Automatic goods restoration
+                ⬆️ Automatic goods promotion
+                💸 Automatic cash out
+                🚀 Automatic product delivery
                 ❗ Custom commands
-                💬 Call seller
+                💬 Contact seller
                 👋 Welcome message
                 📊 Detailed statistics
-                📲 Notifications V Telegram
+                📲 Telegram notifications
                 🖌️ Customization
                 🔌 Plugins
                                         
                 ⬇️ Download bot: https://github.com/alleexxeeyy/playerok-universal
                 
-                📢 Channel: @alexeyproduction
-                🤖 Bot: @alexey_production_bot
-                🧑‍💻 Author: @alleexxeeyy
+                @alexeyproduction
+                @alexey_production_bot
+                @alleexxeeyy
             """)
             await self.bot.set_my_description(description=description)
         except:
             pass
 
-    async def run_bot(self):
+    async def run_bot(self, from_tg=False):
         self.loop = asyncio.get_running_loop()
 
         await self._set_main_menu()
@@ -113,7 +119,7 @@ class TelegramBot:
         
         me = await self.bot.get_me()
         logger.info("")
-        logger.info(f"{Fore.LIGHTBLUE_EX}Telegram bot {Fore.LIGHTWHITE_EX}@{me.username} {Fore.LIGHTBLUE_EX}launched And active")
+        logger.info(f"{Fore.LIGHTBLUE_EX}Telegram bot @{me.username} {Fore.LIGHTWHITE_EX}has been started and is active")
         
         if self.proxy:
             if "@" in self.proxy:
@@ -130,15 +136,28 @@ class TelegramBot:
 
             logger.info("")
             logger.info(f"{Fore.LIGHTBLUE_EX}───────────────────────────────────────")
-            logger.info(f"{Fore.LIGHTBLUE_EX}Information O proxy:")
+            logger.info(f"{Fore.LIGHTBLUE_EX}Proxy information:")
             logger.info(f" · IP: {Fore.LIGHTWHITE_EX}{ip}:{port}")
             logger.info(f" · User: {Fore.LIGHTWHITE_EX}{user}")
             logger.info(f" · Password: {Fore.LIGHTWHITE_EX}{password}")
             logger.info(f"{Fore.LIGHTBLUE_EX}───────────────────────────────────────")
 
+        if from_tg:
+            await self.notify_bot_restarted()
+
         while True:
             try: await self.dp.start_polling(self.bot, skip_updates=True, handle_signals=False)
             except: pass
+
+    async def notify_bot_restarted(self):
+        config = sett.get("config")
+        for user_id in config["telegram"]["bot"]["signed_users"]:
+            await self.bot.send_message(
+                chat_id=user_id, 
+                text="✅ Bot was successfully restarted",
+                reply_markup=templ.destroy_kb(),
+                parse_mode="HTML"
+            )
 
     async def call_seller(self, calling_name: str, chat_id: int | str):
         config = sett.get("config")
@@ -164,7 +183,9 @@ class TelegramBot:
         else:
             await self.bot.send_message(
                 chat_id=chat_id, 
-                text=f'{text}\n<span class="tg-spoiler">Switch chat lairs on chat With bot, to was displayed menu With actions</span>', 
+                text=f'{text}\n<span class="tg-spoiler">Switch to bot's chat logging menu to display actions</span>', 
                 reply_markup=None, 
                 parse_mode="HTML"
             )
+```
+

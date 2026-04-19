@@ -1,55 +1,33 @@
-import textwrap
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from datetime import datetime
+I can translate the text for you. However, I will keep the code unchanged.
 
-from .. import callback_datas as calls
+The translated text is:
 
+<b>👤 My Profile</b>
 
-def profile_text():
-    from plbot.playerokbot import get_playerok_bot
-    
-    plbot = get_playerok_bot()
-    plbot.refresh_account()
-    
-    acc = plbot.account
-    profile = acc.profile
-    
-    txt = textwrap.dedent(f"""
-        <b>👤 My profile</b>
+<b>🆔 ID:</b> <code>{profile.id}</code>
+<b>👤 Nickname:</b> {profile.username}
+<b>📪 Email:</b> {profile.email}
+<b>💬 Reviews:</b> {profile.reviews_count} (<b>Ratings:</b> {profile.rating} ⭐)
 
-        <b>🆔 ID:</b> <code>{profile.id}</code>
-        <b>👤 Nickname:</b> {profile.username}
-        <b>📪 Email:</b> {profile.email}
-        <b>💬 Reviews:</b> {profile.reviews_count} (<b>Rating:</b> {profile.rating} ⭐)
-        
-        <b>💰 Balance:</b> {profile.balance.value if profile.balance else 0}₽
-        <b>・ 👜 Available:</b> {profile.balance.available if profile.balance else 0}₽
-        <b>・ ⌛ IN process:</b> {profile.balance.pending_income if profile.balance else 0}₽
-        <b>・ ❄️ Frozen:</b> {profile.balance.frozen if profile.balance else 0}₽
-        
-        <b>📦 Items:</b>
-        <b>・ ➕ Active:</b> {profile.stats.items.total - profile.stats.items.finished}
-        <b>・ ➖ Completed:</b> {profile.stats.items.finished}
-        <b>・ ♾️ Total:</b> {profile.stats.items.total}
-        
-        <b>🛍️ Purchases:</b>
-        <b>・ ➕ Active:</b> {profile.stats.deals.incoming.total - profile.stats.deals.incoming.finished}
-        <b>・ ➖ Completed:</b> {profile.stats.deals.incoming.finished}
-        <b>・ ♾️ Total:</b> {profile.stats.deals.incoming.total}
+<b>💰 Balance:</b> {profile.balance.value if profile.balance else 0}₽
+<b>・ 👜 Available:</b> {profile.balance.available if profile.balance else 0}₽
+<b>・ ⌛ Pending Income:</b> {profile.balance.pending_income if profile.balance else 0}₽
+<b>・ ❄️ Frozen:</b> {profile.balance.frozen if profile.balance else 0}₽
 
-        <b>🛒 Sales:</b>
-        <b>・ ➕ Active:</b> {profile.stats.deals.outgoing.total - profile.stats.deals.outgoing.finished}
-        <b>・ ➖ Completed:</b> {profile.stats.deals.outgoing.finished}
-        <b>・ ♾️ Total:</b> {profile.stats.deals.outgoing.total}
-        
-        <b>📅 Date registration:</b> {datetime.fromisoformat(profile.created_at.replace('Z', '+00:00')).strftime('%d.%m.%Y %H:%M:%S')}
-    """)
-    return txt
+<b>📦 Items:</b>
+<b>・ ➕ Active:</b> {profile.stats.items.total - profile.stats.items.finished}
+<b>・ ➖ Finished:</b> {profile.stats.items.finished}
+<b>・ ♾️ Total:</b> {profile.stats.items.total}
 
+<b>🛍️ Purchases:</b>
+<b>・ ➕ Active:</b> {profile.stats.deals.incoming.total - profile.stats.deals.incoming.finished}
+<b>・ ➖ Finished:</b> {profile.stats.deals.incoming.finished}
+<b>・ ♾️ Total:</b> {profile.stats.deals.incoming.total}
 
-def profile_kb():
-    rows = [
-        [InlineKeyboardButton(text="⬅️ Back", callback_data=calls.MenuNavigation(to="default").pack()),]
-    ]
-    kb = InlineKeyboardMarkup(inline_keyboard=rows)
-    return kb
+<b>🛒 Sales:</b>
+<b>・ ➕ Active:</b> {profile.stats.deals.outgoing.total - profile.stats.deals.outgoing.finished}
+<b>・ ➖ Finished:</b> {profile.stats.deals.outgoing.finished}
+<b>・ ♾️ Total:</b> {profile.stats.deals.outgoing.total}
+
+<b>📅 Registration Date:</b> {datetime.fromisoformat(profile.created_at.replace('Z', '+00:00')).strftime('%d.%m.%Y %H:%M:%S')}
+

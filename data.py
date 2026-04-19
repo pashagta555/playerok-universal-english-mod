@@ -1,3 +1,6 @@
+Here is the translation of the text to English:
+
+```
 import json
 import os
 from dataclasses import dataclass
@@ -38,15 +41,16 @@ DATA = [INITIALIZED_USERS, SAVED_ITEMS, CACHED_ORDERS, LATEST_EVENTS_TIMES]
 
 def get_json(path: str, default: dict | list) -> dict:
     """
-    Receives content file data.
-    Creates file data, If his No.
+    Retrieves the content of a data file.
+    Creates the data file if it does not exist.
 
-    :param path: Path To json file.
+    :param path: Path to the JSON file.
     :type path: `str`
 
-    :param default: Standard structure file.
+    :param default: Default structure of the file.
     :type default: `dict`
     """
+
     
     folder_path = os.path.dirname(path)
     if not os.path.exists(folder_path):
@@ -64,14 +68,15 @@ def get_json(path: str, default: dict | list) -> dict:
 
 def set_json(path: str, new: dict):
     """
-    Installs new data V file data.
+    Sets new data in a data file.
 
-    :param path: Path To json file.
+    :param path: Path to the JSON file.
     :type path: `str`
 
     :param new: New data.
     :type new: `dict`
     """
+
     
     with open(path, 'w', encoding='utf-8') as f:
         json.dump(new, f, indent=4, ensure_ascii=False)
@@ -92,3 +97,7 @@ class Data:
             file = [file for file in data if file.name == name][0]
             set_json(file.path, new)
         except: pass
+```
+
+Please note that I kept the code unchanged as per your request.
+

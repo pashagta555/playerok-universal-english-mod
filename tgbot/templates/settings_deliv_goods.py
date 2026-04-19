@@ -1,3 +1,6 @@
+I'll translate the text, keeping the code unchanged. Here is the translation:
+
+```
 import math
 import textwrap
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -10,9 +13,9 @@ from .. import callback_datas as calls
 def settings_deliv_goods_text(index=0):
     goods = sett.get("auto_deliveries")[index].get("goods", [])
     txt = textwrap.dedent(f"""
-        <b>📦 Goods auto-issuance</b>
+        <b>📦 Deliveries</b>
 
-        Total <b>{len(goods)}</b> goods:
+        Total of <b>{len(goods)}</b> goods:
     """)
     return txt
 
@@ -58,7 +61,7 @@ def settings_deliv_goods_kb(index=0, page=0):
 
 def settings_deliv_goods_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>📦 Goods auto-issuance</b>
+        <b>📦 Deliveries</b>
         \n{placeholder}
     """)
     return txt
@@ -66,7 +69,11 @@ def settings_deliv_goods_float_text(placeholder: str):
 
 def settings_new_deliv_goods_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>➕📦 Addition goods</b>
+        <b>➕📦 Adding a new delivery item</b>
         \n{placeholder}
     """)
     return txt
+```
+
+Note that I translated the Russian text to English, and kept the code structure and syntax unchanged.
+

@@ -1,3 +1,5 @@
+Here is the translation to English:
+
 from aiogram import Router
 
 from .commands import router as commands_router
@@ -12,7 +14,6 @@ from .states_bump import router as states_bump_router
 from .states_comms import router as states_comms_router
 from .states_delivs import router as states_delivs_router
 
-
 router = Router()
 router.include_routers(
     commands_router,
@@ -26,3 +27,6 @@ router.include_routers(
     states_comms_router,
     states_delivs_router
 )
+
+Note: The code remains unchanged.
+

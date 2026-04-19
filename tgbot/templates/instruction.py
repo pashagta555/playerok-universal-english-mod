@@ -1,3 +1,6 @@
+Here is the translation of the text to English, keeping the code unchanged:
+
+```
 import textwrap
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -6,7 +9,7 @@ from .. import callback_datas as calls
         
 def instruction_text():
     txt = textwrap.dedent(f"""
-        <b>📖 Instructions</b>
+        <b>📖 Instruction</b>
     """)
     return txt
 
@@ -24,8 +27,8 @@ def instruction_comms_text():
     txt = textwrap.dedent(f"""
         <b>⌨️ Commands</b>
                           
-        ・ <code>!teams</code> — displays menu With accessible For buyer teams
-        ・ <code>!seller</code> — notifies And causes seller V dialogue With buyer (writes to you V Telegram message With request O help)
+        ・ <code>!commands</code> — displays a menu with available commands for the customer
+        ・ <code>!seller</code> — notifies and summons the seller to dialogue with the customer (sends you a Telegram message asking for help)
     """)
     return txt
 
@@ -34,3 +37,5 @@ def instruction_comms_kb():
     rows = [[InlineKeyboardButton(text="⬅️ Back", callback_data=calls.InstructionNavigation(to="default").pack())]]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
     return kb
+```
+

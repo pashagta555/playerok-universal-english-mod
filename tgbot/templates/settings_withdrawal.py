@@ -1,3 +1,6 @@
+I will translate the provided Python code to English, keeping the code unchanged. Here is the translation:
+
+```
 import textwrap
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -10,7 +13,7 @@ from .. import callback_datas as calls
 def settings_withdrawal_text(card: UserBankCard = None, sbp_bank: SBPBankMember = None):
     config = sett.get("config")
     
-    enabled = "🟢 Included" if config["playerok"]["auto_withdrawal"]["enabled"] else "🔴 Off"
+    enabled = "🟢 Enabled" if config["playerok"]["auto_withdrawal"]["enabled"] else "🔴 Disabled"
     interval = config["playerok"]["auto_withdrawal"]["interval"]
     usdt_address = config["playerok"]["auto_withdrawal"]["usdt_address"]
     
@@ -23,18 +26,18 @@ def settings_withdrawal_text(card: UserBankCard = None, sbp_bank: SBPBankMember 
     elif usdt_address: 
         details = f"{usdt_address} (USDT TRC20)"
     else: 
-        details = "Not indicated"
+        details = "Not specified"
     
     txt = textwrap.dedent(f"""
         <b>💸 Auto-withdrawal</b>
 
-        <b>🔃 Auto-withdrawal funds:</b> {enabled}
+        <b>🔃 Auto-withdrawal enabled:</b> {enabled}
         <b>⏱️ Interval:</b> {interval} sec.
 
         <b>💳 Details:</b> {details}
 
-        <b>What such auto-conclusion funds?</b>
-        Bot will automatically With specified interval create conclusion everyone funds on account By specified details
+        <b>What is auto-withdrawal?</b>
+        The bot will automatically create withdrawals of all funds on the account with the specified interval and details
     """)
     return txt
 
@@ -42,7 +45,7 @@ def settings_withdrawal_text(card: UserBankCard = None, sbp_bank: SBPBankMember 
 def settings_withdrawal_kb(card: UserBankCard = None, sbp_bank: SBPBankMember = None):
     config = sett.get("config")
     
-    enabled = "🟢 Included" if config["playerok"]["auto_withdrawal"]["enabled"] else "🔴 Off"
+    enabled = "🟢 Enabled" if config["playerok"]["auto_withdrawal"]["enabled"] else "🔴 Disabled"
     interval = config["playerok"]["auto_withdrawal"]["interval"]
     usdt_address = config["playerok"]["auto_withdrawal"]["usdt_address"]
     
@@ -55,10 +58,10 @@ def settings_withdrawal_kb(card: UserBankCard = None, sbp_bank: SBPBankMember = 
     elif usdt_address: 
         details = f"{usdt_address} (USDT TRC20)"
     else: 
-        details = "Not indicated"
+        details = "Not specified"
 
     rows = [
-        [InlineKeyboardButton(text=f"🔃 Auto-withdrawal funds: {enabled}", callback_data="switch_auto_withdrawal_enabled")],
+        [InlineKeyboardButton(text=f"🔃 Auto-withdrawal enabled: {enabled}", callback_data="switch_auto_withdrawal_enabled")],
         [InlineKeyboardButton(text=f"⏱️ Interval: {interval} sec.", callback_data="enter_auto_withdrawal_interval")],
         [InlineKeyboardButton(text=f"💳 Details: {details}", callback_data=calls.BankCardsPagination(page=0).pack())],
         [InlineKeyboardButton(text="⬅️ Back", callback_data=calls.SettingsNavigation(to="default").pack())]
@@ -73,3 +76,5 @@ def settings_withdrawal_float_text(placeholder: str):
         \n{placeholder}
     """)
     return txt
+```
+

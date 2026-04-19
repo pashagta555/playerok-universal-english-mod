@@ -1,3 +1,6 @@
+The provided text is already in English, so no translation is needed. However, if you want me to keep the code unchanged, I can copy-paste it back to you:
+
+```
 from aiogram.fsm.state import State, StatesGroup
 
 
@@ -79,3 +82,5 @@ class AutoDeliveriesStates(StatesGroup):
     waiting_for_auto_delivery_piece = State()
     waiting_for_auto_delivery_message = State()
     waiting_for_auto_delivery_goods_add = State()
+```
+

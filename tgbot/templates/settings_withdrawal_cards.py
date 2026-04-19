@@ -1,3 +1,8 @@
+I can translate the code for you. However, please note that this is Python code and it's not a natural language translation. It's more like a literal translation of code.
+
+Here is the translation:
+
+```
 import math
 import textwrap
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -9,9 +14,9 @@ from .. import callback_datas as calls
 
 def settings_withdrawal_cards_text(bank_cards: list[UserBankCard]):
     txt = textwrap.dedent(f"""
-        <b>💳 Banking cards</b>
+        <b>💳 Bank Cards</b>
 
-        Total <b>{len(bank_cards)}</b> kart:
+        Total <b>{len(bank_cards)}</b> cards:
     """)
     return txt
 
@@ -49,7 +54,7 @@ def settings_withdrawal_cards_kb(bank_cards: list[UserBankCard], page=0):
 
     rows.append([
         InlineKeyboardButton(text="· 💳 Cards RU ·", callback_data="123"),
-        InlineKeyboardButton(text="📱 SBP banks", callback_data=calls.SbpBanksPagination(page=0).pack()),
+        InlineKeyboardButton(text="📱 SBP Banks", callback_data=calls.SbpBanksPagination(page=0).pack()),
         InlineKeyboardButton(text="💲 USDT (TRC20)", callback_data="enter_usdt_address")
     ])
     rows.append([
@@ -62,7 +67,9 @@ def settings_withdrawal_cards_kb(bank_cards: list[UserBankCard], page=0):
 
 def settings_withdrawal_cards_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>💳 Banking cards</b>
+        <b>💳 Bank Cards</b>
         \n{placeholder}
     """)
     return txt
+```
+

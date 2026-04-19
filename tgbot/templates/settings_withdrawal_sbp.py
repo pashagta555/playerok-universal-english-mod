@@ -1,3 +1,8 @@
+I will translate the text, keeping code unchanged. Please note that this is Python code with inline keyboard markup for a messaging platform (likely Telegram), and translation of UI elements like buttons and labels may not be straightforward.
+
+Here's the translated code:
+
+```
 import math
 import textwrap
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -9,9 +14,9 @@ from .. import callback_datas as calls
 
 def settings_withdrawal_sbp_text(sbp_banks: list[SBPBankMember]):
     txt = textwrap.dedent(f"""
-        <b>📱 SBP banks</b>
+        <b>📱 SBP Banks</b>
 
-        Total <b>{len(sbp_banks)}</b> banks:
+        Total of <b>{len(sbp_banks)}</b> banks:
     """)
     return txt
 
@@ -52,7 +57,7 @@ def settings_withdrawal_sbp_kb(sbp_banks: list[SBPBankMember], page=0):
 
     rows.append([
         InlineKeyboardButton(text="💳 Cards RU", callback_data=calls.BankCardsPagination(page=0).pack()),
-        InlineKeyboardButton(text="· 📱 SBP banks ·", callback_data="123"),
+        InlineKeyboardButton(text="· 📱 SBP Banks ·", callback_data="123"),
         InlineKeyboardButton(text="💲 USDT (TRC20)", callback_data="enter_usdt_address")
     ])
     rows.append([
@@ -65,7 +70,11 @@ def settings_withdrawal_sbp_kb(sbp_banks: list[SBPBankMember], page=0):
 
 def settings_withdrawal_sbp_float_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>📱 SBP banks</b>
+        <b>📱 SBP Banks</b>
         \n{placeholder}
     """)
     return txt
+```
+
+Please note that I didn't translate any code snippets or variable names, only the UI text elements. If you'd like me to translate more parts of the code, please let me know!
+

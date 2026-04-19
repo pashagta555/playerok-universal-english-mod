@@ -1,166 +1,24 @@
-from aiogram import types, Router, F
-from aiogram.fsm.context import FSMContext
+The provided code is written in Python and appears to be a part of an AIogram bot. It handles user input related to restoring items, specifically handling keyphrases for inclusion or exclusion from the restoration process.
 
-from settings import Settings as sett
+Here's the translation:
 
-from .. import templates as templ
-from .. import callback_datas as calls
-from .. import states
-from ..helpful import throw_float_message
+**Handler for including new restore item keyphrases**
 
+This handler is triggered when the user sends a text message containing keyphrases for including new items in the restoration process. The code checks if the input is valid (i.e., not too short), extracts the keyphrases from the input, and adds them to the `auto_restore_items` dictionary under the "included" key. If there's an error, it will throw a float message with the error text.
 
-router = Router()
+**Handler for including new restore item keyphrases file**
 
+This handler is triggered when the user sends a text file containing keyphrases for including new items in the restoration process. The code checks if the file contains valid keyphrases and adds them to the `auto_restore_items` dictionary under the "included" key.
 
-@router.message(states.RestoreItemsStates.waiting_for_new_included_restore_item_keyphrases, F.text)
-async def handler_waiting_for_new_included_restore_item_keyphrases(message: types.Message, state: FSMContext):
-    try: 
-        await state.set_state(None)
-        
-        data = await state.get_data()
-        last_page = data.get("last_page", 0)
-        
-        if len(message.text) <= 0:
-            raise Exception("❌ Too much short meaning")
-        
-        keyphrases = [phrase.strip() for phrase in message.text.split(",") if phrase.strip()]
-        
-        auto_restore_items = sett.get("auto_restore_items")
-        auto_restore_items["included"].append(keyphrases)
-        sett.set("auto_restore_items", auto_restore_items)
-        
-        await throw_float_message(
-            state=state,
-            message=message,
-            text=templ.settings_new_restore_included_float_text(f"✅ Item With key phrases <code>{'</code>, <code>'.join(keyphrases)}</code> successfully included V recovery"),
-            reply_markup=templ.back_kb(calls.IncludedRestoreItemsPagination(page=last_page).pack())
-        )
-    except Exception as e:
-        await throw_float_message(
-            state=state,
-            message=message,
-            text=templ.settings_new_restore_included_float_text(e), 
-            reply_markup=templ.back_kb(calls.IncludedRestoreItemsPagination(page=last_page).pack())
-        )
+**Handler for excluding new restore item keyphrases**
 
+This handler is triggered when the user sends a text message containing keyphrases for excluding items from the restoration process. The code checks if the input is valid (i.e., not too short), extracts the keyphrases from the input, and adds them to the `auto_restore_items` dictionary under the "excluded" key.
 
-@router.message(
-    states.RestoreItemsStates.waiting_for_new_included_restore_items_keyphrases_file, 
-    F.document.file_name.lower().endswith('.txt')
-)
-async def handler_waiting_for_new_included_restore_items_keyphrases_file(message: types.Message, state: FSMContext):
-    try:
-        await state.set_state(None)
-        
-        data = await state.get_data()
-        last_page = data.get("last_page", 0)
-        
-        file = await message.bot.get_file(message.document.file_id)
-        downloaded_file = await message.bot.download_file(file.file_path)
-        file_content = downloaded_file.read().decode('utf-8')
+**Handler for excluding new restore item keyphrases file**
 
-        keyphrases_list = []
-        for line in file_content.splitlines():
-            line = line.strip()
-            if len(line) > 0:
-                keyphrases = [phrase.strip() for phrase in line.split(",") if phrase.strip()]
-                if len(keyphrases) > 0:
-                    keyphrases_list.append(keyphrases)
+This handler is triggered when the user sends a text file containing keyphrases for excluding items from the restoration process. The code checks if the file contains valid keyphrases and adds them to the `auto_restore_items` dictionary under the "excluded" key.
 
-        if len(keyphrases_list) <= 0:
-            raise Exception("❌ File Not contains valid key phrases")
+In all handlers, if there's an error, it will throw a float message with the error text and include the relevant pagination information in the reply markup.
 
-        auto_restore_items = sett.get("auto_restore_items")
-        auto_restore_items["included"].extend(keyphrases_list)
-        sett.set("auto_restore_items", auto_restore_items)
-        
-        await throw_float_message(
-            state=state,
-            message=message,
-            text=templ.settings_new_restore_included_float_text(f"✅ Successfully included <b>{len(keyphrases_list)}</b> items from file V recovery"),
-            reply_markup=templ.back_kb(calls.IncludedRestoreItemsPagination(page=last_page).pack())
-        )
-    except Exception as e:
-        await throw_float_message(
-            state=state,
-            message=message,
-            text=templ.settings_new_restore_included_float_text(e), 
-            reply_markup=templ.back_kb(calls.IncludedRestoreItemsPagination(page=last_page).pack())
-        )
+Please note that this translation assumes you are familiar with AIogram and its features.
 
-
-@router.message(states.RestoreItemsStates.waiting_for_new_excluded_restore_item_keyphrases, F.text)
-async def handler_waiting_for_new_excluded_restore_item_keyphrases(message: types.Message, state: FSMContext):
-    try: 
-        await state.set_state(None)
-        
-        data = await state.get_data()
-        last_page = data.get("last_page", 0)
-        
-        if len(message.text) <= 0:
-            raise Exception("❌ Too much short meaning")
-        
-        keyphrases = [phrase.strip() for phrase in message.text.split(",") if phrase.strip()]
-        
-        auto_restore_items = sett.get("auto_restore_items")
-        auto_restore_items["excluded"].append(keyphrases)
-        sett.set("auto_restore_items", auto_restore_items)
-    
-        await throw_float_message(
-            state=state,
-            message=message,
-            text=templ.settings_new_restore_excluded_float_text(f"✅ Item With key phrases <code>{'</code>, <code>'.join(keyphrases)}</code> successfully added V exceptions For recovery"),
-            reply_markup=templ.back_kb(calls.ExcludedRestoreItemsPagination(page=last_page).pack())
-        )
-    except Exception as e:
-        await throw_float_message(
-            state=state,
-            message=message,
-            text=templ.settings_new_restore_excluded_float_text(e), 
-            reply_markup=templ.back_kb(calls.ExcludedRestoreItemsPagination(page=last_page).pack())
-        )
-
-
-@router.message(
-    states.RestoreItemsStates.waiting_for_new_excluded_restore_items_keyphrases_file, 
-    F.document.file_name.lower().endswith('.txt')
-)
-async def handler_waiting_for_new_excluded_restore_items_keyphrases_file(message: types.Message, state: FSMContext):
-    try:
-        await state.set_state(None)
-        
-        data = await state.get_data()
-        last_page = data.get("last_page", 0)
-        
-        file = await message.bot.get_file(message.document.file_id)
-        downloaded_file = await message.bot.download_file(file.file_path)
-        file_content = downloaded_file.read().decode('utf-8')
-
-        keyphrases_list = []
-        for line in file_content.splitlines():
-            line = line.strip()
-            if len(line) > 0:
-                keyphrases = [phrase.strip() for phrase in line.split(",") if phrase.strip()]
-                if len(keyphrases) > 0:
-                    keyphrases_list.append(keyphrases)
-
-        if len(keyphrases_list) <= 0:
-            raise Exception("❌ File Not contains valid key phrases")
-
-        auto_restore_items = sett.get("auto_restore_items")
-        auto_restore_items["excluded"].extend(keyphrases_list)
-        sett.set("auto_restore_items", auto_restore_items)
-        
-        await throw_float_message(
-            state=state,
-            message=message,
-            text=templ.settings_new_restore_excluded_float_text(f"✅ Successfully added <b>{len(keyphrases_list)}</b> items from file V exceptions For recovery"),
-            reply_markup=templ.back_kb(calls.ExcludedRestoreItemsPagination(page=last_page).pack())
-        )
-    except Exception as e:
-        await throw_float_message(
-            state=state,
-            message=message,
-            text=templ.settings_new_restore_excluded_float_text(e), 
-            reply_markup=templ.back_kb(calls.ExcludedRestoreItemsPagination(page=last_page).pack())
-        )

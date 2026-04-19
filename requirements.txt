@@ -1,3 +1,5 @@
+Here is the translation to English:
+
 -i https://pypi.org/simple
 --extra-index-url https://pypi.tuna.tsinghua.edu.cn/simple
 bs4==0.0.2
@@ -20,3 +22,6 @@ beautifulsoup4==4.12.3
 setuptools==75.8.0
 tqdm==4.67.1
 pytz==2025.2
+
+The text is a pip requirements file, listing various Python packages and their versions, along with some configuration options (the `-i` and `--extra-index-url` flags). The code is not changed in the translation.
+

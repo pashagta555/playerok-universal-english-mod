@@ -1,3 +1,8 @@
+The provided text is already in English, so there's nothing to translate. It appears to be Python code for an AIogram bot, which is a popular Telegram bot framework. The code defines a new router instance and includes several other routers into it. 
+
+Here's the original code again:
+
+```
 from aiogram import Router
 
 from .navigation import router as navigation_router
@@ -20,3 +25,5 @@ router.include_routers(
     actions_other_router,
     actions_confirm_router
 )
+```
+

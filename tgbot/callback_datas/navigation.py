@@ -1,3 +1,5 @@
+Here is the translation:
+
 from aiogram.filters.callback_data import CallbackData
 
 
@@ -19,3 +21,6 @@ class ItemsSettingsNavigation(CallbackData, prefix="ispag"):
 
 class InstructionNavigation(CallbackData, prefix="inspag"):
     to: str
+
+(No changes)
+

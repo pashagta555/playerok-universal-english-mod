@@ -1,3 +1,6 @@
+I'll translate the text without changing any code. Here it is:
+
+```
 import textwrap
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -56,8 +59,8 @@ def log_new_mess_kb(username: str):
 def log_new_deal_kb(username: str, deal_id: str):
     rows = [[
         InlineKeyboardButton(text="💬 Write", callback_data=calls.RememberUsername(name=username, do="send_mess").pack()),
-        InlineKeyboardButton(text="☑️ Completed", callback_data=calls.RememberDealId(de_id=deal_id, do="complete").pack()),
-        InlineKeyboardButton(text="📦 Return", callback_data=calls.RememberDealId(de_id=deal_id, do="refund").pack())
+        InlineKeyboardButton(text="☑️ Complete", callback_data=calls.RememberDealId(de_id=deal_id, do="complete").pack()),
+        InlineKeyboardButton(text="📦 Refund", callback_data=calls.RememberDealId(de_id=deal_id, do="refund").pack())
     ]]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
     return kb
@@ -65,7 +68,7 @@ def log_new_deal_kb(username: str, deal_id: str):
 
 def log_new_review_kb(username: str, deal_id: str):
     rows = [[
-        InlineKeyboardButton(text="💬🌟 Answer on review", callback_data=calls.RememberDealId(de_id=deal_id, do="answer_rev").pack()),
+        InlineKeyboardButton(text="💬🌟 Answer review", callback_data=calls.RememberDealId(de_id=deal_id, do="answer_rev").pack()),
         InlineKeyboardButton(text="💬 Write", callback_data=calls.RememberUsername(name=username, do="send_mess").pack())
     ]]
     kb = InlineKeyboardMarkup(inline_keyboard=rows)
@@ -74,7 +77,7 @@ def log_new_review_kb(username: str, deal_id: str):
 
 def sign_text(placeholder: str):
     txt = textwrap.dedent(f"""
-        <b>🔐 Authorization</b>
+        <b>🔐 Sign in</b>
         \n{placeholder}
     """)
     return txt
@@ -82,7 +85,9 @@ def sign_text(placeholder: str):
 
 def call_seller_text(calling_name, chat_link):
     txt = textwrap.dedent(f"""
-        🆘 <b>{calling_name}</b> required yours help!
+        🆘 <b>{calling_name}</b> needs your help!
         {chat_link}
     """)
     return txt
+```
+
