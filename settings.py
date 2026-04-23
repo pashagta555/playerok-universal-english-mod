@@ -20,7 +20,7 @@ need_restore =True ,
 default ={
 'playerok':{
 'api':{
-'token':'',
+'cookies':'',
 'user_agent':'',
 'proxy':'',
 'requests_timeout':30 

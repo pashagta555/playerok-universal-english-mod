@@ -65,7 +65,7 @@ class TransactionOperations (Enum ):
     MANUAL_BALANCE_INCREASE =6 
     'Credit to account balance.'
     MANUAL_BALANCE_DECREASE =7 
-    'Write-off from account balance.'
+    'Write off the account balance.'
     REFERRAL_BONUS =8 
     'Invite a friend (referral).'
     STEAM_DEPOSIT =9 

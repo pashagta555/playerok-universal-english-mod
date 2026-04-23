@@ -1,19 +1,13 @@
 import requests 
 
 
-class CloudflareDetectedException (Exception ):
-    'Cloudflare protection detection error when sending request.\n\n    :param response: The response object.\n    :type response: `requests.Response`'
-
-    def __init__ (self ,response :requests .Response ):
-        self .response =response 
-        self .status_code =self .response .status_code 
-        self .html_text =self .response .text 
+class BotCheckDetectedException (Exception ):
+    'Error detecting bot verification when sending a request.\n\n    :param response: The response object.\n    :type response: `requests.Response`'
 
     def __str__ (self ):
         msg =(
-        f"Ошибка: CloudFlare заметил подозрительную активность при отправке запроса на сайт Playerok."
-        f"\nКод ошибки: {self .status_code }"
-        f"\nОтвет: {self .html_text }"
+        'The verification bot noticed suspicious activity when sending a request to the Playerok website.'
+        'To continue working, you need to change the ddg5 parameter to the current one, or change the cookies to the current ones.'
         )
         return msg 
 
@@ -73,3 +67,13 @@ class UnauthorizedError (Exception ):
 
     def __str__ (self ):
         return 'Failed to connect to Playerok account. Maybe you specified the wrong token?'
+
+
+class NotInitiatedError (Exception ):
+    'An exception that is thrown if the Playerok account has not been initialized (the `get()` method has not been called).'
+
+    def __str__ (self ):
+        return (
+        'The Playerok account is not initialized to perform this action.'
+        'Before you do this, call the Account(...).get() method.'
+        )

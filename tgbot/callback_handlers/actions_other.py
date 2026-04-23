@@ -913,7 +913,7 @@ async def callback_send_logs_file (callback :CallbackQuery ,callback_data :calls
     try :
         src_dir =Path (__file__ ).resolve ().parents [2 ]
         logs_file =os .path .join (src_dir ,'logs','latest.log')
-        txt_file =os .path .join (src_dir ,'logs','Error 500 (Server Error)!!1500.That’s an error.There was an error. Please try again later.That’s all we know.')
+        txt_file =os .path .join (src_dir ,'logs','Work log.txt')
 
         if lines >0 :
             with open (logs_file ,'r',encoding ='utf-8')as f :

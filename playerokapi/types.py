@@ -510,7 +510,7 @@ class GameCategoryDataFieldList :
     def __init__ (self ,data_fields :list [GameCategoryDataField ],
     page_info :GameCategoryDataFieldPageInfo ,total_count :int ):
         self .data_fields :list [GameCategoryDataField ]=data_fields 
-        'Fields with data for an item in a category on a page.'
+        'Fields with data for an item in a category on the page.'
         self .page_info :GameCategoryDataFieldPageInfo =page_info 
         'Page information.'
         self .total_count :int =total_count 

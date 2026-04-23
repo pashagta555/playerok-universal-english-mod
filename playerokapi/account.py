@@ -31,7 +31,7 @@ def get_account ()->Account |None :
 
 
 class Account :
-    'A class that describes Playerok account data and methods.\n\n    :param token: Account token.\n    :type token: `str`\n\n    :param user_agent: Browser user agent.\n    :type user_agent: `str`\n\n    :param proxy: IPV4 proxy in the format: `user:pass@ip:port` or `ip:port`, _optional_.\n    :type proxy: `str` or `None`\n\n    :param requests_timeout: Timeout for waiting for responses to requests.\n    :type requests_timeout: `int`\n\n    :param request_max_retries: The maximum number of retries to send a request if CloudFlare protection was detected.\n    :type request_max_retries: `int`'
+    'A class that describes Playerok account data and methods.\n\n    :param token: Account token.\n    :type token: `str` or `None`\n\n    :param ddg5: Cookie to bypass DDoS-Guard protection (full name: `__ddg5_`).\n            \n **Note:** This Cookie "dies" every time:\n            \n - IP changes\n            \n - User-Agent / TLS fingerprint changes\n            \n - the server updated the keys/algorithm\n            \n For the API to work, this Cookie must be taken from the Cookie data of the account whose token you specified, and requests must come from the same IP address under which you logged in to Playerok.\n            \n If it is invalid, requests will throw a `BotCheckDetectedException` exception.\n    :type ddg5: `str` or `None`\n\n    :param user_agent: Browser user agent.\n    :type user_agent: `str` or `None`\n\n    :param cookies: Cookie data of the authorized account. You can specify `token`, `ddg5`, `user_agent` instead of parameters.\n    :type cookies: `str` or `dict[str, str]` or `None`\n\n    :param proxy: IPV4 proxy in the format: `user:pass@ip:port` or `ip:port`, _optional_.\n    :type proxy: `str` or `None`\n\n    :param requests_timeout: Timeout for waiting for responses to requests.\n    :type requests_timeout: `int`\n\n    :param request_max_retries: The maximum number of retries to send a request if CloudFlare protection was detected.\n    :type request_max_retries: `int`'
     def __new__ (cls ,*args ,**kwargs )->Account :
         if not hasattr (cls ,'instance'):
             cls .instance =super (Account ,cls ).__new__ (cls )
@@ -39,23 +39,51 @@ class Account :
 
     def __init__ (
     self ,
-    token :str ,
+    token :str =None ,
+    ddg5 :str =None ,
     user_agent :str ='',
+    cookies :str |dict [str ,str ]=None ,
     proxy :str =None ,
     requests_timeout :int =15 ,
     request_max_retries :int =5 ,
     **kwargs 
     ):
+        if not any ((token ,cookies )):
+            raise TypeError ('One of the required arguments must be specified: token or cookies')
+
         self .token =token 
         'Account session token.'
+
+        self .ddg5 =ddg5 
+        'Cookie to bypass DDoS-Guard protection.'
+
         self .user_agent =user_agent or 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36'
         'Browser user agent.'
+
+        self .cookies =cookies 
+        'Authorized account cookies.'
+
+        if isinstance (cookies ,str ):
+            self .cookies ={
+            c .split ('=')[0 ].strip ():c .split ('=')[1 ].strip ()for c 
+            in cookies .split (';')if c .strip ()and '='in c 
+            }
+
+        if not self .cookies :
+            self .cookies ={
+            'token':self .token ,
+            '__ddg5_':self .ddg5 
+            }
+
         self .requests_timeout =requests_timeout 
         'Timeout waiting for responses to requests.'
+
         self .proxy =proxy 
         'Proxy.'
+
         self .__proxy_string =f"http://{self .proxy .replace ('https://','').replace ('http://','')}"if self .proxy else None 
         'Proxy string.'
+
         self .request_max_retries =request_max_retries 
         'The maximum number of retries to send a request.'
 
@@ -93,6 +121,9 @@ class Account :
         self .profile :AccountProfile |None =None 
         'Account profile (not to be confused with user profile). \n\n_Filled in when get() is used for the first time_'
 
+        self ._is_initiated =False 
+        'Whether the account has been initialized.'
+
         self ._cert_path =os .path .join (os .path .dirname (__file__ ),'cacert.pem')
         self ._tmp_cert_path =os .path .join (tempfile .gettempdir (),'cacert.pem')
         shutil .copyfile (self ._cert_path ,self ._tmp_cert_path )
@@ -110,9 +141,6 @@ class Account :
         verify =self ._tmp_cert_path 
         )
 
-        # under testing...
-    'def refresh_ddg(self):\n        \n        #import easyocr\n        print(1)\n        import CaptchaCracker as cc\n\n        from selenium import webdriver\n        from selenium.webdriver.support.ui import WebDriverWait\n        from selenium.webdriver.support import expected_conditions as EC\n        from selenium.webdriver.common.by import By\n\n        print(2)\n        driver = webdriver.Chrome()\n        driver.get("https://playerok.com")\n        wait = WebDriverWait(driver, 30)\n\n        print(3)\n        iframe = wait.until(\n            EC.presence_of_element_located((By.ID, "ddg-iframe"))\n        )\n        print(4)\n        input()\n        \n        driver.switch_to.frame(iframe)\n\n        st_nums = [\n            int(name.replace("captcha", "").replace(".png", "")) \n             for name in os.listdir("playerokapi/captchas") \n             if name.startswith("captcha")\n        ]\n        st_num = max(st_nums) + 1 if st_nums else 1\n        print("st_num:", st_num) #ddg-captcha__checkbox\n        \n        for i in range(st_num, 1000):\n            print(i)\n            captcha = wait.until(\n                EC.presence_of_element_located((By.CSS_SELECTOR, ".ddg-modal__captcha-image"))\n            )\n\n            print("captcha:", captcha)\n            captcha.screenshot(f"playerokapi/captchas/captcha{i}.png")\n\n            btn = wait.until(\n                EC.presence_of_element_located((By.CSS_SELECTOR, ".ddg-modal__refresh"))\n            )\n            btn.click()\n            time.sleep(3)\n        \n        #result = reader.readtext("captcha.png")\n        #input(result)\n        cookies = driver.get_cookies()\n\n        ddg_cookies = {}\n        for c in cookies:\n            if c["name"].startswith("__ddg"):\n                ddg_cookies[c["name"]] = c["value"]\n\n        input(ddg_cookies)\n\n        driver.quit()'
-
     def request (
     self ,
     method :Literal ['get','post'],
@@ -126,15 +154,15 @@ class Account :
         try :x_gql_op =payload .get ('operationName','viewer')
         except :x_gql_op ='viewer'
         _headers ={
-        'accept':'*/*',
-        'accept-language':'ru,en;q=0.9',
+        'accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+        'accept-language':'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
         'access-control-allow-headers':'sentry-trace, baggage',
         'apollo-require-preflight':'true',
         'apollographql-client-name':'web',
         'content-type':'application/json',
-        'cookie':f"token={self .token }",
-        'origin':'https://playerok.com',
+        'cookie':'; '.join ([f"{k }={v }"for k ,v in self .cookies .items ()]),
         'priority':'u=1, i',
+        'origin':'https://playerok.com',
         'referer':'https://playerok.com/',
         'sec-ch-ua':'"Chromium";v="146", "Not-A.Brand";v="24", "Google Chrome";v="146"',
         'sec-ch-ua-arch':'"x86"',
@@ -193,7 +221,7 @@ class Account :
 
             raise RequestSendingError (url ,err )
 
-        cf_sigs =[
+        sigs =[
         '<title>Just a moment...</title>',
         'window._cf_chl_opt',
         'Enable JavaScript and cookies to continue',
@@ -202,18 +230,16 @@ class Account :
         'Cloudflare Ray ID'
         ]
 
-        for attempt in range (30 ):
-            resp =make_req ()
-            if not any (sig in resp .text for sig in cf_sigs ):
-                break 
+        resp =make_req ()
+        if any (sig in resp .text for sig in sigs ):
+            raise BotCheckDetectedException ()
 
-            self ._refresh_clients ()
-            delay =min (120.0 ,5.0 *(2 **attempt ))
-            logger .warning (f"Cloudflare Detected, пробую отправить запрос снова через {delay } секунд")
-
-            time .sleep (delay )
-        else :
-            raise CloudflareDetectedException (resp )
+        cookie_headers ={
+        v .split ('=')[0 ]:v .split ('=')[1 ].split (';')[0 ]
+        for k ,v in resp .headers .multi_items ()if k .lower ()=='set-cookie'
+        }
+        for k ,v in cookie_headers .items ():
+            self .cookies [k ]=v 
 
         json ={}
         try :json =resp .json ()
@@ -256,6 +282,7 @@ class Account :
         self .has_confirmed_phone_number =data .get ('hasConfirmedPhoneNumber')
         self .can_publish_items =data .get ('canPublishItems')
         self .unread_chats_counter =data .get ('unreadChatsCounter')
+        self ._is_initiated =True 
 
         headers ={'accept':'*/*'}
         payload ={
@@ -321,6 +348,9 @@ class Account :
     after_cursor :str =None 
     )->types .ItemDealList :
         'Retrieves account transactions.\n\n        :param count: Number of transactions to receive (no more than 24 per request).\n        :type count: `int`\n\n        :param statuses: Statuses of transactions that need to be received, _optional_.\n        :type statuses: `list[playerokapi.enums.ItemDealsStatuses]` or `None`\n\n        :param direction: Direction of trades, _optional_.\n        :type direction: `playerokapi.enums.ItemDealsDirections` or `None`\n\n        :param after_cursor: The cursor from which the parsing will take place (if not present, it searches from the very beginning of the page), _optional_.\n        :type after_cursor: `str`\n        \n        :return: Deals page.\n        :rtype: `playerokapi.types.ItemDealList`'
+        if not self ._is_initiated :
+            raise NotInitiatedError ()
+
         str_statuses =[status .name for status in statuses ]if statuses else None 
         str_direction =direction .name if direction else None 
 
@@ -491,6 +521,9 @@ class Account :
     after_cursor :str |None =None 
     )->types .GameCategoryAgreementList :
         "Retrieves the user's agreements for the sale of items in the category (if the user has already accepted these agreements, the list will be empty).\n\n        :param game_category_id: Game category ID.\n        :type game_category_id: `str`\n\n        :param user_id: ID of the user whose agreements should be obtained. If not specified, it will be received by your account ID, _optional_.\n        :type user_id: `str` or `None`\n\n        :param count: Number of agreements to be received (no more than 24 per request).\n        :type count: `int`\n        \n        :param after_cursor: The cursor from which the parsing will take place (if not present, it searches from the very beginning of the page), _optional_.\n        :type after_cursor: `str` or `None`\n        \n        :return: Agreements page.\n        :rtype: `playerokapi.types.GameCategoryAgreementList`"
+        if not user_id and not self ._is_initiated :
+            raise NotInitiatedError ()
+
         headers ={'accept':'*/*'}
         payload ={
         'operationName':'gameCategoryAgreements',
@@ -621,6 +654,9 @@ class Account :
     after_cursor :str |None =None 
     )->types .ChatList :
         'Retrieves all chats of the account.\n\n        :param count: Number of chats to receive (no more than 24 per request).\n        :type count: `int`\n\n        :param type: Type of chats to receive. Not specified by default, which means they will be all at once, _optional_.\n        :type type: `playerokapi.enums.ChatTypes` or `None`\n\n        :param status: Status of chats to receive. Not specified by default, which means there will be any, _optional_.\n        :type status: `playerokapi.enums.ChatStatuses` or `None`\n        \n        :param after_cursor: The cursor from which the parsing will take place (if not present, it searches from the very beginning of the page), _optional_.\n        :type after_cursor: `str` or `None`\n        \n        :return: Chats page.\n        :rtype: `playerokapi.types.ChatList`'
+        if not self ._is_initiated :
+            raise NotInitiatedError ()
+
         headers ={'accept':'*/*'}
         payload ={
         'operationName':'userChats',
@@ -1091,6 +1127,9 @@ class Account :
     after_cursor :str |None =None 
     )->TransactionList :
         'Retrieves all account transactions.\n\n        :param count: Number of transactions to receive (no more than 24 per request).\n        :type count: `int`\n\n        :param operation: Transaction operation, _optional_.\n        :type operation: `playerokapi.enums.TransactionOperations` or `None`\n\n        :param min_value: Minimum transaction amount, _optional_.\n        :type min_value: `int` or `None`\n\n        :param max_value: Maximum transaction amount, _optional_.\n        :type max_value: `int` or `None`\n\n        :param provider_id: Transaction provider ID, _optional_.\n        :type provider_id: `playerokapi.enums.TransactionProviderIds` or `None`\n\n        :param status: Transaction status, _optional_.\n        :type status: `playerokapi.enums.TransactionStatuses` or `None`\n\n        :param after_cursor: The cursor from which the parsing will take place (if not present, it searches from the very beginning of the page), _optional_.\n        :type after_cursor: `str` or `None`\n        \n        :return: Transactions page.\n        :rtype: `playerokapi.types.TransactionList`'
+        if not self ._is_initiated :
+            raise NotInitiatedError ()
+
         headers ={'accept':'*/*'}
         payload ={
         'operationName':'transactions',
