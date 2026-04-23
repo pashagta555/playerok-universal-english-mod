@@ -31,7 +31,7 @@ def get_account ()->Account |None :
 
 
 class Account :
-    'A class that describes Playerok account data and methods.\n\n    :param token: Account token.\n    :type token: `str` or `None`\n\n    :param ddg5: Cookie to bypass DDoS-Guard protection (full name: `__ddg5_`).\n            \n **Note:** This Cookie "dies" every time:\n            \n - IP changes\n            \n - User-Agent / TLS fingerprint changes\n            \n - the server updated the keys/algorithm\n            \n For the API to work, this Cookie must be taken from the Cookie data of the account whose token you specified, and requests must come from the same IP address under which you logged in to Playerok.\n            \n If it is invalid, requests will throw a `BotCheckDetectedException` exception.\n    :type ddg5: `str` or `None`\n\n    :param user_agent: Browser user agent.\n    :type user_agent: `str` or `None`\n\n    :param cookies: Cookie data of the authorized account. You can specify `token`, `ddg5`, `user_agent` instead of parameters.\n    :type cookies: `str` or `dict[str, str]` or `None`\n\n    :param proxy: IPV4 proxy in the format: `user:pass@ip:port` or `ip:port`, _optional_.\n    :type proxy: `str` or `None`\n\n    :param requests_timeout: Timeout for waiting for responses to requests.\n    :type requests_timeout: `int`\n\n    :param request_max_retries: The maximum number of retries to send a request if CloudFlare protection was detected.\n    :type request_max_retries: `int`'
+    'A class that describes Playerok account data and methods.\n\n    :param token: Account token.\n    :type token: `str` or `None`\n\n    :param ddg5: Cookie to bypass DDoS-Guard protection (full name: `__ddg5_`).\n                \n **Note:** This Cookie "dies" every time:\n                \n - IP changes\n                \n - User-Agent / TLS fingerprint changes\n                \n - the server updated the keys/algorithm\n                \n For the API to work, this Cookie must be taken from the Cookie data of the account whose token you specified, and requests must come from the same IP address under which you logged in to Playerok.\n                \n If it is invalid, requests will throw a `BotCheckDetectedException` exception.\n    :type ddg5: `str`\n\n    :param user_agent: Browser user agent.\n    :type user_agent: `str` or `None`\n\n    :param cookies: Cookie data of the authorized account. You can specify `token`, `ddg5`, `user_agent` instead of parameters.\n    :type cookies: `str` or `dict[str, str]` or `None`\n\n    :param proxy: IPV4 proxy in the format: `user:pass@ip:port` or `ip:port`, _optional_.\n    :type proxy: `str` or `None`\n\n    :param requests_timeout: Timeout for waiting for responses to requests.\n    :type requests_timeout: `int`'
     def __new__ (cls ,*args ,**kwargs )->Account :
         if not hasattr (cls ,'instance'):
             cls .instance =super (Account ,cls ).__new__ (cls )
@@ -40,12 +40,11 @@ class Account :
     def __init__ (
     self ,
     token :str =None ,
-    ddg5 :str =None ,
+    ddg5 :str ='',
     user_agent :str ='',
     cookies :str |dict [str ,str ]=None ,
     proxy :str =None ,
     requests_timeout :int =15 ,
-    request_max_retries :int =5 ,
     **kwargs 
     ):
         if not any ((token ,cookies )):
@@ -83,9 +82,6 @@ class Account :
 
         self .__proxy_string =f"http://{self .proxy .replace ('https://','').replace ('http://','')}"if self .proxy else None 
         'Proxy string.'
-
-        self .request_max_retries =request_max_retries 
-        'The maximum number of retries to send a request.'
 
         self .base_url ='https://playerok.com'
         'Base URL for all requests.'
@@ -136,7 +132,7 @@ class Account :
         )
         self .__curl_session =curl_cffi .Session (
         impersonate ='chrome',
-        timeout =10 ,
+        timeout =self .requests_timeout ,
         proxy =self .__proxy_string ,
         verify =self ._tmp_cert_path 
         )
