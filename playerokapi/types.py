@@ -1,1388 +1,2770 @@
-from __future__ import annotations 
+from __future__ import annotations
 from typing import *
-import json 
+import json
 
-from .import parser 
+from . import parser
 from .enums import *
-from .misc import PERSISTED_QUERIES 
+from .misc import PERSISTED_QUERIES
 
 
-class FileObject :
-    'File object.\n\n    :param id: File ID.\n    :type id: `str`\n\n    :param url: URL of the file.\n    :type url: `str`\n\n    :param filename: The name of the file.\n    :type filename: `str` or `None`\n\n    :param mime: The mime of the file.\n    :type mime: `str` or `None`'
+class FileObject:
+    """
+    Объект файла.
 
-    def __init__ (self ,id :str ,url :str ,
-    filename :str |None ,mime :str |None ):
-        self .id :str =id 
-        'File ID.'
-        self .url :str =url 
-        'File URL.'
-        self .filename :str |None =filename 
-        'File name.'
-        self .mime :str |None =mime 
-        'Mime file.'
+    :param id: ID файла.
+    :type id: `str`
 
+    :param url: URL файла.
+    :type url: `str`
 
-class AccountBalance :
-    'A subclass describing the account balance.\n\n    :param id: Balance ID.\n    :type id: `str`\n\n    :param value: Balance price.\n    :type value: `int`\n\n    :param frozen: Price of frozen balance.\n    :type frozen: `int`\n\n    :param available: Price of available balance.\n    :type available: `int`\n\n    :param withdrawable: Price of the balance available for withdrawal.\n    :type withdrawable: `int`\n\n    :param pending_income: Expected income.\n    :type pending_income: `int`'
+    :param filename: Имя файла.
+    :type filename: `str` or `None`
 
-    def __init__ (self ,id :str ,value :int ,frozen :int ,available :int ,
-    withdrawable :int ,pending_income :int ):
-        self .id :str =id 
-        'Balance ID.'
-        self .value :int =value 
-        'Price of the total balance.'
-        self .frozen :int =frozen 
-        'Price frozen balance.'
-        self .available :int =available 
-        'Price of available balance.'
-        self .withdrawable :int =withdrawable 
-        'Price of the balance available for withdrawal.'
-        self .pending_income :int =pending_income 
-        'Expected income.'
+    :param mime: Mime файла.
+    :type mime: `str` or `None`
+    """
+
+    def __init__(self, id: str, url: str, 
+                 filename: str | None, mime: str | None):
+        self.id: str = id
+        """ ID файла. """
+        self.url: str = url
+        """ URL файла. """
+        self.filename: str | None = filename
+        """ Имя файла. """
+        self.mime: str | None = mime
+        """ Mime файла. """
 
 
-class AccountIncomingDealsStats :
-    'A subclass that describes the statistics of incoming transactions of an account.\n\n    :param total: Total outgoing transactions.\n    :type total: `int`\n\n    :param finished: Completed outgoing transactions.\n    :type finished: `int`'
+class AccountBalance:
+    """
+    Подкласс, описывающий баланс аккаунта.
 
-    def __init__ (self ,total :int ,finished :int ):
-        self .total :int =total 
-        'Total outgoing transactions.'
-        self .finished :int =finished 
-        'Number of completed outgoing transactions.'
+    :param id: ID баланса.
+    :type id: `str`
 
+    :param value: Price баланса.
+    :type value: `int`
 
-class AccountOutgoingDealsStats :
-    'A subclass that describes the statistics of outgoing transactions of an account.\n\n    :param total: Total outgoing transactions.\n    :type total: `int`\n\n    :param finished: Completed outgoing transactions.\n    :type finished: `int`'
+    :param frozen: Price замороженного баланса.
+    :type frozen: `int`
 
-    def __init__ (self ,total :int ,finished :int ):
-        self .total =total 
-        'Total outgoing transactions.'
-        self .finished =finished 
-        'Number of completed outgoing transactions.'
+    :param available: Price доступного баланса.
+    :type available: `int`
 
+    :param withdrawable: Price баланса, доступного для вывода.
+    :type withdrawable: `int`
 
-class AccountDealsStats :
-    'A subclass that describes account transaction statistics.\n\n    :param incoming: Incoming deal.\n    :type incoming: `playerokapi.types.AccountIncomingDealsStats`\n\n    :param outgoing: Outgoing deal.\n    :type outgoing: `playerokapi.types.AccountOutgoingDealsStats`'
+    :param pending_income: Ожидаемый доход.
+    :type pending_income: `int`
+    """
 
-    def __init__ (self ,incoming :AccountIncomingDealsStats ,outgoing :AccountOutgoingDealsStats ):
-        self .incoming :AccountIncomingDealsStats =incoming 
-        'Incoming deal.'
-        self .outgoing :AccountOutgoingDealsStats =outgoing 
-        'Outgoing deal.'
-
-
-class AccountItemsStats :
-    'A subclass that describes the statistics of account items.\n\n    :param total: Total items.\n    :type total: `int`\n\n    :param finished: Completed items.\n    :type finished: `int`'
-
-    def __init__ (self ,total :int ,finished :int ):
-        self .total :int =total 
-        'Total items.'
-        self .finished :int =finished 
-        'Number of completed items.'
-
-
-class AccountStats :
-    'A subclass describing account statistics.\n\n    :param items: Item statistics.\n    :type items: `playerokapi.types.AccountItemsStats`\n\n    :param deals: Deal statistics.\n    :type deals: `playerokapi.types.AccountDealsStats`'
-
-    def __init__ (self ,items :AccountItemsStats ,deals :AccountDealsStats ):
-        self .items :AccountItemsStats =items 
-        'Item statistics.'
-        self .deals :AccountDealsStats =deals 
-        'Transaction statistics.'
+    def __init__(self, id: str, value: int, frozen: int, available: int, 
+                 withdrawable: int, pending_income: int):
+        self.id: str = id
+        """ ID баланса. """
+        self.value: int = value
+        """ Price общего баланса. """
+        self.frozen: int = frozen
+        """ Price замороженного баланса. """
+        self.available: int = available
+        """ Price доступного баланса. """
+        self.withdrawable: int = withdrawable
+        """ Price баланса, доступного для вывода. """
+        self.pending_income: int = pending_income
+        """ Ожидаемый доход. """
 
 
-class AccountProfile :
-    'A class describing the account profile.\n\n    :param id: Account ID.\n    :type id: `str`\n\n    :param username: Account nickname.\n    :type username: `str`\n\n    :param email: Account email.\n    :type email: `str`\n\n    :param balance: Account balance object.\n    :type balance: `playerokapi.types.AccountBalance`\n\n    :param stats: Account statistics.\n    :type stats: `str`\n\n    :param role: Account role.\n    :type role: `playerokapi.enums.UserTypes`\n\n    :param avatar_url: Account avatar URL.\n    :type avatar_url: `str`\n\n    :param is_online: Is your account online now?\n    :type is_online: `bool`\n\n    :param is_blocked: Whether the account is blocked.\n    :type is_blocked: `bool`\n\n    :param is_blocked_for: Reason for blocking.\n    :type is_blocked_for: `str`\n\n    :param is_verified: Whether the account is verified.\n    :type is_verified: `bool`\n\n    :param rating: Account rating (0-5).\n    :type rating: `int`\n\n    :param reviews_count: Number of reviews on the account.\n    :type reviews_count: `int`\n\n    :param created_at: Account creation date.\n    :type created_at: `str`\n\n    :param support_chat_id: Support chat ID.\n    :type support_chat_id: `str`\n\n    :param system_chat_id: System chat ID.\n    :type system_chat_id: `str`\n\n    :param has_frozen_balance: Whether the account balance is frozen.\n    :type has_frozen_balance: `bool`\n\n    :param has_enabled_notifications: Whether notifications are enabled on the account.\n    :type has_enabled_notifications: `bool`\n\n    :param unread_chats_counter: Number of unread chats.\n    :type unread_chats_counter: `int` or `None`'
+class AccountIncomingDealsStats:
+    """
+    Подкласс, описывающий статистику входящих сделок аккаунта.
 
-    def __init__ (self ,id :str ,username :str ,email :str ,balance :AccountBalance ,stats :AccountStats ,role :UserTypes ,avatar_url :str ,is_online :bool ,is_blocked :bool ,
-    is_blocked_for :str ,is_verified :bool ,rating :int ,reviews_count :int ,created_at :str ,support_chat_id :str ,system_chat_id :str ,
-    has_frozen_balance :bool ,has_enabled_notifications :bool ,unread_chats_counter :int |None ):
-        self .id :str =id 
-        'Account ID.'
-        self .username :str =username 
-        'Account nickname.'
-        self .email :str =email 
-        'Account mail.'
-        self .balance :AccountBalance =balance 
-        'Account balance object.'
-        self .stats :AccountStats =stats 
-        'Account statistics.'
-        self .role :UserTypes =role 
-        'Account role.'
-        self .avatar_url :str =avatar_url 
-        'Account avatar URL.'
-        self .is_online :bool =is_online 
-        'Is your account online now?'
-        self .is_blocked :bool =is_blocked 
-        'Is the account blocked?'
-        self .is_blocked_for :str =is_blocked_for 
-        'Reason for account blocking.'
-        self .is_verified :bool =is_verified 
-        'Is the account verified?'
-        self .rating :int =rating 
-        'Account rating (0-5).'
-        self .reviews_count :int =reviews_count 
-        'Number of reviews on the account.'
-        self .created_at :str =created_at 
-        'Account creation date.'
-        self .support_chat_id :str =support_chat_id 
-        'Account support chat ID.'
-        self .system_chat_id :str =system_chat_id 
-        'Account system chat ID.'
-        self .has_frozen_balance :bool =has_frozen_balance 
-        'Is the account balance frozen?'
-        self .has_enabled_notifications :bool =has_enabled_notifications 
-        'Are notifications enabled on your account?'
-        self .unread_chats_counter :bool |None =unread_chats_counter 
-        'Number of unread messages.'
+    :param total: Всего исходящих сделок.
+    :type total: `int`
+
+    :param finished: Завершённых исходящих сделок.
+    :type finished: `int`
+    """
+
+    def __init__(self, total: int, finished: int):
+        self.total: int = total
+        """ Всего исходящих сделок. """
+        self.finished: int = finished
+        """ Кол-во завершённых исходящих сделок. """
 
 
-class UserProfile :
-    "A class describing the user profile.\n\n    :param id: User ID.\n    :type id: `str`\n\n    :param username: User nickname.\n    :type username: `str`\n\n    :param role: User role.\n    :type role: `playerokapi.enums.UserTypes`\n\n    :param avatar_url: URL of the user's avatar.\n    :type avatar_url: `str`\n\n    :param is_online: Is the user online now?\n    :type is_online: `bool`\n\n    :param is_blocked: Whether the user is blocked.\n    :type is_blocked: `bool`\n\n    :param rating: User rating (0-5).\n    :type rating: `int`\n\n    :param reviews_count: Number of user reviews.\n    :type reviews_count: `int`\n\n    :param support_chat_id: Support chat ID.\n    :type support_chat_id: `str` or `None`\n\n    :param system_chat_id: System chat ID.\n    :type system_chat_id: `str` or `None`\n\n    :param created_at: Date the user account was created.\n    :type created_at: `str`"
+class AccountOutgoingDealsStats:
+    """
+    Подкласс, описывающий статистику исходящих сделок аккаунта.
 
-    def __init__ (self ,id :str ,username :str ,role :UserTypes ,avatar_url :str ,is_online :bool ,is_blocked :bool ,
-    rating :int ,reviews_count :int ,support_chat_id :str ,system_chat_id :str |None ,created_at :str |None ):
-        self .id :str =id 
-        'User ID.'
-        self .username :str =username 
-        'User nickname.'
-        self .role :UserTypes =role 
-        'User role.'
-        self .avatar_url :str =avatar_url 
-        'Avatar URL.'
-        self .is_online :bool =is_online 
-        'Is the user online now?'
-        self .is_blocked :bool =is_blocked 
-        'Whether the user is blocked.'
-        self .rating :int =rating 
-        'User rating (0-5).'
-        self .reviews_count :int =reviews_count 
-        'Number of user reviews.'
-        self .support_chat_id :str |None =support_chat_id 
-        'Support chat ID.'
-        self .system_chat_id :str |None =system_chat_id 
-        'System chat ID.'
-        self .created_at :str =created_at 
-        'The date the user account was created.'
+    :param total: Всего исходящих сделок.
+    :type total: `int`
+
+    :param finished: Завершённых исходящих сделок.
+    :type finished: `int`
+    """
+
+    def __init__(self, total: int, finished: int):
+        self.total = total
+        """ Всего исходящих сделок. """
+        self.finished = finished
+        """ Кол-во завершённых исходящих сделок. """
 
 
-    def get_items (
-    self ,
-    count :int =24 ,
-    game_id :str |None =None ,
-    category_id :str |None =None ,
-    statuses :list [ItemStatuses ]|None =None ,
-    after_cursor :str |None =None 
-    )->ItemProfileList :
-        "Retrieves the user's items.\n\n        :param count: Number of items to receive (no more than 24 per request), _optional_.\n        :type count: `int`\n        \n        :param game_id: ID of the game/application whose items you want to receive, _optional_.\n        :type game_id: `str` or `None`\n\n        :param category_id: ID of the category of the game/application whose items you want to receive, _optional_.\n        :type category_id: `str` or `None`\n\n        :param status: An array of item types to receive. Some statuses can only be obtained if this is your account profile. If not specified, gets all possible ones at once.\n        :type status: `list[playerokapi.enums.ItemStatuses]`\n\n        :param after_cursor: The cursor from which the parsing will take place (if not present, it searches from the very beginning of the page), _optional_.\n        :type after_cursor: `str` or `None`\n        \n        :return: Item profile page.\n        :rtype: `PlayerokAPI.types.ItemProfileList`"
-        from .account import get_account 
-        account =get_account ()
+class AccountDealsStats:
+    """
+    Подкласс, описывающий статистику сделок аккаунта.
 
-        headers ={
-        'Accept':'*/*',
-        'Content-Type':'application/json',
-        'Origin':account .base_url 
+    :param incoming: Входящие deal.
+    :type incoming: `playerokapi.types.AccountIncomingDealsStats`
+
+    :param outgoing: Исходящие deal.
+    :type outgoing: `playerokapi.types.AccountOutgoingDealsStats`
+    """
+
+    def __init__(self, incoming: AccountIncomingDealsStats, outgoing: AccountOutgoingDealsStats):
+        self.incoming: AccountIncomingDealsStats = incoming
+        """ Входящие deal. """
+        self.outgoing: AccountOutgoingDealsStats = outgoing
+        """ Исходящие deal. """
+
+
+class AccountItemsStats:
+    """
+    Подкласс, описывающий статистику предметов аккаунта.
+
+    :param total: Всего предметов.
+    :type total: `int`
+
+    :param finished: Завершённых предметов.
+    :type finished: `int`
+    """
+
+    def __init__(self, total: int, finished: int):
+        self.total: int = total
+        """ Всего предметов. """
+        self.finished: int = finished
+        """ Кол-во завершённых предметов. """
+
+
+class AccountStats:
+    """
+    Подкласс, описывающий статистику аккаунта.
+
+    :param items: Статистика предметов.
+    :type items: `playerokapi.types.AccountItemsStats`
+
+    :param deals: Статистика сделок.
+    :type deals: `playerokapi.types.AccountDealsStats`
+    """
+
+    def __init__(self, items: AccountItemsStats, deals: AccountDealsStats):
+        self.items: AccountItemsStats = items
+        """ Статистика предметов. """
+        self.deals: AccountDealsStats = deals
+        """ Статистика сделок. """
+
+
+class AccountProfile:
+    """
+    Класс, описывающий профиль аккаунта.
+
+    :param id: ID аккаунта.
+    :type id: `str`
+
+    :param username: Никнейм аккаунта.
+    :type username: `str`
+
+    :param email: Почта аккаунта.
+    :type email: `str`
+
+    :param balance: Объект баланса аккаунта.
+    :type balance: `playerokapi.types.AccountBalance`
+
+    :param stats: Статистика аккаунта.
+    :type stats: `str`
+
+    :param role: Роль аккаунта.
+    :type role: `playerokapi.enums.UserTypes`
+
+    :param avatar_url: URL аватара аккаунта.
+    :type avatar_url: `str`
+
+    :param is_online: В онлайне ли сейчас аккаунт.
+    :type is_online: `bool`
+
+    :param is_blocked: Заблокирован ли аккаунт.
+    :type is_blocked: `bool`
+
+    :param is_blocked_for: Причина блокировки.
+    :type is_blocked_for: `str`
+
+    :param is_verified: Верифицирован ли аккаунт.
+    :type is_verified: `bool`
+
+    :param rating: Рейтинг аккаунта (0-5).
+    :type rating: `int`
+
+    :param reviews_count: Кол-во отзывов на аккаунте.
+    :type reviews_count: `int`
+
+    :param created_at: Дата создания аккаунта.
+    :type created_at: `str`
+
+    :param support_chat_id: ID чата поддержки.
+    :type support_chat_id: `str`
+
+    :param system_chat_id: ID системного чата.
+    :type system_chat_id: `str`
+
+    :param has_frozen_balance: Заморожен ли баланс на аккаунте.
+    :type has_frozen_balance: `bool`
+
+    :param has_enabled_notifications: Включены ли уведомления на аккаунте.
+    :type has_enabled_notifications: `bool`
+
+    :param unread_chats_counter: Количество непрочитанных чатов.
+    :type unread_chats_counter: `int` or `None`
+    """
+
+    def __init__(self, id: str, username: str, email: str, balance: AccountBalance, stats: AccountStats, role: UserTypes, avatar_url: str, is_online: bool, is_blocked: bool,
+                 is_blocked_for: str, is_verified: bool, rating: int, reviews_count: int, created_at: str, support_chat_id: str, system_chat_id: str,
+                 has_frozen_balance: bool, has_enabled_notifications: bool, unread_chats_counter: int | None):
+        self.id: str = id
+        """ ID аккаунта. """
+        self.username: str = username
+        """ Никнейм аккаунта. """
+        self.email: str = email
+        """ Почта аккаунта. """
+        self.balance: AccountBalance = balance
+        """ Объект баланса аккаунта. """
+        self.stats: AccountStats = stats
+        """ Статистика аккаунта. """
+        self.role: UserTypes  = role
+        """ Роль аккаунта. """
+        self.avatar_url: str = avatar_url
+        """ URL аватара аккаунта. """
+        self.is_online: bool = is_online
+        """ В онлайне ли сейчас аккаунт. """
+        self.is_blocked: bool = is_blocked
+        """ Заблокирован ли аккаунт. """
+        self.is_blocked_for: str = is_blocked_for
+        """ Причина блокировки аккаунта. """
+        self.is_verified: bool = is_verified
+        """ Верифицирован ли аккаунт. """
+        self.rating: int = rating
+        """ Рейтинг аккаунта (0-5). """
+        self.reviews_count: int = reviews_count
+        """ Кол-во отзывов на аккаунте. """
+        self.created_at: str = created_at
+        """ Дата создания аккаунта. """
+        self.support_chat_id: str = support_chat_id
+        """ ID чата поддержки аккаунта. """
+        self.system_chat_id: str = system_chat_id
+        """ ID системного чата аккаунта. """
+        self.has_frozen_balance: bool = has_frozen_balance
+        """ Заморожен ли баланс на аккаунте. """
+        self.has_enabled_notifications: bool = has_enabled_notifications
+        """ Включены ли уведомления на аккаунте. """
+        self.unread_chats_counter: bool | None = unread_chats_counter
+        """ Количество непрочитанных сообщений. """
+
+
+class UserProfile:
+    """
+    Класс, описывающий профиль пользователя.
+
+    :param id: ID пользователя.
+    :type id: `str`
+
+    :param username: Никнейм пользователя.
+    :type username: `str`
+
+    :param role: Роль пользователя.
+    :type role: `playerokapi.enums.UserTypes`
+
+    :param avatar_url: URL аватара пользователя.
+    :type avatar_url: `str`
+
+    :param is_online: В онлайне ли сейчас пользователь.
+    :type is_online: `bool`
+
+    :param is_blocked: Заблокирован ли пользователь.
+    :type is_blocked: `bool`
+
+    :param rating: Рейтинг пользователя (0-5).
+    :type rating: `int`
+
+    :param reviews_count: Кол-во отзывов пользователя.
+    :type reviews_count: `int`
+
+    :param support_chat_id: ID чата поддержки.
+    :type support_chat_id: `str` or `None`
+
+    :param system_chat_id: ID системного чата.
+    :type system_chat_id: `str` or `None`
+
+    :param created_at: Дата создания аккаунта пользователя.
+    :type created_at: `str`
+    """
+
+    def __init__(self, id: str, username: str, role: UserTypes, avatar_url: str, is_online: bool, is_blocked: bool, 
+                 rating: int, reviews_count: int, support_chat_id: str, system_chat_id: str | None, created_at: str | None):
+        self.id: str = id
+        """ ID пользователя. """
+        self.username: str = username
+        """ Никнейм пользователя. """
+        self.role: UserTypes = role
+        """ Роль пользователя. """
+        self.avatar_url: str = avatar_url
+        """ URL аватара. """
+        self.is_online: bool = is_online
+        """ В онлайне ли сейчас пользователь. """
+        self.is_blocked: bool = is_blocked
+        """ Заблокирован ли пользователь. """
+        self.rating: int = rating
+        """ Рейтинг пользователя (0-5). """
+        self.reviews_count: int = reviews_count
+        """ Кол-во отзывов пользователя. """
+        self.support_chat_id: str | None = support_chat_id
+        """ ID чата поддержки. """
+        self.system_chat_id: str | None = system_chat_id
+        """ ID системного чата. """
+        self.created_at: str = created_at
+        """ Дата создания аккаунта пользователя. """
+
+
+    def get_items(
+        self, 
+        count: int = 24, 
+        game_id: str | None = None, 
+        category_id: str | None = None, 
+        statuses: list[ItemStatuses] | None = None,
+        after_cursor: str | None = None
+    ) -> ItemProfileList:
+        """
+        Получает предметы пользователя.
+
+        :param count: Кол-во предеметов, которые нужно получить (не более 24 за один запрос), _опционально_.
+        :type count: `int`
+        
+        :param game_id: ID игры/приложения, чьи предметы нужно получить, _опционально_.
+        :type game_id: `str` or `None`
+
+        :param category_id: ID категории игры/приложения, чьи предметы нужно получить, _опционально_.
+        :type category_id: `str` or `None`
+
+        :param status: Массив типов предметов, которые нужно получить. Некоторые статусы можно получить только, если это профиль вашего аккаунта. Если не указано, получает сразу все возможные.
+        :type status: `list[playerokapi.enums.ItemStatuses]`
+
+        :param after_cursor: Курсор, с которого будет идти парсинг (если нету - ищет с самого начала страницы), _опционально_.
+        :type after_cursor: `str` or `None`
+        
+        :return: Страница профилей предметов.
+        :rtype: `PlayerokAPI.types.ItemProfileList`
+        """
+        from .account import get_account
+        account = get_account()
+        
+        headers = {
+            "Accept": "*/*",
+            "Content-Type": "application/json",
+            "Origin": account.base_url
         }
-        filter ={
-        'userId':self .id ,
-        'status':[status .name for status in statuses ]if statuses else None 
+        filter = {
+            "userId": self.id, 
+            "status": [status.name for status in statuses] if statuses else None
         }
-        if game_id :filter ['gameId']=game_id 
-        elif category_id :filter ['gameCategoryId']=category_id 
-
-        payload ={
-        'operationName':'items',
-        'variables':json .dumps ({
-        'pagination':{
-        'first':count ,
-        'after':after_cursor 
-        },
-        'filter':filter ,
-        'showForbiddenImage':False 
-        }),
-        'extensions':json .dumps ({
-        'persistedQuery':{
-        'version':1 ,
-        'sha256Hash':PERSISTED_QUERIES .get ('items')
-        }
-        })
-        }
-
-        r =account .request ('get',f"{account .base_url }/graphql",headers ,payload ).json ()
-        return parser .item_profile_list (r ['data']['items'])
-
-    def get_reviews (
-    self ,
-    count :int =24 ,
-    status :ReviewStatuses =ReviewStatuses .APPROVED ,
-    comment_required :bool =False ,
-    rating :int |None =None ,
-    game_id :str |None =None ,
-    category_id :str |None =None ,
-    min_item_price :int |None =None ,
-    max_item_price :int |None =None ,
-    sort_direction :SortDirections =SortDirections .DESC ,
-    sort_field :str ='createdAt',
-    after_cursor :str |None =None 
-    )->ReviewList :
-        'Receives user feedback.\n\n        :param count: Number of reviews to receive (no more than 24 per request), _optional_.\n        :type count: `int`\n\n        :param status: Type of feedback to receive.\n        :type status: `playerokapi.enums.ReviewStatuses`\n\n        :param comment_required: Is a comment required in a review, _optional_.\n        :type comment_required: `bool`\n\n        :param rating: Review rating (1-5), _optional_.\n        :type rating: `int` or `None`\n\n        :param game_id: Review game ID, _optional_.\n        :type game_id: `str` or `None`\n\n        :param category_id: Review category ID, _optional_.\n        :type category_id: `str` or `None`\n\n        :param min_item_price: Minimum price of the review item, _optional_.\n        :type min_item_price: `bool` or `None`\n\n        :param max_item_price: Maximum price of the review item, _optional_.\n        :type max_item_price: `bool` or `None`\n\n        :param sort_direction: Sort type.\n        :type sort_direction: `playerokapi.enums.SortDirections`\n\n        :param sort_field: The field by which the sorting will be performed (by default `createdAt` - by date)\n        :type sort_field: `str`\n\n        :param after_cursor: The cursor from which the parsing will take place (if not present, it searches from the very beginning of the page), _optional_.\n        :type after_cursor: `str` or `None`\n        \n        :return: Reviews page.\n        :rtype: `PlayerokAPI.types.ReviewList`'
-        from .account import get_account 
-        account =get_account ()
-
-        headers ={
-        'Accept':'*/*',
-        'Content-Type':'application/json',
-        'Origin':account .base_url ,
+        if game_id: filter["gameId"] = game_id
+        elif category_id: filter["gameCategoryId"] = category_id
+        
+        payload = {
+            "operationName": "items",
+            "variables": json.dumps({
+                "pagination": {
+                    "first": count, 
+                    "after": after_cursor
+                }, 
+                "filter": filter, 
+                "showForbiddenImage": False
+            }),
+            "extensions": json.dumps({
+                "persistedQuery": {
+                    "version": 1, 
+                    "sha256Hash": PERSISTED_QUERIES.get("items")
+                }
+            })
         }
 
-        filters ={'userId':self .id ,'status':[status .name ]if status else None }
-        if comment_required is not None :
-            filters ['hasComment']=comment_required 
-        if game_id is not None :
-            filters ['gameId']=game_id 
-        if category_id is not None :
-            filters ['categoryId']=category_id 
-        if rating is not None :
-            filters ['rating']=rating 
-        if min_item_price is not None or max_item_price is not None :
-            item_price ={}
-            if min_item_price is not None :
-                item_price ['min']=min_item_price 
-            if max_item_price is not None :
-                item_price ['max']=max_item_price 
-            filters ['itemPrice']=item_price 
-        payload ={
-        'operationName':'testimonials',
-        'variables':json .dumps ({
-        'pagination':{
-        'first':count ,
-        'after':after_cursor 
-        },
-        'filter':filters ,
-        'sort':{
-        'direction':sort_direction .name if sort_direction else None ,
-        'field':sort_field 
+        r = account.request("get", f"{account.base_url}/graphql", headers, payload).json()
+        return parser.item_profile_list(r["data"]["items"])
+
+    def get_reviews(
+        self, 
+        count: int = 24, 
+        status: ReviewStatuses = ReviewStatuses.APPROVED, 
+        comment_required: bool = False, 
+        rating: int | None = None, 
+        game_id: str | None = None, 
+        category_id: str | None = None, 
+        min_item_price: int | None = None, 
+        max_item_price: int | None = None, 
+        sort_direction: SortDirections = SortDirections.DESC, 
+        sort_field: str = "createdAt", 
+        after_cursor: str | None = None
+    ) -> ReviewList:
+        """
+        Получает отзывы пользователя.
+
+        :param count: Кол-во отзывов, которые нужно получить (не более 24 за один запрос), _опционально_.
+        :type count: `int`
+
+        :param status: Тип отзывов, которые нужно получить.
+        :type status: `playerokapi.enums.ReviewStatuses`
+
+        :param comment_required: Обязателен ли комментарий в отзыве, _опционально_.
+        :type comment_required: `bool`
+
+        :param rating: Рейтинг отзывов (1-5), _опционально_.
+        :type rating: `int` or `None`
+
+        :param game_id: ID игры отзывов, _опционально_.
+        :type game_id: `str` or `None`
+
+        :param category_id: ID категории отзывов, _опционально_.
+        :type category_id: `str` or `None`
+
+        :param min_item_price: Минимальная цена предмета отзыва, _опционально_.
+        :type min_item_price: `bool` or `None`
+
+        :param max_item_price: Максимальная цена предмета отзыва, _опционально_.
+        :type max_item_price: `bool` or `None`
+
+        :param sort_direction: Тип сортировки.
+        :type sort_direction: `playerokapi.enums.SortDirections`
+
+        :param sort_field: Поле, по которому будет идти сортировка (по умолчанию `createdAt` - по дате)
+        :type sort_field: `str`
+
+        :param after_cursor: Курсор, с которого будет идти парсинг (если нету - ищет с самого начала страницы), _опционально_.
+        :type after_cursor: `str` or `None`
+        
+        :return: Страница отзывов.
+        :rtype: `PlayerokAPI.types.ReviewList`
+        """
+        from .account import get_account
+        account = get_account()
+        
+        headers = {
+            "Accept": "*/*",
+            "Content-Type": "application/json",
+            "Origin": account.base_url,
         }
-        }),
-        'extensions':json .dumps ({
-        'persistedQuery':{
-        'version':1 ,
-        'sha256Hash':PERSISTED_QUERIES .get ('testimonials')
+
+        filters = {"userId": self.id, "status": [status.name] if status else None}
+        if comment_required is not None:
+            filters["hasComment"] = comment_required
+        if game_id is not None:
+            filters["gameId"] = game_id
+        if category_id is not None:
+            filters["categoryId"] = category_id
+        if rating is not None:
+            filters["rating"] = rating
+        if min_item_price is not None or max_item_price is not None:
+            item_price = {}
+            if min_item_price is not None:
+                item_price["min"] = min_item_price
+            if max_item_price is not None:
+                item_price["max"] = max_item_price
+            filters["itemPrice"] = item_price
+        payload = {
+            "operationName": "testimonials",
+            "variables": json.dumps({
+                "pagination": {
+                    "first": count, 
+                    "after": after_cursor
+                }, 
+                "filter": filters, 
+                "sort": {
+                    "direction": sort_direction.name if sort_direction else None, 
+                    "field": sort_field
+                }
+            }),
+            "extensions": json.dumps({
+                "persistedQuery": {
+                    "version": 1, 
+                    "sha256Hash": PERSISTED_QUERIES.get("testimonials")
+                }
+            })
         }
-        })
-        }
-
-        r =account .request ('get',f"{account .base_url }/graphql",headers ,payload ).json ()
-        return parser .review_list (r ['data']['testimonials'])
-
-
-class Event :
-#TODO: Make an Event class
-
-    def __init__ (self ):
-        pass 
-
-
-class ItemDeal :
-    'A deal object with an item.\n\n    :param id: deal ID.\n    :type id: `str`\n\n    :param status: Status of the deal.\n    :type status: `playerokapi.enums.ItemDealStatuses`\n\n    :param status_expiration_date: Status expiration date.\n    :type status_expiration_date: `str` or `None`\n\n    :param status_description: Description of the deal status.\n    :type status_description: `str` or `None`\n\n    :param direction: Direction of the deal (buy/sell).\n    :type direction: `playerokapi.enums.ItemDealDirections`\n\n    :param obtaining: Receiving a deal.\n    :type obtaining: `str` or `None`\n\n    :param has_problem: Is there a problem in the transaction.\n    :type has_problem: `bool`\n\n    :param report_problem_enabled: Whether problem reporting is enabled.\n    :type report_problem_enabled: `bool` or `None`\n\n    :param completed_user: Profile of the user who confirmed the transaction.\n    :type completed_user: `playerokapi.types.UserProfile` or `None`\n\n    :param props: Deal details.\n    :type props: `str` or `None`\n\n    :param previous_status: Previous Status of the.\n    :type previous_status: `playerokapi.enums.ItemDealStatuses` or `None`\n\n    :param completed_at: Deal confirmation date.\n    :type completed_at: `str` or `None`\n\n    :param created_at: Date the deal was created.\n    :type created_at: `str` or `None`\n\n    :param logs: Deal logs.\n    :type logs: `list[playerokapi.types.ItemLog]` or `None`\n\n    :param transaction: Transaction deal.\n    :type transaction: `playerokapi.types.Transaction` or `None`\n\n    :param user: Profile of the user who made the transaction.\n    :type user: `playerokapi.types.UserProfile`\n\n    :param chat: Chat deal (only its ID is transmitted).\n    :type chat: `playerokapi.types.Chat` or `None`\n\n    :param item: Item deal.\n    :type item: `playerokapi.types.Item`\n\n    :param review: Review of the transaction.\n    :type review: `playerokapi.types.Review` or `None`\n\n    :param obtaining_fields: Receiving fields.\n    :type obtaining_fields: `list[playerokapi.types.GameCategoryDataField]` or `None`\n\n    :param comment_from_buyer: Comment from the buyer.\n    :type comment_from_buyer: `str` or `None`'
-
-    def __init__ (self ,id :str ,status :ItemDealStatuses ,status_expiration_date :str |None ,status_description :str |None ,
-    direction :ItemDealDirections ,obtaining :str |None ,has_problem :bool ,report_problem_enabled :bool |None ,
-    completed_user :UserProfile |None ,props :str |None ,previous_status :ItemDealStatuses |None ,
-    completed_at :str ,created_at :str ,logs :list [ItemLog ]|None ,transaction :Transaction |None ,
-    user :UserProfile ,chat :Chat |None ,item :Item ,review :Review |None ,obtaining_fields :list [GameCategoryDataField ]|None ,
-    comment_from_buyer :str |None ):
-        self .id :str =id 
-        ' ID deal. '
-        self .status :ItemDealStatuses =status 
-        ' Status of the deal. '
-        self .status_expiration_date :str |None =status_expiration_date 
-        'Status expiration date.'
-        self .status_description :str |None =status_description 
-        'Description of the deal status.'
-        self .direction :ItemDealDirections =direction 
-        'Deal direction (buy/sell).'
-        self .obtaining :str |None =obtaining 
-        'Receiving a deal.'
-        self .has_problem :bool =has_problem 
-        'Is there a problem with the deal?'
-        self .report_problem_enabled :bool |None =report_problem_enabled 
-        'Is appealing the problem included?'
-        self .completed_user :UserProfile |None =completed_user 
-        'Profile of the user who confirmed the transaction.'
-        self .props :str |None =props 
-        'Details of the deal.'
-        self .previous_status :ItemDealStatuses |None =previous_status 
-        'Previous Status of the.'
-        self .completed_at :str |None =completed_at 
-        'Deal confirmation date.'
-        self .created_at :str |None =created_at 
-        'Deal creation date.'
-        self .logs :list [ItemLog ]|None =logs 
-        'Logi deal.'
-        self .transaction :Transaction |None =transaction 
-        'Transaction deal.'
-        self .user :UserProfile =user 
-        'Profile of the user who made the transaction.'
-        self .chat :Chat |None =chat 
-        'Chat deal (only his ID is transmitted).'
-        self .item :Item =item 
-        ' Item deal. '
-        self .review :Review |None =review 
-        'Feedback on the deal.'
-        self .obtaining_fields :list [GameCategoryDataField ]|None =obtaining_fields 
-        'The resulting fields.'
-        self .comment_from_buyer :str |None =comment_from_buyer 
-        'Comment from the buyer.'
-
-
-class ItemDealPageInfo :
-    'A subclass that describes information about the deals page.\n\n    :param start_cursor: Page start cursor.\n    :type start_cursor: `str`\n\n    :param end_cursor: End of page cursor.\n    :type end_cursor: `str`\n\n    :param has_previous_page: Whether it has a previous page.\n    :type has_previous_page: `bool`\n\n    :param has_next_page: Whether it has a next page.\n    :type has_next_page: `bool`'
-
-    def __init__ (self ,start_cursor :str ,end_cursor :str ,
-    has_previous_page :bool ,has_next_page :bool ):
-        self .start_cursor :str =start_cursor 
-        'Top of page cursor.'
-        self .end_cursor :str =end_cursor 
-        'End of page cursor.'
-        self .has_previous_page :bool =has_previous_page 
-        'Does the previous page have.'
-        self .has_next_page :bool =has_next_page 
-        'Does the next page have.'
-
-
-class ItemDealList :
-    'A class that describes the reviews page.\n\n    :param deals: Page deals.\n    :type deals: `list[playerokapi.types.ItemDeal]`\n\n    :param page_info: Information about the page.\n    :type page_info: `playerokapi.types.ItemDealPageInfo`\n\n    :param total_count: Total transactions.\n    :type total_count: `int`'
-
-    def __init__ (self ,deals :list [ItemDeal ],page_info :ItemDealPageInfo ,
-    total_count :int ):
-        self .deals :list [ItemDeal ]=deals 
-        'Deals page.'
-        self .page_info :ItemDealPageInfo =page_info 
-        'Page information.'
-        self .total_count :int =total_count 
-        'Total transactions.'
-
-
-class GameCategoryAgreement :
-    'A subclass describing buyer agreements.\n\n    :param id: Agreement ID.\n    :type id: `str`\n\n    :param description: Description of the agreement.\n    :type description: `str`\n\n    :param icontype: Agreement icon type.\n    :type icontype: `playerokapi.enums.GameCategoryAgreementIconTypes`\n\n    :param sequence: Agreement sequence.\n    :type sequence: `str`'
-
-    def __init__ (self ,id :str ,description :str ,
-    icontype :GameCategoryAgreementIconTypes ,sequence :int ):
-        self .id :str =id 
-        'Agreement ID.'
-        self .description :str =description 
-        'Description of the agreement.'
-        self .icontype :GameCategoryAgreementIconTypes =icontype 
-        'Agreement icon type.'
-        self .sequence :str =sequence 
-        'Consistency of agreement.'
-
-
-class GameCategoryAgreementPageInfo :
-    'A subclass that describes information about the buyer agreements page.\n\n    :param start_cursor: Page start cursor.\n    :type start_cursor: `str`\n\n    :param end_cursor: End of page cursor.\n    :type end_cursor: `str`\n\n    :param has_previous_page: Whether it has a previous page.\n    :type has_previous_page: `bool`\n\n    :param has_next_page: Whether it has a next page.\n    :type has_next_page: `bool`'
-
-    def __init__ (self ,start_cursor :str ,end_cursor :str ,
-    has_previous_page :bool ,has_next_page :bool ):
-        self .start_cursor :str =start_cursor 
-        'Top of page cursor.'
-        self .end_cursor :str =end_cursor 
-        'End of page cursor.'
-        self .has_previous_page :bool =has_previous_page 
-        'Does the previous page have.'
-        self .has_next_page :bool =has_next_page 
-        'Does the next page have.'
-
-
-class GameCategoryAgreementList :
-    'A class that describes the buyer agreements page.\n\n    :param agreements: Page agreements.\n    :type agreements: `list[playerokapi.types.GameCategoryAgreement]`\n\n    :param page_info: Information about the page.\n    :type page_info: `playerokapi.types.GameCategoryAgreementPageInfo`\n\n    :param total_count: Total agreements.\n    :type total_count: `int`'
-
-    def __init__ (self ,agreements :list [GameCategoryAgreement ],page_info :GameCategoryAgreementPageInfo ,
-    total_count :int ):
-        self .agreements :list [GameCategoryAgreement ]=agreements 
-        'Page conventions.'
-        self .page_info :GameCategoryAgreementPageInfo =page_info 
-        'Page information.'
-        self .total_count :int =total_count 
-        'Total agreements.'
-
-
-class GameCategoryObtainingType :
-    'A subclass that describes the type (method) of obtaining an item in a category.\n\n    :param id: Method ID.\n    :type id: `str`\n\n    :param name: Name of the method.\n    :type name: `str`\n\n    :param description: Description of the method.\n    :type description: `str`\n\n    :param game_category_id: Method game category ID.\n    :type game_category_id: `str`\n\n    :param no_comment_from_buyer: No comment from the buyer?\n    :type no_comment_from_buyer: `bool`\n\n    :param instruction_for_buyer: Instructions for the buyer.\n    :type instruction_for_buyer: `str`\n\n    :param instruction_for_seller: Instructions for the seller.\n    :type instruction_for_seller: `str`\n\n    :param sequence: Method sequence.\n    :type sequence: `int`\n\n    :param fee_multiplier: Commission multiplier.\n    :type fee_multiplier: `float`\n\n    :param agreements: Buyer to buy/seller to sell agreements.\n    :type agreements: `list[playerokapi.types.GameCategoryAgreement]`\n\n    :param props: Category proportions.\n    :type props: `playerokapi.types.GameCategoryProps`'
-
-    def __init__ (self ,id :str ,name :str ,description :str ,game_category_id :str ,no_comment_from_buyer :bool ,
-    instruction_for_buyer :str |None ,instruction_for_seller :str |None ,sequence :int ,fee_multiplier :float ,
-    agreements :list [GameCategoryAgreement ],props :GameCategoryProps ):
-        self .id :str =id 
-        'Method ID.'
-        self .name :str =name 
-        'Name of the method.'
-        self .description :str =description 
-        'Description of the method.'
-        self .game_category_id :str =game_category_id 
-        'Mode game category ID.'
-        self .no_comment_from_buyer :bool =no_comment_from_buyer 
-        'No comment from the buyer?'
-        self .instruction_for_buyer :str |None =instruction_for_buyer 
-        'Instructions for the buyer.'
-        self .instruction_for_seller :str |None =instruction_for_seller 
-        'Instructions for the seller.'
-        self .sequence :int =sequence 
-        'Sequence of method.'
-        self .fee_multiplier :float =fee_multiplier 
-        'Commission multiplier.'
-        self .agreements :list [GameCategoryAgreement ]=agreements 
-        'Buyer to buy/seller to sell agreements.'
-        self .props :GameCategoryProps =props 
-        'Category proportions.'
-
-
-class GameCategoryObtainingTypePageInfo :
-    'A subclass that describes information about the page of types (methods) of obtaining an item in a category.\n\n    :param start_cursor: Page start cursor.\n    :type start_cursor: `str`\n\n    :param end_cursor: End of page cursor.\n    :type end_cursor: `str`\n\n    :param has_previous_page: Whether it has a previous page.\n    :type has_previous_page: `bool`\n\n    :param has_next_page: Whether it has a next page.\n    :type has_next_page: `bool`'
-
-    def __init__ (self ,start_cursor :str ,end_cursor :str ,
-    has_previous_page :bool ,has_next_page :bool ):
-        self .start_cursor :str =start_cursor 
-        'Top of page cursor.'
-        self .end_cursor :str =end_cursor 
-        'End of page cursor.'
-        self .has_previous_page :bool =has_previous_page 
-        'Does the previous page have.'
-        self .has_next_page :bool =has_next_page 
-        'Does the next page have.'
-
-
-class GameCategoryObtainingTypeList :
-    'A class that describes a page of types (methods) of obtaining an item in a category.\n\n    :param obtaining_types: Page methods.\n    :type obtaining_types: `list[playerokapi.types.GameCategoryObtainingType]`\n\n    :param page_info: Information about the page.\n    :type page_info: `playerokapi.types.GameCategoryObtainingTypePageInfo`\n\n    :param total_count: Total ways.\n    :type total_count: `int`'
-
-    def __init__ (self ,obtaining_types :list [GameCategoryObtainingType ],page_info :GameCategoryObtainingTypePageInfo ,
-    total_count :int ):
-        self .obtaining_types :list [GameCategoryObtainingType ]=obtaining_types 
-        'Page conventions.'
-        self .page_info :GameCategoryAgreementPageInfo =page_info 
-        'Page information.'
-        self .total_count :int =total_count 
-        'Total ways.'
-
-
-class GameCategoryDataField :
-    "A subclass that describes the data fields for an item in a category (which are sent after purchase).\n\n    :param id: ID of the data field.\n    :type id: `str`\n\n    :param label: The label is the name of the field.\n    :type label: `str`\n\n    :param type: The type of the data field.\n    :type type: `playerokapi.enums.GameCategoryDataFieldTypes`\n\n    :param input_type: The type of the field's input value.\n    :type input_type: `playerokapi.enums.GameCategoryDataFieldInputTypes`\n\n    :param copyable: Whether the value can be copied from the field.\n    :type copyable: `bool`\n\n    :param hidden: Whether the data in the field is hidden.\n    :type hidden: `bool`\n\n    :param required: Is this field required?\n    :type required: `bool`\n\n    :param value: The value of the data in the field.\n    :type value: `str` or `None`"
-
-    def __init__ (self ,id :str ,label :str ,type :GameCategoryDataFieldTypes ,
-    input_type :GameCategoryDataFieldInputTypes ,copyable :bool ,
-    hidden :bool ,required :bool ,value :str |None ):
-        self .id :str =id 
-        'ID of the data field.'
-        self .label :str =label 
-        'The inscription is the name of the field.'
-        self .type :GameCategoryDataFieldTypes =type 
-        'Data field type.'
-        self .input_type :GameCategoryDataFieldInputTypes =input_type 
-        'The type of field value to be entered.'
-        self .copyable :bool =copyable 
-        'Whether copying of a value from a field is allowed.'
-        self .hidden :bool =hidden 
-        'Is the data hidden in the field?'
-        self .required :bool =required 
-        'Is this field required?'
-        self .value :str |None =value 
-        'The value of the data in the field.'
-
-
-class GameCategoryDataFieldPageInfo :
-    'A subclass that describes information about the item data fields page.\n\n    :param start_cursor: Page start cursor.\n    :type start_cursor: `str`\n\n    :param end_cursor: End of page cursor.\n    :type end_cursor: `str`\n\n    :param has_previous_page: Whether it has a previous page.\n    :type has_previous_page: `bool`\n\n    :param has_next_page: Whether it has a next page.\n    :type has_next_page: `bool`'
-
-    def __init__ (self ,start_cursor :str ,end_cursor :str ,
-    has_previous_page :bool ,has_next_page :bool ):
-        self .start_cursor :str =start_cursor 
-        'Top of page cursor.'
-        self .end_cursor :str =end_cursor 
-        'End of page cursor.'
-        self .has_previous_page :bool =has_previous_page 
-        'Does the previous page have.'
-        self .has_next_page :bool =has_next_page 
-        'Does the next page have.'
-
-
-class GameCategoryDataFieldList :
-    'A class that describes a page of fields with item data.\n\n    :param data_fields: Fields with data for an item in a category on the page.\n    :type data_fields: `list[playerokapi.types.GameCategoryDataField]`\n\n    :param page_info: Information about the page.\n    :type page_info: `playerokapi.types.GameCategoryDataFieldPageInfo`\n\n    :param total_count: Total data fields.\n    :type total_count: `int`'
-
-    def __init__ (self ,data_fields :list [GameCategoryDataField ],
-    page_info :GameCategoryDataFieldPageInfo ,total_count :int ):
-        self .data_fields :list [GameCategoryDataField ]=data_fields 
-        'Fields with data for an item in a category on the page.'
-        self .page_info :GameCategoryDataFieldPageInfo =page_info 
-        'Page information.'
-        self .total_count :int =total_count 
-        'Total data fields.'
-
-
-class GameCategoryProps :
-    'A subclass describing the proportions of a category.\n\n    :param min_reviews: Minimum number of reviews.\n    :type min_reviews: `int`\n\n    :param min_reviews_for_seller: Minimum number of reviews for a seller.\n    :type min_reviews_for_seller: `int`'
-
-    def __init__ (self ,min_reviews :int ,min_reviews_for_seller :int ):
-        self .min_reviews :int =min_reviews 
-        'Minimum number of reviews.'
-        self .min_reviews_for_seller :int =min_reviews_for_seller 
-        'Minimum number of reviews for a seller.'
-
-
-class GameCategoryOption :
-    'A subclass describing a category option.\n\n    :param id: Option ID.\n    :type id: `str`\n\n    :param group: Option group.\n    :type group: `str`\n\n    :param label: The inscription is the name of the option.\n    :type label: `str`\n\n    :param type: Option type.\n    :type type: `playerokapi.enums.GameCategoryOptionTypes`\n\n    :param field: Field name (for payload request to the site).\n    :type field: `str`\n\n    :param value: Field value (for payload request to the site).\n    :type value: `str`\n\n    :param value_range_limit: Value range limit.\n    :type value_range_limit: `int` or `None`'
-
-    def __init__ (self ,id :str ,group :str ,label :str ,type :GameCategoryOptionTypes ,
-    field :str ,value :str ,value_range_limit :int |None ):
-        self .id :str =id 
-        'ID options.'
-        self .group :str =group 
-        'Option group.'
-        self .label :str =label 
-        'The inscription is the name of the option.'
-        self .type :GameCategoryOptionTypes =type 
-        'Type options.'
-        self .field :str =field 
-        'Field name (for payload request to the site).'
-        self .value :str =value 
-        'Field value (for payload request to the site).'
-        self .value_range_limit :int |None =value_range_limit 
-        'Value spread limit.'
-
-
-class GameCategoryInstruction :
-    'A subclass that describes information about the sales/purchase instructions page in a category.\n\n    :param id: Instruction ID.\n    :type id: `str`\n\n    :param text: Instruction text.\n    :type text: `str`'
-
-    def __init__ (self ,id :str ,text :str ):
-        self .id :str =id 
-        'Instruction ID.'
-        self .text :str =text 
-        'Instruction text.'
-
-
-class GameCategoryInstructionPageInfo :
-    'A subclass that describes instructions for selling/purchasing in a category.\n\n    :param start_cursor: Page start cursor.\n    :type start_cursor: `str`\n\n    :param end_cursor: End of page cursor.\n    :type end_cursor: `str`\n\n    :param has_previous_page: Whether it has a previous page.\n    :type has_previous_page: `bool`\n\n    :param has_next_page: Whether it has a next page.\n    :type has_next_page: `bool`'
-
-    def __init__ (self ,start_cursor :str ,end_cursor :str ,
-    has_previous_page :bool ,has_next_page :bool ):
-        self .start_cursor :str =start_cursor 
-        'Top of page cursor.'
-        self .end_cursor :str =end_cursor 
-        'End of page cursor.'
-        self .has_previous_page :bool =has_previous_page 
-        'Does the previous page have.'
-        self .has_next_page :bool =has_next_page 
-        'Does the next page have.'
-
-
-class GameCategoryInstructionList :
-    'A class that describes a page of instructions for selling/purchasing in a category.\n\n    :param instructions: Page instructions.\n    :type instructions: `list[playerokapi.types.GameCategoryInstruction]`\n\n    :param page_info: Information about the page.\n    :type page_info: `playerokapi.types.GameCategoryInstructionPageInfo`\n\n    :param total_count: Total instructions.\n    :type total_count: `int`'
-
-    def __init__ (self ,instructions :list [GameCategoryInstruction ],page_info :GameCategoryInstructionPageInfo ,
-    total_count :int ):
-        self .instructions :list [GameCategoryInstruction ]=instructions 
-        'Page conventions.'
-        self .page_info :GameCategoryInstructionPageInfo =page_info 
-        'Page information.'
-        self .total_count :int =total_count 
-        'Total instructions.'
-
-
-class GameCategory :
-    'Game/application category object.\n\n    :param id: Category ID.\n    :type id: `str`\n\n    :param slug: Category page name.\n    :type slug: `str`\n\n    :param name: Category name.\n    :type name: `str`\n\n    :param category_id: ID of the parent category.\n    :type category_id: `str` or `None`\n\n    :param game_id: Category game ID.\n    :type game_id: `str` or `None`\n\n    :param obtaining: Receiving type.\n    :type obtaining: `str` or `None` or `None`\n\n    :param options: Category options.\n    :type options: `list[playerokapi.types.GameCategoryOption]` or `None`\n\n    :param props: Category proportions.\n    :type props: `playerokapi.types.GameCategoryProps` or `None`\n\n    :param no_comment_from_buyer: No comment from the buyer?\n    :type no_comment_from_buyer: `bool` or `None`\n\n    :param instruction_for_buyer: Instructions for the buyer.\n    :type instruction_for_buyer: `str` or `None`\n\n    :param instruction_for_seller: Instructions for the seller.\n    :type instruction_for_seller: `str` or `None`\n\n    :param use_custom_obtaining: Whether custom obtaining is used.\n    :type use_custom_obtaining: `bool`\n\n    :param auto_confirm_period: Auto-confirmation period for deal of this category.\n    :type auto_confirm_period: `playerokapi.enums.GameCategoryAutoConfirmPeriods` or `None`\n\n    :param auto_moderation_mode: Whether automatic moderation is enabled.\n    :type auto_moderation_mode: `bool` or `None`\n\n    :param agreements: Buyer agreements.\n    :type agreements: `list[playerokapi.types.GameCategoryAgreement]` or `None`\n\n    :param fee_multiplier: Commission multiplier.\n    :type fee_multiplier: `float` or `None`'
-
-    def __init__ (self ,id :str ,slug :str ,name :str ,category_id :str |None ,game_id :str |None ,
-    obtaining :str |None ,options :list [GameCategoryOption ]|None ,props :GameCategoryProps |None ,
-    no_comment_from_buyer :bool |None ,instruction_for_buyer :str |None ,instruction_for_seller :str |None ,
-    use_custom_obtaining :bool ,auto_confirm_period :GameCategoryAutoConfirmPeriods |None ,
-    auto_moderation_mode :bool |None ,agreements :list [GameCategoryAgreement ]|None ,fee_multiplier :float |None ):
-        self .id :str =id 
-        'Category ID.'
-        self .slug :str =slug 
-        'The name of the category page.'
-        self .name :str =name 
-        'Category name.'
-        self .category_id :str |None =category_id 
-        'ID of the parent category.'
-        self .game_id :str |None =game_id 
-        'Category game ID.'
-        self .obtaining :str |None =obtaining 
-        'Receipt type.'
-        self .options :list [GameCategoryOption ]|None =options 
-        'Category options.'
-        self .props :str |None =props 
-        'Category proportions.'
-        self .no_comment_from_buyer :bool |None =no_comment_from_buyer 
-        'No comment from the buyer?'
-        self .instruction_for_buyer :str |None =instruction_for_buyer 
-        'Instructions for the buyer.'
-        self .instruction_for_seller :str |None =instruction_for_seller 
-        'Instructions for the seller.'
-        self .use_custom_obtaining :bool =use_custom_obtaining 
-        'Is custom receiving used?'
-        self .auto_confirm_period :GameCategoryAutoConfirmPeriods |None =auto_confirm_period 
-        'The period of auto-confirmation deal of this category.'
-        self .auto_moderation_mode :bool |None =auto_moderation_mode 
-        'Is automatic moderation enabled?'
-        self .agreements :list [GameCategoryAgreement ]|None =agreements 
-        'Buyer agreements.'
-        self .fee_multiplier :float |None =fee_multiplier 
-        'Commission multiplier.'
-
-
-class Game :
-    'Game/application object.\n\n    :param id: Game/application ID.\n    :type id: `str`\n\n    :param slug: Game/application page name.\n    :type slug: `str`\n\n    :param name: Name of the game/application.\n    :type name: `str`\n\n    :param type: Type: game or application.\n    :type type: `playerokapi.enums.GameTypes`\n\n    :param logo: Game/application logo.\n    :type logo: `playerokapi.types.FileObject`\n\n    :param banner: Game/application banner.\n    :type banner: `FileObject`\n\n    :param categories: List of game/application categories.\n    :type categories: `list[playerokapi.types.GameCategory]`\n\n    :param created_at: Creation date.\n    :type created_at: `str`'
-
-    def __init__ (self ,id :str ,slug :str ,name :str ,type :GameTypes ,
-    logo :FileObject ,banner :FileObject ,categories :list [GameCategory ],
-    created_at :str ):
-        self .id :str =id 
-        'Game/application ID.'
-        self .slug :str =slug 
-        'Game/application page name.'
-        self .name :str =name 
-        'Name of the game/application.'
-        self .type :GameTypes =type 
-        'Type: game or application.'
-        self .logo :FileObject =logo 
-        'Game/application logo.'
-        self .banner :FileObject =banner 
-        'Game/application banner.'
-        self .categories :list [GameCategory ]=categories 
-        'List of game/application categories.'
-        self .created_at :str =created_at 
-        'Creation date.'
-
-
-class GameProfile :
-    'Game/application profile.\n\n    :param id: Game/application ID.\n    :type id: `str`\n\n    :param slug: Game/application page name.\n    :type slug: `str`\n\n    :param name: Name of the game/application.\n    :type name: `str`\n\n    :param type: Type: game or application.\n    :type type: `playerokapi.types.GameTypes`\n\n    :param logo: Game/application logo.\n    :type logo: `playerokapi.types.FileObject`'
-
-    def __init__ (self ,id :str ,slug :str ,name :str ,
-    type :GameTypes ,logo :FileObject ):
-        self .id :str =id 
-        'Game/application ID.'
-        self .slug :str =slug 
-        'Game/application page name.'
-        self .name :str =name 
-        'Name of the game/application.'
-        self .type :GameTypes =id 
-        'Type: game or application.'
-        self .logo :FileObject =logo 
-        'Game/application logo.'
-
-
-class GamePageInfo :
-    'A subclass that describes information about the games page.\n\n    :param start_cursor: Page start cursor.\n    :type start_cursor: `str`\n\n    :param end_cursor: End of page cursor.\n    :type end_cursor: `str`\n\n    :param has_previous_page: Whether it has a previous page.\n    :type has_previous_page: `bool`\n\n    :param has_next_page: Whether it has a next page.\n    :type has_next_page: `bool`'
-
-    def __init__ (self ,start_cursor :str ,end_cursor :str ,
-    has_previous_page :bool ,has_next_page :bool ):
-        self .start_cursor :str =start_cursor 
-        'Top of page cursor.'
-        self .end_cursor :str =end_cursor 
-        'End of page cursor.'
-        self .has_previous_page :bool =has_previous_page 
-        'Does the previous page have.'
-        self .has_next_page :bool =has_next_page 
-        'Does the next page have.'
-
-
-class GameList :
-    'A class describing the games page.\n\n    :param games: Games/applications pages.\n    :type games: `list[playerokapi.types.Game]`\n\n    :param page_info: Information about the page.\n    :type page_info: `playerokapi.types.ChatPageInfo`\n\n    :param total_count: Total games.\n    :type total_count: `int`'
-
-    def __init__ (self ,games :list [Game ],page_info :GamePageInfo ,
-    total_count :int ):
-        self .games :list [Game ]=games 
-        'Games/applications pages.'
-        self .page_info :ChatPageInfo =page_info 
-        'Page information.'
-        self .total_count :int =total_count 
-        'Total games.'
-
-
-class ItemPriorityStatusPriceRange :
-    'A subclass that describes the price range of an item suitable for the definition. priority status.\n\n    :param min: Minimum price of the item.\n    :type min: `int`\n\n    :param max: Maximum price of an item.\n    :type max: `int`'
-
-    def __init__ (self ,min :int ,max :str ):
-        self .min :int =min 
-        'Minimum price of an item (in rubles).'
-        self .max :int =max 
-        'Maximum price of an item (in rubles).'
-
-
-class ItemPriorityStatus :
-    "A class describing the Status of the item's priority.\n\n    :param id: Priority status ID.\n    :type id: `str`\n\n    :param price: Status price (in rubles).\n    :type price: `int`\n\n    :param name: Name of the status.\n    :type name: `str`\n\n    :param type: Status type.\n    :type type: `playerokapi.enums.PriorityTypes`\n\n    :param period: Duration of the status (in days).\n    :type period: `str`\n\n    :param price_range: Price range of the status item.\n    :type price_range: `playerokapi.types.ItemPriorityStatusPriceRange`"
-
-    def __init__ (self ,id :str ,price :int ,name :str ,type :PriorityTypes ,
-    period :int ,price_range :ItemPriorityStatusPriceRange ):
-        self .id :str =id 
-        'Priority Status ID.'
-        self .price :int =price 
-        'Status price (in rubles).'
-        self .name :str =name 
-        'Status name.'
-        self .type :PriorityTypes =type 
-        'Status type.'
-        self .period :int =period 
-        'Duration of status (in days).'
-        self .price_range :ItemPriorityStatusPriceRange =price_range 
-        'Price range of a status item.'
-
-
-class ItemLog :
-    'A subclass that describes an action log with an item.\n    \n    :param id: Log ID.\n    :type id: `str`\n    \n    :param event: Log event.\n    :type event: `playerokapi.enums.ItemLogEvents`\n    \n    :param created_at: Log creation date.\n    :type created_at: `str`\n    \n    :param user: Profile of the user who made the log.\n    :type user: `playerokapi.types.UserProfile`'
-
-    def __init__ (self ,id :str ,event :ItemLogEvents ,created_at :str ,
-    user :UserProfile ):
-        self .id :str =id 
-        'Logo ID.'
-        self .event :ItemLogEvents =event 
-        'Log event.'
-        self .created_at :str =created_at 
-        'Log creation date.'
-        self .user :UserProfile =user 
-        'Profile of the user who made the log.'
-
-
-class Item :
-    'Item object.\n\n    :param id: Item ID.\n    :type id: `str`\n\n    :param name: Name of the item.\n    :type name: `str`\n\n    :param description: Description of the item.\n    :type description: `str`\n\n    :param status: Status of the item.\n    :type status: `playerokapi.enums.ItemStatuses`\n\n    :param obtaining_type: Method of obtaining.\n    :type obtaining_type: `playerokapi.types.GameCategoryObtainingType` or `None`\n\n    :param price: The price of the item.\n    :type price: `int`\n\n    :param raw_price: Price excluding discount.\n    :type raw_price: `int`\n\n    :param priority_position: Priority position.\n    :type priority_position: `int`\n\n    :param attachments: Attachment files.\n    :type attachments: `list[playerokapi.types.FileObject]`\n\n    :param attributes: Item attributes.\n    :type attributes: `dict`\n\n    :param category: Game category of the item.\n    :type category: `playerokapi.types.GameCategory`\n\n    :param comment: Comment on the item.\n    :type comment: `str` or `None`\n\n    :param data_fields: Item data fields.\n    :type data_fields: `list[playerokapi.types.GameCategoryDataField]` or `None`\n\n    :param fee_multiplier: Commission multiplier.\n    :type fee_multiplier: `float`\n\n    :param game: Game profile of the item.\n    :type game: `playerokapi.types.GameProfile`\n\n    :param seller_type: Seller type.\n    :type seller_type: `playerokapi.enums.UserTypes`\n\n    :param slug: Item page name.\n    :type slug: `str`\n\n    :param user: Seller profile.\n    :type user: `playerokapi.types.UserProfile`'
-
-    def __init__ (self ,id :str ,slug :str ,name :str ,description :str ,obtaining_type :GameCategoryObtainingType |None ,price :int ,raw_price :int ,priority_position :int ,
-    attachments :list [FileObject ],attributes :dict ,category :GameCategory ,comment :str |None ,data_fields :list [GameCategoryDataField ]|None ,
-    fee_multiplier :float ,game :GameProfile ,seller_type :UserTypes ,status :ItemStatuses ,user :UserProfile ):
-        self .id :str =id 
-        'Item ID.'
-        self .slug :str =slug 
-        'Item page name.'
-        self .name :str =name 
-        'Title of the subject.'
-        self .description :str =description 
-        'Description of the item.'
-        self .obtaining_type :GameCategoryObtainingType |None =obtaining_type 
-        'Method of receipt.'
-        self .price :int =price 
-        'Price the item.'
-        self .raw_price :int =raw_price 
-        'Price excluding discount.'
-        self .priority_position :int =priority_position 
-        'Priority position.'
-        self .attachments :list [FileObject ]=attachments 
-        'Application files.'
-        self .attributes :dict =attributes 
-        'Item attributes.'
-        self .category :GameCategory =category 
-        'Game category of the item.'
-        self .comment :str |None =comment 
-        'Item comment.'
-        self .data_fields :list [GameCategoryDataField ]|None =data_fields 
-        'Item data fields.'
-        self .fee_multiplier :float =fee_multiplier 
-        'Commission multiplier.'
-        self .game :GameProfile =game 
-        'Item game profile.'
-        self .seller_type :UserTypes =seller_type 
-        'Seller type.'
-        self .slug :str =slug 
-        'Item page name.'
-        self .status :ItemStatuses =status 
-        'Status of the case.'
-        self .user :UserProfile =user 
-        'Seller profile.'
-
-
-class MyItem :
-    "The object of its subject.\n\n    :param id: Item ID.\n    :type id: `str`\n\n    :param slug: Item page name.\n    :type slug: `str`\n\n    :param name: Name of the item.\n    :type name: `str`\n\n    :param description: Description of the item.\n    :type description: `str`\n\n    :param status: Status of the item.\n    :type status: `playerokapi.enums.ItemStatuses`\n\n    :param obtaining_type: Method of obtaining.\n    :type obtaining_type: `playerokapi.types.GameCategoryObtainingType` or `None`\n\n    :param price: The price of the item.\n    :type price: `int`\n\n    :param prev_price: Previous price.\n    :type prev_price: `int`\n\n    :param raw_price: Price excluding discount.\n    :type raw_price: `int`\n\n    :param priority_position: Priority position.\n    :type priority_position: `int`\n\n    :param attachments: Attachment files.\n    :type attachments: `list[playerokapi.types.FileObject]`\n\n    :param attributes: Item attributes.\n    :type attributes: `dict`\n\n    :param category: Game category of the item.\n    :type category: `playerokapi.types.GameCategory`\n\n    :param comment: Comment on the item.\n    :type comment: `str` or `None`\n\n    :param data_fields: Item data fields.\n    :type data_fields: `list[playerokapi.types.GameCategoryDataField]` or `None`\n\n    :param fee_multiplier: Commission multiplier.\n    :type fee_multiplier: `float`\n\n    :param prev_fee_multiplier: Previous commission multiplier.\n    :type prev_fee_multiplier: `float`\n\n    :param seller_notified_about_fee_change: Whether the seller is notified about the change in commission.\n    :type seller_notified_about_fee_change: `bool`\n\n    :param game: Game profile of the item.\n    :type game: `playerokapi.types.GameProfile`\n\n    :param seller_type: Seller type.\n    :type seller_type: `playerokapi.enums.UserTypes`\n\n    :param user: Seller profile.\n    :type user: `playerokapi.types.UserProfile`\n\n    :param buyer: Seller profile.\n    :type user: `playerokapi.types.UserProfile`\n\n    :param priority: Status of the priority of the item.\n    :type priority: `playerokapi.types.PriorityTypes`\n\n    :param priority_price: Priority status prices.\n    :type priority_price: `int`\n\n    :param sequence: Position of the item in the user's product table.\n    :type sequence: `int` or `None`\n\n    :param status_expiration_date: Priority status expiration date.\n    :type status_expiration_date: `str` or `None`\n\n    :param status_description: Description of the priority status.\n    :type status_description: `str` or `None`\n\n    :param status_payment: Payment status (transaction).\n    :type status_payment: `playerokapi.types.Transaction` or `None`\n\n    :param views_counter: Number of views of the item.\n    :type views_counter: `int`\n\n    :param is_editable: Is it possible to edit the product.\n    :type is_editable: `bool`\n\n    :param approval_date: Product publication date.\n    :type approval_date: `str` or `None`\n\n    :param deleted_at: Date the product was deleted.\n    :type deleted_at: `str` or `None`\n\n    :param updated_at: Date the product was last updated.\n    :type updated_at: `str` or `None`\n\n    :param created_at: Product creation date.\n    :type created_at: `str` or `None`"
-
-    def __init__ (self ,id :str ,slug :str ,name :str ,description :str ,obtaining_type :GameCategoryObtainingType |None ,price :int ,raw_price :int ,priority_position :int ,
-    attachments :list [FileObject ],attributes :dict ,buyer :UserProfile ,category :GameCategory ,comment :str |None ,
-    data_fields :list [GameCategoryDataField ]|None ,fee_multiplier :float ,game :GameProfile ,seller_type :UserTypes ,status :ItemStatuses ,
-    user :UserProfile ,prev_price :int ,prev_fee_multiplier :float ,seller_notified_about_fee_change :bool ,
-    priority :PriorityTypes ,priority_price :int ,sequence :int |None ,status_expiration_date :str |None ,status_description :str |None ,
-    status_payment :Transaction |None ,views_counter :int ,is_editable :bool ,approval_date :str |None ,deleted_at :str |None ,
-    updated_at :str |None ,created_at :str |None ):
-        self .id :str =id 
-        'Item ID.'
-        self .slug :str =slug 
-        'Item page name.'
-        self .name :str =name 
-        'Title of the subject.'
-        self .status :ItemStatuses =status 
-        'Status of the case.'
-        self .description :str =description 
-        'Description of the item.'
-        self .obtaining_type :GameCategoryObtainingType |None =obtaining_type 
-        'Method of receipt.'
-        self .price :int =price 
-        'Price the item.'
-        self .prev_price :int =prev_price 
-        'Previous price.'
-        self .raw_price :int =raw_price 
-        'Price excluding discount.'
-        self .priority_position :int =priority_position 
-        'Priority position.'
-        self .attachments :list [FileObject ]=attachments 
-        'Application files.'
-        self .attributes :dict =attributes 
-        'Item attributes.'
-        self .category :GameCategory =category 
-        'Game category of the item.'
-        self .comment :str |None =comment 
-        'Item comment.'
-        self .data_fields :list [GameCategoryDataField ]|None =data_fields 
-        'Item data fields.'
-        self .fee_multiplier :float =fee_multiplier 
-        'Commission multiplier.'
-        self .prev_fee_multiplier :float =prev_fee_multiplier 
-        'Previous commission multiplier.'
-        self .seller_notified_about_fee_change :bool =seller_notified_about_fee_change 
-        'Has the seller been notified of the commission change?'
-        self .game :GameProfile =game 
-        'Item game profile.'
-        self .seller_type :UserTypes =seller_type 
-        'Seller type.'
-        self .user :UserProfile =user 
-        'Seller profile.'
-        self .buyer :UserProfile =buyer 
-        'Buyer profile of the item (if sold).'
-        self .priority :PriorityTypes =priority 
-        'Status of the priority of the case.'
-        self .priority_price :int =priority_price 
-        'Priority status prices.'
-        self .sequence :int |None =sequence 
-        "The item's position in the users' product table."
-        self .status_expiration_date :str |None =status_expiration_date 
-        'Priority status expiration date.'
-        self .status_description :str |None =status_description 
-        'Description of the priority status.'
-        self .status_payment :str |None =status_payment 
-        'Payment status (transaction).'
-        self .views_counter :int =views_counter 
-        'Number of views of the item.'
-        self .is_editable :bool =is_editable 
-        'Is it possible to edit a product?'
-        self .approval_date :str |None =approval_date 
-        'Product publication date.'
-        self .deleted_at :str |None =deleted_at 
-        'Date the item was removed.'
-        self .updated_at :str |None =updated_at 
-        'Date the product was last updated.'
-        self .created_at :str |None =created_at 
-        'Product creation date.'
-
-
-class ItemProfile :
-    'Item profile.\n\n    :param id: Item ID.\n    :type id: `str`\n\n    :param slug: Item page name.\n    :type slug: `str`\n\n    :param priority: Item priority.\n    :type priority: `playerokapi.enums.PriorityTypes`\n\n    :param status: Status of the item.\n    :type status: `playerokapi.enums.ItemStatuses`\n\n    :param name: Name of the item.\n    :type name: `str`\n\n    :param price: The price of the item.\n    :type price: `int`\n\n    :param raw_price: Price excluding discount.\n    :type raw_price: `int`\n\n    :param seller_type: Seller type.\n    :type seller_type: `playerokapi.enums.UserTypes`\n\n    :param attachment: File attachment.\n    :type attachment: `playerokapi.types.FileObject`\n\n    :param user: Seller profile.\n    :type user: `playerokapi.types.UserProfile`\n\n    :param approval_date: Approval date.\n    :type approval_date: `str`\n\n    :param priority_position: Priority position.\n    :type priority_position: `int`\n\n    :param views_counter: Number of views.\n    :type views_counter: `int` or `None`\n\n    :param fee_multiplier: Commission multiplier.\n    :type fee_multiplier: `float`\n\n    :param created_at: Creation date.\n    :type created_at: `str`'
-
-    def __init__ (self ,id :str ,slug :str ,priority :PriorityTypes ,status :ItemStatuses ,
-    name :str ,price :int ,raw_price :int ,seller_type :UserTypes ,attachment :FileObject ,
-    user :UserProfile ,approval_date :str ,priority_position :int ,views_counter :int |None ,
-    fee_multiplier :float ,created_at :str ):
-        self .id :str =id 
-        'Item ID.'
-        self .slug :str =slug 
-        'Item page name.'
-        self .priority :PriorityTypes =priority 
-        'Item priority.'
-        self .status :ItemStatuses =status 
-        'Status of the case.'
-        self .name :str =name 
-        'Title of the subject.'
-        self .price :int =price 
-        'Price the item.'
-        self .raw_price :int =raw_price 
-        'Price excluding discount.'
-        self .seller_type :UserTypes =seller_type 
-        'Seller type.'
-        self .attachment :FileObject =attachment 
-        'File attachment.'
-        self .user :UserProfile =user 
-        'Seller profile.'
-        self .approval_date :str =approval_date 
-        'Date of approvals.'
-        self .priority_position :int =priority_position 
-        'Priority position.'
-        self .views_counter :int |None =views_counter 
-        'Number of views.'
-        self .fee_multiplier :float =fee_multiplier 
-        'Commission multiplier.'
-        self .created_at :str =created_at 
-        'Creation date.'
-
-
-class ItemProfilePageInfo :
-    'A subclass that describes information about the items page.\n\n    :param start_cursor: Page start cursor.\n    :type start_cursor: `str`\n\n    :param end_cursor: End of page cursor.\n    :type end_cursor: `str`\n\n    :param has_previous_page: Whether it has a previous page.\n    :type has_previous_page: `bool`\n\n    :param has_next_page: Whether it has a next page.\n    :type has_next_page: `bool`'
-
-    def __init__ (self ,start_cursor :str ,end_cursor :str ,
-    has_previous_page :bool ,has_next_page :bool ):
-        self .start_cursor :str =start_cursor 
-        'Top of page cursor.'
-        self .end_cursor :str =end_cursor 
-        'End of page cursor.'
-        self .has_previous_page :bool =has_previous_page 
-        'Does the previous page have.'
-        self .has_next_page :bool =has_next_page 
-        'Does the next page have.'
-
-
-class ItemProfileList :
-    'Items page profile.\n\n    :param items: Page items.\n    :type items: `list[playerokapi.types.Item]`\n\n    :param page_info: Information about the page.\n    :type page_info: `playerokapi.types.ItemProfilePageInfo`\n\n    :param total_count: Total items.\n    :type total_count: `int`'
-
-    def __init__ (self ,items :list [ItemProfile ],page_info :ItemProfilePageInfo ,
-    total_count :int ):
-        self .items :list [ItemProfile ]=items 
-        'Page items.'
-        self .page_info :ItemProfilePageInfo =page_info 
-        'Page information.'
-        self .total_count :int =total_count 
-        'Total items.'
-
-
-class SBPBankMember :
-    'Object of SBP Bank members.\n\n    :param id: ID.\n    :type id: `str`\n\n    :param name: Name.\n    :type name: `str`\n\n    :param icon: URL of the icon.\n    :type icon: `str`'
-
-    def __init__ (self ,id :str ,name :str ,icon :str ):
-        self .id :str =id 
-        ' ID. '
-        self .name :str =name 
-        'Name.'
-        self .icon :str =icon 
-        'Icon URL.'
-
-
-class TransactionPaymentMethod :
-    'Payment method of the transaction.\n\n    :param id: Method ID.\n    :type id: `playerokapi.types.TransactionPaymentMethodIds`\n\n    :param name: Name of the method.\n    :type name: `str`\n\n    :param fee: Method commission.\n    :type fee: `int`\n\n    :param provider_id: ID of the transaction provider.\n    :type provider_id: `playerokapi.types.TransactionProviderIds`\n\n    :param account: Method account (?).\n    :type account: `AccountProfile` or `None`\n\n    :param props: Transaction provider parameters.\n    :type props: `playerokapi.types.TransactionProviderProps`\n\n    :param limits: Transaction provider limits.\n    :type limits: `playerokapi.types.TransactionProviderLimits`'
-
-    def __init__ (self ,id :TransactionPaymentMethodIds ,name :str ,fee :int ,provider_id :TransactionProviderIds ,
-    account :AccountProfile |None ,props :TransactionProviderProps ,limits :TransactionProviderLimits ):
-        self .id :TransactionPaymentMethodIds =id 
-        'Method ID.'
-        self .name :str =name 
-        'Method name.'
-        self .fee :int =fee 
-        'Commission method.'
-        self .provider_id :TransactionProviderIds =provider_id 
-        'Transaction provider ID.'
-        self .account :AccountProfile |None =account 
-        'Method account (?).'
-        self .props :TransactionProviderProps =props 
-        'Transaction provider parameters.'
-        self .limits :TransactionProviderLimits =limits 
-        'Transaction provider limits.'
-
-
-class TransactionProviderLimitRange :
-    'Transaction provider limit range.\n\n    :param min: Minimum Price (in rubles).\n    :type min: `int`\n\n    :param max: Maximum Price (in rubles).\n    :type max: `int`'
-
-    def __init__ (self ,min :int ,max :int ):
-        self .min :int =min 
-        'Minimum Price (in rubles).'
-        self .max :int =max 
-        'Maximum Price (in rubles).'
-
-
-class TransactionProviderLimits :
-    'Transaction provider limits.\n\n    :param incoming: For replenishment.\n    :type incoming: `playerokapi.types.TransactionProviderLimitRange`\n\n    :param outgoing: To output.\n    :type outgoing: `playerokapi.types.TransactionProviderLimitRange`'
-
-    def __init__ (self ,incoming :TransactionProviderLimitRange ,outgoing :TransactionProviderLimitRange ):
-        self .incoming :TransactionProviderLimitRange =incoming 
-        'For replenishment.'
-        self .outgoing :TransactionProviderLimitRange =outgoing 
-        'To the conclusion.'
-
-
-class TransactionProviderRequiredUserData :
-    'Required transaction provider user data.\n\n    :param email: Is it necessary to specify EMail?\n    :type email: `bool`\n\n    :param phone_number: Is it necessary to indicate a phone number?\n    :type phone_number: `bool`\n\n    :param erip_account_number: Is it necessary to indicate the ERIP account number?\n    :type erip_account_number: `bool` or `None`'
-
-    def __init__ (self ,email :bool ,phone_number :bool ,
-    erip_account_number :bool |None ):
-        self .email :bool =email 
-        'Is it necessary to indicate EMail?'
-        self .phone_number :bool =phone_number 
-        'Is it necessary to provide a phone number?'
-        self .erip_account_number :bool |None =erip_account_number 
-        'Is it mandatory to specify the ERIP account number?'
-
-
-class TransactionProviderProps :
-    'Transaction provider parameters.\n\n    :param required_user_data: Required user data.\n    :type required_user_data: `playerokapi.types.TransactionProviderRequiredUserData`\n\n    :param tooltip: Hint.\n    :type tooltip: `str` or `None`'
-
-    def __init__ (self ,required_user_data :TransactionProviderRequiredUserData ,
-    tooltip :str |None ):
-        self .required_user_data :TransactionProviderRequiredUserData =required_user_data 
-        'Required user data.'
-        self .tooltip :str |None =tooltip 
-        'Clue.'
-
-
-class TransactionProvider :
-    'Transaction provider object.\n\n    :param id: Provider ID.\n    :type id: `playerokapi.enums.TransactionProviderIds`\n\n    :param name: Provider name.\n    :type name: `str`\n\n    :param fee: Provider commission.\n    :type fee: `int`\n\n    :param min_fee_amount: Minimum commission.\n    :type min_fee_amount: `int` or `None`\n\n    :param description: Description of the provider.\n    :type description: `str` or `None`\n\n    :param account: Provider account (?).\n    :type account: `playerokapi.types.AccountProfile` or `None`\n\n    :param props: Provider parameters.\n    :type props: `playerokapi.types.TransactionProviderProps`\n\n    :param limits: Provider limits.\n    :type limits: `playerokapi.types.TransactionProviderLimits`\n\n    :param payment_methods: Payment methods.\n    :type payment_methods: `list` of `playerokapi.types.TransactionPaymentMethod`'
-
-    def __init__ (self ,id :TransactionProviderIds ,name :str ,fee :int ,min_fee_amount :int |None ,
-    description :str |None ,account :AccountProfile |None ,props :TransactionProviderProps ,
-    limits :TransactionProviderLimits ,payment_methods :list [TransactionPaymentMethod ]):
-        self .id :TransactionProviderIds =id 
-        'Provider ID.'
-        self .name :str =name 
-        'Provider name.'
-        self .fee :int =fee 
-        'Provider commission.'
-        self .min_fee_amount :int |None =min_fee_amount 
-        'Minimum commission.'
-        self .description :str |None =description 
-        'Provider description.'
-        self .account :AccountProfile |None =account 
-        'Provider account (?).'
-        self .props :TransactionProviderProps =props 
-        'Provider settings.'
-        self .limits :TransactionProviderLimits =limits 
-        'Provider limits.'
-        self .payment_methods :list [TransactionPaymentMethod ]=payment_methods 
-        'Payment methods.'
-
-
-class Transaction :
-    'Transaction object.\n\n    :param id: Transaction ID.\n    :type id: `str`\n\n    :param operation: Type of operation performed.\n    :type operation: `playerokapi.enums.TransactionOperations`\n\n    :param direction: Transaction direction.\n    :type direction: `playerokapi.enums.TransactionDirections`\n\n    :param provider_id: Payment provider ID.\n    :type provider_id: `playerokapi.enums.TransactionProviderIds`\n\n    :param provider: Transaction provider object.\n    :type provider: `playerokapi.types.TransactionProvider`\n\n    :param user: Transaction user object.\n    :type user: `playerokapi.types.UserProfile`\n\n    :param creator: Object of the user who created the transaction.\n    :type creator: `playerokapi.types.UserProfile` or `None`\n\n    :param status: Status of the transaction processing.\n    :type status: `playerokapi.enums.TransactionStatuses`\n\n    :param status_description: Description of the status.\n    :type status_description: `str` or `None`\n\n    :param status_expiration_date: Status expiration date.\n    :type status_expiration_date: `str` or `None`\n\n    :param value: Price of the transaction.\n    :type value: `int`\n\n    :param fee: Transaction commission.\n    :type fee: `int`\n\n    :param created_at: Date the transaction was created.\n    :type created_at: `str`\n\n    :param verified_at: Transaction confirmation date.\n    :type verified_at: `str` or `None`\n\n    :param verified_by: Object of the user who confirmed the transaction.\n    :type verified_by: `playerokapi.types.UserProfile` or `None`\n\n    :param completed_at: The date the transaction was completed.\n    :type completed_at: `str` or `None`\n\n    :param completed_by: Object of the user who completed the transaction.\n    :type completed_by: `playerokapi.types.UserProfile` or `None`\n\n    :param payment_method_id: Payment method ID.\n    :type payment_method_id: `str` or `None`\n\n    :param is_suspicious: Is the transaction suspicious?\n    :type is_suspicious: `bool` or `None`\n\n    :param sbp_bank_name: SBP bank name (if the transaction was made using SBP).\n    :type sbp_bank_name: `str` or `None`'
-
-    def __init__ (self ,id :str ,operation :TransactionOperations ,direction :TransactionDirections ,provider_id :TransactionProviderIds ,
-    provider :TransactionProvider ,user :UserProfile ,creator :UserProfile ,status :TransactionStatuses ,status_description :str |None ,
-    status_expiration_date :str |None ,value :int ,fee :int ,created_at :str ,verified_at :str |None ,verified_by :UserProfile |None ,
-    completed_at :str |None ,completed_by :UserProfile |None ,payment_method_id :str |None ,is_suspicious :bool |None ,sbp_bank_name :str |None ):
-        self .id :str =id 
-        'Transaction ID.'
-        self .operation :TransactionOperations =operation 
-        'The type of operation performed.'
-        self .direction :TransactionDirections =direction 
-        'Transaction direction.'
-        self .provider_id :TransactionProviderIds =provider_id 
-        'Payment provider ID.'
-        self .provider :TransactionProvider =provider 
-        'Transaction provider object.'
-        self .user :UserProfile =user 
-        'Transaction user object.'
-        self .creator :UserProfile |None =creator 
-        'Transaction creator user object.'
-        self .status :TransactionStatuses =status 
-        'Status of the transaction processing.'
-        self .status_description :str |None =status_description 
-        'Description of the status.'
-        self .status_expiration_date :str |None =status_expiration_date 
-        'Status expiration date.'
-        self .value :int =value 
-        'Price transaction.'
-        self .fee :int =fee 
-        'Transaction fee.'
-        self .created_at :str =created_at 
-        'The date the transaction was created.'
-        self .verified_at :str |None =verified_at 
-        'Transaction confirmation date.'
-        self .verified_by :UserProfile |None =verified_by 
-        'An object of the user who confirmed the transaction.'
-        self .completed_at :str |None =completed_at 
-        'The date the transaction was executed.'
-        self .completed_by :UserProfile |None =completed_by 
-        'An object of the user who performed the transaction.'
-        self .payment_method_id :str |None =payment_method_id 
-        'Payment method ID.'
-        self .is_suspicious :bool |None =is_suspicious 
-        'Is the transaction suspicious?'
-        self .sbp_bank_name :str |None =sbp_bank_name 
-        'SBP bank name (if the transaction was made using SBP).'
-
-
-class TransactionPageInfo :
-    'A subclass that describes transaction page information.\n\n    :param start_cursor: Page start cursor.\n    :type start_cursor: `str`\n\n    :param end_cursor: End of page cursor.\n    :type end_cursor: `str`\n\n    :param has_previous_page: Whether it has a previous page.\n    :type has_previous_page: `bool`\n\n    :param has_next_page: Whether it has a next page.\n    :type has_next_page: `bool`'
-
-    def __init__ (self ,start_cursor :str ,end_cursor :str ,
-    has_previous_page :bool ,has_next_page :bool ):
-        self .start_cursor :str =start_cursor 
-        'Top of page cursor.'
-        self .end_cursor :str =end_cursor 
-        'End of page cursor.'
-        self .has_previous_page :bool =has_previous_page 
-        'Does the previous page have.'
-        self .has_next_page :bool =has_next_page 
-        'Does the next page have.'
-
-
-class TransactionList :
-    'A class that describes a chat message page.\n\n    :param transactions: Page transactions.\n    :type transactions: `list[playerokapi.types.Transaction]`\n\n    :param page_info: Information about the page.\n    :type page_info: `playerokapi.types.TransactionPageInfo`\n\n    :param total_count: Total transactions on the page.\n    :type total_count: `int`'
-
-    def __init__ (self ,transactions :list [Transaction ],page_info :TransactionPageInfo ,
-    total_count :int ):
-        self .transactions :list [Transaction ]=transactions 
-        'Page transactions.'
-        self .page_info :TransactionPageInfo =page_info 
-        'Page information.'
-        self .total_count :int =total_count 
-        'Total transactions per page.'
-
-
-class UserBankCard :
-    "User's bank card object.\n\n    :param id: Card ID.\n    :type id: `str`\n\n    :param card_first_six: The first six digits of the card.\n    :type card_first_six: `str`\n\n    :param card_last_four: Last four digits of the card.\n    :type card_last_four: `str`\n\n    :param card_type: Bank card type.\n    :card_type: `playerokapi.enums.BankCardTypes`\n\n    :param is_chosen: Is this map selected as the default?\n    :type is_chosen: `bool`"
-
-    def __init__ (self ,id :str ,card_first_six :str ,card_last_four :str ,
-    card_type :BankCardTypes ,is_chosen :bool ):
-        self .id :str =id 
-        'ID card.'
-        self .card_first_six :str =card_first_six 
-        'The first six digits of the card.'
-        self .card_last_four :str =card_last_four 
-        'Last four digits of the card.'
-        self .card_type :BankCardTypes =card_type 
-        'Bank card type.'
-        self .is_chosen :bool =is_chosen 
-        'Is this card selected as the default?'
-
-
-class UserBankCardPageInfo :
-    "A subclass that describes information about the user's bank cards page.\n\n    :param start_cursor: Page start cursor.\n    :type start_cursor: `str`\n\n    :param end_cursor: End of page cursor.\n    :type end_cursor: `str`\n\n    :param has_previous_page: Whether it has a previous page.\n    :type has_previous_page: `bool`\n\n    :param has_next_page: Whether it has a next page.\n    :type has_next_page: `bool`"
-
-    def __init__ (self ,start_cursor :str ,end_cursor :str ,
-    has_previous_page :bool ,has_next_page :bool ):
-        self .start_cursor :str =start_cursor 
-        'Top of page cursor.'
-        self .end_cursor :str =end_cursor 
-        'End of page cursor.'
-        self .has_previous_page :bool =has_previous_page 
-        'Does the previous page have.'
-        self .has_next_page :bool =has_next_page 
-        'Does the next page have.'
-
-
-class UserBankCardList :
-    "A class describing the user's bank cards page.\n\n    :param bank_cards: Bank cards page.\n    :type bank_cards: `list[playerokapi.types.UserBankCard]`\n\n    :param page_info: Information about the page.\n    :type page_info: `playerokapi.types.UserBankCardPageInfo`\n\n    :param total_count: Total bank cards on the page.\n    :type total_count: `int`"
-
-    def __init__ (self ,bank_cards :list [UserBankCard ],
-    page_info :UserBankCardPageInfo ,total_count :int ):
-        self .bank_cards :list [UserBankCard ]=bank_cards 
-        'Bank cards page.'
-        self .page_info :UserBankCardPageInfo =page_info 
-        'Page information.'
-        self .total_count :int =total_count 
-        'Total bank cards on the page.'
-
-
-class Moderator :
-# TODO: Make a moderator class Moderator
-
-    def __init__ (self ):
-        pass 
-
-
-class TemporaryAttachmentUploadOutput :
-    'Output for downloading temporary attachment\n    (image attached to post).\n\n    :param id: Data ID.\n    :type id: `str`\n\n    :param url: Image URL.\n    :type url: `str`\n\n    :param chat_id: ID of the chat where the image is sent.\n    :type chat_id: `str`\n\n    :param client_attachment_id: ID of the client attachment file.\n    :type client_attachment_id: `str`\n\n    :param expires_at: Expiration date.\n    :type expires_at: `str`'
-
-    def __init__ (self ,id :str ,url :str ,chat_id :str ,
-    client_attachment_id :str ,expires_at :str ):
-        self .id :str =id 
-        'Data ID.'
-        self .url :str =id 
-        'Image URL.'
-        self .chat_id :str =id 
-        'ID of the chat where the image is sent.'
-        self .client_attachment_id :str =id 
-        'ID applications the client.'
-        self .expires_at :str =id 
-        'Expiration date.'
-
-
-class ChatMessageButton :
-    'Message button object.\n\n    :param type: Button type.\n    :type type: `playerokapi.types.ChatMessageButtonTypes`\n\n    :param url: Button URL.\n    :type url: `str` or None\n\n    :param text: Button text.\n    :type text: `str`'
-
-    def __init__ (self ,type :ChatMessageButtonTypes ,
-    url :str |None ,text :str ,):
-        self .type :ChatMessageButtonTypes =type 
-        'Button type.'
-        self .url :str |None =url 
-        'Button URL.'
-        self .text :str =text 
-        'Button text.'
-
-
-class ChatMessage :
-    'A class that describes a message in chat.\n\n    :param id: Message ID.\n    :type id: `str`\n\n    :param text: Message text.\n    :type text: `str`\n\n    :param created_at: Date the message was created.\n    :type created_at: `str`\n\n    :param deleted_at: Date the message was deleted.\n    :type deleted_at: `str` or `None`\n\n    :param is_read: Whether the message has been read.\n    :type is_read: `bool`\n\n    :param is_suspicious: Is the message suspicious?\n    :type is_suspicious: `bool`\n\n    :param is_bulk_messaging: Is this a mass mailing?\n    :type is_bulk_messaging: `bool`\n\n    :param game: The game the message refers to.\n    :type game: `str` or `None`\n\n    :param file: File attached to the message.\n    :type file: `playerokapi.types.FileObject` or `None`\n\n    :param user: The user who sent the message.\n    :type user: `playerokapi.types.UserProfile`\n\n    :param deal: The deal the message refers to.\n    :type deal: `playerokapi.types.Deal` or `None`\n\n    :param item: Item to which the message relates (usually only the deal itself is passed to the deal variable).\n    :type item: `playerokapi.types.Item` or `None`\n\n    :param transaction: Message transaction.\n    :type transaction: `playerokapi.types.Transaction` or `None`\n\n    :param moderator: Message moderator.\n    :type moderator: `playerokapi.types.Moderator`\n\n    :param event_by_user: Event from the user.\n    :type event_by_user: `playerokapi.types.UserProfile` or `None`\n\n    :param event_to_user: Event for the user.\n    :type event_to_user: `playerokapi.types.UserProfile` or `None`\n\n    :param is_auto_response: Is this an auto-response?\n    :type is_auto_response: `bool`\n\n    :param event: Message event.\n    :type event: `playerokapi.types.Event` or `None`\n\n    :param buttons: Message buttons.\n    :type buttons: `list[playerokapi.types.MessageButton]`'
-
-    def __init__ (self ,id :str ,text :str ,created_at :str ,deleted_at :str |None ,is_read :bool ,
-    is_suspicious :bool ,is_bulk_messaging :bool ,game :Game |None ,file :FileObject |None ,
-    user :UserProfile ,deal :ItemDeal |None ,item :ItemProfile |None ,transaction :Transaction |None ,
-    moderator :Moderator |None ,event_by_user :UserProfile |None ,event_to_user :UserProfile |None ,
-    is_auto_response :bool ,event :Event |None ,buttons :list [ChatMessageButton ]):
-        self .id :str =id 
-        'Message ID.'
-        self .text :str =text 
-        'Message text.'
-        self .created_at :str =created_at 
-        'Date the message was created.'
-        self .deleted_at :str |None =deleted_at 
-        'Date the message was deleted.'
-        self .is_read :bool =is_read 
-        'Has the message been read?'
-        self .is_suspicious :bool =is_suspicious 
-        'Is the message suspicious?'
-        self .is_bulk_messaging :bool =is_bulk_messaging 
-        'Is this a mass mailing?'
-        self .game :Game |None =game 
-        'The game the message refers to.'
-        self .file :FileObject |None =file 
-        'File attached to message.'
-        self .user :UserProfile =user 
-        'The user who sent the message.'
-        self .deal :ItemDeal |None =deal 
-        'The transaction to which the message relates.'
-        self .item :ItemProfile |None =item 
-        'Item to which the message relates (usually only the deal itself is passed to the deal variable).'
-        self .transaction :Transaction |None =transaction 
-        'Message transaction.'
-        self .moderator :Moderator =moderator 
-        'Post moderator.'
-        self .event_by_user :UserProfile |None =event_by_user 
-        'User event.'
-        self .event_to_user :UserProfile |None =event_to_user 
-        'Event for the user.'
-        self .is_auto_response :bool =is_auto_response 
-        'Is it an auto-response?'
-        self .event :Event |None =event 
-        'Event messages.'
-        self .buttons :list [ChatMessageButton ]=buttons 
-        'Message buttons.'
-
-
-class ChatMessagePageInfo :
-    'A subclass that describes information about the messages page.\n\n    :param start_cursor: Page start cursor.\n    :type start_cursor: `str`\n\n    :param end_cursor: End of page cursor.\n    :type end_cursor: `str`\n\n    :param has_previous_page: Whether it has a previous page.\n    :type has_previous_page: `bool`\n\n    :param has_next_page: Whether it has a next page.\n    :type has_next_page: `bool`'
-
-    def __init__ (self ,start_cursor :str ,end_cursor :str ,
-    has_previous_page :bool ,has_next_page :bool ):
-        self .start_cursor :str =start_cursor 
-        'Top of page cursor.'
-        self .end_cursor :str =end_cursor 
-        'End of page cursor.'
-        self .has_previous_page :bool =has_previous_page 
-        'Does the previous page have.'
-        self .has_next_page :bool =has_next_page 
-        'Does the next page have.'
-
-
-class ChatMessageList :
-    'A class that describes a chat message page.\n\n    :param messages: Page messages.\n    :type messages: `list[playerokapi.types.ChatMessage]`\n\n    :param page_info: Information about the page.\n    :type page_info: `playerokapi.types.ChatMessagePageInfo`\n\n    :param total_count: Total messages in chat.\n    :type total_count: `int`'
-
-    def __init__ (self ,messages :list [ChatMessage ],page_info :ChatMessagePageInfo ,
-    total_count :int ):
-        self .messages :list [ChatMessage ]=messages 
-        'Page messages.'
-        self .page_info :ChatMessagePageInfo =page_info 
-        'Page information.'
-        self .total_count :int =total_count 
-        'Total messages in chat.'
-
-
-class Chat :
-    'Chat object.\n\n    :param id: Chat ID.\n    :type id: `str`\n\n    :param type: Chat type.\n    :type type: `playerokapi.enums.ChatTypes`\n\n    :param status: Status of the chat.\n    :type status: `playerokapi.enums.ChatStatuses` or `None`\n\n    :param unread_messages_counter: Number of unread messages.\n    :type unread_messages_counter: `int`\n\n    :param bookmarked: Is the chat bookmarked?\n    :type bookmarked: `bool` or `None`\n\n    :param is_texting_allowed: Is it allowed to write in the chat.\n    :type is_texting_allowed: `bool` or `None`\n\n    :param owner: The owner of the chat (only if it is a chat with a bot).\n    :type owner: `bool` or `None`\n\n    :param deals: Deals in chat.\n    :type deals: `list[playerokapi.types.ItemDeal]` or `None`\n\n    :param last_message: Last message object in chat\n    :type last_message: `playerokapi.types.ChatMessage` or `None`\n\n    :param users: Chat participants.\n    :type users: `list[UserProfile]`\n\n    :param started_at: Dialogue start date.\n    :type started_at: `str` or `None`\n\n    :param finished_at: The date the dialogue was completed.\n    :type finished_at: `str` or `None`'
-
-    def __init__ (self ,id :str ,type :ChatTypes ,status :ChatStatuses |None ,unread_messages_counter :int ,
-    bookmarked :bool |None ,is_texting_allowed :bool |None ,owner :UserProfile |None ,deals :list [ItemDeal ]|None ,
-    started_at :str |None ,finished_at :str |None ,last_message :ChatMessage |None ,users :list [UserProfile ]):
-        self .id :str =id 
-        'Chat ID.'
-        self .type :ChatTypes =type 
-        'Chat type.'
-        self .status :ChatStatuses |None =status 
-        'Status of the чата.'
-        self .unread_messages_counter :int =unread_messages_counter 
-        'Number of unread messages.'
-        self .bookmarked :bool |None =bookmarked 
-        'I bookmarked chat.'
-        self .is_texting_allowed :bool |None =is_texting_allowed 
-        'Is it allowed to write in the chat?'
-        self .owner :UserProfile =owner 
-        'Owner of the chat.'
-        self .deals :list [ItemDeal ]|None =deals 
-        'Transactions in chat.'
-        self .last_message :ChatMessage |None =last_message 
-        'The last message object in chat.'
-        self .users :list [UserProfile ]=users 
-        'Chat participants.'
-        self .started_at :str |None =started_at 
-        'Dialogue start date.'
-        self .finished_at :str |None =finished_at 
-        'Dialogue end date.'
-
-
-class ChatPageInfo :
-    'A subclass that describes information about the chats page.\n\n    :param start_cursor: Page start cursor.\n    :type start_cursor: `str`\n\n    :param end_cursor: End of page cursor.\n    :type end_cursor: `str`\n\n    :param has_previous_page: Whether it has a previous page.\n    :type has_previous_page: `bool`\n\n    :param has_next_page: Whether it has a next page.\n    :type has_next_page: `bool`'
-
-    def __init__ (self ,start_cursor :str ,end_cursor :str ,
-    has_previous_page :bool ,has_next_page :bool ):
-        self .start_cursor :str =start_cursor 
-        'Top of page cursor.'
-        self .end_cursor :str =end_cursor 
-        'End of page cursor.'
-        self .has_previous_page :bool =has_previous_page 
-        'Does the previous page have.'
-        self .has_next_page :bool =has_next_page 
-        'Does the next page have.'
-
-
-class ChatList :
-    'A class describing a chat page.\n\n    :param chats: Chat pages.\n    :type chats: `list[playerokapi.types.Chat]`\n\n    :param page_info: Information about the page.\n    :type page_info: `playerokapi.types.ChatPageInfo`\n\n    :param total_count: Total chats.\n    :type total_count: `int`'
-
-    def __init__ (self ,chats :list [Chat ],page_info :ChatPageInfo ,
-    total_count :int ):
-        self .chats :list [Chat ]=chats 
-        'Chat pages.'
-        self .page_info :ChatPageInfo =page_info 
-        'Page information.'
-        self .total_count :int =total_count 
-        'Total chats.'
-
-
-class Review :
-    'Review object.\n\n    :param id: Review ID.\n    :type id: `str`\n\n    :param status: Status of the review.\n    :type status: `playerokapi.enums.ReviewStatuses`\n\n    :param text: Review text.\n    :type text: `str` or `None`\n\n    :param rating: Review rating.\n    :type rating: `int`\n\n    :param created_at: Date the review was created.\n    :type created_at: `str`\n\n    :param updated_at: Date the review was modified.\n    :type updated_at: `str`\n\n    :param deal: Deal associated with the review.\n    :type deal: `Deal`\n\n    :param creator: Profile of the review creator.\n    :type creator: `UserProfile`\n\n    :param moderator: The moderator who processed the review.\n    :type moderator: `Moderator` or `None`\n\n    :param user: Profile of the seller to whom the review relates.\n    :type user: `UserProfile`'
-
-    def __init__ (self ,id :str ,status :ReviewStatuses ,text :str |None ,rating :int ,
-    created_at :str ,updated_at :str ,deal :ItemDeal ,creator :UserProfile ,
-    moderator :Moderator |None ,user :UserProfile ):
-        self .id :str =id 
-        'Review ID.'
-        self .status :ReviewStatuses =status 
-        'Status of the review.'
-        self .text :str |None =text 
-        'Review text.'
-        self .rating :int =rating 
-        'Review rating.'
-        self .created_at :str =created_at 
-        'Date the review was created.'
-        self .updated_at :str =updated_at 
-        'Review modification date.'
-        self .deal :ItemDeal =deal 
-        'Review related transaction.'
-        self .creator :UserProfile =creator 
-        'Profile of the review creator.'
-        self .moderator :Moderator |None =moderator 
-        'The moderator who processed the review.'
-        self .user :UserProfile =user 
-        'Profile of the seller to whom the review relates.'
-
-
-class ReviewPageInfo :
-    'A subclass that describes information about the reviews page.\n\n    :param start_cursor: Page start cursor.\n    :type start_cursor: `str`\n\n    :param end_cursor: End of page cursor.\n    :type end_cursor: `str`\n\n    :param has_previous_page: Whether it has a previous page.\n    :type has_previous_page: `bool`\n\n    :param has_next_page: Whether it has a next page.\n    :type has_next_page: `bool`'
-
-    def __init__ (self ,start_cursor :str ,end_cursor :str ,
-    has_previous_page :bool ,has_next_page :bool ):
-        self .start_cursor :str =start_cursor 
-        'Top of page cursor.'
-        self .end_cursor :str =end_cursor 
-        'End of page cursor.'
-        self .has_previous_page :bool =has_previous_page 
-        'Does the previous page have.'
-        self .has_next_page :bool =has_next_page 
-        'Does the next page have.'
-
-
-class ReviewList :
-    'A class that describes the reviews page.\n\n    :param reviews: Reviews page.\n    :type reviews: `list[playerokapi.types.Review]`\n\n    :param page_info: Information about the page.\n    :type page_info: `playerokapi.types.ReviewPageInfo`\n\n    :param total_count: Total reviews.\n    :type total_count: `int`'
-
-    def __init__ (self ,reviews :list [Review ],page_info :ReviewPageInfo ,
-    total_count :int ):
-        self .reviews :list [Review ]=reviews 
-        'Reviews page.'
-        self .page_info :ReviewPageInfo =page_info 
-        'Page information.'
-        self .total_count :int =total_count 
-        'Total reviews.'
+        
+        r = account.request("get", f"{account.base_url}/graphql", headers, payload).json()
+        return parser.review_list(r["data"]["testimonials"])
+
+
+class Event:
+    #TODO: Сделать класс ивента Event
+
+    def __init__(self):
+        pass
+
+
+class ItemDeal:
+    """
+    Объект deal с предметом.
+
+    :param id: ID deal.
+    :type id: `str`
+
+    :param status: Status of the deal.
+    :type status: `playerokapi.enums.ItemDealStatuses`
+
+    :param status_expiration_date: Дата истечения статуса.
+    :type status_expiration_date: `str` or `None`
+
+    :param status_description: Описание статуса deal.
+    :type status_description: `str` or `None`
+
+    :param direction: Направление deal (покупка/продажа).
+    :type direction: `playerokapi.enums.ItemDealDirections`
+
+    :param obtaining: Получение deal.
+    :type obtaining: `str` or `None`
+
+    :param has_problem: Есть ли проблема в сделке.
+    :type has_problem: `bool`
+
+    :param report_problem_enabled: Включено ли обжалование проблемы.
+    :type report_problem_enabled: `bool` or `None`
+
+    :param completed_user: Профиль пользователя, подтвердившего сделку.
+    :type completed_user: `playerokapi.types.UserProfile` or `None`
+
+    :param props: Реквизиты deal.
+    :type props: `str` or `None`
+
+    :param previous_status: Предыдущий Status of the.
+    :type previous_status: `playerokapi.enums.ItemDealStatuses` or `None`
+
+    :param completed_at: Дата подтверждения deal.
+    :type completed_at: `str` or `None`
+
+    :param created_at: Дата создания deal.
+    :type created_at: `str` or `None`
+
+    :param logs: Логи deal.
+    :type logs: `list[playerokapi.types.ItemLog]` or `None`
+
+    :param transaction: Транзакция deal.
+    :type transaction: `playerokapi.types.Transaction` or `None`
+
+    :param user: Профиль пользователя, совершившего сделку.
+    :type user: `playerokapi.types.UserProfile`
+
+    :param chat: Чат deal (передаётся только его ID).
+    :type chat: `playerokapi.types.Chat` or `None`
+
+    :param item: Item deal.
+    :type item: `playerokapi.types.Item`
+
+    :param review: Отзыв по сделке.
+    :type review: `playerokapi.types.Review` or `None`
+
+    :param obtaining_fields: Получаемые поля.
+    :type obtaining_fields: `list[playerokapi.types.GameCategoryDataField]` or `None`
+
+    :param comment_from_buyer: Комментарий от покупателя.
+    :type comment_from_buyer: `str` or `None`
+    """
+
+    def __init__(self, id: str, status: ItemDealStatuses, status_expiration_date: str | None, status_description: str | None, 
+                 direction: ItemDealDirections, obtaining: str | None, has_problem: bool, report_problem_enabled: bool | None, 
+                 completed_user: UserProfile | None, props: str | None, previous_status: ItemDealStatuses | None, 
+                 completed_at: str, created_at: str, logs: list[ItemLog] | None, transaction: Transaction | None,
+                 user: UserProfile, chat: Chat | None, item: Item, review: Review | None, obtaining_fields: list[GameCategoryDataField] | None,
+                 comment_from_buyer: str | None):
+        self.id: str = id
+        """ ID deal. """
+        self.status: ItemDealStatuses = status
+        """ Status of the deal. """
+        self.status_expiration_date: str | None = status_expiration_date
+        """ Дата истечения статуса. """
+        self.status_description: str | None = status_description
+        """ Описание статуса deal. """
+        self.direction: ItemDealDirections = direction
+        """ Направление deal (покупка/продажа). """
+        self.obtaining: str | None = obtaining
+        """ Получение deal. """
+        self.has_problem: bool = has_problem
+        """ Есть ли проблема в сделке. """
+        self.report_problem_enabled: bool | None = report_problem_enabled
+        """ Включено ли обжалование проблемы. """
+        self.completed_user: UserProfile | None = completed_user
+        """ Профиль пользователя, подтвердившего сделку. """
+        self.props: str | None = props
+        """ Реквизиты deal. """
+        self.previous_status: ItemDealStatuses | None = previous_status
+        """ Предыдущий Status of the. """
+        self.completed_at: str | None = completed_at
+        """ Дата подтверждения deal. """
+        self.created_at: str | None = created_at
+        """ Дата создания deal. """
+        self.logs: list[ItemLog] | None = logs
+        """ Логи deal. """
+        self.transaction: Transaction | None = transaction
+        """ Транзакция deal. """
+        self.user: UserProfile = user
+        """ Профиль пользователя, совершившего сделку. """
+        self.chat: Chat | None = chat
+        """ Чат deal (передаётся только его ID). """
+        self.item: Item = item
+        """ Item deal. """
+        self.review: Review | None = review
+        """ Отзыв по сделке. """
+        self.obtaining_fields: list[GameCategoryDataField] | None = obtaining_fields
+        """ Получаемые поля. """
+        self.comment_from_buyer: str | None = comment_from_buyer
+        """ Комментарий от покупателя. """
+
+
+class ItemDealPageInfo:
+    """
+    Подкласс, описывающий информацию о странице сделок.
+
+    :param start_cursor: Курсор начала страницы.
+    :type start_cursor: `str`
+
+    :param end_cursor: Курсок конца страницы.
+    :type end_cursor: `str`
+
+    :param has_previous_page: Имеет ли предыдущую страницу.
+    :type has_previous_page: `bool`
+
+    :param has_next_page: Имеет ли следующую страницу.
+    :type has_next_page: `bool`
+    """
+
+    def __init__(self, start_cursor: str, end_cursor: str,
+                 has_previous_page: bool, has_next_page: bool):
+        self.start_cursor: str = start_cursor
+        """ Курсор начала страницы. """
+        self.end_cursor: str = end_cursor
+        """ Курсор конца страницы. """
+        self.has_previous_page: bool = has_previous_page
+        """ Имеет ли предыдущую страницу. """
+        self.has_next_page: bool = has_next_page
+        """ Имеет ли следующую страницу. """
+
+
+class ItemDealList:
+    """
+    Класс, описывающий страницу отзывов.
+
+    :param deals: Сделки страницы.
+    :type deals: `list[playerokapi.types.ItemDeal]`
+
+    :param page_info: Информация о странице.
+    :type page_info: `playerokapi.types.ItemDealPageInfo`
+
+    :param total_count: Всего сделок.
+    :type total_count: `int`
+    """
+
+    def __init__(self, deals: list[ItemDeal], page_info: ItemDealPageInfo,
+                 total_count: int):
+        self.deals: list[ItemDeal] = deals
+        """ Сделки страницы. """
+        self.page_info: ItemDealPageInfo = page_info
+        """ Информация о странице. """
+        self.total_count: int = total_count
+        """ Всего сделок. """
+
+
+class GameCategoryAgreement:
+    """
+    Подкласс, описывающий соглашения покупателя.
+
+    :param id: ID соглашения.
+    :type id: `str`
+
+    :param description: Описание соглашения.
+    :type description: `str`
+
+    :param icontype: Тип иконки соглашения.
+    :type icontype: `playerokapi.enums.GameCategoryAgreementIconTypes`
+
+    :param sequence: Последовательность соглашения.
+    :type sequence: `str`
+    """
+
+    def __init__(self, id: str, description: str, 
+                 icontype: GameCategoryAgreementIconTypes, sequence: int):
+        self.id: str = id
+        """ ID соглашения. """
+        self.description: str = description
+        """ Описание соглашения. """
+        self.icontype: GameCategoryAgreementIconTypes = icontype
+        """ Тип иконки соглашения. """
+        self.sequence: str = sequence
+        """ Последовательность соглашения. """
+
+
+class GameCategoryAgreementPageInfo:
+    """
+    Подкласс, описывающий информацию о странице соглашений покупателя.
+
+    :param start_cursor: Курсор начала страницы.
+    :type start_cursor: `str`
+
+    :param end_cursor: Курсок конца страницы.
+    :type end_cursor: `str`
+
+    :param has_previous_page: Имеет ли предыдущую страницу.
+    :type has_previous_page: `bool`
+
+    :param has_next_page: Имеет ли следующую страницу.
+    :type has_next_page: `bool`
+    """
+
+    def __init__(self, start_cursor: str, end_cursor: str,
+                 has_previous_page: bool, has_next_page: bool):
+        self.start_cursor: str = start_cursor
+        """ Курсор начала страницы. """
+        self.end_cursor: str = end_cursor
+        """ Курсор конца страницы. """
+        self.has_previous_page: bool = has_previous_page
+        """ Имеет ли предыдущую страницу. """
+        self.has_next_page: bool = has_next_page
+        """ Имеет ли следующую страницу. """
+
+
+class GameCategoryAgreementList:
+    """
+    Класс, описывающий страницу соглашений покупателя.
+
+    :param agreements: Соглашения страницы.
+    :type agreements: `list[playerokapi.types.GameCategoryAgreement]`
+
+    :param page_info: Информация о странице.
+    :type page_info: `playerokapi.types.GameCategoryAgreementPageInfo`
+
+    :param total_count: Всего соглашений.
+    :type total_count: `int`
+    """
+
+    def __init__(self, agreements: list[GameCategoryAgreement], page_info: GameCategoryAgreementPageInfo,
+                 total_count: int):
+        self.agreements: list[GameCategoryAgreement] = agreements
+        """ Соглашения страницы. """
+        self.page_info: GameCategoryAgreementPageInfo = page_info
+        """ Информация о странице. """
+        self.total_count: int = total_count
+        """ Всего соглашений. """
+
+
+class GameCategoryObtainingType:
+    """
+    Подкласс, описывающий тип (способ) получения предмета в категории.
+
+    :param id: ID способа.
+    :type id: `str`
+
+    :param name: Название способа.
+    :type name: `str`
+
+    :param description: Описание способа.
+    :type description: `str`
+
+    :param game_category_id: ID категории игры способа.
+    :type game_category_id: `str`
+
+    :param no_comment_from_buyer: Без комментария от покупателя?
+    :type no_comment_from_buyer: `bool`
+
+    :param instruction_for_buyer: Инструкция для покупателя.
+    :type instruction_for_buyer: `str`
+
+    :param instruction_for_seller: Инструкция для продавца.
+    :type instruction_for_seller: `str`
+
+    :param sequence: Последовательность способа.
+    :type sequence: `int`
+
+    :param fee_multiplier: Множитель комиссии.
+    :type fee_multiplier: `float`
+
+    :param agreements: Соглашения покупателя на покупку/продавца на продажу.
+    :type agreements: `list[playerokapi.types.GameCategoryAgreement]`
+
+    :param props: Пропорции категории.
+    :type props: `playerokapi.types.GameCategoryProps`
+    """
+
+    def __init__(self, id: str, name: str, description: str, game_category_id: str, no_comment_from_buyer: bool,
+                 instruction_for_buyer: str | None, instruction_for_seller: str | None, sequence: int, fee_multiplier: float,
+                 agreements: list[GameCategoryAgreement], props: GameCategoryProps):
+        self.id: str = id
+        """ ID способа. """
+        self.name: str = name
+        """ Название способа. """
+        self.description: str = description
+        """ Описание способа. """
+        self.game_category_id: str = game_category_id
+        """ ID категории игры способа. """
+        self.no_comment_from_buyer: bool = no_comment_from_buyer
+        """ Без комментария от покупателя? """
+        self.instruction_for_buyer: str | None = instruction_for_buyer
+        """ Инструкция для покупателя. """
+        self.instruction_for_seller: str | None = instruction_for_seller
+        """ Инструкция для продавца. """
+        self.sequence: int = sequence
+        """ Последовательность способа. """
+        self.fee_multiplier: float = fee_multiplier
+        """ Множитель комиссии. """
+        self.agreements: list[GameCategoryAgreement] = agreements
+        """ Соглашения покупателя на покупку/продавца на продажу. """
+        self.props: GameCategoryProps = props
+        """ Пропорции категории. """
+
+
+class GameCategoryObtainingTypePageInfo:
+    """
+    Подкласс, описывающий информацию о странице типов (способов) получения предмета в категории.
+
+    :param start_cursor: Курсор начала страницы.
+    :type start_cursor: `str`
+
+    :param end_cursor: Курсок конца страницы.
+    :type end_cursor: `str`
+
+    :param has_previous_page: Имеет ли предыдущую страницу.
+    :type has_previous_page: `bool`
+
+    :param has_next_page: Имеет ли следующую страницу.
+    :type has_next_page: `bool`
+    """
+
+    def __init__(self, start_cursor: str, end_cursor: str,
+                 has_previous_page: bool, has_next_page: bool):
+        self.start_cursor: str = start_cursor
+        """ Курсор начала страницы. """
+        self.end_cursor: str = end_cursor
+        """ Курсор конца страницы. """
+        self.has_previous_page: bool = has_previous_page
+        """ Имеет ли предыдущую страницу. """
+        self.has_next_page: bool = has_next_page
+        """ Имеет ли следующую страницу. """
+
+
+class GameCategoryObtainingTypeList:
+    """
+    Класс, описывающий страницу типов (способов) получения предмета в категории.
+
+    :param obtaining_types: Способы страницы.
+    :type obtaining_types: `list[playerokapi.types.GameCategoryObtainingType]`
+
+    :param page_info: Информация о странице.
+    :type page_info: `playerokapi.types.GameCategoryObtainingTypePageInfo`
+
+    :param total_count: Всего способов.
+    :type total_count: `int`
+    """
+
+    def __init__(self, obtaining_types: list[GameCategoryObtainingType], page_info: GameCategoryObtainingTypePageInfo,
+                 total_count: int):
+        self.obtaining_types: list[GameCategoryObtainingType] = obtaining_types
+        """ Соглашения страницы. """
+        self.page_info: GameCategoryAgreementPageInfo = page_info
+        """ Информация о странице. """
+        self.total_count: int = total_count
+        """ Всего способов. """
+
+
+class GameCategoryDataField:
+    """
+    Подкласс, описывающий поля с данными предмета в категории (которые отправляются после покупки).
+
+    :param id: ID поля с данными.
+    :type id: `str`
+
+    :param label: Надпись-название поля.
+    :type label: `str`
+
+    :param type: Тип поля с данными.
+    :type type: `playerokapi.enums.GameCategoryDataFieldTypes`
+
+    :param input_type: Тип вводимого значения поля.
+    :type input_type: `playerokapi.enums.GameCategoryDataFieldInputTypes`
+
+    :param copyable: Разрешено ли копирование значения с поля.
+    :type copyable: `bool`
+
+    :param hidden: Скрыты ли данные в поле.
+    :type hidden: `bool`
+
+    :param required: Обязательно ли это поле.
+    :type required: `bool`
+
+    :param value: Значение данных в поле.
+    :type value: `str` or `None`
+    """
+
+    def __init__(self, id: str, label: str, type: GameCategoryDataFieldTypes,
+                 input_type: GameCategoryDataFieldInputTypes, copyable: bool, 
+                 hidden: bool, required: bool, value: str | None):
+        self.id: str = id
+        """ ID поля с данными. """
+        self.label: str = label
+        """ Надпись-название поля. """
+        self.type: GameCategoryDataFieldTypes = type
+        """ Тип поля с данными. """
+        self.input_type: GameCategoryDataFieldInputTypes = input_type
+        """ Тип вводимого значения поля. """
+        self.copyable: bool = copyable
+        """ Разрешено ли копирование значения с поля. """
+        self.hidden: bool = hidden
+        """ Скрыты ли данные в поле. """
+        self.required: bool = required
+        """ Обязательно ли это поле. """
+        self.value: str | None = value
+        """ Значение данных в поле. """
+
+
+class GameCategoryDataFieldPageInfo:
+    """
+    Подкласс, описывающий информацию о странице полей с данными предмета.
+
+    :param start_cursor: Курсор начала страницы.
+    :type start_cursor: `str`
+
+    :param end_cursor: Курсок конца страницы.
+    :type end_cursor: `str`
+
+    :param has_previous_page: Имеет ли предыдущую страницу.
+    :type has_previous_page: `bool`
+
+    :param has_next_page: Имеет ли следующую страницу.
+    :type has_next_page: `bool`
+    """
+
+    def __init__(self, start_cursor: str, end_cursor: str,
+                 has_previous_page: bool, has_next_page: bool):
+        self.start_cursor: str = start_cursor
+        """ Курсор начала страницы. """
+        self.end_cursor: str = end_cursor
+        """ Курсор конца страницы. """
+        self.has_previous_page: bool = has_previous_page
+        """ Имеет ли предыдущую страницу. """
+        self.has_next_page: bool = has_next_page
+        """ Имеет ли следующую страницу. """
+
+
+class GameCategoryDataFieldList:
+    """
+    Класс, описывающий страницу полей с данными предмета.
+
+    :param data_fields: Поля с данными предмета в категории на странице.
+    :type data_fields: `list[playerokapi.types.GameCategoryDataField]`
+
+    :param page_info: Информация о странице.
+    :type page_info: `playerokapi.types.GameCategoryDataFieldPageInfo`
+
+    :param total_count: Всего полей с данными.
+    :type total_count: `int`
+    """
+
+    def __init__(self, data_fields: list[GameCategoryDataField], 
+                 page_info: GameCategoryDataFieldPageInfo, total_count: int):
+        self.data_fields: list[GameCategoryDataField] = data_fields
+        """ Поля с данными предмета в категории на странице. """
+        self.page_info: GameCategoryDataFieldPageInfo = page_info
+        """ Информация о странице. """
+        self.total_count: int = total_count
+        """ Всего полей с данными. """
+
+
+class GameCategoryProps:
+    """
+    Подкласс, описывающий пропорции категории.
+
+    :param min_reviews: Минимальное количество отзывов.
+    :type min_reviews: `int`
+
+    :param min_reviews_for_seller: Минимальное количество отзывов для продавца.
+    :type min_reviews_for_seller: `int`
+    """
+
+    def __init__(self, min_reviews: int, min_reviews_for_seller: int):
+        self.min_reviews: int = min_reviews
+        """ Минимальное количество отзывов. """
+        self.min_reviews_for_seller: int = min_reviews_for_seller
+        """ Минимальное количество отзывов для продавца. """
+
+
+class GameCategoryOption:
+    """
+    Подкласс, описывающий опцию категории.
+
+    :param id: ID опции.
+    :type id: `str`
+
+    :param group: Группа опции.
+    :type group: `str`
+
+    :param label: Надпись-название опции.
+    :type label: `str`
+
+    :param type: Тип опции.
+    :type type: `playerokapi.enums.GameCategoryOptionTypes`
+
+    :param field: Название поля (для payload запроса на сайт).
+    :type field: `str`
+
+    :param value: Значение поля (для payload запроса на сайт).
+    :type value: `str`
+
+    :param value_range_limit: Лимит разброса по значению.
+    :type value_range_limit: `int` or `None`
+    """
+
+    def __init__(self, id: str, group: str, label: str, type: GameCategoryOptionTypes,
+                 field: str, value: str, value_range_limit: int | None):
+        self.id: str = id
+        """ ID опции. """
+        self.group: str = group
+        """ Группа опции. """
+        self.label: str = label
+        """ Надпись-название опции. """
+        self.type: GameCategoryOptionTypes = type
+        """ Тип опции. """
+        self.field: str = field
+        """ Название поля (для payload запроса на сайт). """
+        self.value: str = value
+        """ Значение поля (для payload запроса на сайт). """
+        self.value_range_limit: int | None = value_range_limit
+        """ Лимит разброса по значению. """
+
+
+class GameCategoryInstruction:
+    """
+    Подкласс, описывающий информацию о странице инструкии по продаже/покупке в категории.
+
+    :param id: ID инструкции.
+    :type id: `str`
+
+    :param text: Текст инструкции.
+    :type text: `str`
+    """
+
+    def __init__(self, id: str, text: str):
+        self.id: str = id
+        """ ID инструкции. """
+        self.text: str = text
+        """ Текст инструкции. """
+
+
+class GameCategoryInstructionPageInfo:
+    """
+    Подкласс, описывающий инструкцию по продаже/покупке в категории.
+
+    :param start_cursor: Курсор начала страницы.
+    :type start_cursor: `str`
+
+    :param end_cursor: Курсок конца страницы.
+    :type end_cursor: `str`
+
+    :param has_previous_page: Имеет ли предыдущую страницу.
+    :type has_previous_page: `bool`
+
+    :param has_next_page: Имеет ли следующую страницу.
+    :type has_next_page: `bool`
+    """
+
+    def __init__(self, start_cursor: str, end_cursor: str,
+                 has_previous_page: bool, has_next_page: bool):
+        self.start_cursor: str = start_cursor
+        """ Курсор начала страницы. """
+        self.end_cursor: str = end_cursor
+        """ Курсор конца страницы. """
+        self.has_previous_page: bool = has_previous_page
+        """ Имеет ли предыдущую страницу. """
+        self.has_next_page: bool = has_next_page
+        """ Имеет ли следующую страницу. """
+
+
+class GameCategoryInstructionList:
+    """
+    Класс, описывающий страницу инструкций по продаже/покупке в категории.
+
+    :param instructions: Инструкции страницы.
+    :type instructions: `list[playerokapi.types.GameCategoryInstruction]`
+
+    :param page_info: Информация о странице.
+    :type page_info: `playerokapi.types.GameCategoryInstructionPageInfo`
+
+    :param total_count: Всего инструкций.
+    :type total_count: `int`
+    """
+
+    def __init__(self, instructions: list[GameCategoryInstruction], page_info: GameCategoryInstructionPageInfo,
+                 total_count: int):
+        self.instructions: list[GameCategoryInstruction] = instructions
+        """ Соглашения страницы. """
+        self.page_info: GameCategoryInstructionPageInfo = page_info
+        """ Информация о странице. """
+        self.total_count: int = total_count
+        """ Всего инструкций. """
+
+
+class GameCategory:
+    """
+    Объект категории игры/приложения.
+
+    :param id: ID категории.
+    :type id: `str`
+
+    :param slug: Имя страницы категории.
+    :type slug: `str`
+
+    :param name: Название категории.
+    :type name: `str`
+
+    :param category_id: ID родительской категории.
+    :type category_id: `str` or `None`
+
+    :param game_id: ID игры категории.
+    :type game_id: `str` or `None`
+
+    :param obtaining: Тип получения.
+    :type obtaining: `str` or `None` or `None`
+
+    :param options: Опции категории.
+    :type options: `list[playerokapi.types.GameCategoryOption]` or `None`
+
+    :param props: Пропорции категории.
+    :type props: `playerokapi.types.GameCategoryProps` or `None`
+
+    :param no_comment_from_buyer: Без комментария от покупателя?
+    :type no_comment_from_buyer: `bool` or `None`
+
+    :param instruction_for_buyer: Инструкция для покупателя.
+    :type instruction_for_buyer: `str` or `None`
+
+    :param instruction_for_seller: Инструкция для продавца.
+    :type instruction_for_seller: `str` or `None`
+
+    :param use_custom_obtaining: Используется ли кастомное получение.
+    :type use_custom_obtaining: `bool`
+
+    :param auto_confirm_period: Период авто-подтверждения deal этой категории.
+    :type auto_confirm_period: `playerokapi.enums.GameCategoryAutoConfirmPeriods` or `None`
+
+    :param auto_moderation_mode: Включена ли автоматическая модерация.
+    :type auto_moderation_mode: `bool` or `None`
+
+    :param agreements: Соглашения покупателя.
+    :type agreements: `list[playerokapi.types.GameCategoryAgreement]` or `None`
+
+    :param fee_multiplier: Множитель комиссии.
+    :type fee_multiplier: `float` or `None`
+    """
+
+    def __init__(self, id: str, slug: str, name: str, category_id: str | None, game_id: str | None,
+                 obtaining: str | None, options: list[GameCategoryOption] | None, props: GameCategoryProps | None, 
+                 no_comment_from_buyer: bool | None, instruction_for_buyer: str | None, instruction_for_seller: str | None, 
+                 use_custom_obtaining: bool, auto_confirm_period: GameCategoryAutoConfirmPeriods | None, 
+                 auto_moderation_mode: bool | None, agreements: list[GameCategoryAgreement] | None, fee_multiplier: float | None):
+        self.id: str = id
+        """ ID категории. """
+        self.slug: str = slug
+        """ Имя страницы категории. """
+        self.name: str = name
+        """ Название категории. """
+        self.category_id: str | None = category_id
+        """ ID родительской категории. """
+        self.game_id: str | None = game_id
+        """ ID игры категории. """
+        self.obtaining: str | None = obtaining
+        """ Тип получения. """
+        self.options: list[GameCategoryOption] | None = options
+        """ Опции категории. """
+        self.props: str | None = props
+        """ Пропорции категории. """
+        self.no_comment_from_buyer: bool | None = no_comment_from_buyer
+        """ Без комментария от покупателя? """
+        self.instruction_for_buyer: str | None = instruction_for_buyer
+        """ Инструкция для покупателя. """
+        self.instruction_for_seller: str | None = instruction_for_seller
+        """ Инструкция для продавца. """
+        self.use_custom_obtaining: bool = use_custom_obtaining
+        """ Используется ли кастомное получение. """
+        self.auto_confirm_period: GameCategoryAutoConfirmPeriods | None = auto_confirm_period
+        """ Период авто-подтверждения deal этой категории. """
+        self.auto_moderation_mode: bool | None = auto_moderation_mode
+        """ Включена ли автоматическая модерация. """
+        self.agreements: list[GameCategoryAgreement] | None = agreements
+        """ Соглашения покупателя. """
+        self.fee_multiplier: float | None = fee_multiplier
+        """ Множитель комиссии. """
+
+
+class Game:
+    """
+    Объект игры/приложения.
+
+    :param id: ID игры/приложения.
+    :type id: `str`
+
+    :param slug: Имя страницы игры/приложения.
+    :type slug: `str`
+
+    :param name: Название игры/приложения.
+    :type name: `str`
+
+    :param type: Тип: игра или приложение.
+    :type type: `playerokapi.enums.GameTypes`
+
+    :param logo: Лого игры/приложения.
+    :type logo: `playerokapi.types.FileObject`
+
+    :param banner: Баннер игры/приложения.
+    :type banner: `FileObject`
+
+    :param categories: Список категорий игры/приложения.
+    :type categories: `list[playerokapi.types.GameCategory]`
+
+    :param created_at: Дата создания.
+    :type created_at: `str`
+    """
+
+    def __init__(self, id: str, slug: str, name: str, type: GameTypes, 
+                 logo: FileObject, banner: FileObject, categories: list[GameCategory], 
+                 created_at: str):
+        self.id: str = id
+        """ ID игры/приложения. """
+        self.slug: str = slug
+        """ Имя страницы игры/приложения. """
+        self.name: str = name
+        """ Название игры/приложения. """
+        self.type: GameTypes = type
+        """ Тип: игра или приложение. """
+        self.logo: FileObject = logo
+        """ Лого игры/приложения. """
+        self.banner: FileObject = banner
+        """ Баннер игры/приложения. """
+        self.categories: list[GameCategory] = categories
+        """ Список категорий игры/приложения. """
+        self.created_at: str = created_at
+        """ Дата создания. """
+
+
+class GameProfile:
+    """
+    Профиль игры/приложения.
+
+    :param id: ID игры/приложения.
+    :type id: `str`
+
+    :param slug: Имя страницы игры/приложения.
+    :type slug: `str`
+
+    :param name: Название игры/приложения.
+    :type name: `str`
+
+    :param type: Тип: игра или приложение.
+    :type type: `playerokapi.types.GameTypes`
+
+    :param logo: Лого игры/приложения.
+    :type logo: `playerokapi.types.FileObject`
+    """
+
+    def __init__(self, id: str, slug: str, name: str, 
+                 type: GameTypes, logo: FileObject):
+        self.id: str = id
+        """ ID игры/приложения. """
+        self.slug: str = slug
+        """ Имя страницы игры/приложения. """
+        self.name: str = name
+        """ Название игры/приложения. """
+        self.type: GameTypes = id
+        """ Тип: игра или приложение. """
+        self.logo: FileObject = logo
+        """ Лого игры/приложения. """
+
+
+class GamePageInfo:
+    """
+    Подкласс, описывающий информацию о странице игр.
+
+    :param start_cursor: Курсор начала страницы.
+    :type start_cursor: `str`
+
+    :param end_cursor: Курсок конца страницы.
+    :type end_cursor: `str`
+
+    :param has_previous_page: Имеет ли предыдущую страницу.
+    :type has_previous_page: `bool`
+
+    :param has_next_page: Имеет ли следующую страницу.
+    :type has_next_page: `bool`
+    """
+
+    def __init__(self, start_cursor: str, end_cursor: str,
+                 has_previous_page: bool, has_next_page: bool):
+        self.start_cursor: str = start_cursor
+        """ Курсор начала страницы. """
+        self.end_cursor: str = end_cursor
+        """ Курсор конца страницы. """
+        self.has_previous_page: bool = has_previous_page
+        """ Имеет ли предыдущую страницу. """
+        self.has_next_page: bool = has_next_page
+        """ Имеет ли следующую страницу. """
+
+
+class GameList:
+    """
+    Класс, описывающий страницу игр.
+
+    :param games: Игры/приложения страницы.
+    :type games: `list[playerokapi.types.Game]`
+
+    :param page_info: Информация о странице.
+    :type page_info: `playerokapi.types.ChatPageInfo`
+
+    :param total_count: Всего игр.
+    :type total_count: `int`
+    """
+
+    def __init__(self, games: list[Game], page_info: GamePageInfo,
+                 total_count: int):
+        self.games: list[Game] = games
+        """ Игры/приложения страницы. """
+        self.page_info: ChatPageInfo = page_info
+        """ Информация о странице. """
+        self.total_count: int = total_count
+        """ Всего игр. """
+
+
+class ItemPriorityStatusPriceRange:
+    """
+    Подкласс, описывающий ценовой диапазон предмета, подходящего для опред. статуса приоритета.
+
+    :param min: Минимальная цена предмета.
+    :type min: `int`
+
+    :param max: Максимальная цена предмета.
+    :type max: `int`
+    """
+
+    def __init__(self, min: int, max: str):
+        self.min: int = min
+        """ Минимальная цена предмета (в рублях). """
+        self.max: int = max
+        """ Максимальная цена предмета (в рублях). """
+
+
+class ItemPriorityStatus:
+    """
+    Класс, описывающий Status of the приоритета предмета.
+
+    :param id: ID статуса приоритета.
+    :type id: `str`
+
+    :param price: Цена статуса (в рублях).
+    :type price: `int`
+
+    :param name: Название статуса.
+    :type name: `str`
+
+    :param type: Тип статуса.
+    :type type: `playerokapi.enums.PriorityTypes`
+
+    :param period: Длительность статуса (в днях).
+    :type period: `str`
+
+    :param price_range: Ценовой диапазон предмета статуса.
+    :type price_range: `playerokapi.types.ItemPriorityStatusPriceRange`
+    """
+
+    def __init__(self, id: str, price: int, name: str, type: PriorityTypes,
+                 period: int, price_range: ItemPriorityStatusPriceRange):
+        self.id: str = id
+        """ ID статуса приоритета. """
+        self.price: int = price
+        """ Цена статуса (в рублях). """
+        self.name: str = name
+        """ Название статуса. """
+        self.type: PriorityTypes = type
+        """ Тип статуса. """
+        self.period: int = period
+        """ Длительность статуса (в днях). """
+        self.price_range: ItemPriorityStatusPriceRange = price_range
+        """ Ценовой диапазон предмета статуса. """
+
+
+class ItemLog:
+    """
+    Подкласс, описывающий лог действия с предметом.
+    
+    :param id: ID лога.
+    :type id: `str`
+    
+    :param event: Событие лога.
+    :type event: `playerokapi.enums.ItemLogEvents`
+    
+    :param created_at: Дата создания лога.
+    :type created_at: `str`
+    
+    :param user: Профиль пользователя, совершившего лог.
+    :type user: `playerokapi.types.UserProfile`
+    """
+
+    def __init__(self, id: str, event: ItemLogEvents, created_at: str,
+                 user: UserProfile):
+        self.id: str = id
+        """ ID лога. """
+        self.event: ItemLogEvents = event
+        """ Событие лога. """
+        self.created_at: str = created_at
+        """ Дата создания лога. """
+        self.user: UserProfile = user
+        """ Профиль пользователя, совершившего лог. """
+
+
+class Item:
+    """
+    Объект предмета.
+
+    :param id: ID предмета.
+    :type id: `str`
+
+    :param name: Название предмета.
+    :type name: `str`
+
+    :param description: Описание предмета.
+    :type description: `str`
+
+    :param status: Status of the предмета.
+    :type status: `playerokapi.enums.ItemStatuses`
+
+    :param obtaining_type: Способ получения.
+    :type obtaining_type: `playerokapi.types.GameCategoryObtainingType` or `None`
+
+    :param price: Цена предмета.
+    :type price: `int`
+
+    :param raw_price: Цена без учёта скидки.
+    :type raw_price: `int`
+
+    :param priority_position: Приоритетная позиция.
+    :type priority_position: `int`
+
+    :param attachments: Файлы-приложения.
+    :type attachments: `list[playerokapi.types.FileObject]`
+
+    :param attributes: Аттрибуты предмета.
+    :type attributes: `dict`
+
+    :param category: Категория игры предмета.
+    :type category: `playerokapi.types.GameCategory`
+
+    :param comment: Комментарий предмета.
+    :type comment: `str` or `None`
+
+    :param data_fields: Поля данных предмета.
+    :type data_fields: `list[playerokapi.types.GameCategoryDataField]` or `None`
+
+    :param fee_multiplier: Множитель комиссии.
+    :type fee_multiplier: `float`
+
+    :param game: Профиль игры предмета.
+    :type game: `playerokapi.types.GameProfile`
+
+    :param seller_type: Тип продавца.
+    :type seller_type: `playerokapi.enums.UserTypes`
+
+    :param slug: Имя страницы предмета.
+    :type slug: `str`
+
+    :param user: Профиль продавца.
+    :type user: `playerokapi.types.UserProfile`
+    """
+
+    def __init__(self, id: str, slug: str, name: str, description: str, obtaining_type: GameCategoryObtainingType | None, price: int, raw_price: int, priority_position: int,
+                 attachments: list[FileObject], attributes: dict, category: GameCategory, comment: str | None, data_fields: list[GameCategoryDataField] | None, 
+                 fee_multiplier: float, game: GameProfile, seller_type: UserTypes, status: ItemStatuses, user: UserProfile):
+        self.id: str = id
+        """ ID предмета. """
+        self.slug: str = slug
+        """ Имя страницы предмета. """
+        self.name: str = name
+        """ Название предмета. """
+        self.description: str = description
+        """ Описание предмета. """
+        self.obtaining_type: GameCategoryObtainingType | None = obtaining_type
+        """ Способ получения. """
+        self.price: int = price
+        """ Цена предмета. """
+        self.raw_price: int = raw_price
+        """ Цена без учёта скидки. """
+        self.priority_position: int = priority_position
+        """ Приоритетная позиция. """
+        self.attachments: list[FileObject] = attachments
+        """ Файлы-приложения. """
+        self.attributes: dict = attributes
+        """ Аттрибуты предмета. """
+        self.category: GameCategory = category
+        """ Категория игры предмета. """
+        self.comment: str | None = comment
+        """ Комментарий предмета. """
+        self.data_fields: list[GameCategoryDataField] | None = data_fields
+        """ Поля данных предмета. """
+        self.fee_multiplier: float = fee_multiplier
+        """ Множитель комиссии. """
+        self.game: GameProfile = game
+        """ Профиль игры предмета. """
+        self.seller_type: UserTypes = seller_type
+        """ Тип продавца. """
+        self.slug: str = slug
+        """ Имя страницы предмета. """
+        self.status: ItemStatuses = status
+        """ Status of the предмета. """
+        self.user: UserProfile = user
+        """ Профиль продавца. """
+
+
+class MyItem:
+    """
+    Объект своего предмета.
+
+    :param id: ID предмета.
+    :type id: `str`
+
+    :param slug: Имя страницы предмета.
+    :type slug: `str`
+
+    :param name: Название предмета.
+    :type name: `str`
+
+    :param description: Описание предмета.
+    :type description: `str`
+
+    :param status: Status of the предмета.
+    :type status: `playerokapi.enums.ItemStatuses`
+
+    :param obtaining_type: Способ получения.
+    :type obtaining_type: `playerokapi.types.GameCategoryObtainingType` or `None`
+
+    :param price: Цена предмета.
+    :type price: `int`
+
+    :param prev_price: Предыдущая цена.
+    :type prev_price: `int`
+
+    :param raw_price: Цена без учёта скидки.
+    :type raw_price: `int`
+
+    :param priority_position: Приоритетная позиция.
+    :type priority_position: `int`
+
+    :param attachments: Файлы-приложения.
+    :type attachments: `list[playerokapi.types.FileObject]`
+
+    :param attributes: Аттрибуты предмета.
+    :type attributes: `dict`
+
+    :param category: Категория игры предмета.
+    :type category: `playerokapi.types.GameCategory`
+
+    :param comment: Комментарий предмета.
+    :type comment: `str` or `None`
+
+    :param data_fields: Поля данных предмета.
+    :type data_fields: `list[playerokapi.types.GameCategoryDataField]` or `None`
+
+    :param fee_multiplier: Множитель комиссии.
+    :type fee_multiplier: `float`
+
+    :param prev_fee_multiplier: Предыдущий множитель комиссии.
+    :type prev_fee_multiplier: `float`
+
+    :param seller_notified_about_fee_change: Оповещён ли продавец о смене комиссии.
+    :type seller_notified_about_fee_change: `bool`
+
+    :param game: Профиль игры предмета.
+    :type game: `playerokapi.types.GameProfile`
+
+    :param seller_type: Тип продавца.
+    :type seller_type: `playerokapi.enums.UserTypes`
+
+    :param user: Профиль продавца.
+    :type user: `playerokapi.types.UserProfile`
+
+    :param buyer: Профиль продавца.
+    :type user: `playerokapi.types.UserProfile`
+
+    :param priority: Status of the приоритета предмета.
+    :type priority: `playerokapi.types.PriorityTypes`
+
+    :param priority_price: Цены статуса приоритета.
+    :type priority_price: `int`
+
+    :param sequence: Позиция предмета в таблице товаров пользователей.
+    :type sequence: `int` or `None`
+
+    :param status_expiration_date: Дата истечения статуса приоритета.
+    :type status_expiration_date: `str` or `None`
+
+    :param status_description: Описание статуса приоритета.
+    :type status_description: `str` or `None`
+
+    :param status_payment: Платёж статуса (транзакция).
+    :type status_payment: `playerokapi.types.Transaction` or `None`
+
+    :param views_counter: Количество просмотров предмета.
+    :type views_counter: `int`
+
+    :param is_editable: Можно ли редактировать товар.
+    :type is_editable: `bool`
+
+    :param approval_date: Дата публикации товара.
+    :type approval_date: `str` or `None`
+
+    :param deleted_at: Дата удаления товара.
+    :type deleted_at: `str` or `None`
+
+    :param updated_at: Дата последнего обновления товара.
+    :type updated_at: `str` or `None`
+
+    :param created_at: Дата создания товара.
+    :type created_at: `str` or `None`
+    """
+
+    def __init__(self, id: str, slug: str, name: str, description: str, obtaining_type: GameCategoryObtainingType | None, price: int, raw_price: int, priority_position: int,
+                 attachments: list[FileObject], attributes: dict, buyer: UserProfile, category: GameCategory, comment: str | None,
+                 data_fields: list[GameCategoryDataField] | None, fee_multiplier: float, game: GameProfile, seller_type: UserTypes, status: ItemStatuses,
+                 user: UserProfile, prev_price: int, prev_fee_multiplier: float, seller_notified_about_fee_change: bool, 
+                 priority: PriorityTypes, priority_price: int, sequence: int | None, status_expiration_date: str | None, status_description: str | None,
+                 status_payment: Transaction | None, views_counter: int, is_editable: bool, approval_date: str | None, deleted_at: str | None, 
+                 updated_at: str | None, created_at: str | None):
+        self.id: str = id
+        """ ID предмета. """
+        self.slug: str = slug
+        """ Имя страницы предмета. """
+        self.name: str = name
+        """ Название предмета. """
+        self.status: ItemStatuses = status
+        """ Status of the предмета. """
+        self.description: str = description
+        """ Описание предмета. """
+        self.obtaining_type: GameCategoryObtainingType | None = obtaining_type
+        """ Способ получения. """
+        self.price: int = price
+        """ Цена предмета. """
+        self.prev_price: int = prev_price
+        """ Предыдущая цена. """
+        self.raw_price: int = raw_price
+        """ Цена без учёта скидки. """
+        self.priority_position: int = priority_position
+        """ Приоритетная позиция. """
+        self.attachments: list[FileObject] = attachments
+        """ Файлы-приложения. """
+        self.attributes: dict = attributes
+        """ Аттрибуты предмета. """
+        self.category: GameCategory = category
+        """ Категория игры предмета. """
+        self.comment: str | None = comment
+        """ Комментарий предмета. """
+        self.data_fields: list[GameCategoryDataField] | None = data_fields
+        """ Поля данных предмета. """
+        self.fee_multiplier: float = fee_multiplier
+        """ Множитель комиссии. """
+        self.prev_fee_multiplier: float = prev_fee_multiplier
+        """ Предыдущий множитель комиссии. """
+        self.seller_notified_about_fee_change: bool = seller_notified_about_fee_change
+        """ Оповещён ли продавец о смене комиссии. """
+        self.game: GameProfile = game
+        """ Профиль игры предмета. """
+        self.seller_type: UserTypes = seller_type
+        """ Тип продавца. """
+        self.user: UserProfile = user
+        """ Профиль продавца. """
+        self.buyer: UserProfile = buyer
+        """ Профиль покупателя предмета (если продан). """
+        self.priority: PriorityTypes = priority
+        """ Status of the приоритета предмета. """
+        self.priority_price: int = priority_price
+        """ Цены статуса приоритета. """
+        self.sequence: int | None = sequence
+        """ Позиция предмета в таблице товаров пользователей. """
+        self.status_expiration_date: str | None = status_expiration_date
+        """ Дата истечения статуса приоритета. """
+        self.status_description: str | None = status_description
+        """ Описание статуса приоритета. """
+        self.status_payment: str | None = status_payment
+        """ Платёж статуса (транзакция). """
+        self.views_counter: int = views_counter
+        """ Количество просмотров предмета. """
+        self.is_editable: bool = is_editable
+        """ Можно ли редактировать товар. """
+        self.approval_date: str | None = approval_date
+        """ Дата публикации товара. """
+        self.deleted_at: str | None = deleted_at
+        """ Дата удаления товара. """
+        self.updated_at: str | None = updated_at
+        """ Дата последнего обновления товара. """
+        self.created_at: str | None = created_at
+        """ Дата создания товара. """
+
+
+class ItemProfile:
+    """
+    Профиль предмета.
+
+    :param id: ID предмета.
+    :type id: `str`
+
+    :param slug: Имя страницы предмета.
+    :type slug: `str`
+
+    :param priority: Приоритет предмета.
+    :type priority: `playerokapi.enums.PriorityTypes`
+
+    :param status: Status of the предмета.
+    :type status: `playerokapi.enums.ItemStatuses`
+
+    :param name: Название предмета.
+    :type name: `str`
+
+    :param price: Цена предмета.
+    :type price: `int`
+
+    :param raw_price: Цена без учёта скидки.
+    :type raw_price: `int`
+
+    :param seller_type: Тип продавца.
+    :type seller_type: `playerokapi.enums.UserTypes`
+
+    :param attachment: Файл-приложение.
+    :type attachment: `playerokapi.types.FileObject`
+
+    :param user: Профиль продавца.
+    :type user: `playerokapi.types.UserProfile`
+
+    :param approval_date: Дата одобрения.
+    :type approval_date: `str`
+
+    :param priority_position: Приоритетная позиция.
+    :type priority_position: `int`
+
+    :param views_counter: Количество просмотров.
+    :type views_counter: `int` or `None`
+
+    :param fee_multiplier: Множитель комиссии.
+    :type fee_multiplier: `float`
+
+    :param created_at: Дата создания.
+    :type created_at: `str`
+    """
+
+    def __init__(self, id: str, slug: str, priority: PriorityTypes, status: ItemStatuses,
+                 name: str, price: int, raw_price: int, seller_type: UserTypes, attachment: FileObject,
+                 user: UserProfile, approval_date: str, priority_position: int, views_counter: int | None, 
+                 fee_multiplier: float, created_at: str):
+        self.id: str = id
+        """ ID предмета. """
+        self.slug: str = slug
+        """ Имя страницы предмета. """
+        self.priority: PriorityTypes = priority
+        """ Приоритет предмета. """
+        self.status: ItemStatuses = status
+        """ Status of the предмета. """
+        self.name: str = name
+        """ Название предмета. """
+        self.price: int = price
+        """ Цена предмета. """
+        self.raw_price: int = raw_price
+        """ Цена без учёта скидки. """
+        self.seller_type: UserTypes = seller_type
+        """ Тип продавца. """
+        self.attachment: FileObject = attachment
+        """ Файл-приложение. """
+        self.user: UserProfile = user
+        """ Профиль продавца. """
+        self.approval_date: str = approval_date
+        """ Дата одобрения. """
+        self.priority_position: int = priority_position
+        """ Приоритетная позиция. """
+        self.views_counter: int | None = views_counter
+        """ Количество просмотров. """
+        self.fee_multiplier: float = fee_multiplier
+        """ Множитель комиссии. """
+        self.created_at: str = created_at
+        """ Дата создания. """
+
+
+class ItemProfilePageInfo:
+    """
+    Подкласс, описывающий информацию о странице предметов.
+
+    :param start_cursor: Курсор начала страницы.
+    :type start_cursor: `str`
+
+    :param end_cursor: Курсок конца страницы.
+    :type end_cursor: `str`
+
+    :param has_previous_page: Имеет ли предыдущую страницу.
+    :type has_previous_page: `bool`
+
+    :param has_next_page: Имеет ли следующую страницу.
+    :type has_next_page: `bool`
+    """
+
+    def __init__(self, start_cursor: str, end_cursor: str,
+                 has_previous_page: bool, has_next_page: bool):
+        self.start_cursor: str = start_cursor
+        """ Курсор начала страницы. """
+        self.end_cursor: str = end_cursor
+        """ Курсор конца страницы. """
+        self.has_previous_page: bool = has_previous_page
+        """ Имеет ли предыдущую страницу. """
+        self.has_next_page: bool = has_next_page
+        """ Имеет ли следующую страницу. """
+
+
+class ItemProfileList:
+    """
+    Профиль страницы предметов.
+
+    :param items: Предметы страницы.
+    :type items: `list[playerokapi.types.Item]`
+
+    :param page_info: Информация о странице.
+    :type page_info: `playerokapi.types.ItemProfilePageInfo`
+
+    :param total_count: Всего предметов.
+    :type total_count: `int`
+    """
+
+    def __init__(self, items: list[ItemProfile], page_info: ItemProfilePageInfo,
+                 total_count: int):
+        self.items: list[ItemProfile] = items
+        """ Предметы страницы. """
+        self.page_info: ItemProfilePageInfo = page_info
+        """ Информация о странице. """
+        self.total_count: int = total_count
+        """ Всего предметов. """
+
+
+class SBPBankMember:
+    """
+    Объект членов СБП банка.
+
+    :param id: ID.
+    :type id: `str`
+
+    :param name: Название.
+    :type name: `str`
+
+    :param icon: URL иконки.
+    :type icon: `str`
+    """
+
+    def __init__(self, id: str, name: str, icon: str):
+        self.id: str = id
+        """ ID. """
+        self.name: str = name
+        """ Название. """
+        self.icon: str = icon
+        """ URL иконки. """
+
+
+class TransactionPaymentMethod:
+    """
+    Платёжный метод транзакции.
+
+    :param id: ID метода.
+    :type id: `playerokapi.types.TransactionPaymentMethodIds`
+
+    :param name: Название метода.
+    :type name: `str`
+
+    :param fee: Комиссия метода.
+    :type fee: `int`
+
+    :param provider_id: ID провайдера транзакции.
+    :type provider_id: `playerokapi.types.TransactionProviderIds`
+
+    :param account: Аккаунт метода (?).
+    :type account: `AccountProfile` or `None`
+
+    :param props: Параметры провайдера транзакции.
+    :type props: `playerokapi.types.TransactionProviderProps`
+
+    :param limits: Лимиты провайдера транзакции.
+    :type limits: `playerokapi.types.TransactionProviderLimits`
+    """
+
+    def __init__(self, id: TransactionPaymentMethodIds, name: str, fee: int, provider_id: TransactionProviderIds,
+                 account: AccountProfile | None, props: TransactionProviderProps, limits: TransactionProviderLimits):
+        self.id: TransactionPaymentMethodIds = id
+        """ ID метода. """
+        self.name: str = name
+        """ Названиие метода. """
+        self.fee: int = fee
+        """ Комиссия метода. """
+        self.provider_id: TransactionProviderIds = provider_id
+        """ ID провайдера транзакции. """
+        self.account: AccountProfile | None = account
+        """ Аккаунт метода (?). """
+        self.props: TransactionProviderProps = props
+        """ Параметры провайдера транзакции. """
+        self.limits: TransactionProviderLimits = limits
+        """ Лимиты провайдера транзакции. """
+
+
+class TransactionProviderLimitRange:
+    """
+    Диапозон лимитов провайдера транзакции.
+
+    :param min: Минимальная Price (в рублях).
+    :type min: `int`
+
+    :param max: Максимальная Price (в рублях).
+    :type max: `int`
+    """
+
+    def __init__(self, min: int, max: int):
+        self.min: int = min
+        """ Минимальная Price (в рублях). """
+        self.max: int = max
+        """ Максимальная Price (в рублях). """
+
+
+class TransactionProviderLimits:
+    """
+    Лимиты провайдера транзакции.
+
+    :param incoming: На пополнение.
+    :type incoming: `playerokapi.types.TransactionProviderLimitRange`
+
+    :param outgoing: На вывод.
+    :type outgoing: `playerokapi.types.TransactionProviderLimitRange`
+    """
+
+    def __init__(self, incoming: TransactionProviderLimitRange, outgoing: TransactionProviderLimitRange):
+        self.incoming: TransactionProviderLimitRange = incoming
+        """ На пополнение. """
+        self.outgoing: TransactionProviderLimitRange = outgoing
+        """ На вывод. """
+
+
+class TransactionProviderRequiredUserData:
+    """
+    Обязательные пользовательские данные провайдера транзакции.
+
+    :param email: Обязательно ли указывать EMail?
+    :type email: `bool`
+
+    :param phone_number: Обязательно ли указывать номер телефона?
+    :type phone_number: `bool`
+
+    :param erip_account_number: Обязательно ли указывать номер аккаунта ЕРИП?
+    :type erip_account_number: `bool` or `None`
+    """
+
+    def __init__(self, email: bool, phone_number: bool, 
+                 erip_account_number: bool | None):
+        self.email: bool = email
+        """ Обязательно ли указывать EMail? """
+        self.phone_number: bool = phone_number
+        """ Обязательно ли указывать номер телефона? """
+        self.erip_account_number: bool | None = erip_account_number
+        """ Обязательно ли указывать номер аккаунта ЕРИП? """
+
+
+class TransactionProviderProps:
+    """
+    Параметры провайдера транзакции.
+
+    :param required_user_data: Обязательные пользовательские данные.
+    :type required_user_data: `playerokapi.types.TransactionProviderRequiredUserData`
+
+    :param tooltip: Подсказка.
+    :type tooltip: `str` or `None`
+    """
+
+    def __init__(self, required_user_data: TransactionProviderRequiredUserData,
+                 tooltip: str | None):
+        self.required_user_data: TransactionProviderRequiredUserData = required_user_data
+        """ Обязательные пользовательские данные. """
+        self.tooltip: str | None = tooltip
+        """ Подсказка. """
+
+
+class TransactionProvider:
+    """
+    Объект провайдера транзакции.
+
+    :param id: ID провайдера.
+    :type id: `playerokapi.enums.TransactionProviderIds`
+
+    :param name: Название провайдера.
+    :type name: `str`
+
+    :param fee: Комиссия провайдера.
+    :type fee: `int`
+
+    :param min_fee_amount: Минимальная комиссия.
+    :type min_fee_amount: `int` or `None`
+
+    :param description: Описание провайдера.
+    :type description: `str` or `None`
+
+    :param account: Аккаунт провайдера (?).
+    :type account: `playerokapi.types.AccountProfile` or `None`
+
+    :param props: Параметры провайдера.
+    :type props: `playerokapi.types.TransactionProviderProps`
+
+    :param limits: Лимиты провайдера.
+    :type limits: `playerokapi.types.TransactionProviderLimits`
+
+    :param payment_methods: Платёжные методы.
+    :type payment_methods: `list` of `playerokapi.types.TransactionPaymentMethod`
+    """
+
+    def __init__(self, id: TransactionProviderIds, name: str, fee: int, min_fee_amount: int | None, 
+                 description: str | None, account: AccountProfile | None, props: TransactionProviderProps, 
+                 limits: TransactionProviderLimits, payment_methods: list[TransactionPaymentMethod]):
+        self.id: TransactionProviderIds = id
+        """ ID провайдера. """
+        self.name: str = name
+        """ Название провайдера. """
+        self.fee: int = fee
+        """ Комиссия провайдера. """
+        self.min_fee_amount: int | None = min_fee_amount
+        """ Минимальная комиссия. """
+        self.description: str | None = description
+        """ Описание провайдера. """
+        self.account: AccountProfile | None = account
+        """ Аккаунт провайдера (?). """
+        self.props: TransactionProviderProps = props
+        """ Параметры провайдера. """
+        self.limits: TransactionProviderLimits = limits
+        """ Лимиты провайдера. """
+        self.payment_methods: list[TransactionPaymentMethod] = payment_methods
+        """ Платёжные методы. """
+
+
+class Transaction:
+    """
+    Объект транзакции.
+
+    :param id: ID транзакции.
+    :type id: `str`
+
+    :param operation: Тип выполненной операции.
+    :type operation: `playerokapi.enums.TransactionOperations`
+
+    :param direction: Направление транзакции.
+    :type direction: `playerokapi.enums.TransactionDirections`
+
+    :param provider_id: ID платёжного провайдера.
+    :type provider_id: `playerokapi.enums.TransactionProviderIds`
+
+    :param provider: Объект провайдера транзакции.
+    :type provider: `playerokapi.types.TransactionProvider`
+
+    :param user: Объект пользователя-совершателя транзакции.
+    :type user: `playerokapi.types.UserProfile`
+
+    :param creator: Объект пользователя-создателя транзакции.
+    :type creator: `playerokapi.types.UserProfile` or `None`
+
+    :param status: Status of the обработки транзакции.
+    :type status: `playerokapi.enums.TransactionStatuses`
+
+    :param status_description: Описание статуса.
+    :type status_description: `str` or `None`
+
+    :param status_expiration_date: Дата истечения статуса.
+    :type status_expiration_date: `str` or `None`
+
+    :param value: Price транзакции.
+    :type value: `int`
+
+    :param fee: Комиссия транзакции.
+    :type fee: `int`
+
+    :param created_at: Дата создания транзакции.
+    :type created_at: `str`
+
+    :param verified_at: Дата подтверждения транзакции.
+    :type verified_at: `str` or `None`
+
+    :param verified_by: Объект пользователя, подтвердившего транзакцию.
+    :type verified_by: `playerokapi.types.UserProfile` or `None`
+
+    :param completed_at: Дата выполнения транзакции.
+    :type completed_at: `str` or `None`
+
+    :param completed_by: Объект пользователя, выполнившего транзакцию.
+    :type completed_by: `playerokapi.types.UserProfile` or `None`
+
+    :param payment_method_id: ID способа оплаты.
+    :type payment_method_id: `str` or `None`
+
+    :param is_suspicious: Подозрительная ли транзакция.
+    :type is_suspicious: `bool` or `None`
+
+    :param sbp_bank_name: Название банка СБП (если транзакция была совершена с помощью СБП).
+    :type sbp_bank_name: `str` or `None`
+    """
+
+    def __init__(self, id: str, operation: TransactionOperations, direction: TransactionDirections, provider_id: TransactionProviderIds, 
+                 provider: TransactionProvider, user: UserProfile, creator: UserProfile, status: TransactionStatuses, status_description: str | None, 
+                 status_expiration_date: str | None, value: int, fee: int, created_at: str, verified_at: str | None, verified_by: UserProfile | None, 
+                 completed_at: str | None, completed_by: UserProfile | None, payment_method_id: str | None, is_suspicious: bool | None, sbp_bank_name: str | None):
+        self.id: str = id
+        """ ID транзакции. """
+        self.operation: TransactionOperations = operation
+        """ Тип выполненной операции. """
+        self.direction: TransactionDirections = direction
+        """ Направление транзакции. """
+        self.provider_id: TransactionProviderIds = provider_id
+        """ ID платёжного провайдера. """
+        self.provider: TransactionProvider = provider
+        """ Объект провайдера транзакции. """
+        self.user: UserProfile = user
+        """ Объект пользователя-совершателя транзакции. """
+        self.creator: UserProfile | None = creator
+        """ Объект пользователя-создателя транзакции. """
+        self.status: TransactionStatuses = status
+        """ Status of the обработки транзакции. """
+        self.status_description: str | None = status_description
+        """ Описание статуса. """
+        self.status_expiration_date: str | None = status_expiration_date
+        """ Дата истечения статуса. """
+        self.value: int = value
+        """ Price транзакции. """
+        self.fee: int = fee
+        """ Комиссия транзакции. """
+        self.created_at: str = created_at
+        """ Дата создания транзакции. """
+        self.verified_at: str | None = verified_at
+        """ Дата подтверждения транзакции. """
+        self.verified_by: UserProfile | None = verified_by
+        """ Объект пользователя, подтвердившего транзакцию. """
+        self.completed_at: str | None = completed_at
+        """ Дата выполнения транзакции. """
+        self.completed_by: UserProfile | None = completed_by
+        """ Объект пользователя, выполнившего транзакцию. """
+        self.payment_method_id: str | None = payment_method_id
+        """ ID способа оплаты. """
+        self.is_suspicious: bool | None = is_suspicious
+        """ Подозрительная ли транзакция. """
+        self.sbp_bank_name: str | None = sbp_bank_name
+        """ Название банка СБП (если транзакция была совершена с помощью СБП). """
+
+
+class TransactionPageInfo:
+    """
+    Подкласс, описывающий информацию о странице транзакций.
+
+    :param start_cursor: Курсор начала страницы.
+    :type start_cursor: `str`
+
+    :param end_cursor: Курсок конца страницы.
+    :type end_cursor: `str`
+
+    :param has_previous_page: Имеет ли предыдущую страницу.
+    :type has_previous_page: `bool`
+
+    :param has_next_page: Имеет ли следующую страницу.
+    :type has_next_page: `bool`
+    """
+
+    def __init__(self, start_cursor: str, end_cursor: str,
+                 has_previous_page: bool, has_next_page: bool):
+        self.start_cursor: str = start_cursor
+        """ Курсор начала страницы. """
+        self.end_cursor: str = end_cursor
+        """ Курсор конца страницы. """
+        self.has_previous_page: bool = has_previous_page
+        """ Имеет ли предыдущую страницу. """
+        self.has_next_page: bool = has_next_page
+        """ Имеет ли следующую страницу. """
+
+
+class TransactionList:
+    """
+    Класс, описывающий страницу сообщений чата.
+
+    :param transactions: Транзакции страницы.
+    :type transactions: `list[playerokapi.types.Transaction]`
+
+    :param page_info: Информация о странице.
+    :type page_info: `playerokapi.types.TransactionPageInfo`
+
+    :param total_count: Всего транзакций на странице.
+    :type total_count: `int`
+    """
+
+    def __init__(self, transactions: list[Transaction], page_info: TransactionPageInfo,
+                 total_count: int):
+        self.transactions: list[Transaction] = transactions
+        """ Транзакции страницы. """
+        self.page_info: TransactionPageInfo = page_info
+        """ Информация о странице. """
+        self.total_count: int = total_count
+        """ Всего транзакций на странице. """
+
+
+class UserBankCard:
+    """
+    Объект банковской карты пользователя.
+
+    :param id: ID карты.
+    :type id: `str`
+
+    :param card_first_six: Первые шесть цифр карты.
+    :type card_first_six: `str`
+
+    :param card_last_four: Последние четыре цифры карты.
+    :type card_last_four: `str`
+
+    :param card_type: Тип банковской карты.
+    :type card_type: `playerokapi.enums.BankCardTypes`
+
+    :param is_chosen: Выбрана ли эта карта как по умолчанию?
+    :type is_chosen: `bool`
+    """
+
+    def __init__(self, id: str, card_first_six: str, card_last_four: str,
+                 card_type: BankCardTypes, is_chosen: bool):
+        self.id: str = id
+        """ ID карты. """
+        self.card_first_six: str = card_first_six
+        """ Первые шесть цифр карты. """
+        self.card_last_four: str = card_last_four
+        """ Последние четыре цифры карты. """
+        self.card_type: BankCardTypes = card_type
+        """ Тип банковской карты. """
+        self.is_chosen: bool = is_chosen
+        """ Выбрана ли эта карта как по умолчанию? """
+
+
+class UserBankCardPageInfo:
+    """
+    Подкласс, описывающий информацию о странице банковских карт пользователя.
+
+    :param start_cursor: Курсор начала страницы.
+    :type start_cursor: `str`
+
+    :param end_cursor: Курсок конца страницы.
+    :type end_cursor: `str`
+
+    :param has_previous_page: Имеет ли предыдущую страницу.
+    :type has_previous_page: `bool`
+
+    :param has_next_page: Имеет ли следующую страницу.
+    :type has_next_page: `bool`
+    """
+
+    def __init__(self, start_cursor: str, end_cursor: str,
+                 has_previous_page: bool, has_next_page: bool):
+        self.start_cursor: str = start_cursor
+        """ Курсор начала страницы. """
+        self.end_cursor: str = end_cursor
+        """ Курсор конца страницы. """
+        self.has_previous_page: bool = has_previous_page
+        """ Имеет ли предыдущую страницу. """
+        self.has_next_page: bool = has_next_page
+        """ Имеет ли следующую страницу. """
+
+
+class UserBankCardList:
+    """
+    Класс, описывающий страницу банковских карт пользователя.
+
+    :param bank_cards: Банковские карты страницы.
+    :type bank_cards: `list[playerokapi.types.UserBankCard]`
+
+    :param page_info: Информация о странице.
+    :type page_info: `playerokapi.types.UserBankCardPageInfo`
+
+    :param total_count: Всего банковских карт на странице.
+    :type total_count: `int`
+    """
+
+    def __init__(self, bank_cards: list[UserBankCard], 
+                 page_info: UserBankCardPageInfo, total_count: int):
+        self.bank_cards: list[UserBankCard] = bank_cards
+        """ Банковские карты страницы. """
+        self.page_info: UserBankCardPageInfo = page_info
+        """ Информация о странице. """
+        self.total_count: int = total_count
+        """ Всего банковских карт на странице. """
+
+
+class Moderator:
+    # TODO: Сделать класс модератора Moderator
+
+    def __init__(self):
+        pass
+
+
+class TemporaryAttachmentUploadOutput:
+    """
+    Выходные данные для загрузки временного вложения
+    (приложенное к сообщению изображение).
+
+    :param id: ID данных.
+    :type id: `str`
+
+    :param url: URL изображения.
+    :type url: `str`
+
+    :param chat_id: ID чата, куда отправляется изображение.
+    :type chat_id: `str`
+
+    :param client_attachment_id: ID файла-приложения клиента.
+    :type client_attachment_id: `str`
+
+    :param expires_at: Дата истечения.
+    :type expires_at: `str`
+    """
+
+    def __init__(self, id: str, url: str, chat_id: str,
+                 client_attachment_id: str, expires_at: str):
+        self.id: str = id
+        """ ID данных. """
+        self.url: str = id
+        """ URL изображения. """
+        self.chat_id: str = id
+        """ ID чата, куда отправляется изображение. """
+        self.client_attachment_id: str = id
+        """ ID приложения клиента. """
+        self.expires_at: str = id
+        """ Дата истечения. """
+
+
+class ChatMessageButton:
+    """
+    Объект кнопки сообщения.
+
+    :param type: Тип кнопки.
+    :type type: `playerokapi.types.ChatMessageButtonTypes`
+
+    :param url: URL кнопки.
+    :type url: `str` or None
+
+    :param text: Текст кнопки.
+    :type text: `str`
+    """
+
+    def __init__(self, type: ChatMessageButtonTypes, 
+                 url: str | None, text: str,):
+        self.type: ChatMessageButtonTypes = type
+        """ Тип кнопки. """
+        self.url: str | None = url
+        """ URL кнопки. """
+        self.text: str = text
+        """ Текст кнопки. """
+
+
+class ChatMessage:
+    """
+    Класс, описывающий сообщение в chat.
+
+    :param id: ID сообщения.
+    :type id: `str`
+
+    :param text: Текст сообщения.
+    :type text: `str`
+
+    :param created_at: Дата создания сообщения.
+    :type created_at: `str`
+
+    :param deleted_at: Дата удаления сообщения.
+    :type deleted_at: `str` or `None`
+
+    :param is_read: Прочитано ли сообщение.
+    :type is_read: `bool`
+
+    :param is_suspicious: Подозрительное ли сообщение.
+    :type is_suspicious: `bool`
+
+    :param is_bulk_messaging: Массовая ли это рассылка.
+    :type is_bulk_messaging: `bool`
+
+    :param game: Игра, к которой относится сообщение.
+    :type game: `str` or `None`
+
+    :param file: Файл, прикреплённый к сообщению.
+    :type file: `playerokapi.types.FileObject` or `None`
+
+    :param user: Пользователь, который отправил сообщение.
+    :type user: `playerokapi.types.UserProfile`
+
+    :param deal: Сделка, к которой относится сообщение.
+    :type deal: `playerokapi.types.Deal` or `None`
+
+    :param item: Item, к которому относится сообщение (обычно передаётся только сама deal в переменную deal).
+    :type item: `playerokapi.types.Item` or `None`
+
+    :param transaction: Транзакция сообщения.
+    :type transaction: `playerokapi.types.Transaction` or `None`
+
+    :param moderator: Модератор сообщения.
+    :type moderator: `playerokapi.types.Moderator`
+
+    :param event_by_user: Ивент от пользователя.
+    :type event_by_user: `playerokapi.types.UserProfile` or `None`
+
+    :param event_to_user: Ивент для пользователя.
+    :type event_to_user: `playerokapi.types.UserProfile` or `None`
+
+    :param is_auto_response: Авто-ответ ли это.
+    :type is_auto_response: `bool`
+
+    :param event: Ивент сообщения.
+    :type event: `playerokapi.types.Event` or `None`
+
+    :param buttons: Кнопки сообщения.
+    :type buttons: `list[playerokapi.types.MessageButton]`
+    """
+
+    def __init__(self, id: str, text: str, created_at: str, deleted_at: str | None, is_read: bool, 
+                 is_suspicious: bool, is_bulk_messaging: bool, game: Game | None, file: FileObject | None,
+                 user: UserProfile, deal: ItemDeal | None, item: ItemProfile | None, transaction: Transaction | None,
+                 moderator: Moderator | None, event_by_user: UserProfile | None, event_to_user: UserProfile | None, 
+                 is_auto_response: bool, event: Event | None, buttons: list[ChatMessageButton]):
+        self.id: str = id
+        """ ID сообщения. """
+        self.text: str = text
+        """ Текст сообщения. """
+        self.created_at: str = created_at
+        """ Дата создания сообщения. """
+        self.deleted_at: str | None = deleted_at
+        """ Дата удаления сообщения. """
+        self.is_read: bool = is_read
+        """ Прочитано ли сообщение. """
+        self.is_suspicious: bool = is_suspicious
+        """ Подозрительное ли сообщение. """
+        self.is_bulk_messaging: bool = is_bulk_messaging
+        """ Массовая ли это рассылка. """
+        self.game: Game | None  = game
+        """ Игра, к которой относится сообщение. """
+        self.file: FileObject | None  = file
+        """ Файл, прикреплённый к сообщению. """
+        self.user: UserProfile = user
+        """ Пользователь, который отправил сообщение. """
+        self.deal: ItemDeal | None = deal
+        """ Сделка, к которой относится сообщение. """
+        self.item: ItemProfile | None = item
+        """ Item, к которому относится сообщение (обычно передаётся только сама deal в переменную deal). """
+        self.transaction: Transaction | None = transaction
+        """ Транзакция сообщения. """
+        self.moderator: Moderator = moderator
+        """ Модератор сообщения. """
+        self.event_by_user: UserProfile | None = event_by_user
+        """ Ивент от пользователя. """
+        self.event_to_user: UserProfile | None = event_to_user
+        """ Ивент для пользователя. """
+        self.is_auto_response: bool = is_auto_response
+        """ Авто-ответ ли это. """
+        self.event: Event | None = event
+        """ Ивент сообщения. """
+        self.buttons: list[ChatMessageButton] = buttons
+        """ Кнопки сообщения. """
+
+
+class ChatMessagePageInfo:
+    """
+    Подкласс, описывающий информацию о странице сообщений.
+
+    :param start_cursor: Курсор начала страницы.
+    :type start_cursor: `str`
+
+    :param end_cursor: Курсок конца страницы.
+    :type end_cursor: `str`
+
+    :param has_previous_page: Имеет ли предыдущую страницу.
+    :type has_previous_page: `bool`
+
+    :param has_next_page: Имеет ли следующую страницу.
+    :type has_next_page: `bool`
+    """
+
+    def __init__(self, start_cursor: str, end_cursor: str,
+                 has_previous_page: bool, has_next_page: bool):
+        self.start_cursor: str = start_cursor
+        """ Курсор начала страницы. """
+        self.end_cursor: str = end_cursor
+        """ Курсор конца страницы. """
+        self.has_previous_page: bool = has_previous_page
+        """ Имеет ли предыдущую страницу. """
+        self.has_next_page: bool = has_next_page
+        """ Имеет ли следующую страницу. """
+
+
+class ChatMessageList:
+    """
+    Класс, описывающий страницу сообщений чата.
+
+    :param messages: Сообщения страницы.
+    :type messages: `list[playerokapi.types.ChatMessage]`
+
+    :param page_info: Информация о странице.
+    :type page_info: `playerokapi.types.ChatMessagePageInfo`
+
+    :param total_count: Всего сообщений в chat.
+    :type total_count: `int`
+    """
+
+    def __init__(self, messages: list[ChatMessage], page_info: ChatMessagePageInfo,
+                 total_count: int):
+        self.messages: list[ChatMessage] = messages
+        """ Сообщения страницы. """
+        self.page_info: ChatMessagePageInfo = page_info
+        """ Информация о странице. """
+        self.total_count: int = total_count
+        """ Всего сообщений в chat. """
+
+
+class Chat:
+    """
+    Объект чата.
+
+    :param id: ID чата.
+    :type id: `str`
+
+    :param type: Тип чата.
+    :type type: `playerokapi.enums.ChatTypes`
+
+    :param status: Status of the чата.
+    :type status: `playerokapi.enums.ChatStatuses` or `None`
+
+    :param unread_messages_counter: Количество непрочитанных сообщений.
+    :type unread_messages_counter: `int`
+
+    :param bookmarked: В закладках ли чат.
+    :type bookmarked: `bool` or `None`
+
+    :param is_texting_allowed: Разрешено ли писать в чат.
+    :type is_texting_allowed: `bool` or `None`
+
+    :param owner: Владелец чата (только если это чат с ботом).
+    :type owner: `bool` or `None`
+
+    :param deals: Сделки в chat.
+    :type deals: `list[playerokapi.types.ItemDeal]` or `None`
+
+    :param last_message: Объект последнего сообщения в chat
+    :type last_message: `playerokapi.types.ChatMessage` or `None`
+
+    :param users: Участники чата.
+    :type users: `list[UserProfile]`
+
+    :param started_at: Дата начала диалога.
+    :type started_at: `str` or `None`
+
+    :param finished_at: Дата завершения диалога.
+    :type finished_at: `str` or `None`
+    """
+
+    def __init__(self, id: str, type: ChatTypes, status: ChatStatuses | None, unread_messages_counter: int, 
+                 bookmarked: bool | None, is_texting_allowed: bool | None, owner: UserProfile | None, deals: list[ItemDeal] | None,
+                 started_at: str | None, finished_at: str | None, last_message: ChatMessage | None, users: list[UserProfile]):
+        self.id: str = id
+        """ ID чата. """
+        self.type: ChatTypes = type
+        """ Тип чата. """
+        self.status: ChatStatuses | None = status
+        """ Status of the чата. """
+        self.unread_messages_counter: int = unread_messages_counter
+        """ Количество непрочитанных сообщений. """
+        self.bookmarked: bool | None = bookmarked
+        """ В закладках ли чат. """
+        self.is_texting_allowed: bool | None = is_texting_allowed
+        """ Разрешено ли писать в чат. """
+        self.owner: UserProfile = owner
+        """ Владелец чата. """
+        self.deals: list[ItemDeal] | None = deals
+        """ Сделки в chat. """
+        self.last_message: ChatMessage | None = last_message
+        """ Объект последнего сообщения в chat. """
+        self.users: list[UserProfile] = users
+        """ Участники чата. """
+        self.started_at: str | None = started_at
+        """ Дата начала диалога. """
+        self.finished_at: str | None = finished_at
+        """ Дата завершения диалога. """
+
+
+class ChatPageInfo:
+    """
+    Подкласс, описывающий информацию о странице чатов.
+
+    :param start_cursor: Курсор начала страницы.
+    :type start_cursor: `str`
+
+    :param end_cursor: Курсок конца страницы.
+    :type end_cursor: `str`
+
+    :param has_previous_page: Имеет ли предыдущую страницу.
+    :type has_previous_page: `bool`
+
+    :param has_next_page: Имеет ли следующую страницу.
+    :type has_next_page: `bool`
+    """
+
+    def __init__(self, start_cursor: str, end_cursor: str,
+                 has_previous_page: bool, has_next_page: bool):
+        self.start_cursor: str = start_cursor
+        """ Курсор начала страницы. """
+        self.end_cursor: str = end_cursor
+        """ Курсор конца страницы. """
+        self.has_previous_page: bool = has_previous_page
+        """ Имеет ли предыдущую страницу. """
+        self.has_next_page: bool = has_next_page
+        """ Имеет ли следующую страницу. """
+
+
+class ChatList:
+    """
+    Класс, описывающий страницу чатов.
+
+    :param chats: Чаты страницы.
+    :type chats: `list[playerokapi.types.Chat]`
+
+    :param page_info: Информация о странице.
+    :type page_info: `playerokapi.types.ChatPageInfo`
+
+    :param total_count: Всего чатов.
+    :type total_count: `int`
+    """
+
+    def __init__(self, chats: list[Chat], page_info: ChatPageInfo,
+                 total_count: int):
+        self.chats: list[Chat] = chats
+        """ Чаты страницы. """
+        self.page_info: ChatPageInfo = page_info
+        """ Информация о странице. """
+        self.total_count: int = total_count
+        """ Всего чатов. """
+
+
+class Review:
+    """
+    Объект отзыва.
+
+    :param id: ID отзыва.
+    :type id: `str`
+
+    :param status: Status of the отзыва.
+    :type status: `playerokapi.enums.ReviewStatuses`
+
+    :param text: Текст отзыва.
+    :type text: `str` or `None`
+
+    :param rating: Рейтинг отзыва.
+    :type rating: `int`
+
+    :param created_at: Дата создания отзыва.
+    :type created_at: `str`
+
+    :param updated_at: Дата изменения отзыва.
+    :type updated_at: `str`
+
+    :param deal: Сделка, связанная с отзывом.
+    :type deal: `Deal`
+
+    :param creator: Профиль создателя отзыва.
+    :type creator: `UserProfile`
+
+    :param moderator: Модератор, обработавший отзыв.
+    :type moderator: `Moderator` or `None`
+
+    :param user: Профиль продавца, к которому относится отзыв.
+    :type user: `UserProfile`
+    """
+
+    def __init__(self, id: str, status: ReviewStatuses, text: str | None, rating: int,
+                 created_at: str, updated_at: str, deal: ItemDeal, creator: UserProfile, 
+                 moderator: Moderator | None, user: UserProfile):
+        self.id: str = id
+        """ ID отзыва. """
+        self.status: ReviewStatuses = status
+        """ Status of the отзыва. """
+        self.text: str | None = text
+        """ Текст отзыва. """
+        self.rating: int = rating
+        """ Рейтинг отзыва. """
+        self.created_at: str = created_at
+        """ Дата создания отзыва. """
+        self.updated_at: str = updated_at
+        """ Дата изменения отзыва. """
+        self.deal: ItemDeal = deal
+        """ Сделка, связанная с отзывом. """
+        self.creator: UserProfile = creator
+        """ Профиль создателя отзыва. """
+        self.moderator: Moderator | None = moderator
+        """ Модератор, обработавший отзыв. """
+        self.user: UserProfile = user
+        """ Профиль продавца, к которому относится отзыв. """
+
+
+class ReviewPageInfo:
+    """
+    Подкласс, описывающий информацию о странице отзывов.
+
+    :param start_cursor: Курсор начала страницы.
+    :type start_cursor: `str`
+
+    :param end_cursor: Курсок конца страницы.
+    :type end_cursor: `str`
+
+    :param has_previous_page: Имеет ли предыдущую страницу.
+    :type has_previous_page: `bool`
+
+    :param has_next_page: Имеет ли следующую страницу.
+    :type has_next_page: `bool`
+    """
+
+    def __init__(self, start_cursor: str, end_cursor: str,
+                 has_previous_page: bool, has_next_page: bool):
+        self.start_cursor: str = start_cursor
+        """ Курсор начала страницы. """
+        self.end_cursor: str = end_cursor
+        """ Курсор конца страницы. """
+        self.has_previous_page: bool = has_previous_page
+        """ Имеет ли предыдущую страницу. """
+        self.has_next_page: bool = has_next_page
+        """ Имеет ли следующую страницу. """
+
+
+class ReviewList:
+    """
+    Класс, описывающий страницу отзывов.
+
+    :param reviews: Отзывы страницы.
+    :type reviews: `list[playerokapi.types.Review]`
+
+    :param page_info: Информация о странице.
+    :type page_info: `playerokapi.types.ReviewPageInfo`
+
+    :param total_count: Всего отзывов.
+    :type total_count: `int`
+    """
+
+    def __init__(self, reviews: list[Review], page_info: ReviewPageInfo,
+                 total_count: int):
+        self.reviews: list[Review] = reviews
+        """ Отзывы страницы. """
+        self.page_info: ReviewPageInfo = page_info
+        """ Информация о странице. """
+        self.total_count: int = total_count
+        """ Всего отзывов. """

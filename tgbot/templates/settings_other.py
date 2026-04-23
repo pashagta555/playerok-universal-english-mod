@@ -1,57 +1,57 @@
-import textwrap 
-from aiogram .types import InlineKeyboardMarkup ,InlineKeyboardButton 
+import textwrap
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from settings import Settings as sett 
+from settings import Settings as set
 
-from ..import callback_datas as calls 
+from .. import callback_datas as calls
+    
 
+def settings_other_text():
+    config = sett.get("config")
+    
+    switch_read_chat_enabled = "🟢 Enabled" if config["playerok"]["read_chat"]["enabled"] else "🔴 Disabled"
+    custom_commands_enabled = "🟢 Enabled" if config["playerok"]["custom_commands"]["enabled"] else "🔴 Disabled"
+    auto_deliveries_enabled = "🟢 Enabled" if config["playerok"]["auto_deliveries"]["enabled"] else "🔴 Disabled"
+    watermark_enabled = "🟢 Enabled" if config["playerok"]["watermark"]["enabled"] else "🔴 Disabled"
+    watermark_value = config["playerok"]["watermark"]["value"] or "❌ Not set"
+    
+    txt = textwrap.dedent(f"""
+        <b>🔧 Other</b>
 
-def settings_other_text ():
-    config =sett .get ('config')
-
-    switch_read_chat_enabled ='🟢 Included'if config ['playerok']['read_chat']['enabled']else '🔴 Off'
-    custom_commands_enabled ='🟢 Included'if config ['playerok']['custom_commands']['enabled']else '🔴 Off'
-    auto_deliveries_enabled ='🟢 Included'if config ['playerok']['auto_deliveries']['enabled']else '🔴 Off'
-    watermark_enabled ='🟢 Included'if config ['playerok']['watermark']['enabled']else '🔴 Off'
-    watermark_value =config ['playerok']['watermark']['value']or '❌ Not specified'
-
-    txt =textwrap .dedent (f"""
-        <b>🔧 Прочее</b>
-
-        <b>👀 Чтение чата перед отправкой сообщения:</b> {switch_read_chat_enabled }
-        <b>❗ Команды:</b> {custom_commands_enabled }
-        <b>🚀 Авто-выдача:</b> {auto_deliveries_enabled }
+        <b>👀 Read chat before sending message:</b> {switch_read_chat_enabled}
+        <b>❗ Commands:</b> {custom_commands_enabled}
+        <b>🚀 Auto-delivery:</b> {auto_deliveries_enabled}
         
-        <b>©️ Водяной знак под сообщениями:</b> {watermark_enabled }
-        <b>✍️©️ Водяной знак:</b> {watermark_value }
+        <b>©️ Watermark under messages:</b> {watermark_enabled}
+        <b>✍️©️ Watermark:</b> {watermark_value}
     """)
-    return txt 
+    return txt
 
 
-def settings_other_kb ():
-    config =sett .get ('config')
-
-    switch_read_chat_enabled ='🟢 Included'if config ['playerok']['read_chat']['enabled']else '🔴 Off'
-    custom_commands_enabled ='🟢 Included'if config ['playerok']['custom_commands']['enabled']else '🔴 Off'
-    auto_deliveries_enabled ='🟢 Included'if config ['playerok']['auto_deliveries']['enabled']else '🔴 Off'
-    watermark_enabled ='🟢 Included'if config ['playerok']['watermark']['enabled']else '🔴 Off'
-    watermark_value =config ['playerok']['watermark']['value']or '❌ Not specified'
-
-    rows =[
-    [InlineKeyboardButton (text =f"👀 Чтение чата перед отправкой сообщения: {switch_read_chat_enabled }",callback_data ='switch_read_chat_enabled')],
-    [InlineKeyboardButton (text =f"❗ Команды: {custom_commands_enabled }",callback_data ='switch_custom_commands_enabled')],
-    [InlineKeyboardButton (text =f"🚀 Авто-выдача: {auto_deliveries_enabled }",callback_data ='switch_auto_deliveries_enabled')],
-    [InlineKeyboardButton (text =f"©️ Водяной знак под сообщениями: {watermark_enabled }",callback_data ='switch_watermark_enabled')],
-    [InlineKeyboardButton (text =f"✍️©️ Водяной знак: {watermark_value }",callback_data ='enter_watermark_value')],
-    [InlineKeyboardButton (text ='⬅️ Back',callback_data =calls .SettingsNavigation (to ='default').pack ())]
+def settings_other_kb():
+    config = sett.get("config")
+    
+    switch_read_chat_enabled = "🟢 Enabled" if config["playerok"]["read_chat"]["enabled"] else "🔴 Disabled"
+    custom_commands_enabled = "🟢 Enabled" if config["playerok"]["custom_commands"]["enabled"] else "🔴 Disabled"
+    auto_deliveries_enabled = "🟢 Enabled" if config["playerok"]["auto_deliveries"]["enabled"] else "🔴 Disabled"
+    watermark_enabled = "🟢 Enabled" if config["playerok"]["watermark"]["enabled"] else "🔴 Disabled"
+    watermark_value = config["playerok"]["watermark"]["value"] or "❌ Not set"
+    
+    rows = [
+        [InlineKeyboardButton(text=f"👀 Read chat before sending message: {switch_read_chat_enabled}", callback_data="switch_read_chat_enabled")],
+        [InlineKeyboardButton(text=f"❗Commands: {custom_commands_enabled}", callback_data="switch_custom_commands_enabled")],
+        [InlineKeyboardButton(text=f"🚀 Auto-delivery: {auto_deliveries_enabled}", callback_data="switch_auto_deliveries_enabled")],
+        [InlineKeyboardButton(text=f"©️ Message watermark: {watermark_enabled}", callback_data="switch_watermark_enabled")],
+        [InlineKeyboardButton(text=f"✍️©️ Watermark: {watermark_value}", callback_data="enter_watermark_value")],
+        [InlineKeyboardButton(text="⬅️ Back", callback_data=calls.SettingsNavigation(to="default").pack())]
     ]
-    kb =InlineKeyboardMarkup (inline_keyboard =rows )
-    return kb 
+    kb = InlineKeyboardMarkup(inline_keyboard=rows)
+    return kb
 
 
-def settings_other_float_text (placeholder :str ):
-    txt =textwrap .dedent (f"""
-        <b>🔧 Прочее</b>
-        \n{placeholder }
+def settings_other_float_text(placeholder: str):
+    txt = textwrap.dedent(f"""
+        <b>🔧 Other</b>
+        \n{placeholder}
     """)
-    return txt 
+    return txt

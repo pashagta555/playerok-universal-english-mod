@@ -5,40 +5,118 @@
 [![stars](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Falleexxeeyy%2Fplayerok-universal&query=%24.stargazers_count&style=for-the-badge&label=stars&color=43d433&logo=github)](https://github.com/alleexxeeyy/playerok-universal/stargazers)
 [![forks](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Falleexxeeyy%2Fplayerok-universal&query=%24.forks_count&style=for-the-badge&label=forks&color=%236c70e6&logo=github)](https://github.com/alleexxeeyy/playerok-universal/forks)
 
-Modern bot assistant for Playerok 🤖🟦
+Современный бот-помощник для Playerok 🤖🟦
+
 ---
 
-## 🗺️ Navigation- [Bot functionality](#-functionality)- [Bot installation](#%EF%B8%8F-installation)- [Useful links](#-useful-links)- [For developers]
-## 🔧 Functionality### 🤖💬 Telegram bot with full control- Setting any parameter from the config in a couple of steps- View bot statistics and account profile- Bot event management
-### ⚙️ Wide range of possibilities- System of modules (plugins connected to the bot)- Eternal online on the site- Auto-recovery of items- Auto-lifting objects- Automatic delivery of goods- Auto-withdrawal- Auto-confirmation of transactions- Welcome message- Custom commands- Custom auto-issue- Command `!seller` to call the seller in chat- Editing and enabling/disabling each message- Notifications in TG about new messages, orders, reviews, etc.
-### 🌐 More advanced- Connect to HTTPS IPv4 proxy- Setting request intervals
-## ⬇️ Installation1. Download [latest Release version](https://github.com/alleexxeeyy/playerok-universal/releases/latest) and unpack it to any place convenient for you2. Make sure that you have **Python version 3.12.x** installed (the bot is not guaranteed to work on other versions). If not installed, do so by going to https://www.python.org/downloads/release/python-31210/ (when installing, click on `Add to PATH`)3. Open `install_requirements.bat` and wait until all the libraries necessary for operation are installed, and then close the window4. To launch the bot, open the `start.bat` launcher5. After the first launch, you will be asked to configure the bot to work
-[Having problems with installation? Click on me](https://telegra.ph/FunPay-Universal--chastye-oshibki-i-ih-resheniya-08-26)
+## 🗺️ Навигация
+- [Функционал бота](#-функционал)
+- [Установка бота](#%EF%B8%8F-установка)
+- [Полезные ссылки](#-полезные-ссылки)
+- [Для разработчиков](#-для-разработчиков)
 
-## 📚 For developers
-The modular system helps to implement additional functionality into the bot, made by enthusiasts. Essentially, this is the same as plugins, but in a more convenient format.You can create your own module based on [formulaic](.templates/forms_module).
+## 🔧 Функционал
+### 🤖💬 Telegram бот с полным управлением
+- Настройка любого параметра из конфига в пару действий
+- Просмотр статистики бота и профиля аккаунта
+- Управление ивентами бота
+
+### ⚙️ Широкий спектр возможностей
+- Система модулей (плагины, подключаемые к боту)
+- Вечный онлайн на сайте
+- Авто-восстановление предметов
+- Авто-поднятие предметов
+- Авто-выдача товаров
+- Авто-вывод средств
+- Авто-подтверждение сделок
+- Приветственное сообщение
+- Пользовательские команды
+- Пользовательская авто-выдача
+- Команда `!seller` для вызова продавца в чат
+- Редактирование и включение/отключение каждого сообщения
+- Уведомления в TG о новых сообщениях, заказах, отзывах и т.д.
+
+### 🌐 Более продвинутое
+- Подключение к прокси HTTPS IPv4
+- Настройка интервалов запросов
+
+## ⬇️ Установка
+1. Скачайте [последнюю Release версию](https://github.com/alleexxeeyy/playerok-universal/releases/latest) и распакуйте в любое удобное для вас место
+2. Убедитесь, что у вас установлен **Python версии 3.12.x** (на других версиях работа бота не гарантируется). Если не установлен, сделайте это, перейдя по ссылке https://www.python.org/downloads/release/python-31210/ (при установке нажмите на пункт `Add to PATH`)
+3. Откройте `install_requirements.bat` и дождитесь установки всех необходимых для работы библиотек, а после закройте окно
+4. Чтобы запустить бота, откройте запускатор `start.bat`
+5. После первого запуска вас попросят настроить бота для работы
+
+[Возникли проблемы с установкой? Нажми на меня](https://telegra.ph/FunPay-Universal--chastye-oshibki-i-ih-resheniya-08-26)
+
+## 📚 Для разработчиков
+
+Модульная система помогает внедрять в бота дополнительный функционал, сделанный энтузиастами. По сути, это же, что и плагины, но в более удобном формате.
+Вы можете создавать свой модуль, опираясь на [шаблонный](.templates/forms_module).
+
 <details>
-<summary><strong>📌 Main events</strong></summary>
-### Bot events (BOT_EVENT_HANDLERS)
-Events that are executed when a certain bot action occurs.
-| Event | When | is called Passed Arguments |  |-------|------------------|------------------------|
-| `ON_MODULE_ENABLED` | When you turn on the module | `Module` || `ON_MODULE_DISABLED` | When the module is turned off | `Module` || `ON_INIT` | When initializing the bot | `-` || `ON_PLAYEROK_BOT_INIT` | When initializing (launching) the Playerok bot | `PlayerokBot` || `ON_TELEGRAM_BOT_INIT` | When initializing (launching) the Telegram bot | `TelegramBot` |
-### Playerok Events (PLAYEROK_EVENT_HANDLERS)
-Events received in the event listener in the Playerok bot.
-| Event | When | is called Passed Arguments |  |-------|------------------|------------------------|
-| `EventTypes.CHAT_INITIALIZED` | Chat initialized | `PlayerokBot`, `ChatInitializedEvent` |  | `EventTypes.NEW_MESSAGE` | New message in the chat | `PlayerokBot`, `NewMessageEvent` |
-| `EventTypes.NEW_DEAL` | New deal created (when Buyer paid for the goods) | `PlayerokBot`, `NewDealEvent` || `EventTypes.NEW_REVIEW` | New review of the deal | `PlayerokBot`, `NewReviewEvent` || `EventTypes.DEAL_CONFIRMED` | Deal confirmed | `PlayerokBot`, `DealConfirmedEvent` || `EventTypes.DEAL_ROLLED_BACK` | The seller issued a refund deal | `PlayerokBot`, `DealRolledBackEvent` || `EventTypes.DEAL_HAS_PROBLEM` | The user reported a problem with the transaction | `PlayerokBot`, `DealHasProblemEvent` || `EventTypes.DEAL_PROBLEM_RESOLVED` | The problem in the deal has been resolved | `PlayerokBot`, `DealProblemResolvedEvent` || `EventTypes.DEAL_STATUS_CHANGED` | Status of the deal changed | `PlayerokBot`, `DealStatusChangedEvent` || `EventTypes.ITEM_PAID` | User paid for Item | `PlayerokBot`, `ItemPaidEvent` || `EventTypes.ITEM_SENT` | Item has been sent (the seller has confirmed the deal) | `PlayerokBot`, `ItemSentEvent` |
+  <summary><strong>📌 Основные ивенты</strong></summary>
+
+  ### Ивенты бота (BOT_EVENT_HANDLERS)
+
+  Ивенты, которые выполняются при определённом действии бота.
+
+  | Ивент | Когда вызывается | Передающиеся аргументы |
+  |-------|------------------|------------------------|
+  | `ON_MODULE_ENABLED` | При включении модуля | `Module` |
+  | `ON_MODULE_DISABLED` | При выключении модуля | `Module` |
+  | `ON_INIT` | При инициализации бота | `-` |
+  | `ON_PLAYEROK_BOT_INIT` | При инициализации (запуске) Playerok бота | `PlayerokBot` |
+  | `ON_TELEGRAM_BOT_INIT` | При инициализации (запуске) Telegram бота | `TelegramBot` |
+
+  ### Ивенты Playerok (PLAYEROK_EVENT_HANDLERS)
+
+  Ивенты, получаемые в слушателе событий в Playerok боте.
+
+  | Ивент | Когда вызывается | Передающиеся аргументы |
+  |-------|------------------|------------------------|
+  | `EventTypes.CHAT_INITIALIZED` | Чат инициализирован | `PlayerokBot`, `ChatInitializedEvent` |
+  | `EventTypes.NEW_MESSAGE` | New message in the chat | `PlayerokBot`, `NewMessageEvent` |
+  | `EventTypes.NEW_DEAL` | Создана New deal (когда Buyer оплатил товар) | `PlayerokBot`, `NewDealEvent` |
+  | `EventTypes.NEW_REVIEW` | Новый отзыв по сделке | `PlayerokBot`, `NewReviewEvent` |
+  | `EventTypes.DEAL_CONFIRMED` | Сделка подтверждена | `PlayerokBot`, `DealConfirmedEvent` |
+  | `EventTypes.DEAL_ROLLED_BACK` | Продавец оформил возврат deal | `PlayerokBot`, `DealRolledBackEvent` |
+  | `EventTypes.DEAL_HAS_PROBLEM` | Пользователь сообщил о проблеме в сделке | `PlayerokBot`, `DealHasProblemEvent` |
+  | `EventTypes.DEAL_PROBLEM_RESOLVED` | Проблема в сделке решена | `PlayerokBot`, `DealProblemResolvedEvent` |
+  | `EventTypes.DEAL_STATUS_CHANGED` | Status of the deal изменён | `PlayerokBot`, `DealStatusChangedEvent` |
+  | `EventTypes.ITEM_PAID` | Пользователь оплатил Item | `PlayerokBot`, `ItemPaidEvent` |
+  | `EventTypes.ITEM_SENT` | Item отправлен (продавец подтвердил выполнение deal) | `PlayerokBot`, `ItemSentEvent` |
+
 </details>
 
 <details>
-<summary><strong>📁 Module structure</strong></summary>  
-</br>A module is a folder that contains important components. You can study the structure of the module based on [template module](.templates/forms_module), but you should understand that this is just an example made by us.
-Mandatory handler constants:| Constant | Type | Description |  |-----------|-----|----------|
-| `BOT_EVENT_HANDLERS` | `dict[str, list[Any]]` | This dictionary defines bot event handlers || `PLAYEROK_EVENT_HANDLERS` | `dict[EventTypes, list[Any]` | This dictionary defines Playerok event handlers || `TELEGRAM_BOT_ROUTERS` | `list[Router]` | This array specifies the routers of the modular Telegram bot |
-Required metadata constants:| Constant | Type | Description |  |-----------|-----|----------|
-| `PREFIX` | `str` | Prefix || `VERSION` | `str` | Version || `NAME` | `str` | Title || `DESCRIPTION` | `str` | Description || `AUTHORS` | `str` | Authors || `LINKS` | `str` | Author links |
-Also, if a module requires additional dependencies, it must have a dependency file **requirements.txt**, which will be downloaded themselves when all bot modules are loaded.
-#### 🔧 Example content:Please note that the metadata was placed in a separate file `meta.py`, but is imported into `__init__.py`.This is done to avoid import conflicts in the further part of the module code.
+  <summary><strong>📁 Строение модуля</strong></summary>  
+  
+  </br>Модуль - это папка, внутри которой находятся важные компоненты. Вы можете изучить строение модуля, опираясь на [шаблонный модуль](.templates/forms_module), но стоит понимать, что это лишь пример, сделанный нами.
+
+  Обязательные константы хендлеров:
+  | Константа | Тип | Описание |
+  |-----------|-----|----------|
+  | `BOT_EVENT_HANDLERS` | `dict[str, list[Any]]` | В этом словаре задаются хендлеры ивентов бота |
+  | `PLAYEROK_EVENT_HANDLERS` | `dict[EventTypes, list[Any]` | В этом словаре задаются хендлеры ивентов Playerok |
+  | `TELEGRAM_BOT_ROUTERS` | `list[Router]` | В этом массиве задаются роутеры модульного Telegram бота  |
+
+  Обязательные константы метаданных:
+  | Константа | Тип | Описание |
+  |-----------|-----|----------|
+  | `PREFIX` | `str` | Префикс |
+  | `VERSION` | `str` | Версия |
+  | `NAME` | `str` | Название |
+  | `DESCRIPTION` | `str` | Описание |
+  | `AUTHORS` | `str` | Авторы |
+  | `LINKS` | `str` | Ссылки на авторов |
+
+  Также, если модуль требует дополнительных зависимостей, в нём должен быть файл зависимостей **requirements.txt**, которые будут сами скачиваться при загрузке всех модулей бота.
+
+  #### 🔧 Пример содержимого:
+  Обратите внимание, что метаданные были вынесены в отдельный файл `meta.py`, но импортируются в `__init__.py`.
+  Это сделано для избежания конфликтов импорта в дальнейшей части кода модуля.
+
   **`meta.py`**:
   ```python
   from colorama import Fore, Style
@@ -96,9 +174,16 @@ Also, if a module requires additional dependencies, it must have a dependency fi
 </details>
 
 <details>
-<summary><strong>🛠️ Useful tools</strong></summary>  
-### 📝 Customized wrappers for configuration files and data filesInstead of once again struggling with configuration files and writing code to manage them, we have prepared a ready-made solution for you.The bot has already configured classes in the files [`settings.py`](settings.py) and [`data.py`](data.py)
-#### How does it work?Let's say you want to create a configuration file in your module, for this you will need to create a file `settings.py` in the root of the module folder.The contents of `settings.py` should be something like this:  ```python
+  <summary><strong>🛠️ Полезные инструменты</strong></summary>  
+  
+  ### 📝 Настроенные врапперы файлов конфигурации и файлов данных
+  Вместо того, чтобы лишний раз мучаться с файлами конфигурациями, написанием кода для управлениями ими, мы подготовили для вас готовое решение.
+  У бота есть уже настроенные классы в файлах [`settings.py`](settings.py) и [`data.py`](data.py)
+
+  #### Как это работает?
+  Допустим, вы хотите создать файл конфигурации в своём модуле, для этого вам нужно будет создать файл `settings.py` в корне папки модуля.
+  Содержимое `settings.py` должно быть примерно следующим:
+  ```python
   import os
   from settings import (
       Settings as sett,
@@ -131,8 +216,10 @@ Also, if a module requires additional dependencies, it must have a dependency fi
           return sett.set(name, new, DATA)
   ```
 
-The configuration file is specified using the `SettingsFile` dataclass, which in turn is transferred to the `DATA` array.  
-Next, you can get data from the config or save data to the config like this:  ```python
+  Файл конфигурации задаётся с помощью датакласса `SettingsFile`, который в свою очередь, передаётся в массив `DATA`.
+  
+  Далее, получить данные из конфига или сохранить данные в конфиг можно вот так:
+  ```python
   from . import settings as sett
 
   config = sett.get("config") #  получаем конфиг
@@ -145,12 +232,22 @@ Next, you can get data from the config or save data to the config like this:  ``
   sett.set("config", config) #  задаём конфигу новое значение
   ```
 
-By assigning a new value to the config, it is immediately written to its file. Also, upon receipt, the current data is taken from the file.
-Description of dataclass arguments `SettingsFile`:| Argument | Description |  |----------|----------|
-| `name` | The name of the configuration file that we will use when receiving and writing || `path` | Path to configuration file || `need_restore` | Do I need to restore the config? Let's say you have added new data to the standard config value, but it is missing from the previously created **previously** configuration file. If the parameter is enabled, the script will check the current config data with the standard ones specified, and if the current data does not contain one or another key that is in the standard value, it will be automatically added to the config. Also, if the value type of a standard config key does not match the existing one (for example, the type in the file is **string**, and the standard value is **numeric**), this key in the current config will also be replaced with the standard value || `default` | Default configuration file value |
+  Задавая конфигу новое значение, оно сразу записывается в его файл. Также и при получении, берутся актуальные данные из файла.
 
-</br>The data file is designed in exactly the same way, but it is needed to store information collected by the script itself, and not specified by users.For example, you want to create a data file in your module, for this you will need to create a file `data.py` in the root of the module folder.  
-The contents of `data.py` should be something like this:  ```python
+  Описание аргументов датакласса `SettingsFile`:
+  | Аргумент | Описание |
+  |----------|----------|
+  | `name` | Название файла конфигурации, которое будем использовать при получении и записи |
+  | `path` | Путь к файлу конфигурации |
+  | `need_restore` | Нужно ли восстанавливать конфиг? Допустим, в стандартное значение конфига у вас добавились новые данные, а в уже созданном **ранее** файле конфигурации они отсутствуют. Если параметр включен, скрипт будет сверять текущие данные конфига со стандартными указанными, и если в текущих данных не будет того или иного ключа, который есть в стандартном значении, он автоматически добавится в конфиг. Так же, если тип значения ключа стандартного конфига не соответствует существующему (например, в файле **строковый** тип, а в стандартном значении **числовой**), также этот ключ в текущем конфиге будет заменён на стандартное значение |
+  | `default` | Стандартное значение файла конфигурации |
+
+
+  </br>Точно также устроен и файл данных, но он нужен для хранения информации, собранной самим скриптом, а не указанной пользователей.
+  Например, вы хотите создать файл данных в своём модуле, для этого вам нужно будет создать файл `data.py` в корне папки модуля.
+  
+  Содержимое `data.py` должно быть примерно следующим:
+  ```python
   import os
   from data import (
       Data as data,
@@ -178,10 +275,15 @@ The contents of `data.py` should be something like this:  ```python
           return data.set(name, new, DATA)
   ```
 
-Everything here is similar to the configuration file, only it serves a different task.
+  Здесь всё аналогично файлу конфигурации, только служит для другой задачи.
 
-### 🔌 Convenient management of module statesUsing methods from `core/modules.py`, you can conveniently enable/disable/reload the current module.In order to do this, you must first obtain the UUID of the currently running module, which is generated during its initialization.  
-For example, in the `__init__.py` file you can do this:  ```python
+
+  ### 🔌 Удобное управление состояниями модуля
+  Используя методы из `core/modules.py`, можно удобно включать/выключать/перезагружать текущий модуль.
+  Для того, чтобы это сделать, нужно прежде всего получить UUID текущего запущенного модуля, который генерируется при его инициализации.
+  
+  Например, в файле `__init__.py` можно делать так:
+  ```python
   # import ...
 
 
@@ -203,7 +305,8 @@ For example, in the `__init__.py` file you can do this:  ```python
   # ...
   ```
 
-And then manage the module in any convenient place:  ```python
+  А потом в любом удобном месте управлять модулем:
+  ```python
   from core.modules import enable_module, disable_module, reload_module
 
   from . import get_module
@@ -217,9 +320,16 @@ And then manage the module in any convenient place:  ```python
 </details>
 
 <details>
-<summary><strong>❗ Notes</strong></summary>
-</br>The functionality of the Telegram bot is written in the aiogram 3 library, the system for implementing custom functionality of the Telegram bot works on the basis of routers that merge with the main, main router of the bot.And the way they merge together, complications can arise if, for example, Callback data has an identical name. Therefore, after writing the Telegram bot functionality for the module, it is better to renamethis data in a unique way so that it does not match the names of the main bot or additional plug-ins.
+  <summary><strong>❗ Примечания</strong></summary>
+
+  </br>Функционал Telegram бота написан на библиотеке aiogram 3, система внедрения пользовательского функционала Telegram бота работает на основе роутеров, которые сливаются с основным, главным роутером бота.
+  И так, как они сливаются воедино, могут возникнуть осложнения, если, например Callback данные имеют идентичное название. Поэтому, после написания функционала Telegram бота для модуля, лучше переименуйте
+  эти данные уникальным образом, чтобы они не совпадали с названиями основного бота или дополнительных подключаемых модулей.
+
 </details>
 
 
-## 🔗 Useful links- Developer: https://github.com/alleexxeeyy (the profile has up-to-date links to all contacts for communication)- Telegram channel: https://t.me/alexeyproduction- Telegram bot for purchasing official modules: https://t.me/alexey_production_bot
+## 🔗 Полезные ссылки
+- Разработчик: https://github.com/alleexxeeyy (в профиле есть актуальные ссылки на все контакты для связи)
+- Telegram канал: https://t.me/alexeyproduction
+- Telegram бот для покупки официальных модулей: https://t.me/alexey_production_bot
