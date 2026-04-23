@@ -54,7 +54,7 @@ def get_json (path :str ,default :dict |list )->dict :
 
 
 def set_json (path :str ,new :dict ):
-    '\n    Устанавливает новые данные в файл данных.\n\n    :param path: Путь к json файлу.\n    :type path: `str`\n\n    :param new: Новые данные.\n    :type new: `dict`\n    '
+    'Installs new data into the data file.\n\n    :param path: Path to the json file.\n    :type path: `str`\n\n    :param new: New data.\n    :type new: `dict`'
 
     with open (path ,'w',encoding ='utf-8')as f :
         json .dump (new ,f ,indent =4 ,ensure_ascii =False )

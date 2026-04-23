@@ -27,7 +27,7 @@ class ChatInitializedEvent (BaseEvent ):
 
 
 class NewMessageEvent (BaseEvent ):
-    'Event class: new chat message.\n\n    :param message: Object of the received message.\n    :type message: `PlayerokAPI.types.ChatMessage`\n\n    :param chat: The chat object in which the event occurred.\n    :type chat: `PlayerokAPI.types.Chat`'
+    'Event class: new message in chat.\n\n    :param message: Object of the received message.\n    :type message: `PlayerokAPI.types.ChatMessage`\n\n    :param chat: The chat object in which the event occurred.\n    :type chat: `PlayerokAPI.types.Chat`'
 
     def __init__ (self ,message :types .ChatMessage ,chat :types .Chat ):
         super (NewMessageEvent ,self ).__init__ (EventTypes .NEW_MESSAGE ,chat )
@@ -36,12 +36,12 @@ class NewMessageEvent (BaseEvent ):
 
 
 class NewDealEvent (BaseEvent ):
-    'Event class: new transaction created (when the buyer paid for the item).\n\n    :param deal: New deal object.\n    :type deal: `PlayerokAPI.types.ItemDeal`\n\n    :param chat: The chat object in which the event occurred.\n    :type chat: `PlayerokAPI.types.Chat`'
+    'Event class: New deal created (when the Buyer paid for the Item).\n\n    :param deal: New deal object.\n    :type deal: `PlayerokAPI.types.ItemDeal`\n\n    :param chat: The chat object in which the event occurred.\n    :type chat: `PlayerokAPI.types.Chat`'
 
     def __init__ (self ,deal :types .ItemDeal ,chat :types .Chat ):
         super (NewDealEvent ,self ).__init__ (EventTypes .NEW_DEAL ,chat )
         self .deal :types .ItemDeal =deal 
-        'Object of the transaction.'
+        'deal object.'
 
 
 class NewReviewEvent (BaseEvent ):
@@ -50,69 +50,69 @@ class NewReviewEvent (BaseEvent ):
     def __init__ (self ,deal :types .ItemDeal ,chat :types .Chat ):
         super (NewReviewEvent ,self ).__init__ (EventTypes .NEW_REVIEW ,chat )
         self .deal :types .ItemDeal =deal 
-        'Object of the transaction.'
+        'deal object.'
 
 
 class DealConfirmedEvent (BaseEvent ):
-    'Event class: the buyer confirmed the transaction.\n\n    :param deal: Object of the deal.\n    :type deal: `PlayerokAPI.types.ItemDeal`\n\n    :param chat: The chat object in which the event occurred.\n    :type chat: `PlayerokAPI.types.Chat`'
+    'Event class: Buyer confirmed the deal.\n\n    :param deal: The deal object.\n    :type deal: `PlayerokAPI.types.ItemDeal`\n\n    :param chat: The chat object in which the event occurred.\n    :type chat: `PlayerokAPI.types.Chat`'
 
     def __init__ (self ,deal :types .ItemDeal ,chat :types .Chat ):
         super (DealConfirmedEvent ,self ).__init__ (EventTypes .DEAL_CONFIRMED ,chat )
         self .deal :types .ItemDeal =deal 
-        'Object of the transaction.'
+        'deal object.'
 
 
 class DealRolledBackEvent (BaseEvent ):
-    'Event class: the seller has returned funds for the transaction.\n\n    :param deal: Object of the deal.\n    :type deal: `PlayerokAPI.types.ItemDeal`\n\n    :param chat: The chat object in which the event occurred.\n    :type chat: `PlayerokAPI.types.Chat`'
+    'Event class: the seller has returned funds for the transaction.\n\n    :param deal: The deal object.\n    :type deal: `PlayerokAPI.types.ItemDeal`\n\n    :param chat: The chat object in which the event occurred.\n    :type chat: `PlayerokAPI.types.Chat`'
 
     def __init__ (self ,deal :types .ItemDeal ,chat :types .Chat ):
         super (DealRolledBackEvent ,self ).__init__ (EventTypes .DEAL_ROLLED_BACK ,chat )
         self .deal :types .ItemDeal =deal 
-        'Object of the transaction.'
+        'deal object.'
 
 
 class DealHasProblemEvent (BaseEvent ):
-    'Event class: Someone reported a problem with the transaction.\n\n    :param deal: Object of the deal.\n    :type deal: `PlayerokAPI.types.ItemDeal`\n\n    :param chat: The chat object in which the event occurred.\n    :type chat: `PlayerokAPI.types.Chat`'
+    'Event class: Someone reported a problem with the transaction.\n\n    :param deal: The deal object.\n    :type deal: `PlayerokAPI.types.ItemDeal`\n\n    :param chat: The chat object in which the event occurred.\n    :type chat: `PlayerokAPI.types.Chat`'
 
     def __init__ (self ,deal :types .ItemDeal ,chat :types .Chat ):
         super (DealHasProblemEvent ,self ).__init__ (EventTypes .DEAL_HAS_PROBLEM ,chat )
         self .deal :types .ItemDeal =deal 
-        'Object of the transaction.'
+        'deal object.'
 
 
 class DealProblemResolvedEvent (BaseEvent ):
-    'Event class: transaction problem resolved.\n\n    :param deal: Object of the deal.\n    :type deal: `PlayerokAPI.types.ItemDeal`\n\n    :param chat: The chat object in which the event occurred.\n    :type chat: `PlayerokAPI.types.Chat`'
+    'Event class: transaction problem resolved.\n\n    :param deal: The deal object.\n    :type deal: `PlayerokAPI.types.ItemDeal`\n\n    :param chat: The chat object in which the event occurred.\n    :type chat: `PlayerokAPI.types.Chat`'
 
     def __init__ (self ,deal :types .ItemDeal ,chat :types .Chat ):
         super (DealProblemResolvedEvent ,self ).__init__ (
         EventTypes .DEAL_PROBLEM_RESOLVED ,chat 
         )
         self .deal :types .ItemDeal =deal 
-        'Object of the transaction.'
+        'deal object.'
 
 
 class DealStatusChangedEvent (BaseEvent ):
-    'Event class: transaction status changed.\n\n    :param deal: Object of the deal.\n    :type deal: `PlayerokAPI.types.ItemDeal`\n\n    :param chat: The chat object in which the event occurred.\n    :type chat: `PlayerokAPI.types.Chat`'
+    'Event class: Status of the deal changed.\n\n    :param deal: The deal object.\n    :type deal: `PlayerokAPI.types.ItemDeal`\n\n    :param chat: The chat object in which the event occurred.\n    :type chat: `PlayerokAPI.types.Chat`'
 
     def __init__ (self ,deal :types .ItemDeal ,chat :types .Chat ):
         super (DealStatusChangedEvent ,self ).__init__ (
         EventTypes .DEAL_STATUS_CHANGED ,chat 
         )
         self .deal :types .ItemDeal =deal 
-        'Object of the transaction.'
+        'deal object.'
 
 
 class ItemPaidEvent (BaseEvent ):
-    'Event class: item paid for.\n\n    :param deal: Object of the deal.\n    :type deal: `PlayerokAPI.types.Item`\n\n    :param chat: The chat object in which the event occurred.\n    :type chat: `PlayerokAPI.types.Chat`'
+    'Event class: Item paid.\n\n    :param deal: The deal object.\n    :type deal: `PlayerokAPI.types.Item`\n\n    :param chat: The chat object in which the event occurred.\n    :type chat: `PlayerokAPI.types.Chat`'
 
     def __init__ (self ,deal :types .ItemDeal ,chat :types .Chat ):
         super (ItemPaidEvent ,self ).__init__ (EventTypes .ITEM_PAID ,chat )
         self .deal :types .ItemDeal =deal 
-        'Object of the transaction.'
+        'deal object.'
 
 
 class ItemSentEvent (BaseEvent ):
-    'Event Class: The item has been shipped to the buyer.\n\n    :param deal: Object of the deal.\n    :type deal: `PlayerokAPI.types.Item`\n\n    :param chat: The chat object in which the event occurred.\n    :type chat: `PlayerokAPI.types.Chat`'
+    'Event class: Item sent to buyer.\n\n    :param deal: The deal object.\n    :type deal: `PlayerokAPI.types.Item`\n\n    :param chat: The chat object in which the event occurred.\n    :type chat: `PlayerokAPI.types.Chat`'
 
     def __init__ (self ,deal :types .ItemDeal ,chat :types .Chat ):
         super (ItemSentEvent ,self ).__init__ (EventTypes .ITEM_SENT ,chat )

@@ -23,20 +23,20 @@ class FileObject :
 
 
 class AccountBalance :
-    'A subclass describing the account balance.\n\n    :param id: Balance ID.\n    :type id: `str`\n\n    :param value: Balance amount.\n    :type value: `int`\n\n    :param frozen: Amount of frozen balance.\n    :type frozen: `int`\n\n    :param available: Amount of available balance.\n    :type available: `int`\n\n    :param withdrawable: The amount of balance available for withdrawal.\n    :type withdrawable: `int`\n\n    :param pending_income: Expected income.\n    :type pending_income: `int`'
+    'A subclass describing the account balance.\n\n    :param id: Balance ID.\n    :type id: `str`\n\n    :param value: Balance price.\n    :type value: `int`\n\n    :param frozen: Price of frozen balance.\n    :type frozen: `int`\n\n    :param available: Price of available balance.\n    :type available: `int`\n\n    :param withdrawable: Price of the balance available for withdrawal.\n    :type withdrawable: `int`\n\n    :param pending_income: Expected income.\n    :type pending_income: `int`'
 
     def __init__ (self ,id :str ,value :int ,frozen :int ,available :int ,
     withdrawable :int ,pending_income :int ):
         self .id :str =id 
         'Balance ID.'
         self .value :int =value 
-        'Total balance amount.'
+        'Price of the total balance.'
         self .frozen :int =frozen 
-        'Frozen balance amount.'
+        'Price frozen balance.'
         self .available :int =available 
-        'The amount of available balance.'
+        'Price of available balance.'
         self .withdrawable :int =withdrawable 
-        'The amount of balance available for withdrawal.'
+        'Price of the balance available for withdrawal.'
         self .pending_income :int =pending_income 
         'Expected income.'
 
@@ -62,13 +62,13 @@ class AccountOutgoingDealsStats :
 
 
 class AccountDealsStats :
-    'A subclass that describes account transaction statistics.\n\n    :param incoming: Incoming transactions.\n    :type incoming: `playerokapi.types.AccountIncomingDealsStats`\n\n    :param outgoing: Outgoing transactions.\n    :type outgoing: `playerokapi.types.AccountOutgoingDealsStats`'
+    'A subclass that describes account transaction statistics.\n\n    :param incoming: Incoming deal.\n    :type incoming: `playerokapi.types.AccountIncomingDealsStats`\n\n    :param outgoing: Outgoing deal.\n    :type outgoing: `playerokapi.types.AccountOutgoingDealsStats`'
 
     def __init__ (self ,incoming :AccountIncomingDealsStats ,outgoing :AccountOutgoingDealsStats ):
         self .incoming :AccountIncomingDealsStats =incoming 
-        'Incoming transactions.'
+        'Incoming deal.'
         self .outgoing :AccountOutgoingDealsStats =outgoing 
-        'Outgoing transactions.'
+        'Outgoing deal.'
 
 
 class AccountItemsStats :
@@ -284,7 +284,7 @@ class Event :
 
 
 class ItemDeal :
-    'The object of the transaction with the item.\n\n    :param id: Transaction ID.\n    :type id: `str`\n\n    :param status: Transaction status.\n    :type status: `playerokapi.enums.ItemDealStatuses`\n\n    :param status_expiration_date: Status expiration date.\n    :type status_expiration_date: `str` or `None`\n\n    :param status_description: Description of the transaction status.\n    :type status_description: `str` or `None`\n\n    :param direction: Direction of the transaction (buy/sell).\n    :type direction: `playerokapi.enums.ItemDealDirections`\n\n    :param obtaining: Receiving a deal.\n    :type obtaining: `str` or `None`\n\n    :param has_problem: Is there a problem in the transaction.\n    :type has_problem: `bool`\n\n    :param report_problem_enabled: Whether problem reporting is enabled.\n    :type report_problem_enabled: `bool` or `None`\n\n    :param completed_user: Profile of the user who confirmed the transaction.\n    :type completed_user: `playerokapi.types.UserProfile` or `None`\n\n    :param props: Transaction details.\n    :type props: `str` or `None`\n\n    :param previous_status: Previous status.\n    :type previous_status: `playerokapi.enums.ItemDealStatuses` or `None`\n\n    :param completed_at: Transaction confirmation date.\n    :type completed_at: `str` or `None`\n\n    :param created_at: The date the deal was created.\n    :type created_at: `str` or `None`\n\n    :param logs: Transaction logs.\n    :type logs: `list[playerokapi.types.ItemLog]` or `None`\n\n    :param transaction: The transaction transaction.\n    :type transaction: `playerokapi.types.Transaction` or `None`\n\n    :param user: Profile of the user who made the transaction.\n    :type user: `playerokapi.types.UserProfile`\n\n    :param chat: Transaction chat (only its ID is transmitted).\n    :type chat: `playerokapi.types.Chat` or `None`\n\n    :param item: Subject of the transaction.\n    :type item: `playerokapi.types.Item`\n\n    :param review: Review of the transaction.\n    :type review: `playerokapi.types.Review` or `None`\n\n    :param obtaining_fields: Receiving fields.\n    :type obtaining_fields: `list[playerokapi.types.GameCategoryDataField]` or `None`\n\n    :param comment_from_buyer: Comment from the buyer.\n    :type comment_from_buyer: `str` or `None`'
+    'A deal object with an item.\n\n    :param id: deal ID.\n    :type id: `str`\n\n    :param status: Status of the deal.\n    :type status: `playerokapi.enums.ItemDealStatuses`\n\n    :param status_expiration_date: Status expiration date.\n    :type status_expiration_date: `str` or `None`\n\n    :param status_description: Description of the deal status.\n    :type status_description: `str` or `None`\n\n    :param direction: Direction of the deal (buy/sell).\n    :type direction: `playerokapi.enums.ItemDealDirections`\n\n    :param obtaining: Receiving a deal.\n    :type obtaining: `str` or `None`\n\n    :param has_problem: Is there a problem in the transaction.\n    :type has_problem: `bool`\n\n    :param report_problem_enabled: Whether problem reporting is enabled.\n    :type report_problem_enabled: `bool` or `None`\n\n    :param completed_user: Profile of the user who confirmed the transaction.\n    :type completed_user: `playerokapi.types.UserProfile` or `None`\n\n    :param props: Deal details.\n    :type props: `str` or `None`\n\n    :param previous_status: Previous Status of the.\n    :type previous_status: `playerokapi.enums.ItemDealStatuses` or `None`\n\n    :param completed_at: Deal confirmation date.\n    :type completed_at: `str` or `None`\n\n    :param created_at: Date the deal was created.\n    :type created_at: `str` or `None`\n\n    :param logs: Deal logs.\n    :type logs: `list[playerokapi.types.ItemLog]` or `None`\n\n    :param transaction: Transaction deal.\n    :type transaction: `playerokapi.types.Transaction` or `None`\n\n    :param user: Profile of the user who made the transaction.\n    :type user: `playerokapi.types.UserProfile`\n\n    :param chat: Chat deal (only its ID is transmitted).\n    :type chat: `playerokapi.types.Chat` or `None`\n\n    :param item: Item deal.\n    :type item: `playerokapi.types.Item`\n\n    :param review: Review of the transaction.\n    :type review: `playerokapi.types.Review` or `None`\n\n    :param obtaining_fields: Receiving fields.\n    :type obtaining_fields: `list[playerokapi.types.GameCategoryDataField]` or `None`\n\n    :param comment_from_buyer: Comment from the buyer.\n    :type comment_from_buyer: `str` or `None`'
 
     def __init__ (self ,id :str ,status :ItemDealStatuses ,status_expiration_date :str |None ,status_description :str |None ,
     direction :ItemDealDirections ,obtaining :str |None ,has_problem :bool ,report_problem_enabled :bool |None ,
@@ -293,15 +293,15 @@ class ItemDeal :
     user :UserProfile ,chat :Chat |None ,item :Item ,review :Review |None ,obtaining_fields :list [GameCategoryDataField ]|None ,
     comment_from_buyer :str |None ):
         self .id :str =id 
-        'Transaction ID.'
+        ' ID deal. '
         self .status :ItemDealStatuses =status 
-        'Transaction status.'
+        ' Status of the deal. '
         self .status_expiration_date :str |None =status_expiration_date 
         'Status expiration date.'
         self .status_description :str |None =status_description 
-        'Description of the transaction status.'
+        'Description of the deal status.'
         self .direction :ItemDealDirections =direction 
-        'Transaction direction (buy/sell).'
+        'Deal direction (buy/sell).'
         self .obtaining :str |None =obtaining 
         'Receiving a deal.'
         self .has_problem :bool =has_problem 
@@ -311,23 +311,23 @@ class ItemDeal :
         self .completed_user :UserProfile |None =completed_user 
         'Profile of the user who confirmed the transaction.'
         self .props :str |None =props 
-        'Transaction details.'
+        'Details of the deal.'
         self .previous_status :ItemDealStatuses |None =previous_status 
-        'Previous status.'
+        'Previous Status of the.'
         self .completed_at :str |None =completed_at 
-        'Transaction confirmation date.'
+        'Deal confirmation date.'
         self .created_at :str |None =created_at 
-        'The date the deal was created.'
+        'Deal creation date.'
         self .logs :list [ItemLog ]|None =logs 
-        'Transaction logs.'
+        'Logi deal.'
         self .transaction :Transaction |None =transaction 
-        'Deal transaction.'
+        'Transaction deal.'
         self .user :UserProfile =user 
         'Profile of the user who made the transaction.'
         self .chat :Chat |None =chat 
-        'Transaction chat (only its ID is transmitted).'
+        'Chat deal (only his ID is transmitted).'
         self .item :Item =item 
-        'Subject transactions.'
+        ' Item deal. '
         self .review :Review |None =review 
         'Feedback on the deal.'
         self .obtaining_fields :list [GameCategoryDataField ]|None =obtaining_fields 
@@ -587,7 +587,7 @@ class GameCategoryInstructionList :
 
 
 class GameCategory :
-    'Game/application category object.\n\n    :param id: Category ID.\n    :type id: `str`\n\n    :param slug: Category page name.\n    :type slug: `str`\n\n    :param name: Category name.\n    :type name: `str`\n\n    :param category_id: ID of the parent category.\n    :type category_id: `str` or `None`\n\n    :param game_id: Category game ID.\n    :type game_id: `str` or `None`\n\n    :param obtaining: Receiving type.\n    :type obtaining: `str` or `None` or `None`\n\n    :param options: Category options.\n    :type options: `list[playerokapi.types.GameCategoryOption]` or `None`\n\n    :param props: Category proportions.\n    :type props: `playerokapi.types.GameCategoryProps` or `None`\n\n    :param no_comment_from_buyer: No comment from the buyer?\n    :type no_comment_from_buyer: `bool` or `None`\n\n    :param instruction_for_buyer: Instructions for the buyer.\n    :type instruction_for_buyer: `str` or `None`\n\n    :param instruction_for_seller: Instructions for the seller.\n    :type instruction_for_seller: `str` or `None`\n\n    :param use_custom_obtaining: Whether custom obtaining is used.\n    :type use_custom_obtaining: `bool`\n\n    :param auto_confirm_period: Auto-confirmation period for a transaction in this category.\n    :type auto_confirm_period: `playerokapi.enums.GameCategoryAutoConfirmPeriods` or `None`\n\n    :param auto_moderation_mode: Whether automatic moderation is enabled.\n    :type auto_moderation_mode: `bool` or `None`\n\n    :param agreements: Buyer agreements.\n    :type agreements: `list[playerokapi.types.GameCategoryAgreement]` or `None`\n\n    :param fee_multiplier: Commission multiplier.\n    :type fee_multiplier: `float` or `None`'
+    'Game/application category object.\n\n    :param id: Category ID.\n    :type id: `str`\n\n    :param slug: Category page name.\n    :type slug: `str`\n\n    :param name: Category name.\n    :type name: `str`\n\n    :param category_id: ID of the parent category.\n    :type category_id: `str` or `None`\n\n    :param game_id: Category game ID.\n    :type game_id: `str` or `None`\n\n    :param obtaining: Receiving type.\n    :type obtaining: `str` or `None` or `None`\n\n    :param options: Category options.\n    :type options: `list[playerokapi.types.GameCategoryOption]` or `None`\n\n    :param props: Category proportions.\n    :type props: `playerokapi.types.GameCategoryProps` or `None`\n\n    :param no_comment_from_buyer: No comment from the buyer?\n    :type no_comment_from_buyer: `bool` or `None`\n\n    :param instruction_for_buyer: Instructions for the buyer.\n    :type instruction_for_buyer: `str` or `None`\n\n    :param instruction_for_seller: Instructions for the seller.\n    :type instruction_for_seller: `str` or `None`\n\n    :param use_custom_obtaining: Whether custom obtaining is used.\n    :type use_custom_obtaining: `bool`\n\n    :param auto_confirm_period: Auto-confirmation period for deal of this category.\n    :type auto_confirm_period: `playerokapi.enums.GameCategoryAutoConfirmPeriods` or `None`\n\n    :param auto_moderation_mode: Whether automatic moderation is enabled.\n    :type auto_moderation_mode: `bool` or `None`\n\n    :param agreements: Buyer agreements.\n    :type agreements: `list[playerokapi.types.GameCategoryAgreement]` or `None`\n\n    :param fee_multiplier: Commission multiplier.\n    :type fee_multiplier: `float` or `None`'
 
     def __init__ (self ,id :str ,slug :str ,name :str ,category_id :str |None ,game_id :str |None ,
     obtaining :str |None ,options :list [GameCategoryOption ]|None ,props :GameCategoryProps |None ,
@@ -619,7 +619,7 @@ class GameCategory :
         self .use_custom_obtaining :bool =use_custom_obtaining 
         'Is custom receiving used?'
         self .auto_confirm_period :GameCategoryAutoConfirmPeriods |None =auto_confirm_period 
-        'Auto-confirmation period for transactions in this category.'
+        'The period of auto-confirmation deal of this category.'
         self .auto_moderation_mode :bool |None =auto_moderation_mode 
         'Is automatic moderation enabled?'
         self .agreements :list [GameCategoryAgreement ]|None =agreements 
@@ -708,7 +708,7 @@ class ItemPriorityStatusPriceRange :
 
 
 class ItemPriorityStatus :
-    'A class describing the priority status of an item.\n\n    :param id: Priority status ID.\n    :type id: `str`\n\n    :param price: Status price (in rubles).\n    :type price: `int`\n\n    :param name: Name of the status.\n    :type name: `str`\n\n    :param type: Status type.\n    :type type: `playerokapi.enums.PriorityTypes`\n\n    :param period: Duration of the status (in days).\n    :type period: `str`\n\n    :param price_range: Price range of the status item.\n    :type price_range: `playerokapi.types.ItemPriorityStatusPriceRange`'
+    "A class describing the Status of the item's priority.\n\n    :param id: Priority status ID.\n    :type id: `str`\n\n    :param price: Status price (in rubles).\n    :type price: `int`\n\n    :param name: Name of the status.\n    :type name: `str`\n\n    :param type: Status type.\n    :type type: `playerokapi.enums.PriorityTypes`\n\n    :param period: Duration of the status (in days).\n    :type period: `str`\n\n    :param price_range: Price range of the status item.\n    :type price_range: `playerokapi.types.ItemPriorityStatusPriceRange`"
 
     def __init__ (self ,id :str ,price :int ,name :str ,type :PriorityTypes ,
     period :int ,price_range :ItemPriorityStatusPriceRange ):
@@ -742,7 +742,7 @@ class ItemLog :
 
 
 class Item :
-    'Item object.\n\n    :param id: Item ID.\n    :type id: `str`\n\n    :param name: Name of the item.\n    :type name: `str`\n\n    :param description: Description of the item.\n    :type description: `str`\n\n    :param status: Item status.\n    :type status: `playerokapi.enums.ItemStatuses`\n\n    :param obtaining_type: Method of obtaining.\n    :type obtaining_type: `playerokapi.types.GameCategoryObtainingType` or `None`\n\n    :param price: The price of the item.\n    :type price: `int`\n\n    :param raw_price: Price excluding discount.\n    :type raw_price: `int`\n\n    :param priority_position: Priority position.\n    :type priority_position: `int`\n\n    :param attachments: Attachment files.\n    :type attachments: `list[playerokapi.types.FileObject]`\n\n    :param attributes: Item attributes.\n    :type attributes: `dict`\n\n    :param category: Game category of the item.\n    :type category: `playerokapi.types.GameCategory`\n\n    :param comment: Comment on the item.\n    :type comment: `str` or `None`\n\n    :param data_fields: Item data fields.\n    :type data_fields: `list[playerokapi.types.GameCategoryDataField]` or `None`\n\n    :param fee_multiplier: Commission multiplier.\n    :type fee_multiplier: `float`\n\n    :param game: Game profile of the item.\n    :type game: `playerokapi.types.GameProfile`\n\n    :param seller_type: Seller type.\n    :type seller_type: `playerokapi.enums.UserTypes`\n\n    :param slug: Item page name.\n    :type slug: `str`\n\n    :param user: Seller profile.\n    :type user: `playerokapi.types.UserProfile`'
+    'Item object.\n\n    :param id: Item ID.\n    :type id: `str`\n\n    :param name: Name of the item.\n    :type name: `str`\n\n    :param description: Description of the item.\n    :type description: `str`\n\n    :param status: Status of the item.\n    :type status: `playerokapi.enums.ItemStatuses`\n\n    :param obtaining_type: Method of obtaining.\n    :type obtaining_type: `playerokapi.types.GameCategoryObtainingType` or `None`\n\n    :param price: The price of the item.\n    :type price: `int`\n\n    :param raw_price: Price excluding discount.\n    :type raw_price: `int`\n\n    :param priority_position: Priority position.\n    :type priority_position: `int`\n\n    :param attachments: Attachment files.\n    :type attachments: `list[playerokapi.types.FileObject]`\n\n    :param attributes: Item attributes.\n    :type attributes: `dict`\n\n    :param category: Game category of the item.\n    :type category: `playerokapi.types.GameCategory`\n\n    :param comment: Comment on the item.\n    :type comment: `str` or `None`\n\n    :param data_fields: Item data fields.\n    :type data_fields: `list[playerokapi.types.GameCategoryDataField]` or `None`\n\n    :param fee_multiplier: Commission multiplier.\n    :type fee_multiplier: `float`\n\n    :param game: Game profile of the item.\n    :type game: `playerokapi.types.GameProfile`\n\n    :param seller_type: Seller type.\n    :type seller_type: `playerokapi.enums.UserTypes`\n\n    :param slug: Item page name.\n    :type slug: `str`\n\n    :param user: Seller profile.\n    :type user: `playerokapi.types.UserProfile`'
 
     def __init__ (self ,id :str ,slug :str ,name :str ,description :str ,obtaining_type :GameCategoryObtainingType |None ,price :int ,raw_price :int ,priority_position :int ,
     attachments :list [FileObject ],attributes :dict ,category :GameCategory ,comment :str |None ,data_fields :list [GameCategoryDataField ]|None ,
@@ -782,13 +782,13 @@ class Item :
         self .slug :str =slug 
         'Item page name.'
         self .status :ItemStatuses =status 
-        'Subject status.'
+        'Status of the case.'
         self .user :UserProfile =user 
         'Seller profile.'
 
 
 class MyItem :
-    "The object of its subject.\n\n    :param id: Item ID.\n    :type id: `str`\n\n    :param slug: Item page name.\n    :type slug: `str`\n\n    :param name: Name of the item.\n    :type name: `str`\n\n    :param description: Description of the item.\n    :type description: `str`\n\n    :param status: Item status.\n    :type status: `playerokapi.enums.ItemStatuses`\n\n    :param obtaining_type: Method of obtaining.\n    :type obtaining_type: `playerokapi.types.GameCategoryObtainingType` or `None`\n\n    :param price: The price of the item.\n    :type price: `int`\n\n    :param prev_price: Previous price.\n    :type prev_price: `int`\n\n    :param raw_price: Price excluding discount.\n    :type raw_price: `int`\n\n    :param priority_position: Priority position.\n    :type priority_position: `int`\n\n    :param attachments: Attachment files.\n    :type attachments: `list[playerokapi.types.FileObject]`\n\n    :param attributes: Item attributes.\n    :type attributes: `dict`\n\n    :param category: Game category of the item.\n    :type category: `playerokapi.types.GameCategory`\n\n    :param comment: Comment on the item.\n    :type comment: `str` or `None`\n\n    :param data_fields: Item data fields.\n    :type data_fields: `list[playerokapi.types.GameCategoryDataField]` or `None`\n\n    :param fee_multiplier: Commission multiplier.\n    :type fee_multiplier: `float`\n\n    :param prev_fee_multiplier: Previous commission multiplier.\n    :type prev_fee_multiplier: `float`\n\n    :param seller_notified_about_fee_change: Whether the seller is notified about the change in commission.\n    :type seller_notified_about_fee_change: `bool`\n\n    :param game: Game profile of the item.\n    :type game: `playerokapi.types.GameProfile`\n\n    :param seller_type: Seller type.\n    :type seller_type: `playerokapi.enums.UserTypes`\n\n    :param user: Seller profile.\n    :type user: `playerokapi.types.UserProfile`\n\n    :param buyer: Seller profile.\n    :type user: `playerokapi.types.UserProfile`\n\n    :param priority: The priority status of the item.\n    :type priority: `playerokapi.types.PriorityTypes`\n\n    :param priority_price: Priority status prices.\n    :type priority_price: `int`\n\n    :param sequence: Position of the item in the user's product table.\n    :type sequence: `int` or `None`\n\n    :param status_expiration_date: Priority status expiration date.\n    :type status_expiration_date: `str` or `None`\n\n    :param status_description: Description of the priority status.\n    :type status_description: `str` or `None`\n\n    :param status_payment: Payment status (transaction).\n    :type status_payment: `playerokapi.types.Transaction` or `None`\n\n    :param views_counter: Number of views of the item.\n    :type views_counter: `int`\n\n    :param is_editable: Is it possible to edit the product.\n    :type is_editable: `bool`\n\n    :param approval_date: Product publication date.\n    :type approval_date: `str` or `None`\n\n    :param deleted_at: Date the product was deleted.\n    :type deleted_at: `str` or `None`\n\n    :param updated_at: Date the product was last updated.\n    :type updated_at: `str` or `None`\n\n    :param created_at: Product creation date.\n    :type created_at: `str` or `None`"
+    "The object of its subject.\n\n    :param id: Item ID.\n    :type id: `str`\n\n    :param slug: Item page name.\n    :type slug: `str`\n\n    :param name: Name of the item.\n    :type name: `str`\n\n    :param description: Description of the item.\n    :type description: `str`\n\n    :param status: Status of the item.\n    :type status: `playerokapi.enums.ItemStatuses`\n\n    :param obtaining_type: Method of obtaining.\n    :type obtaining_type: `playerokapi.types.GameCategoryObtainingType` or `None`\n\n    :param price: The price of the item.\n    :type price: `int`\n\n    :param prev_price: Previous price.\n    :type prev_price: `int`\n\n    :param raw_price: Price excluding discount.\n    :type raw_price: `int`\n\n    :param priority_position: Priority position.\n    :type priority_position: `int`\n\n    :param attachments: Attachment files.\n    :type attachments: `list[playerokapi.types.FileObject]`\n\n    :param attributes: Item attributes.\n    :type attributes: `dict`\n\n    :param category: Game category of the item.\n    :type category: `playerokapi.types.GameCategory`\n\n    :param comment: Comment on the item.\n    :type comment: `str` or `None`\n\n    :param data_fields: Item data fields.\n    :type data_fields: `list[playerokapi.types.GameCategoryDataField]` or `None`\n\n    :param fee_multiplier: Commission multiplier.\n    :type fee_multiplier: `float`\n\n    :param prev_fee_multiplier: Previous commission multiplier.\n    :type prev_fee_multiplier: `float`\n\n    :param seller_notified_about_fee_change: Whether the seller is notified about the change in commission.\n    :type seller_notified_about_fee_change: `bool`\n\n    :param game: Game profile of the item.\n    :type game: `playerokapi.types.GameProfile`\n\n    :param seller_type: Seller type.\n    :type seller_type: `playerokapi.enums.UserTypes`\n\n    :param user: Seller profile.\n    :type user: `playerokapi.types.UserProfile`\n\n    :param buyer: Seller profile.\n    :type user: `playerokapi.types.UserProfile`\n\n    :param priority: Status of the priority of the item.\n    :type priority: `playerokapi.types.PriorityTypes`\n\n    :param priority_price: Priority status prices.\n    :type priority_price: `int`\n\n    :param sequence: Position of the item in the user's product table.\n    :type sequence: `int` or `None`\n\n    :param status_expiration_date: Priority status expiration date.\n    :type status_expiration_date: `str` or `None`\n\n    :param status_description: Description of the priority status.\n    :type status_description: `str` or `None`\n\n    :param status_payment: Payment status (transaction).\n    :type status_payment: `playerokapi.types.Transaction` or `None`\n\n    :param views_counter: Number of views of the item.\n    :type views_counter: `int`\n\n    :param is_editable: Is it possible to edit the product.\n    :type is_editable: `bool`\n\n    :param approval_date: Product publication date.\n    :type approval_date: `str` or `None`\n\n    :param deleted_at: Date the product was deleted.\n    :type deleted_at: `str` or `None`\n\n    :param updated_at: Date the product was last updated.\n    :type updated_at: `str` or `None`\n\n    :param created_at: Product creation date.\n    :type created_at: `str` or `None`"
 
     def __init__ (self ,id :str ,slug :str ,name :str ,description :str ,obtaining_type :GameCategoryObtainingType |None ,price :int ,raw_price :int ,priority_position :int ,
     attachments :list [FileObject ],attributes :dict ,buyer :UserProfile ,category :GameCategory ,comment :str |None ,
@@ -804,7 +804,7 @@ class MyItem :
         self .name :str =name 
         'Title of the subject.'
         self .status :ItemStatuses =status 
-        'Subject status.'
+        'Status of the case.'
         self .description :str =description 
         'Description of the item.'
         self .obtaining_type :GameCategoryObtainingType |None =obtaining_type 
@@ -842,7 +842,7 @@ class MyItem :
         self .buyer :UserProfile =buyer 
         'Buyer profile of the item (if sold).'
         self .priority :PriorityTypes =priority 
-        'Item priority status.'
+        'Status of the priority of the case.'
         self .priority_price :int =priority_price 
         'Priority status prices.'
         self .sequence :int |None =sequence 
@@ -868,7 +868,7 @@ class MyItem :
 
 
 class ItemProfile :
-    'Item profile.\n\n    :param id: Item ID.\n    :type id: `str`\n\n    :param slug: Item page name.\n    :type slug: `str`\n\n    :param priority: Item priority.\n    :type priority: `playerokapi.enums.PriorityTypes`\n\n    :param status: Item status.\n    :type status: `playerokapi.enums.ItemStatuses`\n\n    :param name: Name of the item.\n    :type name: `str`\n\n    :param price: The price of the item.\n    :type price: `int`\n\n    :param raw_price: Price excluding discount.\n    :type raw_price: `int`\n\n    :param seller_type: Seller type.\n    :type seller_type: `playerokapi.enums.UserTypes`\n\n    :param attachment: File attachment.\n    :type attachment: `playerokapi.types.FileObject`\n\n    :param user: Seller profile.\n    :type user: `playerokapi.types.UserProfile`\n\n    :param approval_date: Approval date.\n    :type approval_date: `str`\n\n    :param priority_position: Priority position.\n    :type priority_position: `int`\n\n    :param views_counter: Number of views.\n    :type views_counter: `int` or `None`\n\n    :param fee_multiplier: Commission multiplier.\n    :type fee_multiplier: `float`\n\n    :param created_at: Creation date.\n    :type created_at: `str`'
+    'Item profile.\n\n    :param id: Item ID.\n    :type id: `str`\n\n    :param slug: Item page name.\n    :type slug: `str`\n\n    :param priority: Item priority.\n    :type priority: `playerokapi.enums.PriorityTypes`\n\n    :param status: Status of the item.\n    :type status: `playerokapi.enums.ItemStatuses`\n\n    :param name: Name of the item.\n    :type name: `str`\n\n    :param price: The price of the item.\n    :type price: `int`\n\n    :param raw_price: Price excluding discount.\n    :type raw_price: `int`\n\n    :param seller_type: Seller type.\n    :type seller_type: `playerokapi.enums.UserTypes`\n\n    :param attachment: File attachment.\n    :type attachment: `playerokapi.types.FileObject`\n\n    :param user: Seller profile.\n    :type user: `playerokapi.types.UserProfile`\n\n    :param approval_date: Approval date.\n    :type approval_date: `str`\n\n    :param priority_position: Priority position.\n    :type priority_position: `int`\n\n    :param views_counter: Number of views.\n    :type views_counter: `int` or `None`\n\n    :param fee_multiplier: Commission multiplier.\n    :type fee_multiplier: `float`\n\n    :param created_at: Creation date.\n    :type created_at: `str`'
 
     def __init__ (self ,id :str ,slug :str ,priority :PriorityTypes ,status :ItemStatuses ,
     name :str ,price :int ,raw_price :int ,seller_type :UserTypes ,attachment :FileObject ,
@@ -881,7 +881,7 @@ class ItemProfile :
         self .priority :PriorityTypes =priority 
         'Item priority.'
         self .status :ItemStatuses =status 
-        'Subject status.'
+        'Status of the case.'
         self .name :str =name 
         'Title of the subject.'
         self .price :int =price 
@@ -968,13 +968,13 @@ class TransactionPaymentMethod :
 
 
 class TransactionProviderLimitRange :
-    'Transaction provider limit range.\n\n    :param min: Minimum amount (in rubles).\n    :type min: `int`\n\n    :param max: Maximum amount (in rubles).\n    :type max: `int`'
+    'Transaction provider limit range.\n\n    :param min: Minimum Price (in rubles).\n    :type min: `int`\n\n    :param max: Maximum Price (in rubles).\n    :type max: `int`'
 
     def __init__ (self ,min :int ,max :int ):
         self .min :int =min 
-        'Minimum amount (in rubles).'
+        'Minimum Price (in rubles).'
         self .max :int =max 
-        'Maximum amount (in rubles).'
+        'Maximum Price (in rubles).'
 
 
 class TransactionProviderLimits :
@@ -1038,7 +1038,7 @@ class TransactionProvider :
 
 
 class Transaction :
-    'Transaction object.\n\n    :param id: Transaction ID.\n    :type id: `str`\n\n    :param operation: Type of operation performed.\n    :type operation: `playerokapi.enums.TransactionOperations`\n\n    :param direction: Transaction direction.\n    :type direction: `playerokapi.enums.TransactionDirections`\n\n    :param provider_id: Payment provider ID.\n    :type provider_id: `playerokapi.enums.TransactionProviderIds`\n\n    :param provider: Transaction provider object.\n    :type provider: `playerokapi.types.TransactionProvider`\n\n    :param user: Transaction user object.\n    :type user: `playerokapi.types.UserProfile`\n\n    :param creator: Object of the user who created the transaction.\n    :type creator: `playerokapi.types.UserProfile` or `None`\n\n    :param status: Transaction processing status.\n    :type status: `playerokapi.enums.TransactionStatuses`\n\n    :param status_description: Description of the status.\n    :type status_description: `str` or `None`\n\n    :param status_expiration_date: Status expiration date.\n    :type status_expiration_date: `str` or `None`\n\n    :param value: Transaction amount.\n    :type value: `int`\n\n    :param fee: Transaction commission.\n    :type fee: `int`\n\n    :param created_at: Date the transaction was created.\n    :type created_at: `str`\n\n    :param verified_at: Transaction confirmation date.\n    :type verified_at: `str` or `None`\n\n    :param verified_by: Object of the user who confirmed the transaction.\n    :type verified_by: `playerokapi.types.UserProfile` or `None`\n\n    :param completed_at: The date the transaction was completed.\n    :type completed_at: `str` or `None`\n\n    :param completed_by: Object of the user who completed the transaction.\n    :type completed_by: `playerokapi.types.UserProfile` or `None`\n\n    :param payment_method_id: Payment method ID.\n    :type payment_method_id: `str` or `None`\n\n    :param is_suspicious: Is the transaction suspicious?\n    :type is_suspicious: `bool` or `None`\n\n    :param sbp_bank_name: SBP bank name (if the transaction was made using SBP).\n    :type sbp_bank_name: `str` or `None`'
+    'Transaction object.\n\n    :param id: Transaction ID.\n    :type id: `str`\n\n    :param operation: Type of operation performed.\n    :type operation: `playerokapi.enums.TransactionOperations`\n\n    :param direction: Transaction direction.\n    :type direction: `playerokapi.enums.TransactionDirections`\n\n    :param provider_id: Payment provider ID.\n    :type provider_id: `playerokapi.enums.TransactionProviderIds`\n\n    :param provider: Transaction provider object.\n    :type provider: `playerokapi.types.TransactionProvider`\n\n    :param user: Transaction user object.\n    :type user: `playerokapi.types.UserProfile`\n\n    :param creator: Object of the user who created the transaction.\n    :type creator: `playerokapi.types.UserProfile` or `None`\n\n    :param status: Status of the transaction processing.\n    :type status: `playerokapi.enums.TransactionStatuses`\n\n    :param status_description: Description of the status.\n    :type status_description: `str` or `None`\n\n    :param status_expiration_date: Status expiration date.\n    :type status_expiration_date: `str` or `None`\n\n    :param value: Price of the transaction.\n    :type value: `int`\n\n    :param fee: Transaction commission.\n    :type fee: `int`\n\n    :param created_at: Date the transaction was created.\n    :type created_at: `str`\n\n    :param verified_at: Transaction confirmation date.\n    :type verified_at: `str` or `None`\n\n    :param verified_by: Object of the user who confirmed the transaction.\n    :type verified_by: `playerokapi.types.UserProfile` or `None`\n\n    :param completed_at: The date the transaction was completed.\n    :type completed_at: `str` or `None`\n\n    :param completed_by: Object of the user who completed the transaction.\n    :type completed_by: `playerokapi.types.UserProfile` or `None`\n\n    :param payment_method_id: Payment method ID.\n    :type payment_method_id: `str` or `None`\n\n    :param is_suspicious: Is the transaction suspicious?\n    :type is_suspicious: `bool` or `None`\n\n    :param sbp_bank_name: SBP bank name (if the transaction was made using SBP).\n    :type sbp_bank_name: `str` or `None`'
 
     def __init__ (self ,id :str ,operation :TransactionOperations ,direction :TransactionDirections ,provider_id :TransactionProviderIds ,
     provider :TransactionProvider ,user :UserProfile ,creator :UserProfile ,status :TransactionStatuses ,status_description :str |None ,
@@ -1059,13 +1059,13 @@ class Transaction :
         self .creator :UserProfile |None =creator 
         'Transaction creator user object.'
         self .status :TransactionStatuses =status 
-        'Transaction processing status.'
+        'Status of the transaction processing.'
         self .status_description :str |None =status_description 
         'Description of the status.'
         self .status_expiration_date :str |None =status_expiration_date 
         'Status expiration date.'
         self .value :int =value 
-        'Transaction amount.'
+        'Price transaction.'
         self .fee :int =fee 
         'Transaction fee.'
         self .created_at :str =created_at 
@@ -1197,7 +1197,7 @@ class ChatMessageButton :
 
 
 class ChatMessage :
-    'A class describing a chat message.\n\n    :param id: Message ID.\n    :type id: `str`\n\n    :param text: Message text.\n    :type text: `str`\n\n    :param created_at: Date the message was created.\n    :type created_at: `str`\n\n    :param deleted_at: Date the message was deleted.\n    :type deleted_at: `str` or `None`\n\n    :param is_read: Whether the message has been read.\n    :type is_read: `bool`\n\n    :param is_suspicious: Is the message suspicious?\n    :type is_suspicious: `bool`\n\n    :param is_bulk_messaging: Is this a mass mailing?\n    :type is_bulk_messaging: `bool`\n\n    :param game: The game the message refers to.\n    :type game: `str` or `None`\n\n    :param file: File attached to the message.\n    :type file: `playerokapi.types.FileObject` or `None`\n\n    :param user: The user who sent the message.\n    :type user: `playerokapi.types.UserProfile`\n\n    :param deal: The deal the message refers to.\n    :type deal: `playerokapi.types.Deal` or `None`\n\n    :param item: The item the message relates to (usually only the deal itself is passed to the deal variable).\n    :type item: `playerokapi.types.Item` or `None`\n\n    :param transaction: Message transaction.\n    :type transaction: `playerokapi.types.Transaction` or `None`\n\n    :param moderator: Message moderator.\n    :type moderator: `playerokapi.types.Moderator`\n\n    :param event_by_user: Event from the user.\n    :type event_by_user: `playerokapi.types.UserProfile` or `None`\n\n    :param event_to_user: Event for the user.\n    :type event_to_user: `playerokapi.types.UserProfile` or `None`\n\n    :param is_auto_response: Is this an auto-response?\n    :type is_auto_response: `bool`\n\n    :param event: Message event.\n    :type event: `playerokapi.types.Event` or `None`\n\n    :param buttons: Message buttons.\n    :type buttons: `list[playerokapi.types.MessageButton]`'
+    'A class that describes a message in chat.\n\n    :param id: Message ID.\n    :type id: `str`\n\n    :param text: Message text.\n    :type text: `str`\n\n    :param created_at: Date the message was created.\n    :type created_at: `str`\n\n    :param deleted_at: Date the message was deleted.\n    :type deleted_at: `str` or `None`\n\n    :param is_read: Whether the message has been read.\n    :type is_read: `bool`\n\n    :param is_suspicious: Is the message suspicious?\n    :type is_suspicious: `bool`\n\n    :param is_bulk_messaging: Is this a mass mailing?\n    :type is_bulk_messaging: `bool`\n\n    :param game: The game the message refers to.\n    :type game: `str` or `None`\n\n    :param file: File attached to the message.\n    :type file: `playerokapi.types.FileObject` or `None`\n\n    :param user: The user who sent the message.\n    :type user: `playerokapi.types.UserProfile`\n\n    :param deal: The deal the message refers to.\n    :type deal: `playerokapi.types.Deal` or `None`\n\n    :param item: Item to which the message relates (usually only the deal itself is passed to the deal variable).\n    :type item: `playerokapi.types.Item` or `None`\n\n    :param transaction: Message transaction.\n    :type transaction: `playerokapi.types.Transaction` or `None`\n\n    :param moderator: Message moderator.\n    :type moderator: `playerokapi.types.Moderator`\n\n    :param event_by_user: Event from the user.\n    :type event_by_user: `playerokapi.types.UserProfile` or `None`\n\n    :param event_to_user: Event for the user.\n    :type event_to_user: `playerokapi.types.UserProfile` or `None`\n\n    :param is_auto_response: Is this an auto-response?\n    :type is_auto_response: `bool`\n\n    :param event: Message event.\n    :type event: `playerokapi.types.Event` or `None`\n\n    :param buttons: Message buttons.\n    :type buttons: `list[playerokapi.types.MessageButton]`'
 
     def __init__ (self ,id :str ,text :str ,created_at :str ,deleted_at :str |None ,is_read :bool ,
     is_suspicious :bool ,is_bulk_messaging :bool ,game :Game |None ,file :FileObject |None ,
@@ -1227,7 +1227,7 @@ class ChatMessage :
         self .deal :ItemDeal |None =deal 
         'The transaction to which the message relates.'
         self .item :ItemProfile |None =item 
-        'The item to which the message relates (usually only the deal itself is passed to the deal variable).'
+        'Item to which the message relates (usually only the deal itself is passed to the deal variable).'
         self .transaction :Transaction |None =transaction 
         'Message transaction.'
         self .moderator :Moderator =moderator 
@@ -1260,7 +1260,7 @@ class ChatMessagePageInfo :
 
 
 class ChatMessageList :
-    'A class that describes a chat message page.\n\n    :param messages: Page messages.\n    :type messages: `list[playerokapi.types.ChatMessage]`\n\n    :param page_info: Information about the page.\n    :type page_info: `playerokapi.types.ChatMessagePageInfo`\n\n    :param total_count: Total messages in the chat.\n    :type total_count: `int`'
+    'A class that describes a chat message page.\n\n    :param messages: Page messages.\n    :type messages: `list[playerokapi.types.ChatMessage]`\n\n    :param page_info: Information about the page.\n    :type page_info: `playerokapi.types.ChatMessagePageInfo`\n\n    :param total_count: Total messages in chat.\n    :type total_count: `int`'
 
     def __init__ (self ,messages :list [ChatMessage ],page_info :ChatMessagePageInfo ,
     total_count :int ):
@@ -1269,11 +1269,11 @@ class ChatMessageList :
         self .page_info :ChatMessagePageInfo =page_info 
         'Page information.'
         self .total_count :int =total_count 
-        'Total chat messages.'
+        'Total messages in chat.'
 
 
 class Chat :
-    'Chat object.\n\n    :param id: Chat ID.\n    :type id: `str`\n\n    :param type: Chat type.\n    :type type: `playerokapi.enums.ChatTypes`\n\n    :param status: Chat status.\n    :type status: `playerokapi.enums.ChatStatuses` or `None`\n\n    :param unread_messages_counter: Number of unread messages.\n    :type unread_messages_counter: `int`\n\n    :param bookmarked: Is the chat bookmarked?\n    :type bookmarked: `bool` or `None`\n\n    :param is_texting_allowed: Is it allowed to write in the chat.\n    :type is_texting_allowed: `bool` or `None`\n\n    :param owner: The owner of the chat (only if it is a chat with a bot).\n    :type owner: `bool` or `None`\n\n    :param deals: Deals in chat.\n    :type deals: `list[playerokapi.types.ItemDeal]` or `None`\n\n    :param last_message: Last chat message object\n    :type last_message: `playerokapi.types.ChatMessage` or `None`\n\n    :param users: Chat participants.\n    :type users: `list[UserProfile]`\n\n    :param started_at: Dialogue start date.\n    :type started_at: `str` or `None`\n\n    :param finished_at: The date the dialogue was completed.\n    :type finished_at: `str` or `None`'
+    'Chat object.\n\n    :param id: Chat ID.\n    :type id: `str`\n\n    :param type: Chat type.\n    :type type: `playerokapi.enums.ChatTypes`\n\n    :param status: Status of the chat.\n    :type status: `playerokapi.enums.ChatStatuses` or `None`\n\n    :param unread_messages_counter: Number of unread messages.\n    :type unread_messages_counter: `int`\n\n    :param bookmarked: Is the chat bookmarked?\n    :type bookmarked: `bool` or `None`\n\n    :param is_texting_allowed: Is it allowed to write in the chat.\n    :type is_texting_allowed: `bool` or `None`\n\n    :param owner: The owner of the chat (only if it is a chat with a bot).\n    :type owner: `bool` or `None`\n\n    :param deals: Deals in chat.\n    :type deals: `list[playerokapi.types.ItemDeal]` or `None`\n\n    :param last_message: Last message object in chat\n    :type last_message: `playerokapi.types.ChatMessage` or `None`\n\n    :param users: Chat participants.\n    :type users: `list[UserProfile]`\n\n    :param started_at: Dialogue start date.\n    :type started_at: `str` or `None`\n\n    :param finished_at: The date the dialogue was completed.\n    :type finished_at: `str` or `None`'
 
     def __init__ (self ,id :str ,type :ChatTypes ,status :ChatStatuses |None ,unread_messages_counter :int ,
     bookmarked :bool |None ,is_texting_allowed :bool |None ,owner :UserProfile |None ,deals :list [ItemDeal ]|None ,
@@ -1283,7 +1283,7 @@ class Chat :
         self .type :ChatTypes =type 
         'Chat type.'
         self .status :ChatStatuses |None =status 
-        'Chat status.'
+        'Status of the чата.'
         self .unread_messages_counter :int =unread_messages_counter 
         'Number of unread messages.'
         self .bookmarked :bool |None =bookmarked 
@@ -1295,7 +1295,7 @@ class Chat :
         self .deals :list [ItemDeal ]|None =deals 
         'Transactions in chat.'
         self .last_message :ChatMessage |None =last_message 
-        'The object of the last chat message.'
+        'The last message object in chat.'
         self .users :list [UserProfile ]=users 
         'Chat participants.'
         self .started_at :str |None =started_at 
@@ -1333,7 +1333,7 @@ class ChatList :
 
 
 class Review :
-    'Review object.\n\n    :param id: Review ID.\n    :type id: `str`\n\n    :param status: Review status.\n    :type status: `playerokapi.enums.ReviewStatuses`\n\n    :param text: Review text.\n    :type text: `str` or `None`\n\n    :param rating: Review rating.\n    :type rating: `int`\n\n    :param created_at: Date the review was created.\n    :type created_at: `str`\n\n    :param updated_at: Date the review was modified.\n    :type updated_at: `str`\n\n    :param deal: Deal associated with the review.\n    :type deal: `Deal`\n\n    :param creator: Profile of the review creator.\n    :type creator: `UserProfile`\n\n    :param moderator: The moderator who processed the review.\n    :type moderator: `Moderator` or `None`\n\n    :param user: Profile of the seller to whom the review relates.\n    :type user: `UserProfile`'
+    'Review object.\n\n    :param id: Review ID.\n    :type id: `str`\n\n    :param status: Status of the review.\n    :type status: `playerokapi.enums.ReviewStatuses`\n\n    :param text: Review text.\n    :type text: `str` or `None`\n\n    :param rating: Review rating.\n    :type rating: `int`\n\n    :param created_at: Date the review was created.\n    :type created_at: `str`\n\n    :param updated_at: Date the review was modified.\n    :type updated_at: `str`\n\n    :param deal: Deal associated with the review.\n    :type deal: `Deal`\n\n    :param creator: Profile of the review creator.\n    :type creator: `UserProfile`\n\n    :param moderator: The moderator who processed the review.\n    :type moderator: `Moderator` or `None`\n\n    :param user: Profile of the seller to whom the review relates.\n    :type user: `UserProfile`'
 
     def __init__ (self ,id :str ,status :ReviewStatuses ,text :str |None ,rating :int ,
     created_at :str ,updated_at :str ,deal :ItemDeal ,creator :UserProfile ,
@@ -1341,7 +1341,7 @@ class Review :
         self .id :str =id 
         'Review ID.'
         self .status :ReviewStatuses =status 
-        'Review status.'
+        'Status of the review.'
         self .text :str |None =text 
         'Review text.'
         self .rating :int =rating 

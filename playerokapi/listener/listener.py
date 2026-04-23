@@ -520,7 +520,7 @@ class EventListener :
                         msg for msg in messages 
                         if msg .text =='{{ITEM_PAID}}'
                         and (now -self ._parse_iso (msg .created_at ).astimezone (timezone .utc )).total_seconds ()<=90 
-                        # ^ check that this transaction was made recently
+                        # ^ check that this deal was completed recently
                         ),
                         None 
                         )

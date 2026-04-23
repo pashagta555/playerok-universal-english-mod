@@ -143,7 +143,7 @@ default ={
 'deal_sent':{
 'enabled':False ,
 'text':[
-'✅ I have confirmed the completion of your order! If you have not received the purchased product, write it in the chat'
+'✅ I have confirmed the completion of your order! If you have not received the purchased product, write this in chat'
 ]
 },
 'deal_confirmed':{
@@ -155,7 +155,7 @@ default ={
 'deal_refunded':{
 'enabled':False ,
 'text':[
-'📦 The order has been returned. I hope this transaction did not cause you any inconvenience. I look forward to seeing you in my store next time, good luck!'
+'📦 The order has been returned. I hope this deal did not cause you any inconvenience. I look forward to seeing you in my store next time, good luck!'
 ]
 },
 'new_review':{

@@ -33,7 +33,7 @@ async def handler_waiting_for_new_included_complete_deal_keyphrases (message :ty
         state =state ,
         message =message ,
         text =templ .settings_new_complete_included_float_text (
-        '✅ Item successfully included in confirmation'
+        '✅ Item has been successfully included in the confirmation'
         ),
         reply_markup =templ .back_kb (calls .IncludedCompleteDealsPagination (page =last_page ).pack ())
         )
@@ -114,7 +114,7 @@ async def handler_waiting_for_new_excluded_complete_deal_keyphrases (message :ty
         state =state ,
         message =message ,
         text =templ .settings_new_complete_excluded_float_text (
-        '✅ The item has been successfully added to the exceptions for confirmation'
+        '✅ Item has been successfully added to exceptions for confirmation'
         ),
         reply_markup =templ .back_kb (calls .ExcludedCompleteDealsPagination (page =last_page ).pack ())
         )

@@ -7,36 +7,36 @@ class EventTypes (Enum ):
     CHAT_INITIALIZED =0 
     'Chat has been initialized.'
     NEW_MESSAGE =1 
-    'New message in chat.'
+    'New message in the chat.'
     NEW_DEAL =2 
-    'A new transaction was created (when the buyer paid for the goods).'
+    'A New deal has been created (when the Buyer has paid for the goods).'
     NEW_REVIEW =3 
     'New review from a buyer.'
     DEAL_CONFIRMED =4 
-    'The transaction is confirmed (the buyer has confirmed receipt of the item).'
+    'The transaction is confirmed (Buyer has confirmed receipt of the item).'
     DEAL_CONFIRMED_AUTOMATICALLY =5 
-    'The transaction is confirmed automatically (if the buyer does not contact for a long time).'
+    'The transaction is confirmed automatically (if Buyer does not contact for a long time).'
     DEAL_ROLLED_BACK =6 
-    'The seller issued a refund of the transaction.'
+    'The seller issued a refund deal.'
     DEAL_HAS_PROBLEM =7 
     'A user reported a problem with the transaction.'
     DEAL_PROBLEM_RESOLVED =8 
     'The problem in the transaction has been resolved.'
     DEAL_STATUS_CHANGED =9 
-    'The transaction status has been changed.'
+    'Status of the deal has been changed.'
     ITEM_PAID =10 
-    'The user paid for the item.'
+    'The user paid for the Item.'
     ITEM_SENT =11 
-    'The item has been shipped (the seller has confirmed the completion of the transaction).'
+    'Item has been sent (the seller has confirmed the completion of the deal).'
 
 
 class ItemLogEvents (Enum ):
     'Item log events.'
 
     PAID =0 
-    'The seller confirmed the completion of the transaction.'
+    'The seller confirmed the completion of the deal.'
     SENT =1 
-    'The transaction item has been sent.'
+    'The deal item has been sent.'
     DEAL_CONFIRMED =2 
     'The deal is confirmed.'
     DEAL_ROLLED_BACK =3 
@@ -149,14 +149,14 @@ class BankCardTypes (Enum ):
 
 
 class ItemDealStatuses (Enum ):
-    'Transaction status.'
+    'Deal states.'
 
     PAID =0 
     'The deal has been paid.'
     PENDING =1 
     'Transaction pending shipment of goods.'
     SENT =2 
-    'The seller confirmed the completion of the transaction.'
+    'The seller confirmed the completion of the deal.'
     CONFIRMED =3 
     'The deal is confirmed.'
     CONFIRMED_AUTOMATICALLY =4 
@@ -166,7 +166,7 @@ class ItemDealStatuses (Enum ):
 
 
 class ItemDealDirections (Enum ):
-    'Transaction directions.'
+    'Directions deal.'
 
     IN =0 
     'Purchase.'
@@ -242,7 +242,7 @@ class ItemStatuses (Enum ):
     SOLD =6 
     'Sold.'
     DRAFT =7 
-    'Draft (if the item is not for sale).'
+    'Draft (if the Item is not for sale).'
 
 
 class ReviewStatuses (Enum ):
@@ -310,7 +310,7 @@ class GameCategoryDataFieldInputTypes (Enum ):
 
 
 class GameCategoryAutoConfirmPeriods (Enum ):
-    'Periods of automatic confirmation of transactions in the game category.'
+    'Automatic deal confirmation periods in the game category.'
 
     # TODO: Complete all auto-confirmation periods
     SEVEN_DEYS =0 

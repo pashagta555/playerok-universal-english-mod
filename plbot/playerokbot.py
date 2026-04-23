@@ -336,7 +336,7 @@ class PlayerokBot :
 
                 prem_status =next ((st for st in statuses if st .type ==PriorityTypes .PREMIUM or st .price >0 ),None )
                 if not prem_status :
-                    raise Exception ('PREMIUM status not found')
+                    raise Exception ('PREMIUM Status of the not found')
 
                 time .sleep (1 )
                 self .account .increase_item_priority_status (item .id ,prem_status .id )
@@ -887,7 +887,7 @@ class PlayerokBot :
         elif event .deal .status is ItemDealStatuses .SENT :
             status_frmtd ='The seller confirmed fulfillment'
         elif event .deal .status is ItemDealStatuses .CONFIRMED :
-            status_frmtd ='The buyer confirmed the deal'
+            status_frmtd ='Buyer confirmed the deal'
         elif event .deal .status is ItemDealStatuses .ROLLED_BACK :
             status_frmtd ='Return'
 

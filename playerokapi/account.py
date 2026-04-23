@@ -347,7 +347,7 @@ class Account :
     direction :ItemDealDirections |None =None ,
     after_cursor :str =None 
     )->types .ItemDealList :
-        'Retrieves account transactions.\n\n        :param count: Number of transactions to receive (no more than 24 per request).\n        :type count: `int`\n\n        :param statuses: Statuses of transactions that need to be received, _optional_.\n        :type statuses: `list[playerokapi.enums.ItemDealsStatuses]` or `None`\n\n        :param direction: Direction of trades, _optional_.\n        :type direction: `playerokapi.enums.ItemDealsDirections` or `None`\n\n        :param after_cursor: The cursor from which the parsing will take place (if not present, it searches from the very beginning of the page), _optional_.\n        :type after_cursor: `str`\n        \n        :return: Deals page.\n        :rtype: `playerokapi.types.ItemDealList`'
+        'Receives the deal of the account.\n\n        :param count: Number of transactions to receive (no more than 24 per request).\n        :type count: `int`\n\n        :param statuses: Statuses of transactions that need to be received, _optional_.\n        :type statuses: `list[playerokapi.enums.ItemDealsStatuses]` or `None`\n\n        :param direction: Direction of trades, _optional_.\n        :type direction: `playerokapi.enums.ItemDealsDirections` or `None`\n\n        :param after_cursor: The cursor from which the parsing will take place (if not present, it searches from the very beginning of the page), _optional_.\n        :type after_cursor: `str`\n        \n        :return: Deals page.\n        :rtype: `playerokapi.types.ItemDealList`'
         if not self ._is_initiated :
             raise NotInitiatedError ()
 
@@ -384,7 +384,7 @@ class Account :
     self ,
     deal_id :str 
     )->types .ItemDeal :
-        'Gets a deal.\n\n        :param deal_id: Deal ID.\n        :type deal_id: `str`\n        \n        :return: Object of the transaction.\n        :rtype: `playerokapi.types.ItemDeal`'
+        'Get a deal.\n\n        :param deal_id: The ID of the deal.\n        :type deal_id: `str`\n        \n        :return: Object deal.\n        :rtype: `playerokapi.types.ItemDeal`'
         headers ={'accept':'*/*'}
         payload ={
         'operationName':'deal',
@@ -409,7 +409,7 @@ class Account :
     deal_id :str ,
     new_status :ItemDealStatuses 
     )->types .ItemDeal :
-        'Updates the transaction status\n        (used to confirm, issue a return, etc.).\n\n        :param deal_id: Deal ID.\n        :type deal_id: `str`\n\n        :param new_status: New transaction status.\n        :type new_status: `playerokapi.enums.ItemDealStatuses`\n        \n        :return: Object of the updated transaction.\n        :rtype: `playerokapi.types.ItemDeal`'
+        'Updates the Status of the deal\n        (used to confirm, issue a return, etc.).\n\n        :param deal_id: ID deal.\n        :type deal_id: `str`\n\n        :param new_status: New Status of the deal.\n        :type new_status: `playerokapi.enums.ItemDealStatuses`\n        \n        :return: Updated deal object.\n        :rtype: `playerokapi.types.ItemDeal`'
         headers ={'accept':'*/*'}
         payload ={
         'operationName':'updateDeal',
@@ -653,7 +653,7 @@ class Account :
     status :ChatStatuses |None =None ,
     after_cursor :str |None =None 
     )->types .ChatList :
-        'Retrieves all chats of the account.\n\n        :param count: Number of chats to receive (no more than 24 per request).\n        :type count: `int`\n\n        :param type: Type of chats to receive. Not specified by default, which means they will be all at once, _optional_.\n        :type type: `playerokapi.enums.ChatTypes` or `None`\n\n        :param status: Status of chats to receive. Not specified by default, which means there will be any, _optional_.\n        :type status: `playerokapi.enums.ChatStatuses` or `None`\n        \n        :param after_cursor: The cursor from which the parsing will take place (if not present, it searches from the very beginning of the page), _optional_.\n        :type after_cursor: `str` or `None`\n        \n        :return: Chats page.\n        :rtype: `playerokapi.types.ChatList`'
+        'Retrieves all chats of the account.\n\n        :param count: Number of chats to receive (no more than 24 per request).\n        :type count: `int`\n\n        :param type: Type of chats to receive. Not specified by default, which means they will be all at once, _optional_.\n        :type type: `playerokapi.enums.ChatTypes` or `None`\n\n        :param status: Status of the chats to receive. Not specified by default, which means there will be any, _optional_.\n        :type status: `playerokapi.enums.ChatStatuses` or `None`\n        \n        :param after_cursor: The cursor from which the parsing will take place (if not present, it searches from the very beginning of the page), _optional_.\n        :type after_cursor: `str` or `None`\n        \n        :return: Chats page.\n        :rtype: `playerokapi.types.ChatList`'
         if not self ._is_initiated :
             raise NotInitiatedError ()
 
@@ -847,7 +847,7 @@ class Account :
     data_fields :list [GameCategoryDataField ],
     attachments :list [str ]
     )->types .Item :
-        'Creates an item (after creation, it is placed in the draft, and not immediately put up for sale).\n\n        :param game_category_id: ID of the category of the game in which you want to create the item.\n        :type game_category_id: `str`\n\n        :param obtaining_type_id: ID of the type of obtaining the item.\n        :type obtaining_type_id: `str`\n\n        :param name: Name of the item.\n        :type name: `str`\n\n        :param price: The price of the item.\n        :type price: `int` or `str`\n\n        :param description: Description of the item.\n        :type description: `str`\n\n        :param options: An array of **selected** options (attributes) of the item.\n        :type options: `list[playerokapi.types.GameCategoryOption]`\n\n        :param data_fields: An array of fields with item data. \n\n            !!! Data with the field type `ITEM_DATA` must be filled in, that is, the data that is specified when filling out information about the product.\n            Fields with the `OBTAINING_DATA` type **do not need to be filled out and transmitted**, since this data will be indicated by the buyer himself when registering the item.\n        :type data_fields: `list[playerokapi.types.GameCategoryDataField]`\n\n        :param attachments: An array of item attachment files. The paths to the files are indicated.\n        :type attachments: `list[str]`\n\n        :return: The object of the created item.\n        :rtype: `playerokapi.types.Item`'
+        'Creates an Item (after creation, it is placed in the draft, and not immediately put up for sale).\n\n        :param game_category_id: ID of the category of the game in which the Item needs to be created.\n        :type game_category_id: `str`\n\n        :param obtaining_type_id: ID of the type of obtaining the item.\n        :type obtaining_type_id: `str`\n\n        :param name: Name of the item.\n        :type name: `str`\n\n        :param price: The price of the item.\n        :type price: `int` or `str`\n\n        :param description: Description of the item.\n        :type description: `str`\n\n        :param options: An array of **selected** options (attributes) of the item.\n        :type options: `list[playerokapi.types.GameCategoryOption]`\n\n        :param data_fields: An array of fields with item data. \n\n            !!! Data with the field type `ITEM_DATA` must be filled in, that is, the data that is specified when filling out information about the product.\n            Fields with the `OBTAINING_DATA` type **do not need to be filled in and passed**, since this data will be indicated by the Buyer himself when registering the item.\n        :type data_fields: `list[playerokapi.types.GameCategoryDataField]`\n\n        :param attachments: An array of item attachment files. The paths to the files are indicated.\n        :type attachments: `list[str]`\n\n        :return: The object of the created item.\n        :rtype: `playerokapi.types.Item`'
         payload_attributes ={option .field :option .value for option in options }
         payload_data_fields =[{'fieldId':field .id ,'value':field .value }for field in data_fields ]
 
@@ -895,7 +895,7 @@ class Account :
     remove_attachments :list [str ]|None =None ,
     add_attachments :list [str ]|None =None 
     )->types .Item :
-        'Updates an account item.\n\n        :param id: Item ID.\n        :type id: `str`\n\n        :param name: Name of the item.\n        :type name: `str` or `None`\n\n        :param price: The price of the item.\n        :type price: `int` or `str` or `None`\n\n        :param description: Description of the item.\n        :type description: `str` or `None`\n\n        :param options: An array of **selected** options (attributes) of the item.\n        :type options: `list[playerokapi.types.GameCategoryOption]` or `None`\n\n        :param data_fields: An array of fields with item data. \n\n            !!! Data with the field type `ITEM_DATA` must be filled in, that is, the data that is specified when filling out information about the product.\n            Fields with the `OBTAINING_DATA` type **do not need to be filled out and transmitted**, since this data will be indicated by the buyer himself when registering the item.\n        :type data_fields: `list[playerokapi.types.GameCategoryDataField]` or `None`\n\n        :param remove_attachments: An array of item attachment file IDs to remove.\n        :type remove_attachments: `list[str]` or `None`\n\n        :param add_attachments: An array of item attachment files to add. The paths to the files are indicated.\n        :type add_attachments: `list[str]` or `None`\n\n        :return: Object of the updated item.\n        :rtype: `playerokapi.types.Item`'
+        'Updates the Item of the account.\n\n        :param id: Item ID.\n        :type id: `str`\n\n        :param name: Name of the item.\n        :type name: `str` or `None`\n\n        :param price: The price of the item.\n        :type price: `int` or `str` or `None`\n\n        :param description: Description of the item.\n        :type description: `str` or `None`\n\n        :param options: An array of **selected** options (attributes) of the item.\n        :type options: `list[playerokapi.types.GameCategoryOption]` or `None`\n\n        :param data_fields: An array of fields with item data. \n\n            !!! Data with the field type `ITEM_DATA` must be filled in, that is, the data that is specified when filling out information about the product.\n            Fields with the `OBTAINING_DATA` type **do not need to be filled in and passed**, since this data will be indicated by the Buyer himself when registering the item.\n        :type data_fields: `list[playerokapi.types.GameCategoryDataField]` or `None`\n\n        :param remove_attachments: An array of item attachment file IDs to remove.\n        :type remove_attachments: `list[str]` or `None`\n\n        :param add_attachments: An array of item attachment files to add. The paths to the files are indicated.\n        :type add_attachments: `list[str]` or `None`\n\n        :return: Object of the updated item.\n        :rtype: `playerokapi.types.Item`'
         payload_attributes ={option .field :option .value for option in options }if options is not None else None 
         payload_data_fields =[{'fieldId':field .id ,'value':field .value }for field in data_fields ]if data_fields is not None else None 
 
@@ -937,7 +937,7 @@ class Account :
     self ,
     id :str 
     )->bool :
-        'Completely removes the item from your account.\n\n        :param id: Item ID.\n        :type id: `str`'
+        'Completely deletes the Item from your account.\n\n        :param id: Item ID.\n        :type id: `str`'
         headers ={'accept':'*/*'}
         payload ={
         'operationName':'removeItem',
@@ -956,7 +956,7 @@ class Account :
     priority_status_id :str ,
     transaction_provider_id :TransactionProviderIds =TransactionProviderIds .LOCAL 
     )->types .Item :
-        'Puts an item up for sale.\n\n        :param item_id: Item ID.\n        :type item_id: `str`\n\n        :param priority_status_id: ID of the priority status of the item under which it should be put up for sale.\n        :type priority_status_id: `str`\n\n        :param transaction_provider_id: ID of the transaction provider.\n        :type transaction_provider_id: `playerokapi.types.TransactionProviderIds`\n\n        :return: Object of the published item.\n        :rtype: `playerokapi.types.Item`'
+        'Puts an Item up for sale.\n\n        :param item_id: Item ID.\n        :type item_id: `str`\n\n        :param priority_status_id: ID of the priority status of the item under which it should be put up for sale.\n        :type priority_status_id: `str`\n\n        :param transaction_provider_id: ID of the transaction provider.\n        :type transaction_provider_id: `playerokapi.types.TransactionProviderIds`\n\n        :return: Object of the published item.\n        :rtype: `playerokapi.types.Item`'
         headers ={'accept':'*/*'}
         payload ={
         'operationName':'publishItem',
@@ -1012,7 +1012,7 @@ class Account :
     id :str |None =None ,
     slug :str |None =None 
     )->types .MyItem |types .Item |types .ItemProfile :
-        'Receives an item (product).\n\n        Can be obtained using any of two parameters:\n\n        :param id: Item ID, _optional_.\n        :type id: `str` or `None`\n\n        :param slug: Item page name, _optional_.\n        :type slug: `str` or `None`\n        \n        :return: Item object.\n        :rtype: `playerokapi.types.MyItem` or `playerokapi.types.Item` or `playerokapi.types.ItemProfile`'
+        'Gets Item.\n\n        Can be obtained using any of two parameters:\n\n        :param id: Item ID, _optional_.\n        :type id: `str` or `None`\n\n        :param slug: Item page name, _optional_.\n        :type slug: `str` or `None`\n        \n        :return: Item object.\n        :rtype: `playerokapi.types.MyItem` or `playerokapi.types.Item` or `playerokapi.types.ItemProfile`'
         if not any ((id ,slug )):
             raise TypeError ('None of the required arguments were passed: id, slug')
 
@@ -1072,7 +1072,7 @@ class Account :
     payment_method_id :TransactionPaymentMethodIds |None =None ,
     transaction_provider_id :TransactionProviderIds =TransactionProviderIds .LOCAL 
     )->types .Item :
-        'Increases the priority status of an item.\n\n        :param item_id: Item ID.\n        :type item_id: `str`\n\n        :param priority_status_id: ID of the priority status to change to.\n        :type priority_status_id: `int` or `str`\n\n        :param payment_method_id: Payment method, _optional_.\n        :type payment_method_id: `playerokapi.enums.TransactionPaymentMethodIds` or `None`\n\n        :param transaction_provider_id: ID of the transaction provider (LOCAL - from the wallet balance on the website).\n        :type transaction_provider_id: `playerokapi.enums.TransactionProviderIds`\n        \n        :return: Object of the updated item.\n        :rtype: `playerokapi.types.Item`'
+        'Increases the Status of the priority of an item.\n\n        :param item_id: Item ID.\n        :type item_id: `str`\n\n        :param priority_status_id: ID of the priority status to change to.\n        :type priority_status_id: `int` or `str`\n\n        :param payment_method_id: Payment method, _optional_.\n        :type payment_method_id: `playerokapi.enums.TransactionPaymentMethodIds` or `None`\n\n        :param transaction_provider_id: ID of the transaction provider (LOCAL - from the wallet balance on the website).\n        :type transaction_provider_id: `playerokapi.enums.TransactionProviderIds`\n        \n        :return: Object of the updated item.\n        :rtype: `playerokapi.types.Item`'
         headers ={'accept':'*/*'}
         payload ={
         'operationName':'increaseItemPriorityStatus',
@@ -1126,7 +1126,7 @@ class Account :
     status :TransactionStatuses |None =None ,
     after_cursor :str |None =None 
     )->TransactionList :
-        'Retrieves all account transactions.\n\n        :param count: Number of transactions to receive (no more than 24 per request).\n        :type count: `int`\n\n        :param operation: Transaction operation, _optional_.\n        :type operation: `playerokapi.enums.TransactionOperations` or `None`\n\n        :param min_value: Minimum transaction amount, _optional_.\n        :type min_value: `int` or `None`\n\n        :param max_value: Maximum transaction amount, _optional_.\n        :type max_value: `int` or `None`\n\n        :param provider_id: Transaction provider ID, _optional_.\n        :type provider_id: `playerokapi.enums.TransactionProviderIds` or `None`\n\n        :param status: Transaction status, _optional_.\n        :type status: `playerokapi.enums.TransactionStatuses` or `None`\n\n        :param after_cursor: The cursor from which the parsing will take place (if not present, it searches from the very beginning of the page), _optional_.\n        :type after_cursor: `str` or `None`\n        \n        :return: Transactions page.\n        :rtype: `playerokapi.types.TransactionList`'
+        'Retrieves all account transactions.\n\n        :param count: Number of transactions to receive (no more than 24 per request).\n        :type count: `int`\n\n        :param operation: Transaction operation, _optional_.\n        :type operation: `playerokapi.enums.TransactionOperations` or `None`\n\n        :param min_value: Minimum Price of the transaction, _optional_.\n        :type min_value: `int` or `None`\n\n        :param max_value: Maximum Transaction Price, _optional_.\n        :type max_value: `int` or `None`\n\n        :param provider_id: Transaction provider ID, _optional_.\n        :type provider_id: `playerokapi.enums.TransactionProviderIds` or `None`\n\n        :param status: Status of the transaction, _optional_.\n        :type status: `playerokapi.enums.TransactionStatuses` or `None`\n\n        :param after_cursor: The cursor from which the parsing will take place (if not present, it searches from the very beginning of the page), _optional_.\n        :type after_cursor: `str` or `None`\n        \n        :return: Transactions page.\n        :rtype: `playerokapi.types.TransactionList`'
         if not self ._is_initiated :
             raise NotInitiatedError ()
 
@@ -1240,7 +1240,7 @@ class Account :
     payment_method_id :TransactionPaymentMethodIds |None =None ,
     sbp_bank_member_id :str |None =None 
     )->types .Transaction :
-        'Creates a request to withdraw funds from your account balance.\n\n        :param provider: Transaction provider.\n        :type provider: `playerokapi.enums.TransactionProviderIds`\n\n        :param account: ID of the added card (or phone number, if the SBP provider) to which you want to make a withdrawal.\n        :type account: `str`\n\n        :param value: Output amount.\n        :type value: `int`\n\n        :param payment_method_id: Payment method ID, _optional_.\n        :type payment_method_id: `playerokapi.enums.TransactionPaymentMethodIds` or `None`\n\n        :param sbp_bank_member_id: SBP bank member ID (only if the SBP provider is specified), _optional_.\n        :type sbp_bank_member_id: `str` or `None`\n        \n        :return: Output transaction object.\n        :rtype: `playerokapi.types.Transaction`'
+        'Creates a request to withdraw funds from your account balance.\n\n        :param provider: Transaction provider.\n        :type provider: `playerokapi.enums.TransactionProviderIds`\n\n        :param account: ID of the added card (or phone number, if the SBP provider) to which you want to make a withdrawal.\n        :type account: `str`\n\n        :param value: Price of the output.\n        :type value: `int`\n\n        :param payment_method_id: Payment method ID, _optional_.\n        :type payment_method_id: `playerokapi.enums.TransactionPaymentMethodIds` or `None`\n\n        :param sbp_bank_member_id: SBP bank member ID (only if the SBP provider is specified), _optional_.\n        :type sbp_bank_member_id: `str` or `None`\n        \n        :return: Output transaction object.\n        :rtype: `playerokapi.types.Transaction`'
         headers ={'accept':'*/*'}
         payload ={
         'operationName':'requestWithdrawal',
