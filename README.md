@@ -32,7 +32,7 @@
 - Приветственное сообщение
 - Пользовательские команды
 - Пользовательская авто-выдача
-- Команда `!seller` для вызова продавца в чат
+- Команда `!продавец` для вызова продавца в чат
 - Редактирование и включение/отключение каждого сообщения
 - Уведомления в TG о новых сообщениях, заказах, отзывах и т.д.
 
@@ -76,16 +76,16 @@
   | Ивент | Когда вызывается | Передающиеся аргументы |
   |-------|------------------|------------------------|
   | `EventTypes.CHAT_INITIALIZED` | Чат инициализирован | `PlayerokBot`, `ChatInitializedEvent` |
-  | `EventTypes.NEW_MESSAGE` | New message in the chat | `PlayerokBot`, `NewMessageEvent` |
-  | `EventTypes.NEW_DEAL` | Создана New deal (когда Buyer оплатил товар) | `PlayerokBot`, `NewDealEvent` |
+  | `EventTypes.NEW_MESSAGE` | Новое сообщение в чате | `PlayerokBot`, `NewMessageEvent` |
+  | `EventTypes.NEW_DEAL` | Создана новая сделка (когда покупатель оплатил товар) | `PlayerokBot`, `NewDealEvent` |
   | `EventTypes.NEW_REVIEW` | Новый отзыв по сделке | `PlayerokBot`, `NewReviewEvent` |
   | `EventTypes.DEAL_CONFIRMED` | Сделка подтверждена | `PlayerokBot`, `DealConfirmedEvent` |
-  | `EventTypes.DEAL_ROLLED_BACK` | Продавец оформил возврат deal | `PlayerokBot`, `DealRolledBackEvent` |
+  | `EventTypes.DEAL_ROLLED_BACK` | Продавец оформил возврат сделки | `PlayerokBot`, `DealRolledBackEvent` |
   | `EventTypes.DEAL_HAS_PROBLEM` | Пользователь сообщил о проблеме в сделке | `PlayerokBot`, `DealHasProblemEvent` |
   | `EventTypes.DEAL_PROBLEM_RESOLVED` | Проблема в сделке решена | `PlayerokBot`, `DealProblemResolvedEvent` |
-  | `EventTypes.DEAL_STATUS_CHANGED` | Status of the deal изменён | `PlayerokBot`, `DealStatusChangedEvent` |
-  | `EventTypes.ITEM_PAID` | Пользователь оплатил Item | `PlayerokBot`, `ItemPaidEvent` |
-  | `EventTypes.ITEM_SENT` | Item отправлен (продавец подтвердил выполнение deal) | `PlayerokBot`, `ItemSentEvent` |
+  | `EventTypes.DEAL_STATUS_CHANGED` | Статус сделки изменён | `PlayerokBot`, `DealStatusChangedEvent` |
+  | `EventTypes.ITEM_PAID` | Пользователь оплатил предмет | `PlayerokBot`, `ItemPaidEvent` |
+  | `EventTypes.ITEM_SENT` | Предмет отправлен (продавец подтвердил выполнение сделки) | `PlayerokBot`, `ItemSentEvent` |
 
 </details>
 
