@@ -1,326 +1,326 @@
-from enum import Enum
-
-
-class EventTypes(Enum):
-    """Типы событий."""
-
-    CHAT_INITIALIZED = 0
-    """Чат инициализирован."""
-    NEW_MESSAGE = 1
-    """New message in the chat."""
-    NEW_DEAL = 2
-    """Создана New deal (когда Buyer оплатил товар)."""
-    NEW_REVIEW = 3
-    """Новый отзыв от покупателя."""
-    DEAL_CONFIRMED = 4
-    """Сделка подтверждена (Buyer подтвердил получение предмета)."""
-    DEAL_CONFIRMED_AUTOMATICALLY = 5
-    """Сделка подтверждена автоматически (если Buyer долго не выходит на связь)."""
-    DEAL_ROLLED_BACK = 6
-    """Продавец оформил возврат deal."""
-    DEAL_HAS_PROBLEM = 7
-    """Пользователь сообщил о проблеме в сделке."""
-    DEAL_PROBLEM_RESOLVED = 8
-    """Проблема в сделке решена."""
-    DEAL_STATUS_CHANGED = 9
-    """Status of the deal изменён."""
-    ITEM_PAID = 10
-    """Пользователь оплатил Item."""
-    ITEM_SENT = 11
-    """Item отправлен (продавец подтвердил выполнение deal)."""
-
-
-class ItemLogEvents(Enum):
-    """События логов предмета."""
-
-    PAID = 0
-    """Продавец подтвердил выполнение deal."""
-    SENT = 1
-    """Товар deal отправлен."""
-    DEAL_CONFIRMED = 2
-    """Сделка подтверждена."""
-    DEAL_ROLLED_BACK = 3
-    """Сделка возвращена."""
-    PROBLEM_REPORTED = 4
-    """Отправлена жалоба (создана проблема)."""
-    PROBLEM_RESOLVED = 5
-    """Проблема решена."""
-
-
-class TransactionOperations(Enum):
-    """Операции транзакций."""
-
-    DEPOSIT = 0
-    """Пополнение."""
-    BUY = 1
-    """Оплата товара."""
-    SELL = 2
-    """Продажа товара."""
-    ITEM_DEFAULT_PRIORITY = 3
-    """Оплата бесплатного приоритета."""
-    ITEM_PREMIUM_PRIORITY = 4
-    """Оплата премиум приоритета."""
-    WITHDRAW = 5
-    """Выплата."""
-    MANUAL_BALANCE_INCREASE = 6
-    """Начисление на баланс аккаунта."""
-    MANUAL_BALANCE_DECREASE = 7
-    """Списание с баланса аккаунта."""
-    REFERRAL_BONUS = 8
-    """Приглашение друга (реферал)."""
-    STEAM_DEPOSIT = 9
-    """Оплата пополнения Steam."""
-
-
-class TransactionDirections(Enum):
-    """Операции транзакций."""
-
-    IN = 0
-    """Начисление."""
-    OUT = 1
-    """Списание."""
-
-
-class TransactionStatuses(Enum):
-    """Статусы транзакций."""
-
-    PENDING = 0
-    """В ожидании (транзакция оплачена, но деньги за неё ещё не поступили на баланс)."""
-    PROCESSING = 1
-    """В заморозке."""
-    CONFIRMED = 2
-    """Сделка транзакции подтверждена."""
-    ROLLED_BACK = 3
-    """Возврат по сделке транзакции."""
-    FAILED = 4
-    """Ошибка транзакции."""
-
-
-class TransactionPaymentMethodIds(Enum):
-    """Айди методов транзакции."""
-
-    MIR = 0
-    """С помощью банковских карт МИР."""
-    VISA_MASTERCARD = 1
-    """С помощью банковских карт VISA/Mastercard."""
-    ERIP = 2
-    """С помощью ЕРИП."""
+from enum import Enum 
+
+
+class EventTypes (Enum ):
+    'Event types.'
+
+    CHAT_INITIALIZED =0 
+    'Chat has been initialized.'
+    NEW_MESSAGE =1 
+    'New message in the chat.'
+    NEW_DEAL =2 
+    'A New deal has been created (when the Buyer has paid for the goods).'
+    NEW_REVIEW =3 
+    'New review from a buyer.'
+    DEAL_CONFIRMED =4 
+    'The transaction is confirmed (Buyer has confirmed receipt of the item).'
+    DEAL_CONFIRMED_AUTOMATICALLY =5 
+    'The transaction is confirmed automatically (if Buyer does not contact for a long time).'
+    DEAL_ROLLED_BACK =6 
+    'The seller issued a refund deal.'
+    DEAL_HAS_PROBLEM =7 
+    'A user reported a problem with the transaction.'
+    DEAL_PROBLEM_RESOLVED =8 
+    'The problem in the transaction has been resolved.'
+    DEAL_STATUS_CHANGED =9 
+    'Status of the deal has been changed.'
+    ITEM_PAID =10 
+    'The user paid for the Item.'
+    ITEM_SENT =11 
+    'Item has been sent (the seller has confirmed the completion of the deal).'
+
+
+class ItemLogEvents (Enum ):
+    'Item log events.'
+
+    PAID =0 
+    'The seller confirmed the completion of the deal.'
+    SENT =1 
+    'The deal item has been sent.'
+    DEAL_CONFIRMED =2 
+    'The deal is confirmed.'
+    DEAL_ROLLED_BACK =3 
+    'The transaction has been returned.'
+    PROBLEM_REPORTED =4 
+    'A complaint has been sent (a problem has been created).'
+    PROBLEM_RESOLVED =5 
+    'Problem solved.'
+
+
+class TransactionOperations (Enum ):
+    'Transaction operations.'
+
+    DEPOSIT =0 
+    'Replenishment.'
+    BUY =1 
+    'Payment for goods.'
+    SELL =2 
+    'Sale of goods.'
+    ITEM_DEFAULT_PRIORITY =3 
+    'Pay for free priority.'
+    ITEM_PREMIUM_PRIORITY =4 
+    'Premium priority payment.'
+    WITHDRAW =5 
+    'Pay.'
+    MANUAL_BALANCE_INCREASE =6 
+    'Credit to account balance.'
+    MANUAL_BALANCE_DECREASE =7 
+    'Write off the account balance.'
+    REFERRAL_BONUS =8 
+    'Invite a friend (referral).'
+    STEAM_DEPOSIT =9 
+    'Payment for Steam replenishment.'
+
+
+class TransactionDirections (Enum ):
+    'Transaction operations.'
+
+    IN =0 
+    'Accrual.'
+    OUT =1 
+    'Magazine.'
+
+
+class TransactionStatuses (Enum ):
+    'Transaction statuses.'
+
+    PENDING =0 
+    'Pending (the transaction has been paid, but the money for it has not yet been credited to the balance).'
+    PROCESSING =1 
+    'In the freezer.'
+    CONFIRMED =2 
+    'The transaction transaction is confirmed.'
+    ROLLED_BACK =3 
+    'Return on transaction transaction.'
+    FAILED =4 
+    'Transaction error.'
+
+
+class TransactionPaymentMethodIds (Enum ):
+    'ID of transaction methods.'
+
+    MIR =0 
+    'Using MIR bank cards.'
+    VISA_MASTERCARD =1 
+    'Using VISA/Mastercard bank cards.'
+    ERIP =2 
+    'With the help of ERIP.'
 
 
-class TransactionProviderDirections(Enum):
-    """Направления провайдеров транзакции."""
+class TransactionProviderDirections (Enum ):
+    'Transaction Provider Directions.'
 
-    IN = 0
-    """Пополнение."""
-    OUT = 1
-    """Вывод."""
+    IN =0 
+    'Replenishment.'
+    OUT =1 
+    'Conclusion.'
 
 
-class TransactionProviderIds(Enum):
-    """Айди провайдеров транзакции."""
+class TransactionProviderIds (Enum ):
+    'Transaction providers ID.'
 
-    LOCAL = 0
-    """С помощью баланса аккаунта."""
-    SBP = 1
-    """С помощью СБП."""
-    BANK_CARD_RU = 2
-    """С помощью банковской карты России."""
-    BANK_CARD_BY = 3
-    """С помощью банковской карты Беларуси."""
-    BANK_CARD = 4
-    """С помощью иностранной банковской карты."""
-    YMONEY = 5
-    """С помощью ЮMoney."""
-    USDT = 6
-    """Криптовалюта USDT (TRC20)."""
-    PENDING_INCOME = 7
-    """Пополнение из замороженных средств."""
-
-
-class BankCardTypes(Enum):
-    """Типы банковских карт."""
-
-    MIR = 0
-    """Банковская карта МИР."""
-    VISA = 1
-    """Банковская карта VISA."""
-    MASTERCARD = 2
-    """Банковская карта Mastercard."""
-
-
-class ItemDealStatuses(Enum):
-    """Состояния deal."""
-
-    PAID = 0
-    """Сделка оплачена."""
-    PENDING = 1
-    """Сделка в ожидании отправки товара."""
-    SENT = 2
-    """Продавец подтвердил выполнение deal."""
-    CONFIRMED = 3
-    """Сделка подтверждена."""
-    CONFIRMED_AUTOMATICALLY = 4
-    """Сделка подтверждена автоматически."""
-    ROLLED_BACK = 5
-    """Сделка возвращена."""
+    LOCAL =0 
+    'Using your account balance.'
+    SBP =1 
+    'Using SBP.'
+    BANK_CARD_RU =2 
+    'Using a Russian bank card.'
+    BANK_CARD_BY =3 
+    'Using a Belarusian bank card.'
+    BANK_CARD =4 
+    'Using a foreign bank card.'
+    YMONEY =5 
+    'With the help of YuMoney.'
+    USDT =6 
+    'Cryptocurrency USDT (TRC20).'
+    PENDING_INCOME =7 
+    'Replenishment from frozen funds.'
+
+
+class BankCardTypes (Enum ):
+    'Types of bank cards.'
+
+    MIR =0 
+    'Bank card MIR.'
+    VISA =1 
+    'VISA bank card.'
+    MASTERCARD =2 
+    'Mastercard bank card.'
+
+
+class ItemDealStatuses (Enum ):
+    'Deal states.'
+
+    PAID =0 
+    'The deal has been paid.'
+    PENDING =1 
+    'Transaction pending shipment of goods.'
+    SENT =2 
+    'The seller confirmed the completion of the deal.'
+    CONFIRMED =3 
+    'The deal is confirmed.'
+    CONFIRMED_AUTOMATICALLY =4 
+    'The transaction is confirmed automatically.'
+    ROLLED_BACK =5 
+    'The transaction has been returned.'
 
 
-class ItemDealDirections(Enum):
-    """Направления deal."""
+class ItemDealDirections (Enum ):
+    'Directions deal.'
 
-    IN = 0
-    """Покупка."""
-    OUT = 1
-    """Продажа."""
+    IN =0 
+    'Purchase.'
+    OUT =1 
+    'Sale.'
 
 
-class GameTypes(Enum):
-    """Типы игр."""
+class GameTypes (Enum ):
+    'Types of games.'
 
-    GAME = 0
-    """Игра."""
-    APPLICATION = 1
-    """Приложение."""
+    GAME =0 
+    'A game.'
+    APPLICATION =1 
+    'Application.'
 
 
-class UserTypes(Enum):
-    """Типы пользователей."""
+class UserTypes (Enum ):
+    'User types.'
 
-    USER = 0
-    """Обычный пользователь."""
-    MODERATOR = 1
-    """Модератор."""
-    BOT = 2
-    """Бот."""
+    USER =0 
+    'Regular user.'
+    MODERATOR =1 
+    'Moderator.'
+    BOT =2 
+    'Bot.'
 
 
-class ChatTypes(Enum):
-    """Типы чатов."""
+class ChatTypes (Enum ):
+    'Types of chats.'
 
-    PM = 0
-    """Приватный чат (диалог с пользователем)."""
-    NOTIFICATIONS = 1
-    """Чат уведомлений."""
-    SUPPORT = 2
-    """Чат поддержки."""
+    PM =0 
+    'Private chat (dialogue with the user).'
+    NOTIFICATIONS =1 
+    'Chat notifications.'
+    SUPPORT =2 
+    'Support chat.'
 
 
-class ChatStatuses(Enum):
-    """Статусы чатов."""
+class ChatStatuses (Enum ):
+    'Chat statuses.'
 
-    NEW = 0
-    """Новый чат (в нём нет ни единого прочитанного сообщения)."""
-    FINISHED = 1
-    """Чат доступен, в нём сейчас можно переписываться."""
+    NEW =0 
+    'New chat (there is not a single read message in it).'
+    FINISHED =1 
+    'The chat is available, you can now chat in it.'
 
 
-class ChatMessageButtonTypes(Enum):
-    """Типы кнопок сообщений."""
+class ChatMessageButtonTypes (Enum ):
+    'Types of message buttons.'
 
-    # TODO: Доделать все типы кнопок сообщения
-    REDIRECT = 0
-    """Перенаправляет на ссылку."""
-    LOTTERY = 1
-    """Перенаправляет на розыгрыш/акцию."""
+    # TODO: Finish all types of message buttons
+    REDIRECT =0 
+    'Redirects to a link.'
+    LOTTERY =1 
+    'Redirects to a draw/promotion.'
 
 
-class ItemStatuses(Enum):
-    """Статусы предметов."""
+class ItemStatuses (Enum ):
+    'Item statuses.'
 
-    PENDING_APPROVAL = 0
-    """Ожидает принятия (на проверке модерацией)."""
-    PENDING_MODERATION = 1
-    """Ожидает проверки изменений модерацией."""
-    APPROVED = 2
-    """Активный (принятый модерацией)."""
-    DECLINED = 3
-    """Отклонённый."""
-    BLOCKED = 4
-    """Заблокированный."""
-    EXPIRED = 5
-    """Истёкший."""
-    SOLD = 6
-    """Проданный."""
-    DRAFT = 7
-    """Черновик (если Item не выставлен на продажу)."""
+    PENDING_APPROVAL =0 
+    'Awaiting acceptance (under moderation review).'
+    PENDING_MODERATION =1 
+    'Awaiting review of changes by moderation.'
+    APPROVED =2 
+    'Active (accepted by moderation).'
+    DECLINED =3 
+    'Rejected.'
+    BLOCKED =4 
+    'Locked.'
+    EXPIRED =5 
+    'Wanted.'
+    SOLD =6 
+    'Sold.'
+    DRAFT =7 
+    'Draft (if the Item is not for sale).'
 
 
-class ReviewStatuses(Enum):
-    """Статусы отзывов."""
+class ReviewStatuses (Enum ):
+    'Review statuses.'
 
-    APPROVED = 0
-    """Активный."""
-    DELETED = 1
-    """Удалённый."""
+    APPROVED =0 
+    'Active.'
+    DELETED =1 
+    'Remote.'
 
 
-class SortDirections(Enum):
-    """Типы сортировки."""
+class SortDirections (Enum ):
+    'Types of sorting.'
 
-    DESC = 0
-    """По убыванию."""
-    ASC = 1
-    """По возрастанию."""
+    DESC =0 
+    'Descending.'
+    ASC =1 
+    'Ascending.'
 
 
-class PriorityTypes(Enum):
-    """Типы приоритетов."""
+class PriorityTypes (Enum ):
+    'Types of priorities.'
 
-    DEFAULT = 0
-    """Стандартный приоритет."""
-    PREMIUM = 1
-    """Премиум приоритет."""
+    DEFAULT =0 
+    'Standard priority.'
+    PREMIUM =1 
+    'Premium priority.'
 
 
-class GameCategoryAgreementIconTypes(Enum):
-    """Типы иконок соглашения покупателя в определённой категории."""
+class GameCategoryAgreementIconTypes (Enum ):
+    'Types of buyer agreement icons in a specific category.'
 
-    # TODO: Доделать все типы иконок соглашений
-    RESTRICTION = 0
-    """Ограничение."""
-    CONFIRMATION = 0
-    """Подтверждение."""
+    # TODO: Complete all types of agreement icons
+    RESTRICTION =0 
+    'Limitation.'
+    CONFIRMATION =0 
+    'Confirmation.'
 
 
-class GameCategoryOptionTypes(Enum):
-    """Типы опции категории."""
+class GameCategoryOptionTypes (Enum ):
+    'Category option types.'
 
-    # TODO: Доделать все типы опций категории
-    SELECTOR = 0
-    """Выбор типа."""
-    SWITCH = 1
-    """Переключатель."""
+    # TODO: Complete all types of category options
+    SELECTOR =0 
+    'Type selection.'
+    SWITCH =1 
+    'Switch.'
 
 
-class GameCategoryDataFieldTypes(Enum):
-    """Типы полей с данными категории игры."""
+class GameCategoryDataFieldTypes (Enum ):
+    'Types of game category data fields.'
 
-    ITEM_DATA = 0
-    """Данные предмета."""
-    OBTAINING_DATA = 1
-    """Получаемые данные (после покупки предмета)."""
+    ITEM_DATA =0 
+    'Item data.'
+    OBTAINING_DATA =1 
+    'Data received (after purchasing an item).'
 
 
-class GameCategoryDataFieldInputTypes(Enum):
-    """Типы вводимых полей с данными категории игры."""
+class GameCategoryDataFieldInputTypes (Enum ):
+    'Types of input fields with game category data.'
 
-    # TODO: Доделать все типы вводимых дата-полей
-    INPUT = 0
-    """Вводимое значение (вводится покупателем при оформлении предмета)."""
+    # TODO: Complete all types of input data fields
+    INPUT =0 
+    'Entered value (entered by the buyer when checking out the item).'
 
 
-class GameCategoryAutoConfirmPeriods(Enum):
-    """Периоды автоматического подтверждения deal в категории игры."""
+class GameCategoryAutoConfirmPeriods (Enum ):
+    'Automatic deal confirmation periods in the game category.'
 
-    # TODO: Доделать все периоды авто-подтверждения
-    SEVEN_DEYS = 0
-    """Семь дней."""
+    # TODO: Complete all auto-confirmation periods
+    SEVEN_DEYS =0 
+    'Seven days.'
 
 
-class GameCategoryInstructionTypes(Enum):
-    """Типы инструкций категории."""
+class GameCategoryInstructionTypes (Enum ):
+    'Types of category instructions.'
 
-    FOR_SELLER = 0
-    """Для продавца."""
-    FOR_BUYER = 1
-    """Для покупателя."""
+    FOR_SELLER =0 
+    'For the seller.'
+    FOR_BUYER =1 
+    'For the buyer.'

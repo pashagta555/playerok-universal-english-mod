@@ -1,59 +1,59 @@
-import textwrap
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from datetime import datetime
+import textwrap 
+from aiogram .types import InlineKeyboardMarkup ,InlineKeyboardButton 
+from datetime import datetime 
 
-from settings import Settings as set
+from settings import Settings as sett 
 
-from .. import callback_datas as calls
+from ..import callback_datas as calls 
 
 
-def logs_text():
-    config = sett.get("config")
-    max_file_size = config["logs"]["max_file_size"] or "❌ Not set"
-    
-    txt = textwrap.dedent(f"""
-        <b>🗒️ Logs</b>
+def logs_text ():
+    config =sett .get ('config')
+    max_file_size =config ['logs']['max_file_size']or '❌ Not specified'
 
-        <b>📄 Max. file size:</b>{max_file_size} MB
+    txt =textwrap .dedent (f"""
+        <b>🗒️ Логи</b>
 
-        <b>Note:</b>
-        The log file will be automatically cleared as soon as its size exceeds the one specified in the config, so as not to take up a lot of space on your device.
+        <b>📄 Макс. размер файла:</b> {max_file_size } MB
+
+        <b>Примечание:</b>
+        Файл логов будет автоматически очищаться, как только его размер превысит указанный в конфиге, чтобы не занимать много места на вашем устройстве.
     """)
-    return txt
+    return txt 
 
 
-def logs_kb():
-    config = sett.get("config")
-    max_file_size = config["logs"]["max_file_size"] or "❌ Not set"
+def logs_kb ():
+    config =sett .get ('config')
+    max_file_size =config ['logs']['max_file_size']or '❌ Not specified'
 
-    rows = [
-        [InlineKeyboardButton(text=f"📄 Max file size: {max_file_size} MB", callback_data="enter_logs_max_file_size")],
-        [InlineKeyboardButton(text=f"📔 Get logs", callback_data="select_logs_file_lines")],
-        [InlineKeyboardButton(text="⬅️ Back", callback_data=calls.MenuNavigation(to="default").pack())]
+    rows =[
+    [InlineKeyboardButton (text =f"📄 Макс. размер файла: {max_file_size } MB",callback_data ='enter_logs_max_file_size')],
+    [InlineKeyboardButton (text =f"📔 Получить логи",callback_data ='select_logs_file_lines')],
+    [InlineKeyboardButton (text ='⬅️ Back',callback_data =calls .MenuNavigation (to ='default').pack ())]
     ]
-    kb = InlineKeyboardMarkup(inline_keyboard=rows)
-    return kb
+    kb =InlineKeyboardMarkup (inline_keyboard =rows )
+    return kb 
 
 
-def logs_file_lines_kb():
-    rows = [
-        [
-        InlineKeyboardButton(text=f"📗 Last 100 lines", callback_data=calls.SendLogsFile(lines=100).pack()),
-        InlineKeyboardButton(text=f"📘 Last 250 lines", callback_data=calls.SendLogsFile(lines=250).pack())
-        ],
-        [
-        InlineKeyboardButton(text=f"📕 Last 1000 lines", callback_data=calls.SendLogsFile(lines=1000).pack()),
-        InlineKeyboardButton(text=f"📖 Entire file", callback_data=calls.SendLogsFile(lines=-1).pack())
-        ],
-        [InlineKeyboardButton(text="⬅️ Back", callback_data=calls.MenuNavigation(to="logs").pack())]
+def logs_file_lines_kb ():
+    rows =[
+    [
+    InlineKeyboardButton (text =f"📗 Последние 100 строк",callback_data =calls .SendLogsFile (lines =100 ).pack ()),
+    InlineKeyboardButton (text =f"📘 Последние 250 строк",callback_data =calls .SendLogsFile (lines =250 ).pack ())
+    ],
+    [
+    InlineKeyboardButton (text =f"📕 Последние 1000 строк",callback_data =calls .SendLogsFile (lines =1000 ).pack ()),
+    InlineKeyboardButton (text =f"📖 Весь файл",callback_data =calls .SendLogsFile (lines =-1 ).pack ())
+    ],
+    [InlineKeyboardButton (text ='⬅️ Back',callback_data =calls .MenuNavigation (to ='logs').pack ())]
     ]
-    kb = InlineKeyboardMarkup(inline_keyboard=rows)
-    return kb
+    kb =InlineKeyboardMarkup (inline_keyboard =rows )
+    return kb 
 
 
-def logs_float_text(placeholder: str):
-    txt = textwrap.dedent(f"""
-        <b>🗒️ Logs</b>
-        \n{placeholder}
+def logs_float_text (placeholder :str ):
+    txt =textwrap .dedent (f"""
+        <b>🗒️ Логи</b>
+        \n{placeholder }
     """)
-    return txt
+    return txt 

@@ -1,9 +1,9 @@
-import textwrap
+import textwrap 
 
 
-def settings_withdrawal_usdt_float_text(placeholder: str):
-    txt = textwrap.dedent(f"""
+def settings_withdrawal_usdt_float_text (placeholder :str ):
+    txt =textwrap .dedent (f"""
         <b>💲 USDT (TRC20)</b>
-        \n{placeholder}
+        \n{placeholder }
     """)
-    return txt
+    return txt 

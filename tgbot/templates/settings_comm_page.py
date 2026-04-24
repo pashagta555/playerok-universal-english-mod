@@ -1,40 +1,40 @@
-import textwrap
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+import textwrap 
+from aiogram .types import InlineKeyboardMarkup ,InlineKeyboardButton 
 
-from settings import Settings as sett
+from settings import Settings as sett 
 
-from .. import callback_datas as calls
+from ..import callback_datas as calls 
 
 
-def settings_comm_page_text(command: str):
-    custom_commands = sett.get("custom_commands")
-    command_text = "\n".join(custom_commands[command]) or "❌ Не задано"
-    
-    txt = textwrap.dedent(f"""
+def settings_comm_page_text (command :str ):
+    custom_commands =sett .get ('custom_commands')
+    command_text ='\n'.join (custom_commands [command ])or '❌ Not specified'
+
+    txt =textwrap .dedent (f"""
         <b>📄❗ Страница команды</b>
 
-        <b>⌨️ Команда:</b> {command}
-        <b>💬 Ответ:</b> <blockquote>{command_text}</blockquote>
+        <b>⌨️ Команда:</b> {command }
+        <b>💬 Ответ:</b> <blockquote>{command_text }</blockquote>
     """)
-    return txt
+    return txt 
 
 
-def settings_comm_page_kb(command: str, page: int = 0):
-    custom_commands = sett.get("custom_commands")
-    command_text = "\n".join(custom_commands[command]) or "❌ Не задано"
-    
-    rows = [
-        [InlineKeyboardButton(text=f"💬 Ответ: {command_text}", callback_data="enter_custom_command_answer")],
-        [InlineKeyboardButton(text="🗑️ Удалить", callback_data="confirm_deleting_custom_command")],
-        [InlineKeyboardButton(text="⬅️ Назад", callback_data=calls.CustomCommandsPagination(page=page).pack())]
+def settings_comm_page_kb (command :str ,page :int =0 ):
+    custom_commands =sett .get ('custom_commands')
+    command_text ='\n'.join (custom_commands [command ])or '❌ Not specified'
+
+    rows =[
+    [InlineKeyboardButton (text =f"💬 Ответ: {command_text }",callback_data ='enter_custom_command_answer')],
+    [InlineKeyboardButton (text ='🗑️ Delete',callback_data ='confirm_deleting_custom_command')],
+    [InlineKeyboardButton (text ='⬅️ Back',callback_data =calls .CustomCommandsPagination (page =page ).pack ())]
     ]
-    kb = InlineKeyboardMarkup(inline_keyboard=rows)
-    return kb
+    kb =InlineKeyboardMarkup (inline_keyboard =rows )
+    return kb 
 
 
-def settings_comm_page_float_text(placeholder: str):
-    txt = textwrap.dedent(f"""
+def settings_comm_page_float_text (placeholder :str ):
+    txt =textwrap .dedent (f"""
         <b>📄❗ Страница команды</b>
-        \n{placeholder}
+        \n{placeholder }
     """)
-    return txt
+    return txt 
